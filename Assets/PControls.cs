@@ -1,0 +1,39 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[RequireComponent(typeof(PMovement))]
+public class PControls : MonoBehaviour
+{
+    [SerializeField] KeyCode forward = KeyCode.W, left = KeyCode.A, backward = KeyCode.S, right = KeyCode.D, run = KeyCode.LeftShift, standUpKey = KeyCode.Space;
+    [SerializeField] bool mouseMove;
+    [SerializeField] float sitControlTime = 1f;
+    float timeSitting;
+    PMovement move;
+    PFighting fight;
+
+    private void Start()
+    {
+        move = GetComponent<PMovement>();
+        fight = GetComponent<PFighting>();
+    }
+
+    private void Update()
+    {
+        if (move.sitting) timeSitting += Time.deltaTime;
+        if (timeSitting >= sitControlTime) GlobalUI.i.DisplayPrompt("press space to stand up");
+
+        if (move.sitting && Input.GetKeyDown(standUpKey)) { move.sitting = false; GlobalUI.i.HidePrompt(); }
+
+        if (Input.GetMouseButtonDown(0) && !move.sitting) fight.PressAttack();
+
+        move.goForward = Input.GetKey(forward);
+        move.goBack = Input.GetKey(backward);
+        move.running = Input.GetKey(run);
+        if (Input.GetKeyDown(run)) fight.PutAwayStaff();
+
+        if (move.alignToCamera) return;
+        move.turnRight = Input.GetKey(right);
+        move.turnLeft = Input.GetKey(left);
+    }
+}
