@@ -77,6 +77,7 @@ public class CameraController : MonoBehaviour
         SetCamLookDir(currentState);
         SetFollow(currentState);
         SetParentLookDir(currentState);
+
         if (currentState.limitParentRot) LimitParentRot(currentState);
     }
 
@@ -145,6 +146,7 @@ public class CameraController : MonoBehaviour
             transform.forward = Vector3.Lerp(transform.forward, targetForward, s.parentRotSmoothness);
             return;
         }
+
         if (!Application.isPlaying) return;
 
         float mouseX = Input.GetAxis("Mouse X") * s.mouseXSens;

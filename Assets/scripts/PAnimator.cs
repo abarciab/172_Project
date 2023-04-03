@@ -32,11 +32,13 @@ public class PAnimator : MonoBehaviour
 
         anim.SetBool("Sitting", move.sitting);
         anim.SetBool("Moving", moving);
+        anim.SetBool("Backwards", moving && p.forwardSpeed <= -0.1f);
         anim.SetBool("Running", move.running);
         anim.SetBool("TurningLeft", move.turnLeft && !moving);
         anim.SetBool("TurningRight", move.turnRight && !moving);
         anim.SetBool("StaffDrawn", fight.staffDrawn);
         anim.SetBool("Attacking", fight.attacking);
+        anim.SetBool("Strafe", move.strafe);
 
         if (triggeredDash && !move.dashing) triggeredDash = false;
         if (move.dashing && !triggeredDash) {

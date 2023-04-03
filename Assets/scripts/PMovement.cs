@@ -6,10 +6,10 @@ using UnityEngine;
 public class PMovement : MonoBehaviour
 {
     [SerializeField] float forwardSpeed, runSpeed, backSpeed, stoppingFriction = 0.025f, rotationSpeed = 0.5f, cameraAlignSmoothness = 0.2f, stepSpeed, stepTime, strafeSpeed = 4, dashSpeed, dashTime;
-    [HideInInspector] public bool goForward, turnLeft, turnRight, goBack, running, alignToCamera, stepping, dashing;
+    [HideInInspector] public bool goForward, turnLeft, turnRight, goBack, running, alignToCamera, stepping, dashing, strafe, attacking;
     public bool sitting;
 
-    bool alignToEnemy;
+    public bool alignToEnemy;
     float rotation;
     Rigidbody rb;
     Player p;
@@ -45,6 +45,7 @@ public class PMovement : MonoBehaviour
 
     private void Update()
     {
+        attacking = GetComponent<PFighting>().attacking;
         alignToEnemy = CameraState.i.GetLockedEnemy() != null;
         alignToCamera = CameraState.i.mouseControl;
         SetPlayerStats();
@@ -57,7 +58,7 @@ public class PMovement : MonoBehaviour
 
     void Turn()
     {
-        if (stepping || dashing) return;
+        if (stepping || dashing || attacking) return;
 
         if (alignToCamera) {
             AlignToCamera();
@@ -79,8 +80,6 @@ public class PMovement : MonoBehaviour
 
     void AlignToEnemy() {
 
-        
-
         if (goForward) return;
 
         var enemy = CameraState.i.GetLockedEnemy();
@@ -98,8 +97,8 @@ public class PMovement : MonoBehaviour
         transform.forward = Vector3.Lerp(transform.forward, camForward, cameraAlignSmoothness);
 
         turnLeft = turnRight = false;
-        if (rotation < transform.eulerAngles.y) turnLeft = true;
-        else if (rotation > transform.eulerAngles.y) turnRight = true;
+        if (transform.eulerAngles.y - rotation > 0.01f) turnLeft = true;
+        else if (rotation - transform.eulerAngles.y > 0.01f) turnRight = true;
         rotation = transform.eulerAngles.y;
     }
 
@@ -116,19 +115,21 @@ public class PMovement : MonoBehaviour
         else if (goBack) rb.velocity = (transform.forward * backSpeed * -1) + verticalVel;
         else rb.velocity = Vector3.Lerp(rb.velocity, verticalVel, stoppingFriction);
 
-        if (alignToEnemy) Strafe();
+        if (alignToEnemy && !attacking) Strafe();
     }
 
     void Strafe() {
         var verticalVel = rb.velocity;
         verticalVel.x = verticalVel.z = 0;
         if (turnLeft) {
+            strafe = true;
             rb.velocity = (transform.right * -1 * strafeSpeed) + verticalVel;
         }
-        if (turnRight) {
+        else if (turnRight) {
+            strafe = true;
             rb.velocity = (transform.right * strafeSpeed) + verticalVel;
         }
-
+        else strafe = false;
     }
 
     void SetPlayerStats()

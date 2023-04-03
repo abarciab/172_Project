@@ -128,6 +128,7 @@ public class CameraState : MonoBehaviour
     }
 
     public GameObject GetLockedEnemy() {
+        if (current.displayName != StateName.LockOn) return null;
         return current.objFocus;
     }
 

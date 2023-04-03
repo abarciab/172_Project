@@ -15,13 +15,25 @@ public class Player : MonoBehaviour
     [SerializeField] int maxHealth;
     [SerializeField] int Health;
 
+    public enum TESTENUM { hidden, option1, option2}
+    
+    public TESTENUM showEnum;
+
+    public bool SHOW;
+    [ConditionalHide(nameof(SHOW))]
+    public float field1;
+
     private void Update() {
+        for (int i = 0; i < enemies.Count; i++) {
+            if (enemies[i] == null) enemies.RemoveAt(i);
+        }
         if (enemies.Count == 0) {
             CameraState.i.StopLockOn();
             return;
         }
-
-        if (closestEnemy == null) closestEnemy = enemies[0];
+        
+        if (closestEnemy == null && enemies[0] != null) closestEnemy = enemies[0];
+        
         foreach (var e in enemies) {
             if (Vector3.Distance(transform.position, e.transform.position) < Vector3.Distance(transform.position, closestEnemy.transform.position)) closestEnemy = e;
         }
@@ -31,6 +43,7 @@ public class Player : MonoBehaviour
         }
 
         CameraState.i.LockOnEnemy(closestEnemy.gameObject, closestEnemy.centerOffset);
+        GetComponent<PFighting>().DrawWeapon();
     }
 
     private void Start() {

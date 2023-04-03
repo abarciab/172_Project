@@ -15,7 +15,14 @@ public class PFighting : HitReciever
 
     [SerializeField] float waitTime = 1, stafDrawTime = 0.7f;
     float endAttackTime = 0;
-    public int currentAttack = -1;
+    int currentAttack = -1;
+
+    [Header("Damage")]
+    [SerializeField] int attack1Damage = 10;
+    [SerializeField] int attack2Damage = 15, attack3Damage = 30;
+
+    [Header("Dependencies")]
+    [SerializeField] HitBox hitBox;
 
     public void PutAwayStaff()
     {
@@ -24,9 +31,14 @@ public class PFighting : HitReciever
         staffDrawn = false;
     }
 
+    public void DrawWeapon()
+    {
+        StartCoroutine(_DrawWeapon());
+    }
+
     public void PressAttack()
     {
-        if (currentAttack == -1) { StartCoroutine(DrawWeapon()); return; }
+        if (currentAttack == -1) DrawWeapon();
 
         if (currentAttack == 0) DoAttack1();
         else if (currentAttack == 1) DoAttack2();
@@ -39,6 +51,15 @@ public class PFighting : HitReciever
         GetComponent<PMovement>().StepForward();
     }
 
+    public void HitCheckStaff()
+    {
+        var hits = hitBox.EndChecking();
+        if (hits.Count == 0) return;
+
+        foreach (var h in hits) {
+            h.Hit(attack1Damage);
+        }
+    }
     
     void EndAttack() {
         attacking = false;
@@ -67,7 +88,7 @@ public class PFighting : HitReciever
         EndAttack();
     }
 
-    IEnumerator DrawWeapon()
+    IEnumerator _DrawWeapon()
     {
         if (staffDrawn) yield break;
         staffDrawn = true;
@@ -77,11 +98,10 @@ public class PFighting : HitReciever
         currentAttack = 0;
     }
 
-    
-
     void DoAttack1()
     {
         Attack1.Invoke();
+        hitBox.StartChecking();
     }
 
     void DoAttack2()

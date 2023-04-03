@@ -5,7 +5,7 @@ using UnityEngine;
 public class HitBox : MonoBehaviour
 {
     public bool checking;
-    public List<HitReciever> targets = new List<HitReciever>();
+    [HideInInspector] public List<HitReciever> targets = new List<HitReciever>();
     
     public void StartChecking() {
         checking = true;
@@ -19,6 +19,16 @@ public class HitBox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
 
+        if (!checking) return;
+
+        var reciever = other.GetComponent<HitReciever>();
+        if (reciever == null || targets.Contains(reciever)) return;
+
+        targets.Add(reciever);
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
         if (!checking) return;
 
         var reciever = other.GetComponent<HitReciever>();
