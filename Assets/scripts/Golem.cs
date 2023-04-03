@@ -11,11 +11,15 @@ public class Golem : MonoBehaviour
 
     [Header("Attacks")]
     [SerializeField] int attack1Damage;
-    [SerializeField] float attack1resetTime;
+    [SerializeField] float attack1resetTime, attack1StunTime;
     float attack1Cooldown;
+    [SerializeField] int quickAttackDamage;
+    [SerializeField] float quickAttackresetTime, quickAttackStunTime;
+    float quickAttackCooldown;
 
     [Header("HitBox")]
     [SerializeField] HitBox attack1HitBox;
+    [SerializeField] HitBox quickAttackHitBox;
 
     bool stopped;
 
@@ -35,11 +39,13 @@ public class Golem : MonoBehaviour
         SetAnims();
 
         attack1Cooldown -= Time.deltaTime;
+        quickAttackCooldown -= Time.deltaTime;
         float dist = Vector3.Distance(transform.position, target.transform.position);
 
         if (stopped) return;
         if (attack1Cooldown > 0 && dist <= backupRange) {
-            BackUpFromTarget();
+            if (quickAttackCooldown <= 0) DoQuickAttack();
+            else  BackUpFromTarget();
             return;
         }
         if (dist > attackRange) {
@@ -74,9 +80,19 @@ public class Golem : MonoBehaviour
         StartCoroutine(TurnToFace(0.2f, 0.1f));
 
         move.disableRotation();
-        anim.SetTrigger("attack1");
+        anim.SetBool("attack1", true);
         attack1Cooldown = attack1resetTime;
         attack1HitBox.StartChecking();
+        stopped = true;
+    }
+
+    void DoQuickAttack() {
+        StartCoroutine(TurnToFace(0.1f, 0.1f));
+
+        move.disableRotation();
+        anim.SetBool("quickAttack", true);
+        quickAttackCooldown = quickAttackresetTime;
+        quickAttackHitBox.StartChecking();
         stopped = true;
     }
 
@@ -93,12 +109,29 @@ public class Golem : MonoBehaviour
     }
 
     public void HitCheckAttack1() {
-        stopped = false;
+        StartCoroutine(Resume(attack1StunTime, "attack1"));
         var hits = attack1HitBox.EndChecking();
         if (hits.Count == 0) return;
 
         foreach (var h in hits) {
             h.Hit(attack1Damage);
         }
+    }
+
+    public void HitCheckQuickAttack() {
+        StartCoroutine(Resume(quickAttackStunTime, "quickAttack"));
+        var hits = quickAttackHitBox.EndChecking();
+        if (hits.Count == 0) return;
+
+        foreach (var h in hits) {
+            h.Hit(quickAttackDamage);
+        }
+    }
+
+
+    IEnumerator Resume(float stunTime, string parameter) {
+        yield return new WaitForSeconds(stunTime);
+        anim.SetBool(parameter, false);
+        stopped = false;
     }
 }

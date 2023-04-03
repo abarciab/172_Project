@@ -9,6 +9,11 @@ public class HitEventCoord : MonoBehaviour
         if (golem != null) golem.HitCheckAttack1();
     }
 
+    public void GolemQuickAttack() {
+        var golem = GetComponentInParent<Golem>();
+        if (golem != null) golem.HitCheckQuickAttack();
+    }
+
     public void PlayerStaffAttack()
     {
         var player = GetComponentInParent<PFighting>();
