@@ -25,6 +25,6 @@ public class EnemyStats : HitReciever
 
     private void Update()
     {
-        hpBar.value = (float) health / maxHealth;
+        if (hpBar) hpBar.value = (float) health / maxHealth;
     }
 }

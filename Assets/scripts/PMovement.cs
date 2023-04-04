@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Player))]
 public class PMovement : MonoBehaviour
 {
-    [SerializeField] float forwardSpeed, runSpeed, backSpeed, stoppingFriction = 0.025f, rotationSpeed = 0.5f, cameraAlignSmoothness = 0.2f, stepSpeed, stepTime, strafeSpeed = 4, dashSpeed, dashTime, KBsmoothness = 0.5f;
+    [SerializeField] float forwardSpeed, runSpeed, stoppingFriction = 0.025f, rotationSpeed = 0.5f, cameraAlignSmoothness = 0.2f, stepSpeed, stepTime, strafeSpeed = 4, dashSpeed, dashTime, KBsmoothness = 0.5f;
     [HideInInspector] public bool goForward, turnLeft, turnRight, goBack, running, alignToCamera, stepping, dashing, strafe, attacking, pressLeft, pressRight;
     public bool sitting;
 
@@ -126,37 +126,55 @@ public class PMovement : MonoBehaviour
         var verticalVel = rb.velocity;
         verticalVel.x = verticalVel.z = 0;
 
+        Vector3 horizontalDir = !attacking ? GetStrafeDir() : Vector3.zero;
+
         if (knockedBack) rb.velocity = (transform.position - source.transform.position).normalized * KB + verticalVel;
         else if(dashing) rb.velocity = (dashDir * dashSpeed) + verticalVel;
         else if (stepping) rb.velocity = (transform.forward * stepSpeed) + verticalVel;
-        else if (goForward) rb.velocity = (transform.forward * speed) + verticalVel;
-        else if (goBack) rb.velocity = (transform.forward * backSpeed * -1) + verticalVel;
-        else rb.velocity = Vector3.Lerp(rb.velocity, verticalVel, stoppingFriction);
 
-        if ((alignToEnemy && !attacking) || alignToCamera) Strafe();
+        else if (goForward) rb.velocity = (transform.forward + horizontalDir).normalized * speed + verticalVel;
+        else if (goBack) rb.velocity = (transform.forward * -1 + horizontalDir).normalized * speed + verticalVel;
+        else rb.velocity = Vector3.Lerp(rb.velocity, horizontalDir * speed + verticalVel, stoppingFriction);
+
+        if (!alignToEnemy && !attacking) AlignModel();
+    }
+
+    void AlignModel()
+    {
+        Transform model = transform.GetChild(0);
+
+        if (rb.velocity.magnitude <= 0.01f) {
+            model.transform.localRotation = Quaternion.Lerp(model.transform.localRotation, Quaternion.identity, 0.2f);
+            return;
+        }
+        
+        var originalRot = model.transform.localEulerAngles;
+        model.LookAt(transform.position + rb.velocity.normalized);
+        var targetRot = model.transform.localEulerAngles;
+        targetRot.x = originalRot.x;
+        targetRot.z = originalRot.z;
+        model.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(originalRot), Quaternion.Euler(targetRot), 0.2f);
+
+        Debug.DrawRay(transform.position, rb.velocity.normalized, Color.blue);
     }
 
     Vector3 GetDashDir() {
         return goBack ? transform.forward * -1 : (pressRight ? transform.right : (pressLeft ? transform.right * -1 : transform.forward));
     }
 
-    void Strafe() {
-        var verticalVel = rb.velocity;
-        verticalVel.x = verticalVel.z = 0;
-        if (pressLeft) {
-            strafe = true;
-            rb.velocity = (transform.right * -1 * strafeSpeed) + verticalVel;
-        }
-        else if (pressRight) {
-            strafe = true;
-            rb.velocity = (transform.right * strafeSpeed) + verticalVel;
-        }
+    Vector3 GetStrafeDir() {
+        var strafeDir = Vector3.zero;
+        strafe = alignToEnemy && !attacking;
+        if (pressLeft) strafeDir = transform.right * -1;
+        else if (pressRight) strafeDir = transform.right;
         else strafe = false;
+
+        return strafeDir;
     }
 
     void SetPlayerStats()
     {
         p.speed3D = rb.velocity;
-        p.forwardSpeed = Vector3.Dot(rb.velocity, transform.forward);
+        p.forwardSpeed = Vector3.Dot(rb.velocity, transform.GetChild(0).forward);
     }
 }

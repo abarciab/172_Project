@@ -34,8 +34,8 @@ public class PControls : MonoBehaviour
         move.pressLeft = Input.GetKey(left);
         move.pressRight = Input.GetKey(right);
 
-        if (Input.GetKeyDown(run)) move.running = true;
-        if (!Input.GetKey(forward) && !Input.GetKey(left) && !Input.GetKey(right)) move.running = false;
+        if (Input.GetKeyDown(run)) move.running = !move.running;
+        if (!Input.GetKey(forward) && !Input.GetKey(left) && !Input.GetKey(right) && !Input.GetKey(backward)) move.running = false;
         if (Input.GetKeyDown(run)) fight.PutAwayStaff();
 
         if (move.alignToCamera) return;
