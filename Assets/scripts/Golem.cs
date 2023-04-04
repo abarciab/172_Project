@@ -6,15 +6,15 @@ using UnityEngine;
 public class Golem : MonoBehaviour
 {
     [SerializeField] Animator anim;
-    [SerializeField] float attackRange = 1, backupRange;
+    [SerializeField] float attackRange = 1;
     [SerializeField] GameObject target;
 
     [Header("Attacks")]
     [SerializeField] int attack1Damage;
-    [SerializeField] float attack1resetTime, attack1StunTime;
+    [SerializeField] float attack1resetTime, attack1StunTime, attack1KB;
     float attack1Cooldown;
     [SerializeField] int quickAttackDamage;
-    [SerializeField] float quickAttackresetTime, quickAttackStunTime;
+    [SerializeField] float quickAttackresetTime, quickAttackStunTime, quickAttackKB;
     float quickAttackCooldown;
 
     [Header("HitBox")]
@@ -22,9 +22,15 @@ public class Golem : MonoBehaviour
     [SerializeField] HitBox quickAttackHitBox;
 
     bool stopped;
-
     EnemyMovement move;
     Vector3 oldPosition;
+    HitBox activeHitBox;
+
+    public void StartChecking()
+    {
+        if (activeHitBox != null) activeHitBox.StartChecking();
+        activeHitBox = null;
+    }
 
     private void Start() {
         oldPosition = transform.position;
@@ -40,21 +46,14 @@ public class Golem : MonoBehaviour
 
         attack1Cooldown -= Time.deltaTime;
         quickAttackCooldown -= Time.deltaTime;
+        if (target == null || stopped) { move.gotoTarget = false; return; }
+
         float dist = Vector3.Distance(transform.position, target.transform.position);
 
-        if (stopped) return;
-        if (attack1Cooldown > 0 && dist <= backupRange) {
-            if (quickAttackCooldown <= 0) DoQuickAttack();
-            else  BackUpFromTarget();
-            return;
-        }
-        if (dist > attackRange) {
-            MoveToTarget();
-            return;
-        }
-        else move.gotoTarget = false;
-
-        if (attack1Cooldown <= 0) DoAttack1();
+        if (dist > attackRange) MoveToTarget();
+        else if (attack1Cooldown <= 0) DoAttack1();
+        else if (quickAttackCooldown <= 0) DoQuickAttack(); 
+        else BackUpFromTarget();
     }
 
     void SetAnims() {
@@ -82,7 +81,7 @@ public class Golem : MonoBehaviour
         move.disableRotation();
         anim.SetBool("attack1", true);
         attack1Cooldown = attack1resetTime;
-        attack1HitBox.StartChecking();
+        activeHitBox = attack1HitBox;
         stopped = true;
     }
 
@@ -92,7 +91,7 @@ public class Golem : MonoBehaviour
         move.disableRotation();
         anim.SetBool("quickAttack", true);
         quickAttackCooldown = quickAttackresetTime;
-        quickAttackHitBox.StartChecking();
+        activeHitBox = quickAttackHitBox;
         stopped = true;
     }
 
@@ -114,7 +113,7 @@ public class Golem : MonoBehaviour
         if (hits.Count == 0) return;
 
         foreach (var h in hits) {
-            h.Hit(attack1Damage);
+            h.Hit(attack1Damage, gameObject, attack1KB);
         }
     }
 
@@ -124,7 +123,7 @@ public class Golem : MonoBehaviour
         if (hits.Count == 0) return;
 
         foreach (var h in hits) {
-            h.Hit(quickAttackDamage);
+            h.Hit(quickAttackDamage, gameObject, quickAttackKB);
         }
     }
 

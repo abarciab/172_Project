@@ -18,7 +18,7 @@ public class CameraController : MonoBehaviour
 
     [Header("Transition parameters")]
     [SerializeField] float blendSmoothness;
-    [SerializeField] float fixedToMouseTransitionTime = 1;
+    [SerializeField] float fixedToMouseTransitionTime = 1, parentMoveSmoothness = 0.5f;
     [HideInInspector] public float mouseTransitionTimeLeft;
 
     [Header("Dependencies")]
@@ -114,25 +114,26 @@ public class CameraController : MonoBehaviour
 
     void SetCamPosition(CameraState.State s)
     {
-        //if (s.parentLookTarget == CameraState.ParentLookTarget.Mouse) return;
-
         var pos = cam.transform.localPosition;
         pos.x = Mathf.Abs(s.limitsX.x - s.limitsX.y) * (1 - s.playerX) + s.limitsX.x;
         pos.y = Mathf.Abs(s.limitsY.x - s.limitsY.y) * s.playerY + s.limitsY.x;
         pos.z = Mathf.Abs(s.zoomLimits.x - s.zoomLimits.y) * s.zoom + s.zoomLimits.x;
 
-        cam.transform.localPosition = pos;
-        camTarget.transform.localPosition = pos + s.camTargetOffset;
+        cam.transform.localPosition = Vector3.Lerp(cam.transform.localPosition, pos, blendSmoothness);
+        camTarget.transform.localPosition = Vector3.Lerp(camTarget.transform.localPosition, pos + s.camTargetOffset, blendSmoothness);
     }
     void SetCamLookDir(CameraState.State s)
     {
+        var _rot = cam.transform.localEulerAngles;
         if (s.lookAtPlayer) cam.transform.LookAt(p.transform);
         else cam.transform.LookAt(camTarget.transform);
+        var targetRot = cam.transform.localEulerAngles;
+        cam.transform.localEulerAngles = Vector3.Lerp(_rot, targetRot, blendSmoothness);
     }
 
     void SetFollow(CameraState.State s)
     {
-        if (s.followPlayer) transform.position = p.transform.position + s.camParentPlayerOffset;
+        if (s.followPlayer) transform.position = Vector3.Lerp(transform.position, p.transform.position + s.camParentPlayerOffset, parentMoveSmoothness);
     }
 
     void SetParentLookDir(CameraState.State s)

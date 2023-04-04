@@ -5,14 +5,26 @@ using UnityEngine;
 [RequireComponent(typeof(Player))]
 public class PMovement : MonoBehaviour
 {
-    [SerializeField] float forwardSpeed, runSpeed, backSpeed, stoppingFriction = 0.025f, rotationSpeed = 0.5f, cameraAlignSmoothness = 0.2f, stepSpeed, stepTime, strafeSpeed = 4, dashSpeed, dashTime;
+    [SerializeField] float forwardSpeed, runSpeed, backSpeed, stoppingFriction = 0.025f, rotationSpeed = 0.5f, cameraAlignSmoothness = 0.2f, stepSpeed, stepTime, strafeSpeed = 4, dashSpeed, dashTime, KBsmoothness = 0.5f;
     [HideInInspector] public bool goForward, turnLeft, turnRight, goBack, running, alignToCamera, stepping, dashing, strafe, attacking;
     public bool sitting;
 
+    [Header("TEST")]
     public bool alignToEnemy;
-    float rotation;
+    public float rotation, stunned, KB;
     Rigidbody rb;
     Player p;
+
+    bool knockedBack;
+    GameObject source;
+
+    public void KnockBack(GameObject _source, float _KB)
+    {
+
+        source = _source;
+        KB = _KB;
+        knockedBack = true;
+    }
 
     public void StepForward()
     {
@@ -54,6 +66,9 @@ public class PMovement : MonoBehaviour
         if (sitting) return;
         Turn();
         Move();
+
+        if (KB > 0.01f) KB = Mathf.Lerp(KB, 0, KBsmoothness);
+        else knockedBack = false;
     }
 
     void Turn()
@@ -109,7 +124,8 @@ public class PMovement : MonoBehaviour
         var verticalVel = rb.velocity;
         verticalVel.x = verticalVel.z = 0;
 
-        if (dashing) rb.velocity = (transform.forward * dashSpeed) + verticalVel;
+        if (knockedBack) rb.velocity = (transform.position - source.transform.position).normalized * KB + verticalVel;
+        else if(dashing) rb.velocity = (transform.forward * dashSpeed) + verticalVel;
         else if (stepping) rb.velocity = (transform.forward * stepSpeed) + verticalVel;
         else if (goForward) rb.velocity = (transform.forward * speed) + verticalVel;
         else if (goBack) rb.velocity = (transform.forward * backSpeed * -1) + verticalVel;

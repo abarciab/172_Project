@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 6715.4097, g: 6756.6655, b: 6739.8584, a: 1}
+  m_IndirectSpecularColor: {r: 6736.4697, g: 6809.132, b: 6878.5117, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -369,6 +369,8 @@ MonoBehaviour:
   commandPrompt: {fileID: 307159205}
   subtitle: {fileID: 252761579}
   HpBar: {fileID: 151174010}
+  redFlashTime: 0.08
+  red: {fileID: 151832574}
 --- !u!1001 &99021784
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -736,6 +738,82 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &151832574
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 151832577}
+  - component: {fileID: 151832576}
+  - component: {fileID: 151832575}
+  m_Layer: 5
+  m_Name: damageIndicator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &151832575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 151832574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.6415094, g: 0, b: 0, a: 0.101960786}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &151832576
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 151832574}
+  m_CullTransparentMesh: 1
+--- !u!224 &151832577
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 151832574}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2091418115}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &154595186
 GameObject:
   m_ObjectHideFlags: 0
@@ -2201,8 +2279,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 352234588}
-  m_LocalRotation: {x: -0.00021226352, y: 0.9987894, z: 0.048998818, w: 0.0043267687}
-  m_LocalPosition: {x: -70.39, y: -25, z: 681.89}
+  m_LocalRotation: {x: -0.000108842985, y: 0.9987028, z: 0.050873432, w: 0.0021367106}
+  m_LocalPosition: {x: -67.1, y: -24.919, z: 665.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3727,6 +3805,17 @@ MonoBehaviour:
     clips:
     - name: '0: hit sound'
       clip: {fileID: 8300000, guid: 5bd0abe935cf33343b168d7f01b6721f, type: 3}
+      localVolume: 0
+      localPitch: 0
+      looping: 0
+    parentVolume: 1
+    parentPitch: 1
+  - name: '2: player grunt'
+    ID: 2
+    displayName: player grunt
+    clips:
+    - name: '0: grunt1'
+      clip: {fileID: 8300000, guid: ffe4c09ae2362494eb45ab9837296558, type: 3}
       localVolume: 0
       localPitch: 0
       looping: 0
@@ -6948,12 +7037,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 889095904}
   attackRange: 1.5
-  backupRange: 1
   target: {fileID: 2147413889}
   attack1Damage: 5
   attack1resetTime: 3.5
+  attack1StunTime: 2
+  attack1KB: 9
   quickAttackDamage: 3
   quickAttackresetTime: 2
+  quickAttackStunTime: 0.2
+  quickAttackKB: 18
   attack1HitBox: {fileID: 1281148497}
   quickAttackHitBox: {fileID: 1340423388}
 --- !u!114 &963091992
@@ -6972,8 +7064,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _damage: 0
+  source: {fileID: 0}
+  KB: 0
   health: 100
-  maxHealth: 100
+  maxHealth: 1000
   hpBar: {fileID: 1700222134}
 --- !u!1001 &967087892
 PrefabInstance:
@@ -8713,15 +8807,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1250323203}
-  m_LocalRotation: {x: -0, y: -0.2127282, z: -0, w: -0.9771114}
-  m_LocalPosition: {x: -70.39, y: -25, z: 681.89}
+  m_LocalRotation: {x: -0, y: -0.021316683, z: -0, w: 0.9997728}
+  m_LocalPosition: {x: -67.1, y: -24.919, z: 665.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1850441304}
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: -335.435, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -722.443, z: 0}
 --- !u!114 &1250323205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8759,6 +8853,7 @@ MonoBehaviour:
   strafeSpeed: 3
   dashSpeed: 6
   dashTime: 0.6
+  KBsmoothness: 0.5
   goForward: 0
   turnLeft: 0
   turnRight: 0
@@ -8771,6 +8866,9 @@ MonoBehaviour:
   attacking: 0
   sitting: 1
   alignToEnemy: 0
+  rotation: 0
+  stunned: 0
+  KB: 0
 --- !u!114 &1250323207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8860,6 +8958,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _damage: 0
+  source: {fileID: 0}
+  KB: 0
   swooshSource: {fileID: 1250323212}
   Attack1:
     m_PersistentCalls:
@@ -11579,7 +11679,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1823688464}
-  m_LocalRotation: {x: 0.0000003986135, y: 0.00000054528937, z: 0.00000005365291,
+  m_LocalRotation: {x: 0.00000057742267, y: -0.0000001792796, z: -0.000000018284481,
     w: 1}
   m_LocalPosition: {x: -0.16799998, y: 1.012, z: -1.844}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -13588,6 +13688,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 151174009}
+  - {fileID: 151832577}
   m_Father: {fileID: 58867663}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -14007,6 +14108,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _damage: 0
+  source: {fileID: 0}
+  KB: 0
 --- !u!4 &543450652251350641 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7793030441448404030, guid: 2cfe0796e45b9024ea815c787c9a75f8,

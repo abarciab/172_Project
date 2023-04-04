@@ -15,7 +15,7 @@ public class TEST : MonoBehaviour
 
         if (testHit) {
             testHit = false;
-            reciever.Hit(10);
+            //reciever.Hit(10);
         }
     }
 }

@@ -54,6 +54,12 @@ public class Player : MonoBehaviour
         Health = Mathf.Min(Health + delta, maxHealth);
         if (Health <= 0) Die();
         GlobalUI.i.HpBar.value = (float)Health / maxHealth;
+
+        if (delta > 0) return;
+        
+        GlobalUI.i.FlashRed();
+        AudioManager.instance.PlaySound(2, transform.GetChild(0).gameObject);
+        GetComponent<PFighting>().Inturrupt(1);
     }
 
     void Die() {

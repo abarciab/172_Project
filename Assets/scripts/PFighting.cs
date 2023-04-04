@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Rendering.Universal;
 
 public class PFighting : HitReciever
 {
@@ -14,8 +16,7 @@ public class PFighting : HitReciever
     public bool staffDrawn;
 
     [SerializeField] float waitTime = 1, stafDrawTime = 0.7f;
-    float endAttackTime = 0;
-    int currentAttack = -1;
+    
 
     [Header("Damage")]
     [SerializeField] int attack1Damage = 10;
@@ -23,6 +24,18 @@ public class PFighting : HitReciever
 
     [Header("Dependencies")]
     [SerializeField] HitBox hitBox;
+
+    float endAttackTime = 0;
+    int currentAttack = -1;
+    float stunTime;
+    HitBox activeHitBox;
+
+    public void Inturrupt(float _stunTime)
+    {
+        stunTime = _stunTime;
+        activeHitBox = null;
+        EndAttack();
+    }
 
     public void PutAwayStaff()
     {
@@ -38,6 +51,8 @@ public class PFighting : HitReciever
 
     public void PressAttack()
     {
+        if (stunTime > 0) return;
+
         if (currentAttack == -1) DrawWeapon();
 
         if (currentAttack == 0) DoAttack1();
@@ -45,6 +60,7 @@ public class PFighting : HitReciever
         else if (currentAttack == 2) DoAttack3();
         else return;
 
+        activeHitBox = hitBox;
         attacking = true;
         currentAttack += 1;
         endAttackTime = waitTime;
@@ -53,11 +69,14 @@ public class PFighting : HitReciever
 
     public void HitCheckStaff()
     {
-        var hits = hitBox.EndChecking();
+        if (activeHitBox == null) return;
+        var hits = activeHitBox.EndChecking();
+        activeHitBox = null;
+
         if (hits.Count == 0) return;
 
         foreach (var h in hits) {
-            h.Hit(attack1Damage);
+            h.Hit(attack1Damage, gameObject, 0);
         }
     }
     
@@ -77,10 +96,12 @@ public class PFighting : HitReciever
     void _Hit() {
         int damage = _damage;
         Player.i.ChangeHealth(-damage);
+        GetComponent<PMovement>().KnockBack(source, KB);
     }
 
     private void Update()
     {
+        stunTime -= Time.deltaTime;
         if (currentAttack <= 0) return;
         endAttackTime -= Time.deltaTime;
         if (endAttackTime > 0) return;
