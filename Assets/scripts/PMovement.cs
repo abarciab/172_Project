@@ -6,7 +6,7 @@ using UnityEngine;
 public class PMovement : MonoBehaviour
 {
     [SerializeField] float forwardSpeed, runSpeed, backSpeed, stoppingFriction = 0.025f, rotationSpeed = 0.5f, cameraAlignSmoothness = 0.2f, stepSpeed, stepTime, strafeSpeed = 4, dashSpeed, dashTime, KBsmoothness = 0.5f;
-    [HideInInspector] public bool goForward, turnLeft, turnRight, goBack, running, alignToCamera, stepping, dashing, strafe, attacking;
+    [HideInInspector] public bool goForward, turnLeft, turnRight, goBack, running, alignToCamera, stepping, dashing, strafe, attacking, pressLeft, pressRight;
     public bool sitting;
 
     [Header("TEST")]
@@ -14,6 +14,7 @@ public class PMovement : MonoBehaviour
     public float rotation, stunned, KB;
     Rigidbody rb;
     Player p;
+    Vector3 dashDir;
 
     bool knockedBack;
     GameObject source;
@@ -33,6 +34,7 @@ public class PMovement : MonoBehaviour
     }
 
     public void Dash() {
+        dashDir = GetDashDir();
         dashing = true;
         StartCoroutine(StopDash());
     }
@@ -125,23 +127,27 @@ public class PMovement : MonoBehaviour
         verticalVel.x = verticalVel.z = 0;
 
         if (knockedBack) rb.velocity = (transform.position - source.transform.position).normalized * KB + verticalVel;
-        else if(dashing) rb.velocity = (transform.forward * dashSpeed) + verticalVel;
+        else if(dashing) rb.velocity = (dashDir * dashSpeed) + verticalVel;
         else if (stepping) rb.velocity = (transform.forward * stepSpeed) + verticalVel;
         else if (goForward) rb.velocity = (transform.forward * speed) + verticalVel;
         else if (goBack) rb.velocity = (transform.forward * backSpeed * -1) + verticalVel;
         else rb.velocity = Vector3.Lerp(rb.velocity, verticalVel, stoppingFriction);
 
-        if (alignToEnemy && !attacking) Strafe();
+        if ((alignToEnemy && !attacking) || alignToCamera) Strafe();
+    }
+
+    Vector3 GetDashDir() {
+        return goBack ? transform.forward * -1 : (pressRight ? transform.right : (pressLeft ? transform.right * -1 : transform.forward));
     }
 
     void Strafe() {
         var verticalVel = rb.velocity;
         verticalVel.x = verticalVel.z = 0;
-        if (turnLeft) {
+        if (pressLeft) {
             strafe = true;
             rb.velocity = (transform.right * -1 * strafeSpeed) + verticalVel;
         }
-        else if (turnRight) {
+        else if (pressRight) {
             strafe = true;
             rb.velocity = (transform.right * strafeSpeed) + verticalVel;
         }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 6736.4697, g: 6809.132, b: 6878.5117, a: 1}
+  m_IndirectSpecularColor: {r: 6752.946, g: 6825.909, b: 6895.885, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2267,6 +2267,7 @@ MonoBehaviour:
   manualStateNum: -1
   blendSmoothness: 0.025
   fixedToMouseTransitionTime: 1
+  parentMoveSmoothness: 0.5
   mouseTransitionTimeLeft: -1
   p: {fileID: 1250323207}
   cam: {fileID: 1823688464}
@@ -6954,7 +6955,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!136 &963091987
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -8864,6 +8865,8 @@ MonoBehaviour:
   dashing: 0
   strafe: 0
   attacking: 0
+  pressLeft: 0
+  pressRight: 0
   sitting: 1
   alignToEnemy: 0
   rotation: 0
@@ -10318,7 +10321,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.872, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

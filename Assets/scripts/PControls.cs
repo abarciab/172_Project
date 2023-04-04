@@ -31,6 +31,8 @@ public class PControls : MonoBehaviour
 
         move.goForward = Input.GetKey(forward);
         move.goBack = Input.GetKey(backward);
+        move.pressLeft = Input.GetKey(left);
+        move.pressRight = Input.GetKey(right);
 
         if (Input.GetKeyDown(run)) move.running = true;
         if (!Input.GetKey(forward) && !Input.GetKey(left) && !Input.GetKey(right)) move.running = false;
