@@ -6,7 +6,9 @@ using UnityEngine;
 public class CameraZone : MonoBehaviour {
     [Header("On enter")]
     [SerializeField] CameraState.StateName enterState;
-    [SerializeField] List<GameObject> enableOnEnter; 
+    [SerializeField] List<GameObject> enableOnEnter;
+    [SerializeField] bool stopAndPose;
+    [SerializeField] Transform poseTarget;
 
     [Header("On exit")]
     [SerializeField] bool switchOnExit;
@@ -22,6 +24,7 @@ public class CameraZone : MonoBehaviour {
         if (other.GetComponent<Player>() != null) {
             if (enterState != CameraState.StateName.None) CameraState.i.SwitchToState(enterState);
             foreach (var obj in enableOnEnter) if (obj != null && !obj.activeInHierarchy) obj.SetActive(true);
+            if (stopAndPose) Player.i.GetComponent<PMovement>().SlowDownAndPose(poseTarget);
         }
     }
 

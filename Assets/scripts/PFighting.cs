@@ -21,7 +21,7 @@ public class PFighting : HitReciever
     [Header("Damage")]
     [SerializeField] int attack1Damage = 10;
     [SerializeField] int attack2Damage = 15, attack3Damage = 30;
-    [SerializeField] float KB = 20;
+    [SerializeField] float _KB = 20;
 
     [Header("Dependencies")]
     [SerializeField] HitBox hitBox;
@@ -77,7 +77,7 @@ public class PFighting : HitReciever
         if (hits.Count == 0) return;
 
         foreach (var h in hits) {
-            h.Hit(attack1Damage, gameObject, KB);
+            h.Hit(attack1Damage, gameObject, _KB);
         }
     }
     
@@ -97,7 +97,7 @@ public class PFighting : HitReciever
     void _Hit() {
         int damage = _damage;
         Player.i.ChangeHealth(-damage);
-        GetComponent<PMovement>().KnockBack(source, KB);
+        GetComponent<PMovement>().KnockBack(source, _KB);
     }
 
     private void Update()

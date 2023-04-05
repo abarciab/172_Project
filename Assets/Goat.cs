@@ -24,20 +24,22 @@ public class Goat : MonoBehaviour
 
     private void Update()
     {
-        anim.SetBool("moving", (Vector3.Distance(transform.position, oldPosition) > 0.001f));
-        oldPosition = transform.position;
+        waitTime -= Time.deltaTime;
+        if (waitTime > 0) return;
+
+        
         if (GetComponent<EnemyStats>().health == 0) {
             anim.SetTrigger("die");
             move.gotoTarget = false;
             return;
         }
-        
-        waitTime -= Time.deltaTime;
-        if (waitTime > 0) return;
+
+        anim.SetBool("moving", (Vector2.Distance(transform.position, oldPosition) > 0.001f));
+        oldPosition = transform.position;
 
         if (target == null) target = GetNewTarget();
         if (target == null) return;
-        var dist = Vector3.Distance(transform.position, target.position);
+        var dist = Vector2.Distance(transform.position, target.position);
 
         if (dist > 1f) {
             move.gotoTarget = true;

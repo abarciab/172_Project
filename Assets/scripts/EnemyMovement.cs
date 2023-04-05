@@ -31,20 +31,20 @@ public class EnemyMovement : MonoBehaviour
         else agent.isStopped = true;
     }
 
-    public void KnockBack(GameObject source, float KB)
+    public void KnockBack(GameObject source, float _KB)
     {
-        StartCoroutine(_KnockBack(source, KB));
+        StartCoroutine(_KnockBack(source, _KB));
     }
 
-    IEnumerator _KnockBack(GameObject source, float KB)
+    IEnumerator _KnockBack(GameObject source, float _KB)
     {
         agent.enabled = false;
-        while (KB > 0.01f) {
+        while (_KB > 0.01f) {
             var dir = (source.transform.position - transform.position).normalized;
             dir.y = 0;
 
-            transform.position += dir * KB;
-            KB *= KBDecay;
+            transform.position += dir * _KB;
+            _KB *= KBDecay;
             yield return new WaitForEndOfFrame();
         }
         agent.enabled = true;

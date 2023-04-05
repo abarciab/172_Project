@@ -30,6 +30,8 @@ public class PAnimator : MonoBehaviour
     {
         bool moving = Mathf.Abs(p.forwardSpeed) > minWalkSpeed;
 
+        if (move.posing) anim.SetBool("HandsOnHips", move.posing);
+
         anim.SetBool("Hurt", move.knockedBack);
         anim.SetBool("Sitting", move.sitting);
         anim.SetBool("Moving", moving);
@@ -37,7 +39,7 @@ public class PAnimator : MonoBehaviour
         anim.SetBool("Running", move.running);
         anim.SetBool("TurningLeft", move.turnLeft && !moving);
         anim.SetBool("TurningRight", move.turnRight && !moving);
-        anim.SetBool("StaffDrawn", fight.staffDrawn);
+        anim.SetBool("StaffDrawn", fight.staffDrawn && !move.posing);
         anim.SetBool("Attacking", fight.attacking);
         anim.SetBool("Strafe", move.strafe);
 

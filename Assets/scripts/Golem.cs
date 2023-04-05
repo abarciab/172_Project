@@ -98,7 +98,7 @@ public class Golem : MonoBehaviour
 
     void SlamAttack()
     {
-        print("I WANT TO SLAM");
+        //print("I WANT TO SLAM");
     }
 
     void Attack() {

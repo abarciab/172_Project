@@ -6,7 +6,7 @@ using UnityEngine;
 public class PMovement : MonoBehaviour
 {
     [SerializeField] float forwardSpeed, runSpeed, stoppingFriction = 0.025f, rotationSpeed = 0.5f, cameraAlignSmoothness = 0.2f, stepSpeed, stepTime, strafeSpeed = 4, dashSpeed, dashTime, KBsmoothness = 0.5f;
-    [HideInInspector] public bool goForward, turnLeft, turnRight, goBack, running, alignToCamera, stepping, dashing, strafe, attacking, pressLeft, pressRight, knockedBack;
+    [HideInInspector] public bool goForward, turnLeft, turnRight, goBack, running, alignToCamera, stepping, dashing, strafe, attacking, pressLeft, pressRight, knockedBack, posing;
     public bool sitting;
 
     [Header("TEST")]
@@ -15,12 +15,12 @@ public class PMovement : MonoBehaviour
     Rigidbody rb;
     Player p;
     Vector3 dashDir;
+    Transform poseLookTarget;
 
     GameObject source;
 
     public void KnockBack(GameObject _source, float _KB)
     {
-
         source = _source;
         KB = _KB;
         knockedBack = true;
@@ -36,6 +36,11 @@ public class PMovement : MonoBehaviour
         dashDir = GetDashDir();
         dashing = true;
         StartCoroutine(StopDash());
+    }
+
+    public void SlowDownAndPose(Transform lookTarget = null) {
+        posing = true;
+        if (lookTarget) poseLookTarget = lookTarget;
     }
 
     IEnumerator StopDash() {
@@ -76,6 +81,17 @@ public class PMovement : MonoBehaviour
     void Turn()
     {
         if (stepping || dashing || attacking) return;
+
+        if (posing) {
+            if (poseLookTarget == null) return;
+
+            transform.LookAt(poseLookTarget);
+            var orig = transform.localEulerAngles;
+            var rot_ = transform.localEulerAngles;
+            rot_.x = rot_.z = 0;
+            transform.localRotation = Quaternion.Lerp(Quaternion.Euler(orig), Quaternion.Euler(rot_), 0.025f);
+            return;
+        }
 
         if (alignToCamera) {
             AlignToCamera();
@@ -136,8 +152,9 @@ public class PMovement : MonoBehaviour
             KBdir.y = 0;
         }
 
-        if (knockedBack) rb.velocity = KBdir * KB + verticalVel;
-        else if(dashing) rb.velocity = (dashDir * dashSpeed) + verticalVel;
+        if (posing) rb.velocity = Vector3.Lerp(rb.velocity, Vector3.zero, 0.025f);
+        else if (knockedBack) rb.velocity = KBdir * KB + verticalVel;
+        else if (dashing) rb.velocity = (dashDir * dashSpeed) + verticalVel;
         else if (stepping) rb.velocity = (transform.forward * stepSpeed) + verticalVel;
 
         else if (goForward) rb.velocity = (transform.forward + horizontalDir).normalized * speed + verticalVel;
@@ -177,6 +194,8 @@ public class PMovement : MonoBehaviour
     Vector3 GetStrafeDir() {
         var strafeDir = Vector3.zero;
         strafe = alignToEnemy && !attacking;
+        if (!alignToCamera && !alignToEnemy) return strafeDir;
+
         if (pressLeft) strafeDir = transform.right * -1;
         else if (pressRight) strafeDir = transform.right;
         else strafe = false;
