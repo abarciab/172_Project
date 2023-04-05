@@ -7,6 +7,7 @@ public class Goat : MonoBehaviour
     EnemyMovement move;
     [SerializeField] Animator anim;
     Vector3 oldPosition;
+    [SerializeField] bool agro;
 
     private void Start()
     {
@@ -20,6 +21,6 @@ public class Goat : MonoBehaviour
         oldPosition = transform.position;
 
         move.target = Player.i.transform.position;
-        move.gotoTarget = true;
+        move.gotoTarget = agro;
     }
 }
