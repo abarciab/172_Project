@@ -30,6 +30,7 @@ public class PAnimator : MonoBehaviour
     {
         bool moving = Mathf.Abs(p.forwardSpeed) > minWalkSpeed;
 
+        anim.SetBool("Hurt", move.knockedBack);
         anim.SetBool("Sitting", move.sitting);
         anim.SetBool("Moving", moving);
         anim.SetBool("Backwards", moving && p.forwardSpeed <= -0.1f);

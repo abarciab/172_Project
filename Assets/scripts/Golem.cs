@@ -6,36 +6,48 @@ using UnityEngine;
 public class Golem : MonoBehaviour
 {
     [SerializeField] Animator anim;
-    [SerializeField] float attackRange = 1;
+    [SerializeField] float jumpBackSpeed;
     [SerializeField] GameObject target;
 
-    [Header("Attacks")]
-    [SerializeField] int attack1Damage;
-    [SerializeField] float attack1resetTime, attack1StunTime, attack1KB;
+    [Header("Attack1")]
+    [SerializeField] int attack1Damage, attack2Damage;
+    [SerializeField] float attack1resetTime, attack1StunTime, attack1KB, attack1Range;
     float attack1Cooldown;
-    [SerializeField] int quickAttackDamage;
-    [SerializeField] float quickAttackresetTime, quickAttackStunTime, quickAttackKB;
-    float quickAttackCooldown;
+
+    [Header("slamAttack")]
+    [SerializeField] int slamAttackDamage;
+    [SerializeField] float slamRange, slamResetTime;
+    float slamCooldown;
+
+    [Header("Kick")]
+    [SerializeField] int kickDamage;
+    [SerializeField] float kickResetTime, kickStunTime, kickKB, kickRange;
+    float kickCooldown;
 
     [Header("HitBox")]
     [SerializeField] HitBox attack1HitBox;
-    [SerializeField] HitBox quickAttackHitBox;
+    [SerializeField] HitBox attack2HitBox, kickHitBox;
 
-    bool stopped;
+    [SerializeField, Space()] bool debug;
+
+    public bool stopped;
     EnemyMovement move;
     Vector3 oldPosition;
     HitBox activeHitBox;
+    bool attacking;
 
     public void StartChecking()
     {
         if (activeHitBox != null) activeHitBox.StartChecking();
         activeHitBox = null;
+        attacking = true;
     }
 
     private void Start() {
         oldPosition = transform.position;
         move = GetComponent<EnemyMovement>();
         attack1Cooldown = 0;
+        GetComponent<EnemyStats>().OnHit.AddListener(JumpBack);
     }
 
     private void Update() {
@@ -45,15 +57,20 @@ public class Golem : MonoBehaviour
         SetAnims();
 
         attack1Cooldown -= Time.deltaTime;
-        quickAttackCooldown -= Time.deltaTime;
+        kickCooldown -= Time.deltaTime;
+        slamCooldown -= Time.deltaTime;
         if (target == null || stopped) { move.gotoTarget = false; return; }
 
         float dist = Vector3.Distance(transform.position, target.transform.position);
 
-        if (dist > attackRange) MoveToTarget();
-        else if (attack1Cooldown <= 0) DoAttack1();
-        else if (quickAttackCooldown <= 0) DoQuickAttack(); 
-        else BackUpFromTarget();
+        if (dist < kickRange) {
+            if (kickCooldown <= 0) Kick();
+            else JumpBack();
+        }
+        else if (dist < attack1Range && attack1Cooldown <= 0) Attack();
+        else if (dist > attack1Range && dist < slamRange && slamCooldown <= 0) SlamAttack();
+        
+        if (dist > slamRange || (dist > attack1Range && slamCooldown > 0) || (dist > kickRange && attack1Cooldown > 0)) MoveToTarget();
     }
 
     void SetAnims() {
@@ -62,36 +79,55 @@ public class Golem : MonoBehaviour
     }    
 
     void MoveToTarget() {
+        move.NormalSpeed();
         move.EnableRotation();
         move.target = target.transform.position;
         move.gotoTarget = true;
     }
 
-    void BackUpFromTarget()
+    void JumpBack()
     {
+        if (attacking || stopped) return;
+
         move.disableRotation();
         var dir = transform.forward * -5 + transform.position;
+        move.ChangeSpeed(jumpBackSpeed);
         move.target = dir;
         move.gotoTarget = true;
     }
 
-    void DoAttack1() {
+    void SlamAttack()
+    {
+        print("I WANT TO SLAM");
+    }
+
+    void Attack() {
         StartCoroutine(TurnToFace(0.2f, 0.1f));
 
         move.disableRotation();
         anim.SetBool("attack1", true);
         attack1Cooldown = attack1resetTime;
+        slamCooldown = slamResetTime;
         activeHitBox = attack1HitBox;
         stopped = true;
     }
 
-    void DoQuickAttack() {
+    void Attack2()
+    {
+        StartCoroutine(TurnToFace(0.2f, 0.1f));
+
+        move.disableRotation();
+        activeHitBox = attack2HitBox;
+        stopped = true;
+    }
+
+    void Kick() {
         StartCoroutine(TurnToFace(0.1f, 0.1f));
 
         move.disableRotation();
-        anim.SetBool("quickAttack", true);
-        quickAttackCooldown = quickAttackresetTime;
-        activeHitBox = quickAttackHitBox;
+        anim.SetBool("kick", true);
+        kickCooldown = kickResetTime;
+        activeHitBox = kickHitBox;
         stopped = true;
     }
 
@@ -108,8 +144,21 @@ public class Golem : MonoBehaviour
     }
 
     public void HitCheckAttack1() {
-        StartCoroutine(Resume(attack1StunTime, "attack1"));
         var hits = attack1HitBox.EndChecking();
+
+        Attack2();
+
+        if (hits.Count == 0) return;
+
+        foreach (var h in hits) {
+            h.Hit(attack1Damage, gameObject, attack1KB);
+        }
+    }
+    public void HitCheckAttack2()
+    {
+        attacking = false;
+        StartCoroutine(Resume(attack1StunTime, "attack1"));
+        var hits = attack2HitBox.EndChecking();
         if (hits.Count == 0) return;
 
         foreach (var h in hits) {
@@ -117,14 +166,16 @@ public class Golem : MonoBehaviour
         }
     }
 
-    public void HitCheckQuickAttack() {
-        StartCoroutine(Resume(quickAttackStunTime, "quickAttack"));
-        var hits = quickAttackHitBox.EndChecking();
+    public void HitCheckKick() {
+        attacking = false;
+        StartCoroutine(Resume(kickStunTime, "kick"));
+        var hits = kickHitBox.EndChecking();
         if (hits.Count == 0) return;
 
         foreach (var h in hits) {
-            h.Hit(quickAttackDamage, gameObject, quickAttackKB);
+            h.Hit(kickDamage, gameObject, kickKB);
         }
+        attack1Cooldown = 0;
     }
 
 
@@ -132,5 +183,17 @@ public class Golem : MonoBehaviour
         yield return new WaitForSeconds(stunTime);
         anim.SetBool(parameter, false);
         stopped = false;
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (!debug) return;
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, attack1Range);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, kickRange);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, slamRange);
     }
 }

@@ -3,7 +3,12 @@ guid: 1f8d5bb55782aed42adf448937fb5786
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: monster
+    second: {fileID: 2100000, guid: a5a6977cb76eb9d4f921387349569ce5, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -95,7 +100,7 @@ ModelImporter:
       takeName: golem|golemAttack1
       internalID: 3550864296179001297
       firstFrame: 0
-      lastFrame: 14
+      lastFrame: 21
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -115,7 +120,15 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.75434244
+      - time: 0.3815148
+        functionName: GolemStartChecking
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 04e21306de9dc36438f3257d61282239,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.58516324
         functionName: GolemAttack1
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 04e21306de9dc36438f3257d61282239,
@@ -123,8 +136,16 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.5774947
+      - time: 0.6995885
         functionName: GolemStartChecking
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 04e21306de9dc36438f3257d61282239,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 1
+        functionName: GolemAttack2
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 04e21306de9dc36438f3257d61282239,
           type: 3}
@@ -159,7 +180,23 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.5205762
+        functionName: GolemStartChecking
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 04e21306de9dc36438f3257d61282239,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.9958847
+        functionName: GolemSlamAttack
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 04e21306de9dc36438f3257d61282239,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -169,7 +206,7 @@ ModelImporter:
       takeName: golem|golemQuickAttack
       internalID: -5907166260880828143
       firstFrame: 0
-      lastFrame: 8
+      lastFrame: 15
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -191,6 +228,14 @@ ModelImporter:
       events:
       - time: 0.9826733
         functionName: GolemQuickAttack
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 04e21306de9dc36438f3257d61282239,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.47736627
+        functionName: GolemStartChecking
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 04e21306de9dc36438f3257d61282239,
           type: 3}

@@ -9,6 +9,12 @@ public class HitEventCoord : MonoBehaviour
         if (golem != null) golem.HitCheckAttack1();
     }
 
+    public void GolemAttack2()
+    {
+        var golem = GetComponentInParent<Golem>();
+        if (golem != null) golem.HitCheckAttack2();
+    }
+
     public void GolemStartChecking()
     {
         var golem = GetComponentInParent<Golem>();
@@ -17,7 +23,7 @@ public class HitEventCoord : MonoBehaviour
 
     public void GolemQuickAttack() {
         var golem = GetComponentInParent<Golem>();
-        if (golem != null) golem.HitCheckQuickAttack();
+        if (golem != null) golem.HitCheckKick();
     }
 
     public void PlayerStaffAttack()

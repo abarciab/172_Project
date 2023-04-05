@@ -6,7 +6,7 @@ using UnityEngine;
 public class PMovement : MonoBehaviour
 {
     [SerializeField] float forwardSpeed, runSpeed, stoppingFriction = 0.025f, rotationSpeed = 0.5f, cameraAlignSmoothness = 0.2f, stepSpeed, stepTime, strafeSpeed = 4, dashSpeed, dashTime, KBsmoothness = 0.5f;
-    [HideInInspector] public bool goForward, turnLeft, turnRight, goBack, running, alignToCamera, stepping, dashing, strafe, attacking, pressLeft, pressRight;
+    [HideInInspector] public bool goForward, turnLeft, turnRight, goBack, running, alignToCamera, stepping, dashing, strafe, attacking, pressLeft, pressRight, knockedBack;
     public bool sitting;
 
     [Header("TEST")]
@@ -16,7 +16,6 @@ public class PMovement : MonoBehaviour
     Player p;
     Vector3 dashDir;
 
-    bool knockedBack;
     GameObject source;
 
     public void KnockBack(GameObject _source, float _KB)
@@ -41,6 +40,7 @@ public class PMovement : MonoBehaviour
 
     IEnumerator StopDash() {
         yield return new WaitForSeconds(dashTime);
+        if (alignToEnemy) AlignToEnemy(1);
         dashing = false;
     }
 
@@ -95,17 +95,20 @@ public class PMovement : MonoBehaviour
         transform.localEulerAngles = rot;
     }
 
-    void AlignToEnemy() {
+    void AlignToEnemy(float smoothnessOverride = -1) {
 
-        if (goForward) return;
-
+        if (smoothnessOverride == -1) smoothnessOverride = cameraAlignSmoothness;
         var enemy = CameraState.i.GetLockedEnemy();
+        var dist = Vector3.Distance(transform.position, enemy.transform.position);
+        if (goForward && dist < 2.5) return;
+
+        
         var _rot = transform.localEulerAngles;
         var originalRot = _rot;
         transform.LookAt(enemy.transform);
         var lookAtRot = transform.localEulerAngles;
         _rot.y = lookAtRot.y;
-        transform.localEulerAngles = Vector3.Lerp(originalRot, _rot, cameraAlignSmoothness);
+        transform.localEulerAngles = Vector3.Lerp(originalRot, _rot, smoothnessOverride);
     }
 
     void AlignToCamera() {
@@ -127,8 +130,13 @@ public class PMovement : MonoBehaviour
         verticalVel.x = verticalVel.z = 0;
 
         Vector3 horizontalDir = !attacking ? GetStrafeDir() : Vector3.zero;
+        var KBdir = Vector3.zero;
+        if (knockedBack) {
+            KBdir = (transform.position - source.transform.position).normalized;
+            KBdir.y = 0;
+        }
 
-        if (knockedBack) rb.velocity = (transform.position - source.transform.position).normalized * KB + verticalVel;
+        if (knockedBack) rb.velocity = KBdir * KB + verticalVel;
         else if(dashing) rb.velocity = (dashDir * dashSpeed) + verticalVel;
         else if (stepping) rb.velocity = (transform.forward * stepSpeed) + verticalVel;
 
@@ -136,7 +144,11 @@ public class PMovement : MonoBehaviour
         else if (goBack) rb.velocity = (transform.forward * -1 + horizontalDir).normalized * speed + verticalVel;
         else rb.velocity = Vector3.Lerp(rb.velocity, horizontalDir * speed + verticalVel, stoppingFriction);
 
-        if (!alignToEnemy && !attacking) AlignModel();
+        if (!alignToEnemy) AlignModel();
+        else {
+            Transform model = transform.GetChild(0);
+            model.transform.localRotation = Quaternion.Lerp(model.localRotation, Quaternion.Euler(Vector3.zero), 0.2f);
+        }
     }
 
     void AlignModel()

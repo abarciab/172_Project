@@ -31,9 +31,20 @@ public class Player : MonoBehaviour
             CameraState.i.StopLockOn();
             return;
         }
-        
+    }
+
+    public void ToggleLockOn()
+    {
+        if (CameraState.i.GetLockedEnemy() != null) CameraState.i.StopLockOn();
+        else LockOn();
+    }
+
+    void LockOn()
+    {
+        if (enemies.Count == 0) return;
+
         if (closestEnemy == null && enemies[0] != null) closestEnemy = enemies[0];
-        
+
         foreach (var e in enemies) {
             if (Vector3.Distance(transform.position, e.transform.position) < Vector3.Distance(transform.position, closestEnemy.transform.position)) closestEnemy = e;
         }

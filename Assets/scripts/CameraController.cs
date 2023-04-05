@@ -27,6 +27,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] CameraState camState;
 
     CameraState.State currentState = new CameraState.State();
+    float _blendSmoothness;
 
     private void Start()
     {
@@ -43,10 +44,20 @@ public class CameraController : MonoBehaviour
             addManualState = false;
             manualStateNum = -1;
         }
+        _blendSmoothness = Application.isPlaying ? blendSmoothness : 1;
+
         if (!Application.isPlaying) return;
 
         if (Input.GetKeyDown(KeyCode.Escape)) UnlockMouse();
         if (Input.GetMouseButtonDown(0)) LockMouse();
+        LockCamZ();
+    }
+
+    void LockCamZ()
+    {
+        var rot = cam.transform.eulerAngles;
+        rot.z = 0;
+        cam.transform.eulerAngles = rot;
     }
 
     void LockMouse()
@@ -88,19 +99,19 @@ public class CameraController : MonoBehaviour
             return;
         }
 
-        currentState.playerX = Mathf.Lerp(currentState.playerX, o.playerX, blendSmoothness);
-        currentState.playerY = Mathf.Lerp(currentState.playerY, o.playerY, blendSmoothness);
-        currentState.zoom = Mathf.Lerp(currentState.zoom, o.zoom, blendSmoothness);
-        currentState.parentRotSmoothness = Mathf.Lerp(currentState.parentRotSmoothness, o.parentRotSmoothness, blendSmoothness); 
+        currentState.playerX = Mathf.Lerp(currentState.playerX, o.playerX, _blendSmoothness);
+        currentState.playerY = Mathf.Lerp(currentState.playerY, o.playerY, _blendSmoothness);
+        currentState.zoom = Mathf.Lerp(currentState.zoom, o.zoom, _blendSmoothness);
+        currentState.parentRotSmoothness = Mathf.Lerp(currentState.parentRotSmoothness, o.parentRotSmoothness, _blendSmoothness); 
 
-        currentState.limitsX = Vector2.Lerp(currentState.limitsX, o.limitsX, blendSmoothness);
-        currentState.limitsY = Vector2.Lerp(currentState.limitsY, o.limitsY, blendSmoothness);
-        currentState.zoomLimits = Vector2.Lerp(currentState.zoomLimits, o.zoomLimits, blendSmoothness);
-        currentState.parentRotLimits = Vector2.Lerp(currentState.parentRotLimits, o.parentRotLimits, blendSmoothness);
+        currentState.limitsX = Vector2.Lerp(currentState.limitsX, o.limitsX, _blendSmoothness);
+        currentState.limitsY = Vector2.Lerp(currentState.limitsY, o.limitsY, _blendSmoothness);
+        currentState.zoomLimits = Vector2.Lerp(currentState.zoomLimits, o.zoomLimits, _blendSmoothness);
+        currentState.parentRotLimits = Vector2.Lerp(currentState.parentRotLimits, o.parentRotLimits, _blendSmoothness);
 
-        currentState.camTargetOffset = Vector3.Lerp(currentState.camTargetOffset, o.camTargetOffset, blendSmoothness);
-        currentState.camParentPlayerOffset = Vector3.Lerp(currentState.camParentPlayerOffset, o.camParentPlayerOffset, blendSmoothness);
-        currentState.objTargetOffset = Vector3.Lerp(currentState.objTargetOffset, o.objTargetOffset, blendSmoothness);
+        currentState.camTargetOffset = Vector3.Lerp(currentState.camTargetOffset, o.camTargetOffset, _blendSmoothness);
+        currentState.camParentPlayerOffset = Vector3.Lerp(currentState.camParentPlayerOffset, o.camParentPlayerOffset, _blendSmoothness);
+        currentState.objTargetOffset = Vector3.Lerp(currentState.objTargetOffset, o.objTargetOffset, _blendSmoothness);
 
         currentState.lookAtPlayer = o.lookAtPlayer;
         currentState.followPlayer = o.followPlayer;
@@ -119,8 +130,8 @@ public class CameraController : MonoBehaviour
         pos.y = Mathf.Abs(s.limitsY.x - s.limitsY.y) * s.playerY + s.limitsY.x;
         pos.z = Mathf.Abs(s.zoomLimits.x - s.zoomLimits.y) * s.zoom + s.zoomLimits.x;
 
-        cam.transform.localPosition = Vector3.Lerp(cam.transform.localPosition, pos, blendSmoothness);
-        camTarget.transform.localPosition = Vector3.Lerp(camTarget.transform.localPosition, pos + s.camTargetOffset, blendSmoothness);
+        cam.transform.localPosition = Vector3.Lerp(cam.transform.localPosition, pos, _blendSmoothness);
+        camTarget.transform.localPosition = Vector3.Lerp(camTarget.transform.localPosition, pos + s.camTargetOffset, _blendSmoothness);
     }
     void SetCamLookDir(CameraState.State s)
     {
@@ -128,7 +139,7 @@ public class CameraController : MonoBehaviour
         if (s.lookAtPlayer) cam.transform.LookAt(p.transform);
         else cam.transform.LookAt(camTarget.transform);
         var targetRot = cam.transform.localEulerAngles;
-        cam.transform.localEulerAngles = Vector3.Lerp(_rot, targetRot, blendSmoothness);
+        cam.transform.localEulerAngles = Vector3.Lerp(_rot, targetRot, _blendSmoothness);
     }
 
     void SetFollow(CameraState.State s)

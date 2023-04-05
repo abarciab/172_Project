@@ -21,13 +21,15 @@ public class PControls : MonoBehaviour
     private void Update()
     {
         if (move.sitting) timeSitting += Time.deltaTime;
-        if (timeSitting >= sitControlTime) GlobalUI.i.DisplayPrompt("press space to stand up");
+        if (timeSitting >= sitControlTime) GlobalUI.i.DisplayPrompt("press alt to stand up");
 
         if (move.sitting && Input.GetKeyDown(standUpKey)) { move.sitting = false; GlobalUI.i.HidePrompt(); }
 
         if (Input.GetMouseButtonDown(0) && !move.sitting) fight.PressAttack();
 
         if (!move.sitting && Input.GetKeyDown(roll)) move.Dash();
+
+        if (Input.GetMouseButtonDown(2)) Player.i.ToggleLockOn();
 
         move.goForward = Input.GetKey(forward);
         move.goBack = Input.GetKey(backward);

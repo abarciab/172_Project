@@ -8,6 +8,8 @@ public class EnemyStats : HitReciever
     public int health;
     public int maxHealth;
     [SerializeField] Slider hpBar;
+    public bool destroy;
+    [SerializeField] float KBresist;
 
     private void Start()
     {
@@ -19,8 +21,11 @@ public class EnemyStats : HitReciever
     {
         int damage = _damage;
         health -= damage;
-        if (health <= 0) Destroy(gameObject);
+        health = Mathf.Clamp(health, 0, maxHealth);
+        if (health <= 0 && destroy) Destroy(gameObject);
         AudioManager.instance.PlaySound(1, gameObject);
+
+        GetComponent<EnemyMovement>().KnockBack(source, KB * KBresist);
     }
 
     private void Update()
