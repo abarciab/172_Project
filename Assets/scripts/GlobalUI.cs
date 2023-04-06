@@ -12,7 +12,13 @@ public class GlobalUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI commandPrompt, subtitle;
     public Slider HpBar;
     [SerializeField] float redFlashTime = 0.1f;
-    [SerializeField] GameObject red;
+    [SerializeField] GameObject red, title;
+    [SerializeField] bool showHPbar;
+
+    private void Update()
+    {
+        HpBar.gameObject.SetActive(!title.activeInHierarchy && showHPbar);
+    }
 
     public void FlashRed()
     {

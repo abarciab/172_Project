@@ -77,7 +77,8 @@ public class PFighting : HitReciever
         if (hits.Count == 0) return;
 
         foreach (var h in hits) {
-            h.Hit(attack1Damage, gameObject, _KB);
+            int attackDmg = currentAttack == 0 ? attack1Damage : (currentAttack == 1 ? attack2Damage : attack3Damage);
+            h.Hit(attackDmg, gameObject, _KB);
         }
     }
     

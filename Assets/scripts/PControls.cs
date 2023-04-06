@@ -23,6 +23,8 @@ public class PControls : MonoBehaviour
         if (move.sitting) timeSitting += Time.deltaTime;
         if (timeSitting >= sitControlTime) GlobalUI.i.DisplayPrompt("press alt to stand up");
 
+        if (move.posing) return;
+
         if (move.sitting && Input.GetKeyDown(standUpKey)) { move.sitting = false; GlobalUI.i.HidePrompt(); }
 
         if (Input.GetMouseButtonDown(0) && !move.sitting) fight.PressAttack();

@@ -36,7 +36,7 @@ public class PAnimator : MonoBehaviour
         anim.SetBool("Sitting", move.sitting);
         anim.SetBool("Moving", moving);
         anim.SetBool("Backwards", moving && p.forwardSpeed <= -0.1f);
-        anim.SetBool("Running", move.running);
+        anim.SetBool("Running", move.running && !move.posing);
         anim.SetBool("TurningLeft", move.turnLeft && !moving);
         anim.SetBool("TurningRight", move.turnRight && !moving);
         anim.SetBool("StaffDrawn", fight.staffDrawn && !move.posing);

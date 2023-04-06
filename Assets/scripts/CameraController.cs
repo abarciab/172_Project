@@ -50,7 +50,7 @@ public class CameraController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape)) UnlockMouse();
         if (Input.GetMouseButtonDown(0)) LockMouse();
-        LockCamZ();
+        //LockCamZ();
     }
 
     void LockCamZ()
