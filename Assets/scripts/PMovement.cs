@@ -141,6 +141,7 @@ public class PMovement : MonoBehaviour
     void Move()
     {
         float speed = running ? runSpeed : forwardSpeed;
+        if (attacking) speed = 0;
 
         var verticalVel = rb.velocity;
         verticalVel.x = verticalVel.z = 0;
@@ -161,7 +162,7 @@ public class PMovement : MonoBehaviour
         else if (goBack) rb.velocity = (transform.forward * -1 + horizontalDir).normalized * speed + verticalVel;
         else rb.velocity = Vector3.Lerp(rb.velocity, horizontalDir * speed + verticalVel, stoppingFriction);
 
-        if (!alignToEnemy) AlignModel();
+        if (!alignToEnemy && !attacking) AlignModel();
         else {
             Transform model = transform.GetChild(0);
             model.transform.localRotation = Quaternion.Lerp(model.localRotation, Quaternion.Euler(Vector3.zero), 0.2f);
