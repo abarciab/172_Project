@@ -10,6 +10,11 @@ public class HitReciever : MonoBehaviour
     [HideInInspector] public GameObject source;
     [HideInInspector] public float KB;
 
+    public void Hit(int damage)
+    {
+        Hit(damage, gameObject, 0);
+    }
+
     public void Hit(int damage, GameObject _source, float _KB) {
         _damage = damage;
         source = _source;

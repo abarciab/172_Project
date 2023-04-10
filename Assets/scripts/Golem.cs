@@ -9,6 +9,8 @@ public class Golem : MonoBehaviour
     [SerializeField] float jumpBackSpeed;
     [SerializeField] GameObject target;
 
+    [SerializeField] List<AttackStats> attacks;
+
     [Header("Attack1")]
     [SerializeField] int attack1Damage, attack2Damage;
     [SerializeField] float attack1resetTime, attack1StunTime, attack1KB, attack1Range;
@@ -98,6 +100,7 @@ public class Golem : MonoBehaviour
 
     void SlamAttack()
     {
+        slamCooldown = slamResetTime;
         //print("I WANT TO SLAM");
     }
 

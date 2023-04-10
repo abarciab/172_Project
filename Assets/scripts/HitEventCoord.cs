@@ -26,9 +26,21 @@ public class HitEventCoord : MonoBehaviour
         if (golem != null) golem.HitCheckKick();
     }
 
-    public void PlayerStaffAttack()
+    public void StartPlayerCheck()
     {
         var player = GetComponentInParent<PFighting>();
-        if (player != null) player.HitCheckStaff();
+        if (player != null) player.StartChecking();
+    }
+
+    public void EndPlayerAttack(float delay = 0)
+    {
+        var player = GetComponentInParent<PFighting>();
+        if (player != null) player.EndAttack(delay);
+    }
+
+    public void RefreshPlayerHB()
+    {
+        var player = GetComponentInParent<PFighting>();
+        if (player != null) player.RefreshHitBox();
     }
 }

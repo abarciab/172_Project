@@ -20,10 +20,7 @@ public class PAnimator : MonoBehaviour
         p = Player.i;
         move = GetComponent<PMovement>();
         fight = GetComponent<PFighting>();
-
-        fight.Attack1.AddListener(Attack1);
-        fight.Attack2.AddListener(Attack2);
-        fight.Attack3.AddListener(Attack3);     
+   
     }
 
     private void Update()
@@ -40,17 +37,14 @@ public class PAnimator : MonoBehaviour
         anim.SetBool("TurningLeft", move.turnLeft && !moving);
         anim.SetBool("TurningRight", move.turnRight && !moving);
         anim.SetBool("StaffDrawn", fight.staffDrawn && !move.posing);
-        anim.SetBool("Attacking", fight.attacking);
+        anim.SetBool("BasicAttack", fight.basicAttacking);
+        anim.SetBool("StrongAttack", fight.hvyAttacking);
         anim.SetBool("Strafe", move.strafe);
 
-        if (triggeredDash && !move.dashing) triggeredDash = false;
-        if (move.dashing && !triggeredDash) {
+        if (triggeredDash && !move.rolling) triggeredDash = false;
+        if (move.rolling && !triggeredDash) {
             triggeredDash = true;
             anim.SetTrigger("Roll");
         }
     }
-
-    void Attack1() { anim.SetTrigger("Attack1");  }
-    void Attack2() { anim.SetTrigger("Attack2");  }
-    void Attack3() { anim.SetTrigger("Attack3");  }
 }

@@ -121,7 +121,10 @@ public class CameraState : MonoBehaviour
     public void LockOnEnemy(GameObject target, Vector3 objOffset) {
 
         foreach (var s in states) {
-            if (s.displayName == StateName.LockOn) s.objTargetOffset = objOffset;
+            if (s.displayName == StateName.LockOn) {
+                s.objTargetOffset = objOffset;
+                s.objFocus = target;
+            }
         }
 
         SwitchToState(StateName.LockOn);

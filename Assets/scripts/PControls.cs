@@ -27,9 +27,10 @@ public class PControls : MonoBehaviour
 
         if (move.sitting && Input.GetKeyDown(standUpKey)) { move.sitting = false; GlobalUI.i.HidePrompt(); }
 
-        if (Input.GetMouseButtonDown(0) && !move.sitting) fight.PressAttack();
+        if (Input.GetMouseButtonDown(0) && !move.sitting) fight.StartAttack(AttackStats.AttackType.basic);
+        if (Input.GetMouseButtonDown(1) && !move.sitting) fight.StartAttack(AttackStats.AttackType.heavy);
 
-        if (!move.sitting && Input.GetKeyDown(roll)) move.Dash();
+        if (!move.sitting && Input.GetKeyDown(roll)) move.Roll();
 
         if (Input.GetMouseButtonDown(2)) Player.i.ToggleLockOn();
 
@@ -37,8 +38,8 @@ public class PControls : MonoBehaviour
         move.goBack = Input.GetKey(backward);
         move.pressLeft = Input.GetKey(left);
         move.pressRight = Input.GetKey(right);
+        move.running = Input.GetKey(run);
 
-        if (Input.GetKeyDown(run)) move.running = !move.running;
         if (!Input.GetKey(forward) && !Input.GetKey(left) && !Input.GetKey(right) && !Input.GetKey(backward)) move.running = false;
         if (Input.GetKeyDown(run)) fight.PutAwayStaff();
 

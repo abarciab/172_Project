@@ -6,7 +6,7 @@ using UnityEngine;
 public class PMovement : MonoBehaviour
 {
     [SerializeField] float forwardSpeed, runSpeed, stoppingFriction = 0.025f, rotationSpeed = 0.5f, cameraAlignSmoothness = 0.2f, stepSpeed, stepTime, strafeSpeed = 4, dashSpeed, dashTime, KBsmoothness = 0.5f;
-    [HideInInspector] public bool goForward, turnLeft, turnRight, goBack, running, alignToCamera, stepping, dashing, strafe, attacking, pressLeft, pressRight, knockedBack, posing;
+    [HideInInspector] public bool goForward, turnLeft, turnRight, goBack, running, alignToCamera, stepping, rolling, strafe, attacking, pressLeft, pressRight, knockedBack, posing;
     public bool sitting;
 
     [Header("TEST")]
@@ -14,7 +14,7 @@ public class PMovement : MonoBehaviour
     public float rotation, stunned, KB;
     Rigidbody rb;
     Player p;
-    Vector3 dashDir;
+    Vector3 rollDir;
     Transform poseLookTarget;
 
     GameObject source;
@@ -28,13 +28,16 @@ public class PMovement : MonoBehaviour
 
     public void StepForward()
     {
+        return;
+
         stepping = true;
         StartCoroutine(StopStep());
     }
 
-    public void Dash() {
-        dashDir = GetDashDir();
-        dashing = true;
+    public void Roll() {
+        if (!rolling) AudioManager.instance.PlaySound(5, gameObject);
+        rollDir = GetDashDir();
+        rolling = true;
         StartCoroutine(StopDash());
     }
 
@@ -46,7 +49,7 @@ public class PMovement : MonoBehaviour
     IEnumerator StopDash() {
         yield return new WaitForSeconds(dashTime);
         if (alignToEnemy) AlignToEnemy(1);
-        dashing = false;
+        rolling = false;
     }
 
     IEnumerator StopStep()
@@ -64,7 +67,7 @@ public class PMovement : MonoBehaviour
 
     private void Update()
     {
-        attacking = GetComponent<PFighting>().attacking;
+        attacking = GetComponent<PFighting>().basicAttacking || GetComponent<PFighting>().hvyAttacking;
         alignToEnemy = CameraState.i.GetLockedEnemy() != null;
         alignToCamera = CameraState.i.mouseControl;
         SetPlayerStats();
@@ -80,7 +83,7 @@ public class PMovement : MonoBehaviour
 
     void Turn()
     {
-        if (stepping || dashing || attacking) return;
+        if (stepping || rolling || attacking) return;
 
         if (posing) {
             if (poseLookTarget == null) return;
@@ -115,9 +118,6 @@ public class PMovement : MonoBehaviour
 
         if (smoothnessOverride == -1) smoothnessOverride = cameraAlignSmoothness;
         var enemy = CameraState.i.GetLockedEnemy();
-        var dist = Vector3.Distance(transform.position, enemy.transform.position);
-        if (goForward && dist < 2.5) return;
-
         
         var _rot = transform.localEulerAngles;
         var originalRot = _rot;
@@ -155,7 +155,7 @@ public class PMovement : MonoBehaviour
 
         if (posing) rb.velocity = Vector3.Lerp(rb.velocity, Vector3.zero, 0.025f);
         else if (knockedBack) rb.velocity = KBdir * KB + verticalVel;
-        else if (dashing) rb.velocity = (dashDir * dashSpeed) + verticalVel;
+        else if (rolling) rb.velocity = (rollDir * dashSpeed) + verticalVel;
         else if (stepping) rb.velocity = (transform.forward * stepSpeed) + verticalVel;
 
         else if (goForward) rb.velocity = (transform.forward + horizontalDir).normalized * speed + verticalVel;
@@ -171,6 +171,7 @@ public class PMovement : MonoBehaviour
 
     void AlignModel()
     {
+        print("ALIGN");
         Transform model = transform.GetChild(0);
 
         if (rb.velocity.magnitude <= 0.01f) {

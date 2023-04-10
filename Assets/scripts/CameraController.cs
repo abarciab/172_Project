@@ -139,7 +139,7 @@ public class CameraController : MonoBehaviour
         if (s.lookAtPlayer) cam.transform.LookAt(p.transform);
         else cam.transform.LookAt(camTarget.transform);
         var targetRot = cam.transform.localEulerAngles;
-        cam.transform.localEulerAngles = Vector3.Lerp(_rot, targetRot, _blendSmoothness);
+        cam.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(_rot), Quaternion.Euler(targetRot), _blendSmoothness);
     }
 
     void SetFollow(CameraState.State s)
@@ -155,6 +155,7 @@ public class CameraController : MonoBehaviour
         if (s.parentLookTarget == CameraState.ParentLookTarget.Obj && s.objFocus != null) targetForward = (s.objFocus.transform.position + s.objTargetOffset - transform.position).normalized; 
 
         if ((s.parentLookTarget != CameraState.ParentLookTarget.None && s.parentLookTarget != CameraState.ParentLookTarget.Mouse) || mouseTransitionTimeLeft > 0) {
+            //transform.forward = Quaternion.Lerp(Quaternion.Euler(transform.forward), Quaternion.Euler(targetForward), s.parentRotSmoothness).eulerAngles;
             transform.forward = Vector3.Lerp(transform.forward, targetForward, s.parentRotSmoothness);
             return;
         }

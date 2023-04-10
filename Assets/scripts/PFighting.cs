@@ -4,136 +4,100 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UIElements;
 
 public class PFighting : HitReciever
 {
-    [SerializeField] AudioSource swooshSource;
 
-    [HideInInspector] public UnityEvent Attack1 = new UnityEvent();
-    [HideInInspector] public UnityEvent Attack2 = new UnityEvent();
-    [HideInInspector] public UnityEvent Attack3 = new UnityEvent();
-    [HideInInspector] public bool attacking;
+    [SerializeField] AudioSource swooshSource;
     public bool staffDrawn;
 
-    [SerializeField] float waitTime = 1, stafDrawTime = 0.7f;
-    
-
-    [Header("Damage")]
-    [SerializeField] int attack1Damage = 10;
-    [SerializeField] int attack2Damage = 15, attack3Damage = 30;
-    [SerializeField] float _KB = 20;
+    [SerializeField] List<AttackStats> attacks = new List<AttackStats>();
 
     [Header("Dependencies")]
     [SerializeField] HitBox hitBox;
 
-    float endAttackTime = 0;
-    int currentAttack = -1;
-    float stunTime;
-    HitBox activeHitBox;
+    [HideInInspector] public bool basicAttacking, hvyAttacking;
+    AttackStats currentAttack;
+
+    private void OnValidate()
+    {
+        foreach (var a in attacks) {
+            a.OnValidate();
+        }
+    }
 
     public void Inturrupt(float _stunTime)
     {
-        stunTime = _stunTime;
-        activeHitBox = null;
         EndAttack();
     }
 
     public void PutAwayStaff()
     {
         EndAttack();
-        currentAttack = -1;
         staffDrawn = false;
     }
 
     public void DrawWeapon()
     {
-        StartCoroutine(_DrawWeapon());
+        staffDrawn = true;
     }
 
-    public void PressAttack()
+    public void RefreshHitBox()
     {
-        if (stunTime > 0 || GetComponent<PMovement>().knockedBack) return;
-
-        if (currentAttack == -1) DrawWeapon();
-
-        if (currentAttack == 0) DoAttack1();
-        else if (currentAttack == 1) DoAttack2();
-        else if (currentAttack == 2) DoAttack3();
-        else return;
-
-        activeHitBox = hitBox;
-        attacking = true;
-        currentAttack += 1;
-        endAttackTime = waitTime;
-        GetComponent<PMovement>().StepForward();
+        hitBox.Refresh();
     }
 
-    public void HitCheckStaff()
+    public void StartAttack(AttackStats.AttackType attack)
     {
-        if (activeHitBox == null) return;
-        var hits = activeHitBox.EndChecking();
-        activeHitBox = null;
+        if (basicAttacking || hvyAttacking) return;
+        var a = GetAttackFromType(attack);
 
-        if (hits.Count == 0) return;
+        if (!staffDrawn) { DrawWeapon(); return; }
 
-        foreach (var h in hits) {
-            int attackDmg = currentAttack == 0 ? attack1Damage : (currentAttack == 1 ? attack2Damage : attack3Damage);
-            h.Hit(attackDmg, gameObject, _KB);
-        }
+        basicAttacking = a.type == AttackStats.AttackType.basic;
+        hvyAttacking = !basicAttacking;
+        currentAttack = a;
     }
-    
+
+    public void StartChecking()
+    {
+        hitBox.StartChecking(true, currentAttack.damage, currentAttack.knockBack, gameObject);
+    }
+
+    public void EndAttack(float delay)
+    {
+        StartCoroutine(waitThenEndAttack(delay));
+    }
+
+    AttackStats GetAttackFromType(AttackStats.AttackType type)
+    {
+        foreach (var a in attacks) if (a.type == type) return a;
+        return attacks[0];
+    }
+
+
     void EndAttack() {
-        attacking = false;
-        currentAttack = 0;
-        endAttackTime = waitTime;
+        basicAttacking = hvyAttacking = false;
+        hitBox.EndChecking();
+    }
+
+    IEnumerator waitThenEndAttack(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        EndAttack();
     }
 
     private void Start()
     {
         OnHit.AddListener(_Hit);
-        if (currentAttack == 0) staffDrawn = true;
-        endAttackTime = waitTime;
     }
 
     void _Hit() {
+        if (GetComponent<PMovement>().rolling) return;
+
         int damage = _damage;
         Player.i.ChangeHealth(-damage);
-        GetComponent<PMovement>().KnockBack(source, _KB);
-    }
-
-    private void Update()
-    {
-        stunTime -= Time.deltaTime;
-        if (currentAttack <= 0) return;
-        endAttackTime -= Time.deltaTime;
-        if (endAttackTime > 0) return;
-
-        EndAttack();
-    }
-
-    IEnumerator _DrawWeapon()
-    {
-        if (staffDrawn) yield break;
-        staffDrawn = true;
-
-        yield return new WaitForSeconds(stafDrawTime);
-
-        currentAttack = 0;
-    }
-
-    void DoAttack1()
-    {
-        Attack1.Invoke();
-        hitBox.StartChecking();
-    }
-
-    void DoAttack2()
-    {
-        Attack2.Invoke();
-    }
-
-    void DoAttack3()
-    {
-        Attack3.Invoke();
+        GetComponent<PMovement>().KnockBack(source, KB);
     }
 }

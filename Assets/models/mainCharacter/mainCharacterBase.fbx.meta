@@ -49,10 +49,7 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: Event PlayerStaffAttack has a time (0.342048) outside
-      the clip's valid range (0.000000..0.333333). It will never be firedEvent PlayerStaffAttack
-      has a time (0.389434) outside the clip's valid range (0.000000..0.333333).
-      It will never be fired
+    animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -359,141 +356,6 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature|Attack1
-      takeName: Armature|Attack1
-      internalID: -1932418194567212034
-      firstFrame: 0
-      lastFrame: 12
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events:
-      - time: 0.17997317
-        functionName: PlaySwoosh
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: ac192df5bc63a5e4c923039723c6a7e5,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.68409586
-        functionName: PlayerStaffAttack
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 04e21306de9dc36438f3257d61282239,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Armature|Attack2
-      takeName: Armature|Attack2
-      internalID: 4360681319692094363
-      firstFrame: 0
-      lastFrame: 11
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events:
-      - time: 0.013427536
-        functionName: PlaySwoosh
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: ac192df5bc63a5e4c923039723c6a7e5,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.8496732
-        functionName: PlayerStaffAttack
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 04e21306de9dc36438f3257d61282239,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Armature|Attack3
-      takeName: Armature|Attack3
-      internalID: -643647167496234714
-      firstFrame: 0
-      lastFrame: 11
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events:
-      - time: 0.540856
-        functionName: PlaySwoosh
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: ac192df5bc63a5e4c923039723c6a7e5,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.8148148
-        functionName: PlayerStaffAttack
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 04e21306de9dc36438f3257d61282239,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
       name: Armature|staffWalk
       takeName: Armature|staffWalk
       internalID: -2426965335809530460
@@ -517,7 +379,23 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.45971215
+        functionName: PlayFootStep
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: ac192df5bc63a5e4c923039723c6a7e5,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.99863005
+        functionName: PlayFootStep
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: ac192df5bc63a5e4c923039723c6a7e5,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -593,6 +471,173 @@ ModelImporter:
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|basicAttack
+      takeName: Armature|basicAttack
+      internalID: 7986669993326331644
+      firstFrame: 0
+      lastFrame: 8
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: 0.9977376
+        functionName: EndPlayerAttack
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 04e21306de9dc36438f3257d61282239,
+          type: 3}
+        floatParameter: 0.8
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.5837104
+        functionName: StartPlayerCheck
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 04e21306de9dc36438f3257d61282239,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.6095238
+        functionName: PlaySwoosh
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: ac192df5bc63a5e4c923039723c6a7e5,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|doubleAttack
+      takeName: Armature|doubleAttack
+      internalID: 7927709131463621319
+      firstFrame: 0
+      lastFrame: 23
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: 0.20588236
+        functionName: StartPlayerCheck
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 04e21306de9dc36438f3257d61282239,
+          type: 3}
+        floatParameter: 1
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.25794995
+        functionName: PlaySound
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: ac192df5bc63a5e4c923039723c6a7e5,
+          type: 3}
+        floatParameter: 0
+        intParameter: 4
+        messageOptions: 0
+      - time: 0.38333333
+        functionName: PlayFootStep
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: ac192df5bc63a5e4c923039723c6a7e5,
+          type: 3}
+        floatParameter: 0
+        intParameter: 4
+        messageOptions: 0
+      - time: 0.5138815
+        functionName: RefreshPlayerHB
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 04e21306de9dc36438f3257d61282239,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.649315
+        functionName: PlaySound
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: ac192df5bc63a5e4c923039723c6a7e5,
+          type: 3}
+        floatParameter: 0
+        intParameter: 4
+        messageOptions: 0
+      - time: 0.7914716
+        functionName: PlayFootStep
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: ac192df5bc63a5e4c923039723c6a7e5,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.8710407
+        functionName: EndPlayerAttack
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 04e21306de9dc36438f3257d61282239,
+          type: 3}
+        floatParameter: 1
+        intParameter: 0
+        messageOptions: 0
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|LongSpinAttack
+      takeName: Armature|LongSpinAttack
+      internalID: -5081208532821713984
+      firstFrame: 0
+      lastFrame: 20
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0

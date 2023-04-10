@@ -25,7 +25,7 @@ public class EnemyStats : HitReciever
         if (health <= 0 && destroy) Destroy(gameObject);
         AudioManager.instance.PlaySound(1, gameObject);
 
-        GetComponent<EnemyMovement>().KnockBack(source, KB * KBresist);
+        GetComponent<EnemyMovement>()?.KnockBack(source, KB * KBresist);
     }
 
     private void Update()
