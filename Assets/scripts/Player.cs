@@ -10,10 +10,13 @@ public class Player : MonoBehaviour
     [HideInInspector] public float forwardSpeed;
     public List<EnemyMovement> enemies = new List<EnemyMovement>();
     EnemyMovement closestEnemy;
-    [SerializeField] float lockOnDist = 15;
+    [SerializeField] float lockOnDist = 15, speakerEndDist;
 
     [SerializeField] int maxHealth;
     [SerializeField] int Health;
+
+    [Header("Prompts")]
+    [SerializeField] string startTalkingPrompt = "Press E to talk";
 
     public enum TESTENUM { hidden, option1, option2}
     
@@ -23,7 +26,46 @@ public class Player : MonoBehaviour
     [ConditionalHide(nameof(SHOW))]
     public float field1;
 
+    Speaker interestedSpeaker;
+
+    public void SpeakerStopInterest(Speaker speaker)
+    {
+        if (interestedSpeaker != speaker) return;
+        interestedSpeaker = null;
+        GlobalUI.i.HidePrompt();
+    }
+
+    public void SpeakerShowInterest(Speaker speaker)
+    {
+        interestedSpeaker = speaker;
+        GlobalUI.i.DisplayPrompt(startTalkingPrompt);
+    }
+
+    public void StartConversation()
+    {
+        if (interestedSpeaker == null) return;
+
+        GetComponent<PMovement>().StopMovement();
+
+        var nextLine = ConversationHolder.i.GetNextLine(interestedSpeaker.speaker);
+        if (string.Equals("END", nextLine)) EndConversation();
+        else GlobalUI.i.DisplayLine(interestedSpeaker.speaker.ToString(), nextLine);
+    }
+
+    public void EndConversation()
+    {
+        GetComponent<PMovement>().ResumeMovement();
+        interestedSpeaker = null;
+        GlobalUI.i.EndConversation();
+    }
+
     private void Update() {
+        if (interestedSpeaker == null) GlobalUI.i.HidePrompt(startTalkingPrompt);
+        if (interestedSpeaker != null && Vector3.Distance(transform.position, interestedSpeaker.transform.position) > speakerEndDist) {
+            interestedSpeaker = null;
+            GlobalUI.i.HidePrompt();
+        }
+
         for (int i = 0; i < enemies.Count; i++) {
             if (enemies[i] == null) enemies.RemoveAt(i);
         }

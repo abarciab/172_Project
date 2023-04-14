@@ -15,9 +15,50 @@ public class GlobalUI : MonoBehaviour
     [SerializeField] GameObject red, title;
     [SerializeField] bool showHPbar;
 
-    private void Update()
+    [Header("Dialogue")]
+    [SerializeField] TextMeshProUGUI nameText;
+    [SerializeField] TextMeshProUGUI mainText;
+
+    public void DisplayLine(string speaker, string line)
     {
-        HpBar.gameObject.SetActive(!title.activeInHierarchy && showHPbar);
+        showHPbar = false;
+        commandPrompt.gameObject.SetActive(false);
+
+        nameText.gameObject.SetActive(true);
+        nameText.text = speaker;
+        mainText.gameObject.SetActive(true);
+        mainText.text = line;
+    }
+
+    public void EndConversation()
+    {
+        StopAllCoroutines();
+        showHPbar = true;
+        commandPrompt.gameObject.SetActive(false);
+        nameText.gameObject.SetActive(false);
+        mainText.gameObject.SetActive(false);
+    }
+
+    public void DisplayPrompt(string prompt)
+    {
+        if (mainText.gameObject.activeInHierarchy) return;
+
+        StopAllCoroutines();
+        commandPrompt.text = prompt;
+        StartCoroutine(FadeText(commandPrompt, 1));
+    }
+
+    public void HidePrompt(string prompt)
+    {
+        if (string.Equals(prompt, commandPrompt.text)) HidePrompt();
+    }
+
+    public void HidePrompt()
+    {
+        if (commandPrompt.color.a == 0 || !commandPrompt.gameObject.activeInHierarchy) return;
+
+        StopAllCoroutines();
+        StartCoroutine(FadeText(commandPrompt, 0));
     }
 
     public void FlashRed()
@@ -32,32 +73,28 @@ public class GlobalUI : MonoBehaviour
         red.SetActive(false);
     }
 
+    private void Update()
+    {
+        HpBar.gameObject.SetActive(!title.activeInHierarchy && showHPbar);
+        if (mainText.gameObject.activeInHierarchy) commandPrompt.gameObject.SetActive(false);
+    }
+
     private void Start()
     {
         commandPrompt.color = subtitle.color = new Color(1, 1, 1, 0);
+
+        mainText.gameObject.SetActive(false);
+        nameText.gameObject.SetActive(false);
     }
 
-    public void DisplayPrompt(string prompt)
-    {
-        if (commandPrompt.text == prompt) return;
-
-        commandPrompt.text = prompt;
-        StartCoroutine(FadeText(commandPrompt, 1));
-    }
-
-    public void HidePrompt(string prompt = null)
-    {
-        StopAllCoroutines();
-        StartCoroutine(FadeText(commandPrompt, 0));
-    }
-
+    
     IEnumerator FadeText(TextMeshProUGUI text, float targetAlpha)
     {
         text.gameObject.SetActive(true);
         var targetcolor = text.color;
         targetcolor.a = targetAlpha;
         while (Mathf.Abs(text.color.a - targetAlpha) > 0.01f) {
-            text.color = Color.Lerp(text.color, targetcolor, 0.025f);
+            text.color = Color.Lerp(text.color, targetcolor, 0.1f);
             yield return new WaitForEndOfFrame();
         }
         text.color = targetcolor;

@@ -28,6 +28,7 @@ public class CameraState : MonoBehaviour
 
         [Header("Object Focus")]
         public GameObject objFocus;
+        public int focusIndex;
 
         [Header("Mouse Focus")]
         public float mouseXSens = 1;
@@ -56,6 +57,7 @@ public class CameraState : MonoBehaviour
             parentRotSmoothness = original.parentRotSmoothness;
             parentRotLimits = original.parentRotLimits;
             objFocus = original.objFocus;
+            focusIndex = original.focusIndex;
 
         }
 
@@ -64,6 +66,7 @@ public class CameraState : MonoBehaviour
             if (lookAtPlayer != o.lookAtPlayer) return false;
             if (followPlayer != o.followPlayer) return false;
             if (limitParentRot != o.limitParentRot) return false;
+            if (focusIndex != o.focusIndex) return false;
             
             if (playerX != o.playerX) return false;
             if (playerY != o.playerY) return false;

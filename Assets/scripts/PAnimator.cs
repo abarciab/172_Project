@@ -39,7 +39,7 @@ public class PAnimator : MonoBehaviour
         anim.SetBool("StaffDrawn", fight.staffDrawn && !move.posing);
         anim.SetBool("BasicAttack", fight.basicAttacking);
         anim.SetBool("StrongAttack", fight.hvyAttacking);
-        anim.SetBool("Strafe", move.strafe);
+        anim.SetBool("Strafe", move.strafe && Mathf.Abs(GetComponent<Rigidbody>().velocity.x + GetComponent<Rigidbody>().velocity.z) > 0.01f);
 
         if (triggeredDash && !move.rolling) triggeredDash = false;
         if (move.rolling && !triggeredDash) {

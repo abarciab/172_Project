@@ -25,6 +25,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] Player p;
     [SerializeField] GameObject cam,camTarget;
     [SerializeField] CameraState camState;
+    [SerializeField] CameraFocusManager focusMan;
 
     CameraState.State currentState = new CameraState.State();
     float _blendSmoothness;
@@ -50,7 +51,6 @@ public class CameraController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape)) UnlockMouse();
         if (Input.GetMouseButtonDown(0)) LockMouse();
-        //LockCamZ();
     }
 
     void LockCamZ()
@@ -99,10 +99,12 @@ public class CameraController : MonoBehaviour
             return;
         }
 
+        currentState.focusIndex = o.focusIndex;
+
         currentState.playerX = Mathf.Lerp(currentState.playerX, o.playerX, _blendSmoothness);
         currentState.playerY = Mathf.Lerp(currentState.playerY, o.playerY, _blendSmoothness);
         currentState.zoom = Mathf.Lerp(currentState.zoom, o.zoom, _blendSmoothness);
-        currentState.parentRotSmoothness = Mathf.Lerp(currentState.parentRotSmoothness, o.parentRotSmoothness, _blendSmoothness); 
+        currentState.parentRotSmoothness = Mathf.Lerp(currentState.parentRotSmoothness, o.parentRotSmoothness, _blendSmoothness);
 
         currentState.limitsX = Vector2.Lerp(currentState.limitsX, o.limitsX, _blendSmoothness);
         currentState.limitsY = Vector2.Lerp(currentState.limitsY, o.limitsY, _blendSmoothness);
@@ -150,12 +152,12 @@ public class CameraController : MonoBehaviour
     void SetParentLookDir(CameraState.State s)
     {
         Vector3 targetForward = transform.position;
+        if (s.parentLookTarget == CameraState.ParentLookTarget.Obj && s.objFocus == null) s.objFocus = focusMan.GetFocus(s.focusIndex);
 
         if (s.parentLookTarget == CameraState.ParentLookTarget.PlayerForward || mouseTransitionTimeLeft > 0) targetForward = p.transform.forward;
         if (s.parentLookTarget == CameraState.ParentLookTarget.Obj && s.objFocus != null) targetForward = (s.objFocus.transform.position + s.objTargetOffset - transform.position).normalized; 
 
         if ((s.parentLookTarget != CameraState.ParentLookTarget.None && s.parentLookTarget != CameraState.ParentLookTarget.Mouse) || mouseTransitionTimeLeft > 0) {
-            //transform.forward = Quaternion.Lerp(Quaternion.Euler(transform.forward), Quaternion.Euler(targetForward), s.parentRotSmoothness).eulerAngles;
             transform.forward = Vector3.Lerp(transform.forward, targetForward, s.parentRotSmoothness);
             return;
         }

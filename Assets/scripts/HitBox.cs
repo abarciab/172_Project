@@ -20,12 +20,13 @@ public class HitBox : MonoBehaviour
         obj = _obj;
         checking = true;
         targets.Clear();
-        foreach (var l in linkedBoxes) l.StartChecking();
+        foreach (var l in linkedBoxes) l.StartChecking(hitting, _dmg ,_kb, _obj);
     }
 
     public void Refresh()
     {
         targets.Clear();
+        foreach (var l in linkedBoxes) l.Refresh(); 
     }
 
     public List<HitReciever> EndChecking() {

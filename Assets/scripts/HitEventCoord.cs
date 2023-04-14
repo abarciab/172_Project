@@ -4,26 +4,22 @@ using UnityEngine;
 
 public class HitEventCoord : MonoBehaviour
 {
-    public void GolemAttack1() {
-        var golem = GetComponentInParent<Golem>();
-        if (golem != null) golem.HitCheckAttack1();
-    }
-
-    public void GolemAttack2()
-    {
-        var golem = GetComponentInParent<Golem>();
-        if (golem != null) golem.HitCheckAttack2();
-    }
-
+   
     public void GolemStartChecking()
     {
         var golem = GetComponentInParent<Golem>();
         if (golem != null) golem.StartChecking();
     }
-
-    public void GolemQuickAttack() {
+    public void EndGolemAttack()
+    {
         var golem = GetComponentInParent<Golem>();
-        if (golem != null) golem.HitCheckKick();
+        if (golem != null) golem.EndAttack();
+    }
+
+    public void RefreshGolemHB()
+    {
+        var golem = GetComponentInParent<Golem>();
+        if (golem != null) golem.RefreshHB();
     }
 
     public void StartPlayerCheck()

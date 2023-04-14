@@ -67,4 +67,10 @@ public class EnemyMovement : MonoBehaviour
     public void EnableRotation() {
         agent.angularSpeed = originalAngSpeed;
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawSphere(target, 1);
+    }
 }

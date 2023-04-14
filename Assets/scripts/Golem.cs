@@ -11,7 +11,7 @@ public class Golem : MonoBehaviour
 
     [SerializeField] List<AttackStats> attacks;
 
-    [Header("Attack1")]
+    /*[Header("Attack1")]
     [SerializeField] int attack1Damage, attack2Damage;
     [SerializeField] float attack1resetTime, attack1StunTime, attack1KB, attack1Range;
     float attack1Cooldown;
@@ -24,7 +24,7 @@ public class Golem : MonoBehaviour
     [Header("Kick")]
     [SerializeField] int kickDamage;
     [SerializeField] float kickResetTime, kickStunTime, kickKB, kickRange;
-    float kickCooldown;
+    float kickCooldown;*/
 
     [Header("HitBox")]
     [SerializeField] HitBox attack1HitBox;
@@ -35,44 +35,131 @@ public class Golem : MonoBehaviour
     public bool stopped;
     EnemyMovement move;
     Vector3 oldPosition;
-    HitBox activeHitBox;
+    public AttackStats currentAttack;
     bool attacking;
+
+    private void OnValidate()
+    {
+        foreach (var a in attacks) a.OnValidate();
+    }
 
     public void StartChecking()
     {
-        if (activeHitBox != null) activeHitBox.StartChecking();
-        activeHitBox = null;
+        if (currentAttack != null) currentAttack.hitBox.StartChecking(true, currentAttack.damage, currentAttack.knockBack, gameObject);
         attacking = true;
+    }
+
+    public void RefreshHB()
+    {
+        currentAttack.hitBox.Refresh();
+    }
+
+    public void EndAttack()
+    {
+        attacking = false;
+        currentAttack.hitBox.EndChecking();
+        currentAttack.Cooldown = currentAttack.resetTime;
+        
+        StartCoroutine(Resume(currentAttack.selfStunTime, currentAttack.animBool));
+        print("ended attack: " + currentAttack.animBool);
+        currentAttack = null;
     }
 
     private void Start() {
         oldPosition = transform.position;
         move = GetComponent<EnemyMovement>();
-        attack1Cooldown = 0;
         GetComponent<EnemyStats>().OnHit.AddListener(JumpBack);
+        foreach (var a in attacks) a.Reset();
     }
 
     private void Update() {
+        SetTarget();
+        SetAnims();
+        DoCooldowns();
+
+        if (target == null || stopped) { move.gotoTarget = false; return; }
+        float dist = Vector3.Distance(transform.position, target.transform.position);
+
+        if (TrySlamAttack(dist)) return;
+        if (tryDoubleHit(dist)) return;
+        if (TryKick(dist)) return;
+        move.gotoTarget = false;
+    }
+
+    AttackStats GetAttack(AttackStats.AttackType type)
+    {
+        foreach (var a in attacks) if (a.type == type) return a;
+        return null;
+    }
+
+    bool TrySlamAttack(float dist)
+    {
+        var attack = GetAttack(AttackStats.AttackType.special);
+        var status = attack.status(dist);
+
+        switch (status) {
+            case AttackStats.StatusType.ready:
+                StartAttack(attack);
+                break;
+            case AttackStats.StatusType.too_close:
+                return false;
+            case AttackStats.StatusType.too_far:
+                MoveToTarget();
+                break;
+            case AttackStats.StatusType.on_cooldown:
+                return false;
+        }
+        return true;
+    }
+
+    bool TryKick(float dist)
+    {
+        var attack = GetAttack(AttackStats.AttackType.basic);
+        var status = attack.status(dist);
+
+        switch (status) {
+            case AttackStats.StatusType.ready:
+                StartAttack(attack);
+                break;
+            case AttackStats.StatusType.too_close:
+                JumpBack();
+                break;
+            case AttackStats.StatusType.on_cooldown:
+                return false;
+        }
+        return true;
+    }
+
+    bool tryDoubleHit(float dist)
+    {
+        var attack = GetAttack(AttackStats.AttackType.heavy);
+        var status = attack.status(dist);
+
+        switch (status) {
+            case AttackStats.StatusType.ready:
+                StartAttack(attack);
+                break;
+            case AttackStats.StatusType.too_close:
+                return false;
+            case AttackStats.StatusType.too_far:
+                MoveToTarget();
+                break;
+            case AttackStats.StatusType.on_cooldown:
+                return false;
+        }
+        return true;
+    }
+
+    void SetTarget()
+    {
         if (target == null) target = Player.i.gameObject;
         if (target == Player.i.gameObject && !Player.i.enemies.Contains(move)) Player.i.enemies.Add(move);
         if (target != Player.i.gameObject) Player.i.enemies.Remove(move);
-        SetAnims();
+    }
 
-        attack1Cooldown -= Time.deltaTime;
-        kickCooldown -= Time.deltaTime;
-        slamCooldown -= Time.deltaTime;
-        if (target == null || stopped) { move.gotoTarget = false; return; }
-
-        float dist = Vector3.Distance(transform.position, target.transform.position);
-
-        if (dist < kickRange) {
-            if (kickCooldown <= 0) Kick();
-            else JumpBack();
-        }
-        else if (dist < attack1Range && attack1Cooldown <= 0) Attack();
-        else if (dist > attack1Range && dist < slamRange && slamCooldown <= 0) SlamAttack();
-        
-        if (dist > slamRange || (dist > attack1Range && slamCooldown > 0) || (dist > kickRange && attack1Cooldown > 0)) MoveToTarget();
+    void DoCooldowns()
+    {
+        foreach (var a in attacks) a.Cooldown -= Time.deltaTime;
     }
 
     void SetAnims() {
@@ -98,40 +185,16 @@ public class Golem : MonoBehaviour
         move.gotoTarget = true;
     }
 
-    void SlamAttack()
-    {
-        slamCooldown = slamResetTime;
-        //print("I WANT TO SLAM");
-    }
-
-    void Attack() {
-        StartCoroutine(TurnToFace(0.2f, 0.1f));
-
-        move.disableRotation();
-        anim.SetBool("attack1", true);
-        attack1Cooldown = attack1resetTime;
-        slamCooldown = slamResetTime;
-        activeHitBox = attack1HitBox;
-        stopped = true;
-    }
-
-    void Attack2()
+    void StartAttack(AttackStats attack)
     {
         StartCoroutine(TurnToFace(0.2f, 0.1f));
 
+        anim.SetBool(attack.animBool, true);
         move.disableRotation();
-        activeHitBox = attack2HitBox;
+        attack.Cooldown = attack.resetTime;
         stopped = true;
-    }
-
-    void Kick() {
-        StartCoroutine(TurnToFace(0.1f, 0.1f));
-
-        move.disableRotation();
-        anim.SetBool("kick", true);
-        kickCooldown = kickResetTime;
-        activeHitBox = kickHitBox;
-        stopped = true;
+        currentAttack = attack;
+        print("Starting attack: " + currentAttack.animBool);
     }
 
     IEnumerator TurnToFace(float time, float smoothness) {
@@ -146,41 +209,7 @@ public class Golem : MonoBehaviour
         }
     }
 
-    public void HitCheckAttack1() {
-        var hits = attack1HitBox.EndChecking();
-
-        Attack2();
-
-        if (hits.Count == 0) return;
-
-        foreach (var h in hits) {
-            h.Hit(attack1Damage, gameObject, attack1KB);
-        }
-    }
-    public void HitCheckAttack2()
-    {
-        attacking = false;
-        StartCoroutine(Resume(attack1StunTime, "attack1"));
-        var hits = attack2HitBox.EndChecking();
-        if (hits.Count == 0) return;
-
-        foreach (var h in hits) {
-            h.Hit(attack1Damage, gameObject, attack1KB);
-        }
-    }
-
-    public void HitCheckKick() {
-        attacking = false;
-        StartCoroutine(Resume(kickStunTime, "kick"));
-        var hits = kickHitBox.EndChecking();
-        if (hits.Count == 0) return;
-
-        foreach (var h in hits) {
-            h.Hit(kickDamage, gameObject, kickKB);
-        }
-        attack1Cooldown = 0;
-    }
-
+   
 
     IEnumerator Resume(float stunTime, string parameter) {
         yield return new WaitForSeconds(stunTime);
@@ -192,11 +221,6 @@ public class Golem : MonoBehaviour
     {
         if (!debug) return;
 
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, attack1Range);
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, kickRange);
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, slamRange);
+        foreach (var a in attacks) a.DrawGizmos(transform.position);
     }
 }

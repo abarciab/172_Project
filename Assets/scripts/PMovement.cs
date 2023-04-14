@@ -10,7 +10,7 @@ public class PMovement : MonoBehaviour
     public bool sitting;
 
     [Header("TEST")]
-    public bool alignToEnemy;
+    bool alignToEnemy, stopped;
     public float rotation, stunned, KB;
     Rigidbody rb;
     Player p;
@@ -39,6 +39,16 @@ public class PMovement : MonoBehaviour
         rollDir = GetDashDir();
         rolling = true;
         StartCoroutine(StopDash());
+    }
+
+    public void StopMovement()
+    {
+        stopped = true;   
+    }
+
+    public void ResumeMovement()
+    {
+        stopped = false;
     }
 
     public void SlowDownAndPose(Transform lookTarget = null) {
@@ -73,7 +83,7 @@ public class PMovement : MonoBehaviour
         SetPlayerStats();
         if (running) stepping = false;
 
-        if (sitting) return;
+        if (sitting || stopped) return;
         Turn();
         Move();
 
@@ -171,7 +181,6 @@ public class PMovement : MonoBehaviour
 
     void AlignModel()
     {
-        print("ALIGN");
         Transform model = transform.GetChild(0);
 
         if (rb.velocity.magnitude <= 0.01f) {
@@ -195,8 +204,9 @@ public class PMovement : MonoBehaviour
 
     Vector3 GetStrafeDir() {
         var strafeDir = Vector3.zero;
-        strafe = alignToEnemy && !attacking;
+        strafe = false;
         if (!alignToCamera && !alignToEnemy) return strafeDir;
+        strafe = alignToEnemy && !attacking;
 
         if (pressLeft) strafeDir = transform.right * -1;
         else if (pressRight) strafeDir = transform.right;
