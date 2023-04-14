@@ -128,16 +128,8 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.58516324
-        functionName: GolemAttack1
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 04e21306de9dc36438f3257d61282239,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.6995885
-        functionName: GolemStartChecking
+      - time: 0.80865365
+        functionName: RefreshGolemHB
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 04e21306de9dc36438f3257d61282239,
           type: 3}
@@ -145,7 +137,7 @@ ModelImporter:
         intParameter: 0
         messageOptions: 0
       - time: 1
-        functionName: GolemAttack2
+        functionName: EndGolemAttack
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 04e21306de9dc36438f3257d61282239,
           type: 3}
@@ -180,23 +172,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0.5205762
-        functionName: GolemStartChecking
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 04e21306de9dc36438f3257d61282239,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.9958847
-        functionName: GolemSlamAttack
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 04e21306de9dc36438f3257d61282239,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -226,16 +202,16 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.9826733
-        functionName: GolemQuickAttack
+      - time: 0.15866938
+        functionName: GolemStartChecking
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 04e21306de9dc36438f3257d61282239,
           type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.47736627
-        functionName: GolemStartChecking
+      - time: 0.41751748
+        functionName: EndGolemAttack
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 04e21306de9dc36438f3257d61282239,
           type: 3}
