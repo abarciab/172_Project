@@ -42,7 +42,7 @@ public class PControls : MonoBehaviour
         move.pressRight = Input.GetKey(right);
         move.running = Input.GetKey(run);
 
-        if (Input.GetKeyDown(interactKey)) player.StartConversation();
+        if (Input.GetKeyDown(interactKey)) player.ActivateInteractable();
 
         if (!Input.GetKey(forward) && !Input.GetKey(left) && !Input.GetKey(right) && !Input.GetKey(backward)) move.running = false;
         if (Input.GetKeyDown(run)) fight.PutAwayStaff();

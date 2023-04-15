@@ -27,6 +27,27 @@ public class Player : MonoBehaviour
     public float field1;
 
     Speaker interestedSpeaker;
+    Gate interestedInteractable;
+
+    public void RemoveInteractable(Gate interactable)
+    {
+        if (interestedInteractable == interactable) {
+            interestedInteractable = null;
+            GlobalUI.i.HidePrompt(interactable.prompt);
+        }
+    }
+
+    public void AddInteractable(Gate interactable)
+    {
+        interestedInteractable = interactable;
+        GlobalUI.i.DisplayPrompt(interactable.prompt);
+    }
+
+    public void ActivateInteractable()
+    {
+        if (interestedSpeaker) StartConversation();
+        else if (interestedInteractable) interestedInteractable.Interact();
+    }
 
     public void SpeakerStopInterest(Speaker speaker)
     {
@@ -41,7 +62,7 @@ public class Player : MonoBehaviour
         GlobalUI.i.DisplayPrompt(startTalkingPrompt);
     }
 
-    public void StartConversation()
+    void StartConversation()
     {
         if (interestedSpeaker == null) return;
 

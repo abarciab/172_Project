@@ -25,10 +25,14 @@ public class EnemyMovement : MonoBehaviour
 
     private void Update() {
         if (gotoTarget) {
+            if (!agent.enabled) { agent.enabled = true; return; }
             agent.isStopped = false;
             agent.SetDestination(target);
         }
-        else agent.isStopped = true;
+        else if (agent.enabled) {
+            agent.isStopped = true;
+            agent.enabled = false;
+        }
     }
 
     public void KnockBack(GameObject source, float _KB)
@@ -70,6 +74,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        return;
         Gizmos.color = Color.blue;
         Gizmos.DrawSphere(target, 1);
     }

@@ -22,10 +22,16 @@ public class EnemyStats : HitReciever
         int damage = _damage;
         health -= damage;
         health = Mathf.Clamp(health, 0, maxHealth);
-        if (health <= 0 && destroy) Destroy(gameObject);
+        if (health <= 0) Die();
         AudioManager.instance.PlaySound(1, gameObject);
 
         GetComponent<EnemyMovement>()?.KnockBack(source, KB * KBresist);
+    }
+
+    void Die()
+    {
+        if (destroy) Destroy(gameObject);
+        if (hpBar) hpBar.gameObject.SetActive(false);
     }
 
     private void Update()

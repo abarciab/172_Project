@@ -26,6 +26,11 @@ public class Goat : MonoBehaviour
     bool charging;
     float chargeCooldown;
 
+    [Header("Jump")]
+    [SerializeField] float jumpDist;
+    [SerializeField] float jumpheight, jumpTime;
+    bool jumping;
+
     Vector3 TESTPOS;
 
     private void Start()
@@ -33,15 +38,61 @@ public class Goat : MonoBehaviour
         move = GetComponent<EnemyMovement>();
         oldPosition = transform.position;
         waitTime = Random.Range(waitTimeRange.x, waitTimeRange.y);
+        GetComponent<EnemyStats>().OnHit.AddListener(JumpBack);
+    }
+
+    void JumpBack()
+    {
+        if (jumping) return;
+
+        StopAllCoroutines();
+        StartCoroutine(_JumpBack(Player.i.transform.position));
+    }
+
+    IEnumerator _JumpBack(Vector3 threat)
+    {
+        var targetPos = transform.position + (threat - transform.position).normalized * -jumpDist;
+        Vector2 originalPos = new Vector2(transform.position.x, transform.position.z);
+        move.gotoTarget = false;
+
+        jumping = true;
+        charging = false;
+
+        float timeLeft = jumpTime;
+        float startPos = transform.position.y;
+
+        while (timeLeft > 0) {
+            float progress = timeLeft / jumpTime;
+
+            float yPos = startPos + Mathf.Sin(progress * Mathf.PI) * jumpheight;
+            Vector2 xzPos = Vector2.Lerp(originalPos, new Vector2(targetPos.x, targetPos.z), 1-progress);
+            transform.position = new Vector3(xzPos.x, yPos, xzPos.y);
+            
+            timeLeft -= Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        PutOnGround();
+
+        jumping = false;
+        chargeCooldown = 0;
+        yield break;
+    }
+
+    void PutOnGround()
+    {
+        int layerMask = 1 << 7;
+        Physics.Raycast(transform.position + Vector3.up * 100, Vector3.down, out var hit, 150, layerMask: layerMask);
+        if (hit.collider == null) return;
+        var pos = transform.position;
+        pos.y = hit.point.y;
+        transform.position = pos;
     }
 
     private void Update()
     {
         if (agro) waitTime = 0;
         waitTime -= Time.deltaTime;
-        if (waitTime > 0) return;
-
-        
+        if (waitTime > 0 || jumping) return;
 
         if (GetComponent<EnemyStats>().health == 0) {
             anim.SetTrigger("die");
@@ -74,6 +125,7 @@ public class Goat : MonoBehaviour
 
     void BeAgro()
     {
+        Player.i.enemies.Add(move);
         target = Player.i.transform;
         if (charging) return;
 
@@ -82,12 +134,12 @@ public class Goat : MonoBehaviour
         float dist = Vector3.Distance(transform.position, target.position);
         chargeCooldown -= Time.deltaTime;
 
-        //if (dist <= chargeRange && chargeCooldown <= 0) { move.gotoTarget = false; return; }
+        if (dist <= chargeRange && chargeCooldown > 0) { move.gotoTarget = false; return; }
         
         move.target = target.position;
         move.gotoTarget = true;
 
-        if (chargeCooldown <= 0) StartCoroutine(Charge());
+        if (chargeCooldown <= 0 && dist <= chargeRange) StartCoroutine(Charge());
 
         move.target = Player.i.transform.position;
     }
@@ -124,7 +176,8 @@ public class Goat : MonoBehaviour
             dist = Vector3.Distance(transform.position, targetPos);
             yield return new WaitForEndOfFrame();
         }
-        
+
+        hb.EndChecking();
         move.gotoTarget = false;
         yield return new WaitForSeconds(chargeStunTime);
 
