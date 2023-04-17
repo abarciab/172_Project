@@ -1,30 +1,61 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MarkerTracker : MonoBehaviour
 {
     public static MarkerTracker i;
     void Awake() { i = this; }
 
-    public List<Transform> trackedMarkers;
+    [System.Serializable]
+    public class Marker
+    {
+        public RectTransform UImarker;
+        public Transform trackedObj;
+    }
 
-    [SerializeField] RectTransform markerParent, marker1;
+    public List<Marker> activeMarkers = new List<Marker>();
 
-    public Transform test1;
+    [SerializeField] RectTransform markerParent;
+    [SerializeField] GameObject markerPrefab;
+
+    public bool AlreadyTracking(Transform obj)
+    {
+        foreach (var m in activeMarkers) if (m.trackedObj == obj) return true;
+        return false;
+    }
+
+    public void AddMarker(Transform obj, Sprite img)
+    {
+        if (AlreadyTracking(obj)) return;
+
+        GameObject newUImarker = Instantiate(markerPrefab, markerParent);
+        newUImarker.GetComponentInChildren<Image>().sprite = img;
+        Marker newMarker = new Marker();
+        newMarker.trackedObj = obj;
+        newMarker.UImarker = newUImarker.GetComponent<RectTransform>();
+        UpdateMarker(newMarker);
+        activeMarkers.Add(newMarker);
+    }
 
     private void Update()
     {
+        foreach (var m in activeMarkers) UpdateMarker(m);
+    }
+
+    void UpdateMarker(Marker m)
+    {
         var camForward = Camera.main.transform.forward;
-        var dir = test1.position - Camera.main.transform.position;
+        var dir = m.trackedObj.position - Camera.main.transform.position;
         dir.y = camForward.y = 0;
         float angle = Vector3.SignedAngle(camForward, dir, Camera.main.transform.up);
         float parentMod = 2;
         float x = (markerParent.rect.width * parentMod) * ((angle + 180) / 360);
 
-        Vector3 targetPos = Vector3.right * (x - markerParent.rect.width*parentMod / 2);
-        marker1.transform.localPosition = Vector3.Lerp(marker1.transform.localPosition, targetPos, 0.2f);
+        Vector3 targetPos = Vector3.right * (x - markerParent.rect.width * parentMod / 2);
+        m.UImarker.transform.localPosition = Vector3.Lerp(m.UImarker.transform.localPosition, targetPos, 0.2f);
 
-        marker1.gameObject.SetActive(targetPos.x < markerParent.rect.width / 2 && targetPos.x > -markerParent.rect.width / 2);
+        m.UImarker.gameObject.SetActive(targetPos.x < markerParent.rect.width / 2 && targetPos.x > -markerParent.rect.width / 2);
     }
 }

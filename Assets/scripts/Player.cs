@@ -68,13 +68,14 @@ public class Player : MonoBehaviour
 
         GetComponent<PMovement>().StopMovement();
 
-        var nextLine = ConversationHolder.i.GetNextLine(interestedSpeaker.speaker);
+        var nextLine = interestedSpeaker.GetNextLine();
         if (string.Equals("END", nextLine)) EndConversation();
-        else GlobalUI.i.DisplayLine(interestedSpeaker.speaker.ToString(), nextLine);
+        else GlobalUI.i.DisplayLine(interestedSpeaker.characterName, nextLine);
     }
 
     public void EndConversation()
     {
+        interestedSpeaker.EndConversation();
         GetComponent<PMovement>().ResumeMovement();
         interestedSpeaker = null;
         GlobalUI.i.EndConversation();

@@ -2,16 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Character { none, engineer_1}
-
 [CreateAssetMenu(fileName = "New Conversation", menuName = "Conversations")]
 public class Conversation : ScriptableObject
 {
-    public Character speaker;
     public List<string> lines = new List<string>();
     public string nextLine { get { return GetNextLine(); } }
-
     public int step = -1;
+    public Fact endConvoFact;
 
     string GetNextLine()
     {
@@ -20,6 +17,11 @@ public class Conversation : ScriptableObject
         
         step = -1; 
         return "END"; 
+    }
+
+    public void StepBack()
+    {
+        if (step > -1) step -= 1;
     }
 
     public void Init()
