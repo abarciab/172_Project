@@ -10,11 +10,14 @@ public class EnemyStats : HitReciever
     [SerializeField] Slider hpBar;
     public bool destroy;
     [SerializeField] float KBresist;
+    [SerializeField] GameObject blood;
+    [SerializeField] float bloodTime = 1;
 
     private void Start()
     {
         OnHit.AddListener(_Hit);
         health = maxHealth;
+        if (blood != null) blood.SetActive(false);
     }
 
     void _Hit()
@@ -26,10 +29,22 @@ public class EnemyStats : HitReciever
         AudioManager.instance.PlaySound(1, gameObject);
 
         GetComponent<EnemyMovement>()?.KnockBack(source, KB * KBresist);
+
+        StopAllCoroutines();
+        if (blood != null) StartCoroutine(Bleed());
+    }
+
+    IEnumerator Bleed()
+    {
+        blood.SetActive(true);
+        yield return new WaitForSeconds(bloodTime);
+        blood.SetActive(false);
     }
 
     void Die()
     {
+        StopAllCoroutines();
+        blood.SetActive(false);
         if (destroy) Destroy(gameObject);
         if (hpBar) hpBar.gameObject.SetActive(false);
     }
