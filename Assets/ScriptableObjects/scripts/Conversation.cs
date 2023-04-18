@@ -8,7 +8,9 @@ public class Conversation : ScriptableObject
     public List<string> lines = new List<string>();
     public string nextLine { get { return GetNextLine(); } }
     public int step = -1;
+
     public Fact endConvoFact;
+    public Fact endConvoRemoveFact;
 
     string GetNextLine()
     {

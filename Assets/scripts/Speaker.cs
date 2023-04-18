@@ -77,5 +77,6 @@ public class Speaker : MonoBehaviour
         if (convoData == null) return;
 
         if (convoData.convo.endConvoFact != null) FactManager.i.facts.Add(convoData.convo.endConvoFact);
+        if (convoData.convo.endConvoRemoveFact != null) FactManager.i.facts.Remove(convoData.convo.endConvoRemoveFact);
     }
 }
