@@ -12,7 +12,8 @@ public class GlobalUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI commandPrompt, subtitle;
     public Slider HpBar;
     [SerializeField] float redFlashTime = 0.1f;
-    [SerializeField] GameObject red, title;
+    [SerializeField] GameObject title;
+    [SerializeField] Image dmgIndicator;
     [SerializeField] bool showHPbar;
 
     [Header("Dialogue")]
@@ -61,17 +62,13 @@ public class GlobalUI : MonoBehaviour
         StartCoroutine(FadeText(commandPrompt, 0));
     }
 
-    public void FlashRed()
+    public void UpdateDmgIndicator(float health)
     {
-        StartCoroutine(_FlashRed());
+        var col = dmgIndicator.color;
+        col.a = (1-health) * 0.8f;
+        dmgIndicator.color = col;
     }
 
-    IEnumerator _FlashRed()
-    {
-        red.SetActive(true);
-        yield return new WaitForSeconds(redFlashTime);
-        red.SetActive(false);
-    }
 
     private void Update()
     {

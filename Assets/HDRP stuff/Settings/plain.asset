@@ -1,5 +1,33 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5043917303576717184
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b8bcdf71d7fafa419fca1ed162f5fc9, type: 3}
+  m_Name: ColorAdjustments
+  m_EditorClassIdentifier: 
+  active: 1
+  postExposure:
+    m_OverrideState: 1
+    m_Value: -0.68
+  contrast:
+    m_OverrideState: 1
+    m_Value: -2.5
+  colorFilter:
+    m_OverrideState: 1
+    m_Value: {r: 1.3711779, g: 1.4189767, b: 1.5712959, a: 1}
+  hueShift:
+    m_OverrideState: 1
+    m_Value: 0
+  saturation:
+    m_OverrideState: 1
+    m_Value: -37.1
 --- !u!114 &-3894180125248914940
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -21,7 +49,7 @@ MonoBehaviour:
     m_Value: 0.33
   intensity:
     m_OverrideState: 1
-    m_Value: 0.064
+    m_Value: 0
   scatter:
     m_OverrideState: 1
     m_Value: 0.7
@@ -391,13 +419,13 @@ MonoBehaviour:
     m_Value: 0
   skyIntensityMode:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 2
   exposure:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: -3.95
   multiplier:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0.25
   upperHemisphereLuxValue:
     m_OverrideState: 1
     m_Value: 1
@@ -417,7 +445,7 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 0
   type:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 0
   sphericalMode:
     m_OverrideState: 1
@@ -448,10 +476,10 @@ MonoBehaviour:
     m_Value: 55261.973
   aerosolDensity:
     m_OverrideState: 1
-    m_Value: 0.508
+    m_Value: 0
   aerosolTint:
     m_OverrideState: 1
-    m_Value: {r: 0.9, g: 0.9, b: 0.9, a: 1}
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
   aerosolMaximumAltitude:
     m_OverrideState: 1
     m_Value: 8289.296
@@ -463,7 +491,7 @@ MonoBehaviour:
     m_Value: 3
   groundTint:
     m_OverrideState: 1
-    m_Value: {r: 0.8207547, g: 0.7711796, b: 0.7549395, a: 1}
+    m_Value: {r: 0.6476059, g: 0.7264151, b: 0.6476382, a: 1}
   groundColorTexture:
     m_OverrideState: 1
     m_Value: {fileID: 0}
@@ -496,7 +524,7 @@ MonoBehaviour:
     m_Value: 1
   horizonTint:
     m_OverrideState: 1
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_Value: {r: 0, g: 0.91298866, b: 1, a: 1}
   zenithTint:
     m_OverrideState: 1
     m_Value: {r: 1, g: 1, b: 1, a: 1}
@@ -526,38 +554,10 @@ MonoBehaviour:
   - {fileID: 8570783516103317407}
   - {fileID: -3894180125248914940}
   - {fileID: -2112341970885420002}
-  - {fileID: 223462666031817472}
+  - {fileID: -5043917303576717184}
   - {fileID: -2823953491085531506}
   - {fileID: 3805897146134634223}
   - {fileID: 2991352641532797797}
---- !u!114 &223462666031817472
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b8bcdf71d7fafa419fca1ed162f5fc9, type: 3}
-  m_Name: ColorAdjustments
-  m_EditorClassIdentifier: 
-  active: 1
-  postExposure:
-    m_OverrideState: 1
-    m_Value: 0.91
-  contrast:
-    m_OverrideState: 1
-    m_Value: 0
-  colorFilter:
-    m_OverrideState: 1
-    m_Value: {r: 0.764151, g: 0.74995834, b: 0.73891956, a: 1}
-  hueShift:
-    m_OverrideState: 1
-    m_Value: 0
-  saturation:
-    m_OverrideState: 1
-    m_Value: 0
 --- !u!114 &2172454525753427306
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -601,7 +601,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b24b200358312b4fa1004e2431c2f1f, type: 3}
   m_Name: ShadowsMidtonesHighlights
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   shadows:
     m_OverrideState: 1
     m_Value: {x: 0.9007455, y: 0.7821536, z: 1, w: 0.21531099}

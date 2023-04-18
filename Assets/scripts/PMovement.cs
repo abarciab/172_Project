@@ -17,11 +17,11 @@ public class PMovement : MonoBehaviour
     Vector3 rollDir;
     Transform poseLookTarget;
 
-    GameObject source;
+    Vector3 source;
 
-    public void KnockBack(GameObject _source, float _KB)
+    public void KnockBack(GameObject _source, float _KB, Vector3 offset)
     {
-        source = _source;
+        source = _source.transform.position + offset;
         KB = _KB;
         knockedBack = true;
     }
@@ -35,6 +35,8 @@ public class PMovement : MonoBehaviour
     }
 
     public void Roll() {
+        if (GetComponent<PFighting>().basicAttacking || GetComponent<PFighting>().hvyAttacking) return;
+
         if (!rolling) AudioManager.instance.PlaySound(5, gameObject);
         rollDir = GetDashDir();
         rolling = true;
@@ -159,7 +161,7 @@ public class PMovement : MonoBehaviour
         Vector3 horizontalDir = !attacking ? GetStrafeDir() : Vector3.zero;
         var KBdir = Vector3.zero;
         if (knockedBack) {
-            KBdir = (transform.position - source.transform.position).normalized;
+            KBdir = (transform.position - source).normalized;
             KBdir.y = 0;
         }
 

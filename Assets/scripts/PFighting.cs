@@ -53,7 +53,7 @@ public class PFighting : HitReciever
         if (basicAttacking || hvyAttacking) return;
         var a = GetAttackFromType(attack);
 
-        if (!staffDrawn) { DrawWeapon(); return; }
+        if (!staffDrawn) DrawWeapon();
 
         basicAttacking = a.type == AttackStats.AttackType.basic;
         hvyAttacking = !basicAttacking;
@@ -98,6 +98,6 @@ public class PFighting : HitReciever
 
         int damage = _damage;
         Player.i.ChangeHealth(-damage);
-        GetComponent<PMovement>().KnockBack(source, KB);
+        GetComponent<PMovement>().KnockBack(source, KB, hitSourceOffset);
     }
 }

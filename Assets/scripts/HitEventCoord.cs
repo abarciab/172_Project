@@ -4,7 +4,17 @@ using UnityEngine;
 
 public class HitEventCoord : MonoBehaviour
 {
-   
+    public void GoatStartCheck()
+    {
+        var goat = GetComponentInParent<Goat>();
+        if (goat != null) goat.StartChecking();
+    }
+    public void GoatEndCheck()
+    {
+        var goat = GetComponentInParent<Goat>();
+        if (goat != null) goat.EndChecking();
+    }
+
     public void GolemStartChecking()
     {
         var golem = GetComponentInParent<Golem>();

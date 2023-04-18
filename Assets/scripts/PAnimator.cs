@@ -15,6 +15,8 @@ public class PAnimator : MonoBehaviour
     PFighting fight;
     bool triggeredDash;
 
+    bool attacking;
+
     private void Start()
     {
         p = Player.i;
@@ -37,12 +39,25 @@ public class PAnimator : MonoBehaviour
         anim.SetBool("TurningLeft", move.turnLeft && !moving);
         anim.SetBool("TurningRight", move.turnRight && !moving);
         anim.SetBool("StaffDrawn", fight.staffDrawn && !move.posing);
-        anim.SetBool("BasicAttack", fight.basicAttacking);
-        anim.SetBool("StrongAttack", fight.hvyAttacking);
         anim.SetBool("Strafe", move.strafe && Mathf.Abs(GetComponent<Rigidbody>().velocity.x + GetComponent<Rigidbody>().velocity.z) > 0.01f);
 
+        anim.SetBool("Attacking", attacking);
+
+        if (!attacking && fight.basicAttacking) {
+            attacking = true;
+            anim.SetTrigger("BasicAttack");
+        }
+        if (!attacking && fight.hvyAttacking) {
+            attacking = true;
+            anim.SetTrigger("StrongAttack");
+        }
+        if (!fight.hvyAttacking && !fight.basicAttacking) {
+            attacking = false;
+        }
+
+
         if (triggeredDash && !move.rolling) triggeredDash = false;
-        if (move.rolling && !triggeredDash) {
+        if (move.rolling && !triggeredDash && !attacking) {
             triggeredDash = true;
             anim.SetTrigger("Roll");
         }

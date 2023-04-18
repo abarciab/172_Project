@@ -13,21 +13,21 @@ public class Player : MonoBehaviour
     [SerializeField] float lockOnDist = 15, speakerEndDist;
 
     [SerializeField] int maxHealth;
-    [SerializeField] int Health;
+    [SerializeField] int health;
 
     [Header("Prompts")]
     [SerializeField] string startTalkingPrompt = "Press E to talk";
 
-    public enum TESTENUM { hidden, option1, option2}
-    
-    public TESTENUM showEnum;
-
-    public bool SHOW;
-    [ConditionalHide(nameof(SHOW))]
-    public float field1;
+    [Header("sfx")]
+    [SerializeField] AudioSource hurtSource;
 
     Speaker interestedSpeaker;
     Gate interestedInteractable;
+
+    [Header("Healing")]
+    [SerializeField] float healWaitTime;
+    [SerializeField] int healRate;
+    float healCooldown;
 
     public void RemoveInteractable(Gate interactable)
     {
@@ -58,6 +58,7 @@ public class Player : MonoBehaviour
 
     public void SpeakerShowInterest(Speaker speaker)
     {
+        print("Show interest: " + speaker.characterName);
         interestedSpeaker = speaker;
         GlobalUI.i.DisplayPrompt(startTalkingPrompt);
     }
@@ -82,6 +83,9 @@ public class Player : MonoBehaviour
     }
 
     private void Update() {
+        if (healCooldown <= 0 && health < maxHealth) StartCoroutine(Heal());
+        healCooldown -= Time.deltaTime;
+
         if (interestedSpeaker == null) GlobalUI.i.HidePrompt(startTalkingPrompt);
         if (interestedSpeaker != null && Vector3.Distance(transform.position, interestedSpeaker.transform.position) > speakerEndDist) {
             interestedSpeaker = null;
@@ -95,6 +99,16 @@ public class Player : MonoBehaviour
             CameraState.i.StopLockOn();
             return;
         }
+    }
+
+    IEnumerator Heal()
+    {
+        healCooldown = Mathf.Infinity;
+        while (health < maxHealth) {
+            ChangeHealth(healRate);
+            yield return new WaitForSeconds(0.5f);
+        }
+        healCooldown = healWaitTime;
     }
 
     public void ToggleLockOn()
@@ -122,23 +136,26 @@ public class Player : MonoBehaviour
     }
 
     private void Start() {
-        Health = maxHealth;
+        health = maxHealth;
     }
 
     public void ChangeHealth(int delta) {
-        Health = Mathf.Min(Health + delta, maxHealth);
-        if (Health <= 0) Die();
-        GlobalUI.i.HpBar.value = (float)Health / maxHealth;
+        health = Mathf.Min(health + delta, maxHealth);
+        if (health <= 0) Die();
+        GlobalUI.i.HpBar.value = (float)health / maxHealth;
+        GlobalUI.i.UpdateDmgIndicator((float)health / maxHealth);
 
         if (delta > 0) return;
+
+        healCooldown = healWaitTime;
+        StopAllCoroutines();
         
-        GlobalUI.i.FlashRed();
-        AudioManager.instance.PlaySound(2, transform.GetChild(0).gameObject);
+        AudioManager.instance.PlaySound(2, hurtSource);
         GetComponent<PFighting>().Inturrupt(1);
     }
 
     void Die() {
-        Destroy(gameObject);
+        health = maxHealth;
     }
 
     private void Awake()

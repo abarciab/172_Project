@@ -20,25 +20,47 @@ public class Goat : MonoBehaviour
 
     [Header("agro")]
     [SerializeField] bool agro;
-    [SerializeField] float chargeResetTime, chargeRange, chargeSpeed, overshootDist, chargeStartUpTime, chargeStunTime, chargeKB;
+    [SerializeField] float chargeResetTime, chargeRange, chargeSpeed, overshootDist, chargeStartUpTime, chargeStunTime, chargeKB, throwKB, throwRange, throwResetTime;
     [SerializeField] int chargeDamage;
     [SerializeField] HitBox hb;
-    bool charging;
-    float chargeCooldown;
+    bool attacking;
+    float chargeCooldown, throwCooldown;
 
     [Header("Jump")]
     [SerializeField] float jumpDist;
     [SerializeField] float jumpheight, jumpTime;
     bool jumping;
 
+    [Header("audio")]
+    [SerializeField] AudioSource hoofBeats; 
+    [SerializeField] AudioSource hurt, throwSource; 
+
     Vector3 TESTPOS;
+
+    public void StartChecking()
+    {
+        hb.StartChecking(transform, chargeDamage, throwKB, gameObject);
+    }
+
+    public void EndChecking()
+    {
+        hb.EndChecking();
+        attacking = false;
+        throwCooldown = throwResetTime;
+    }
 
     private void Start()
     {
         move = GetComponent<EnemyMovement>();
         oldPosition = transform.position;
         waitTime = Random.Range(waitTimeRange.x, waitTimeRange.y);
-        GetComponent<EnemyStats>().OnHit.AddListener(JumpBack);
+        GetComponent<EnemyStats>().OnHit.AddListener(TakeHit);
+    }
+
+    void TakeHit()
+    {
+        hurt.Play();
+        JumpBack();
     }
 
     void JumpBack()
@@ -46,6 +68,9 @@ public class Goat : MonoBehaviour
         if (jumping) return;
 
         StopAllCoroutines();
+        anim.SetBool("charging", false);
+        attacking = false;
+        throwCooldown = 0;
         StartCoroutine(_JumpBack(Player.i.transform.position));
     }
 
@@ -56,7 +81,7 @@ public class Goat : MonoBehaviour
         move.gotoTarget = false;
 
         jumping = true;
-        charging = false;
+        attacking = false;
 
         float timeLeft = jumpTime;
         float startPos = transform.position.y;
@@ -90,13 +115,15 @@ public class Goat : MonoBehaviour
 
     private void Update()
     {
-        if (agro) waitTime = 0;
         waitTime -= Time.deltaTime;
         if (waitTime > 0 || jumping) return;
 
         if (GetComponent<EnemyStats>().health == 0) {
             anim.SetTrigger("die");
             move.gotoTarget = false;
+            hoofBeats.gameObject.SetActive(false);
+            hb.EndChecking();
+            Player.i.enemies.Remove(move);
             return;
         }
 
@@ -113,6 +140,7 @@ public class Goat : MonoBehaviour
         if (target == null) return;
         var dist = Vector2.Distance(transform.position, target.position);
 
+
         if (dist > 1f) {
             move.gotoTarget = true;
             move.target = target.position;
@@ -125,23 +153,58 @@ public class Goat : MonoBehaviour
 
     void BeAgro()
     {
-        Player.i.enemies.Add(move);
+        if (!Player.i.enemies.Contains(move)) Player.i.enemies.Add(move);
         target = Player.i.transform;
-        if (charging) return;
+        if (attacking) return;
 
         FaceTarget();
 
         float dist = Vector3.Distance(transform.position, target.position);
         chargeCooldown -= Time.deltaTime;
+        var stats = GetComponent<EnemyStats>();
 
-        if (dist <= chargeRange && chargeCooldown > 0) { move.gotoTarget = false; return; }
+        if (dist <= chargeRange/2 || (chargeCooldown > 0 && throwCooldown <= 0 && stats.health > stats.maxHealth/2)) {
+            if (throwCooldown <= 0 && stats.health > stats.maxHealth / 2) StartCoroutine(MoveToThrow());
+            else JumpBack();
+            return;
+        }
         
         move.target = target.position;
         move.gotoTarget = true;
 
-        if (chargeCooldown <= 0 && dist <= chargeRange) StartCoroutine(Charge());
+        if (chargeCooldown <= 0 && dist <= chargeRange) {
+            StopAllCoroutines();
+            StartCoroutine(Charge());
+        }
+        move.target = Player.i.transform.position;
+    }
+
+    IEnumerator MoveToThrow()
+    {
+        print("START THROW");
+
+        attacking = true;
+        throwCooldown = Mathf.Infinity;
 
         move.target = Player.i.transform.position;
+        move.gotoTarget = true;
+
+        float dist = Vector3.Distance(transform.position, Player.i.transform.position);
+        while (dist > throwRange) {
+            dist = Vector3.Distance(transform.position, Player.i.transform.position);
+            yield return new WaitForEndOfFrame();
+        }
+
+        var rot = transform.localEulerAngles;
+        transform.LookAt(Player.i.transform);
+        rot.y = transform.localEulerAngles.y;
+        transform.localEulerAngles = rot;
+
+        move.gotoTarget = false;
+        anim.SetTrigger("throw");
+        throwSource.Play();
+
+        print("END THROW");
     }
 
     void FaceTarget(float t = 0.05f)
@@ -155,9 +218,11 @@ public class Goat : MonoBehaviour
 
     IEnumerator Charge()
     {
+        print("START CHARGE");
+
         FaceTarget(0.5f);
         move.gotoTarget = false;
-        charging = true;
+        attacking = true;
         var dir = target.position - transform.position;
         var targetPos = target.position + dir.normalized * overshootDist;
         TESTPOS = targetPos;
@@ -165,26 +230,31 @@ public class Goat : MonoBehaviour
 
         yield return new WaitForSeconds(chargeStartUpTime);
 
-        hb.StartChecking(transform, chargeDamage, chargeKB, gameObject);
+        hoofBeats.Play();
+        hb.StartChecking(transform, chargeDamage, chargeKB, gameObject, transform.right * Random.Range(-2, 2));
 
         move.target = targetPos;
         move.ChangeSpeed(chargeSpeed);
         move.gotoTarget = true;
 
         float dist = Vector3.Distance(transform.position, targetPos);
-        while (dist > 0.1f) {
+        float time = 0;
+        while (dist > 1f || time > 3.5f) {
             dist = Vector3.Distance(transform.position, targetPos);
             yield return new WaitForEndOfFrame();
+            time += Time.deltaTime;
         }
 
         hb.EndChecking();
         move.gotoTarget = false;
         yield return new WaitForSeconds(chargeStunTime);
 
+        hoofBeats.Stop();
         anim.SetBool("charging", false);
         move.NormalSpeed();
         chargeCooldown = chargeResetTime;
-        charging = false;
+        attacking = false;
+        print("DONE CHARGING");
     }
 
     Transform GetNewTarget()
