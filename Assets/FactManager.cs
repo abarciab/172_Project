@@ -21,6 +21,6 @@ public class FactManager : MonoBehaviour
 
     private void Start()
     {
-        foreach (var f in facts) print(f.name);
+        //foreach (var f in facts) print(f.name);
     }
 }

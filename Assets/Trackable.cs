@@ -11,8 +11,9 @@ public class Trackable : MonoBehaviour
 
     private void Update()
     {
-        if (factCondition != null) track = FactManager.i.IsPresent(factCondition); 
+        if (factCondition != null) track = FactManager.i.IsPresent(factCondition);
 
-        if (track && !MarkerTracker.i.AlreadyTracking(transform)) MarkerTracker.i.AddMarker(transform, trackerIcon); 
+        if (track && !MarkerTracker.i.AlreadyTracking(transform)) MarkerTracker.i.AddMarker(transform, trackerIcon);
+        if (MarkerTracker.i.AlreadyTracking(transform) && !track) MarkerTracker.i.RemoveMarker(transform);
     }
 }
