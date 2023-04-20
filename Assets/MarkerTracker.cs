@@ -26,6 +26,18 @@ public class MarkerTracker : MonoBehaviour
         return false;
     }
 
+    public void RemoveMarker(Transform obj) {
+        print("REMOVING");
+        if (!AlreadyTracking(obj)) return;
+
+        for (int i = 0; i < activeMarkers.Count; i++) {
+            if (activeMarkers[i].trackedObj == obj) {
+                Destroy(activeMarkers[i].UImarker.gameObject);
+                activeMarkers.RemoveAt(i);
+            }
+        }
+    }
+
     public void AddMarker(Transform obj, Sprite img)
     {
         if (AlreadyTracking(obj)) return;
