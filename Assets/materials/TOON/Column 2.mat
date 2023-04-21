@@ -24,17 +24,16 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Column 2
-  m_Shader: {fileID: -6465566751694194690, guid: 860144483d80a20418be49b1ff83ef65,
+  m_Shader: {fileID: -6465566751694194690, guid: 756bc8ccf7441ac468346e00be096055,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
-  m_InvalidKeywords:
-  - _DISABLE_SSR_TRANSPARENT
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: -1
   stringTagMap:
     MotionVector: User
   disabledShaderPasses:
@@ -88,7 +87,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 049a5cd83304844488984ba92f5ef4c0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskMap:
@@ -227,12 +226,16 @@ Material:
     - _PPDMinSamples: 5
     - _PPDPrimitiveLength: 1
     - _PPDPrimitiveWidth: 1
+    - _QueueControl: 0
+    - _QueueOffset: 0
     - _RayTracing: 0
     - _ReceivesSSR: 1
     - _ReceivesSSRTransparent: 0
     - _RefractionModel: 0
     - _RenderQueueType: 1
     - _RequireSplitLighting: 0
+    - _ShadowHardness: 0.01
+    - _ShadowHardness_2: 0.011
     - _Smoothness: 0.5
     - _SmoothnessRemapMax: 1
     - _SmoothnessRemapMin: 0
@@ -278,15 +281,23 @@ Material:
     - _ZWrite: 1
     - _frenelPower: 1
     - _frenelThreshold: 1
+    - _glossiness: 54.53
+    - _gradient: 1
     - _gradientDark: 0.97
+    - _gradientMod: -1
     - _gradientTextureStr: 0
     - _input: 0
-    - _outlineThickness: 0.1
+    - _outlineThickness: -0.17
+    - _outlineThreshold: 4.15
+    - _rimAmount: 0.299
+    - _rimThreshold: 0
     - _useGradient: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color1: {r: 0.8867924, g: 0.71047837, b: 0.6483624, a: 1}
+    - _Color2: {r: 0.18867922, g: 0.118697405, b: 0.11480952, a: 1}
     - _DarkerColor: {r: 0.8862745, g: 0.8745098, b: 0.8666667, a: 0}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
@@ -296,6 +307,7 @@ Material:
     - _InvPrimScale: {r: 1, g: 1, b: 0, a: 0}
     - _IridescenceThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
     - _LighterColor: {r: 0.8867924, g: 0.87619174, b: 0.8658775, a: 0}
+    - _OutlieColor: {r: 0.026464976, g: 0.034003485, b: 0.03255175, a: 0}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _TESTINPUT: {r: 0, g: 0, b: 0, a: 0}
     - _ThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
@@ -305,5 +317,24 @@ Material:
     - _UVDetailsMappingMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMaskEmissive: {r: 1, g: 0, b: 0, a: 0}
+    - _ambientColor: {r: 1, g: 1, b: 1, a: 1}
+    - _color: {r: 0, g: 0, b: 0, a: 0}
+    - _mainColor: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 1}
+    - _rimColor: {r: 1.7207954, g: 1.7207954, b: 1.7207954, a: 1}
+    - _specularColor: {r: 0.00073146453, g: 0.00073146453, b: 0.00073146453, a: 1}
     - _textureScale: {r: 1, g: 1, b: 0, a: 0}
+    - _tiling: {r: 1, g: 5.4, b: 0, a: 0}
   m_BuildTextureStacks: []
+--- !u!114 &2484376714297425479
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7

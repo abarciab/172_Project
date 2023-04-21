@@ -1,6 +1,13 @@
 #ifndef CUSTOM_LIGHTING_INCLUDED
 #define CUSTOM_LIGHTING_INCLUDED
 
+#pragma multi_compile _ _MAIN_LIGHT_SHADOWS
+#pragma multi_compile _ _MAIN_LIGHT_SHADOWS_CASCADE
+     
+//#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+//#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+
+
 void MainLight_float(float3 WorldPos, out float3 Direction, out float3 Color, out float DistanceAtten, out float ShadowAtten)
 {
 #if SHADERGRAPH_PREVIEW
@@ -19,7 +26,8 @@ void MainLight_float(float3 WorldPos, out float3 Direction, out float3 Color, ou
     Direction = mainLight.direction;
     Color = mainLight.color;
     DistanceAtten = mainLight.distanceAttenuation;
-    ShadowAtten = mainLight.shadowAttenuation;
+    //ShadowAtten = mainLight.shadowAttenuation;
+    ShadowAtten = MainLightRealtimeShadow(TransformWorldToShadowCoord(WorldPos));
 #endif
 }
 

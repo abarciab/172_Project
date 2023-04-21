@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Rendering.HighDefinition;
 using UnityEngine;
 using UnityEngine.AI;
-using static Unity.VisualScripting.Member;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyMovement : MonoBehaviour
