@@ -68,7 +68,7 @@ public class Golem : MonoBehaviour
     private void Start() {
         oldPosition = transform.position;
         move = GetComponent<EnemyMovement>();
-        GetComponent<EnemyStats>().OnHit.AddListener(JumpBack);
+        //GetComponent<EnemyStats>().OnHit.AddListener(JumpBack);
         foreach (var a in attacks) a.Reset();
     }
 

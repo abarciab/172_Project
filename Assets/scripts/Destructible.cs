@@ -5,12 +5,10 @@ using UnityEngine.Events;
 
 public class Destructible : HitReciever
 {
-    private void Awake() {
-        OnHit.AddListener(_Hit);
-    }
+    public override void Hit2(HitData hit)
+    {
+        base.Hit2(hit);
 
-    void _Hit() {
-        int damage = _damage;
         Destroy(gameObject);
     }
 

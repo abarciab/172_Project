@@ -88,16 +88,21 @@ public class PFighting : HitReciever
         EndAttack();
     }
 
-    private void Start()
+    public override void Hit2(HitData hit)
     {
-        OnHit.AddListener(_Hit);
-    }
+        base.Hit2(hit);
 
+        if (GetComponent<PMovement>().rolling) return;
+
+        Player.i.ChangeHealth(-hit.damage);
+        GetComponent<PMovement>().KnockBack(hit.source, hit.KB, hit.offset);
+    }
+    /*
     void _Hit() {
         if (GetComponent<PMovement>().rolling) return;
 
         int damage = _damage;
         Player.i.ChangeHealth(-damage);
         GetComponent<PMovement>().KnockBack(source, KB, hitSourceOffset);
-    }
+    }*/
 }

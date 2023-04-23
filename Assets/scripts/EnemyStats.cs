@@ -15,12 +15,27 @@ public class EnemyStats : HitReciever
 
     private void Start()
     {
-        OnHit.AddListener(_Hit);
+        //OnHit.AddListener(_Hit);
         health = maxHealth;
         if (blood != null) blood.SetActive(false);
     }
 
-    void _Hit()
+    public override void Hit2(HitData hit)
+    {
+        base.Hit2(hit);
+
+        health -= hit.damage;
+        health = Mathf.Clamp(health, 0, maxHealth);
+        if (health <= 0) Die();
+        AudioManager.instance.PlaySound(1, gameObject);
+
+        GetComponent<EnemyMovement>()?.KnockBack(hit.source, hit.KB * KBresist);
+
+        StopAllCoroutines();
+        if (blood != null) StartCoroutine(Bleed());
+    }
+
+    /*public void _Hit()
     {
         int damage = _damage;
         health -= damage;
@@ -32,7 +47,7 @@ public class EnemyStats : HitReciever
 
         StopAllCoroutines();
         if (blood != null) StartCoroutine(Bleed());
-    }
+    }*/
 
     IEnumerator Bleed()
     {

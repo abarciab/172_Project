@@ -57,7 +57,7 @@ public class HitBox : MonoBehaviour
         var reciever = other.GetComponent<HitReciever>();
         if (reciever == null || targets.Contains(reciever)) return;
 
-        if (hitting) reciever.Hit(dmg, obj, kb, offset);
+        if (hitting) reciever.Hit2(new HitReciever.HitData(dmg, obj, kb, offset));
         targets.Add(reciever);
     }
 }
