@@ -369,6 +369,7 @@ MonoBehaviour:
   redFlashTime: 0.08
   title: {fileID: 2092052179}
   dmgIndicator: {fileID: 151832575}
+  dmgFlash: {fileID: 467275460}
   showHPbar: 1
   nameText: {fileID: 1498849373}
   mainText: {fileID: 2090538213}
@@ -1938,7 +1939,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 352234588}
   m_LocalRotation: {x: -0, y: 0.14716186, z: -0, w: 0.98911244}
-  m_LocalPosition: {x: 117.100006, y: 81.05699, z: -19.2}
+  m_LocalPosition: {x: 167.1, y: 81.906006, z: -15.200001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1967,13 +1968,13 @@ MonoBehaviour:
     displayName: 4
     selected: 1
     playerX: 0.7
-    playerY: 0.742
-    zoom: 0.46
+    playerY: 0.792
+    zoom: 0.359
     limitsX: {x: -1, y: 1}
     limitsY: {x: 0.22, y: 1.72}
     zoomLimits: {x: -3, y: -1}
     parentRotLimits: {x: 0, y: 0}
-    camTargetOffset: {x: 0, y: 0, z: 2.5}
+    camTargetOffset: {x: 0, y: -0.14, z: 2.5}
     camParentPlayerOffset: {x: 0, y: 0, z: 0}
     objTargetOffset: {x: 0, y: 0, z: 0}
     lookAtPlayer: 0
@@ -2588,6 +2589,82 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 458633783}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &467275459
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 467275462}
+  - component: {fileID: 467275461}
+  - component: {fileID: 467275460}
+  m_Layer: 5
+  m_Name: dmgFlash
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &467275460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 467275459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.11320752, g: 0, b: 0, a: 0.25490198}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 3f0b98743b0783e42af05722b00d243a, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &467275461
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 467275459}
+  m_CullTransparentMesh: 1
+--- !u!224 &467275462
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 467275459}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2091418115}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &512143800
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3191,6 +3268,49 @@ MonoBehaviour:
       looping: 1
     parentVolume: 0.1
     parentPitch: 1
+  - name: '11: goop footsteps'
+    ID: 11
+    displayName: goop footsteps
+    clips:
+    - name: '0: goopy footstep1'
+      clip: {fileID: 8300000, guid: a792e612a02c21342939b7babc1ab8a2, type: 3}
+      localVolume: 0
+      localPitch: 0
+      looping: 0
+    - name: '1: goopyfootstep2'
+      clip: {fileID: 8300000, guid: 59e7e47d31b2d114987b60c642fe6465, type: 3}
+      localVolume: 0
+      localPitch: 0
+      looping: 0
+    parentVolume: 0.443
+    parentPitch: 0.852
+  - name: '12: goopEnemyHit'
+    ID: 12
+    displayName: 
+    clips:
+    - name: '0: goopEnemyHit'
+      clip: {fileID: 8300000, guid: bc91e82652b3dc748a8a36bc1728d298, type: 3}
+      localVolume: 0
+      localPitch: 0
+      looping: 0
+    parentVolume: 0.6
+    parentPitch: 1
+  - name: '13: enemyswish1'
+    ID: 13
+    displayName: 
+    clips:
+    - name: '0: enemyswish1'
+      clip: {fileID: 8300000, guid: 3703865871857e843882765c34b9848a, type: 3}
+      localVolume: 0
+      localPitch: 0
+      looping: 0
+    - name: '1: enemyswish2'
+      clip: {fileID: 8300000, guid: d05eb838ac0cc5a428c1f96301d6e96a, type: 3}
+      localVolume: 0
+      localPitch: 0
+      looping: 0
+    parentVolume: 1
+    parentPitch: 0.809
   masterVolume: 1
 --- !u!4 &537273565
 Transform:
@@ -4066,6 +4186,9 @@ MonoBehaviour:
   checking: 0
   targets: []
   linkedBoxes: []
+  OnHit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &948740828
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4907,7 +5030,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1250323203}
   m_LocalRotation: {x: 0, y: -0.01745245, z: 0, w: 0.99984777}
-  m_LocalPosition: {x: 117.1, y: 81.057, z: -19.2}
+  m_LocalPosition: {x: 167.1, y: 81.906, z: -15.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5085,9 +5208,6 @@ MonoBehaviour:
   OnHit:
     m_PersistentCalls:
       m_Calls: []
-  _damage: 0
-  source: {fileID: 0}
-  KB: 0
   swooshSource: {fileID: 1250323212}
   staffDrawn: 0
   attacks:
@@ -6439,7 +6559,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1668410871}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.39999998, y: 1.333, z: 0.42000008}
+  m_LocalPosition: {x: -0.39999998, y: 1.268, z: 0.21799994}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6888,8 +7008,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1823688464}
-  m_LocalRotation: {x: 0, y: 0.000000014901161, z: 0, w: 1}
-  m_LocalPosition: {x: -0.39999998, y: 1.333, z: -2.08}
+  m_LocalRotation: {x: 0.027967017, y: 0.00000007450581, z: -0.0000000018626451, w: 0.9996089}
+  m_LocalPosition: {x: -0.39999998, y: 1.408, z: -2.282}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8497,6 +8617,7 @@ RectTransform:
   m_Children:
   - {fileID: 151832577}
   - {fileID: 416523270}
+  - {fileID: 467275462}
   - {fileID: 151174009}
   - {fileID: 1497959224}
   - {fileID: 1555749916}

@@ -97,12 +97,4 @@ public class PFighting : HitReciever
         Player.i.ChangeHealth(-hit.damage);
         GetComponent<PMovement>().KnockBack(hit.source, hit.KB, hit.offset);
     }
-    /*
-    void _Hit() {
-        if (GetComponent<PMovement>().rolling) return;
-
-        int damage = _damage;
-        Player.i.ChangeHealth(-damage);
-        GetComponent<PMovement>().KnockBack(source, KB, hitSourceOffset);
-    }*/
 }

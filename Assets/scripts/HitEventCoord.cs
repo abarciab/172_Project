@@ -4,6 +4,24 @@ using UnityEngine;
 
 public class HitEventCoord : MonoBehaviour
 {
+    public void CorruptEndAttack()
+    {
+        var corrupt = GetComponentInParent<CorruptExplorer>();
+        corrupt.EndAttack();
+    }
+
+    public void CorruptStartCheck()
+    {
+        var corrupt = GetComponentInParent<CorruptExplorer>();
+        corrupt.StartChecking();
+    }
+
+    public void CorruptEndScream()
+    {
+        var corrupt = GetComponentInParent<CorruptExplorer>();
+        corrupt.EndScream();
+    }
+
     public void GoatStartCheck()
     {
         var goat = GetComponentInParent<Goat>();

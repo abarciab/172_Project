@@ -183,6 +183,7 @@ public class PMovement : MonoBehaviour
 
     void AlignModel()
     {
+        return;
         Transform model = transform.GetChild(0);
 
         if (rb.velocity.magnitude <= 0.01f) {

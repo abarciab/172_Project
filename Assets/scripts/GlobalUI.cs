@@ -13,7 +13,7 @@ public class GlobalUI : MonoBehaviour
     public Slider HpBar;
     [SerializeField] float redFlashTime = 0.1f;
     [SerializeField] GameObject title;
-    [SerializeField] Image dmgIndicator;
+    [SerializeField] Image dmgIndicator, dmgFlash;
     [SerializeField] bool showHPbar;
 
     [Header("Dialogue")]
@@ -64,11 +64,20 @@ public class GlobalUI : MonoBehaviour
 
     public void UpdateDmgIndicator(float health)
     {
+        
+
         var col = dmgIndicator.color;
         col.a = (1-health) * 0.8f;
+        if (col.a > dmgIndicator.color.a) StartCoroutine(FlashRed());
         dmgIndicator.color = col;
     }
 
+    IEnumerator FlashRed()
+    {
+        dmgFlash.gameObject.SetActive(true);
+        yield return new WaitForSeconds(redFlashTime);
+        dmgFlash.gameObject.SetActive(false);
+    }
 
     private void Update()
     {

@@ -27,6 +27,8 @@ public class AttackStats
     [ConditionalHide(nameof(extras))]
     public string animBool;
 
+    
+
 
     [HideInInspector] public float Cooldown;
 
@@ -41,6 +43,16 @@ public class AttackStats
         if (dist > range.y) return StatusType.too_far;
         if (dist < range.x) return StatusType.too_close;
         return StatusType.ready;
+    }
+
+    public bool TooFar(float dist)
+    {
+        return dist > range.y;
+    }
+
+    public bool TooClose(float dist)
+    {
+        return dist < range.x;
     }
 
     public void Reset()
