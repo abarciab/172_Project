@@ -47,10 +47,13 @@ public class ShaderTransitionController : MonoBehaviour {
     }
 
 
-    public void EndTransition()
+    public void EndTransition(int shaderID)
     {
+        print("ending: " + shaderID);
+        if (shaderID != shader2) return;
+
         progressLerpTarget = 1;
-        next = true;
+        //next = true;
         transitioning = false;
     }
 

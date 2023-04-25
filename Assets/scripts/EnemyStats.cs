@@ -13,6 +13,9 @@ public class EnemyStats : HitReciever
     [SerializeField] GameObject blood;
     [SerializeField] float bloodTime = 1;
 
+    [SerializeField] List<Fact> removeFactOnDeath = new List<Fact>(), addFactOnDeath = new List<Fact>();
+
+
     private void Start()
     {
         //OnHit.AddListener(_Hit);
@@ -30,6 +33,7 @@ public class EnemyStats : HitReciever
         AudioManager.instance.PlaySound(1, gameObject);
 
         GetComponent<EnemyMovement>()?.KnockBack(hit.source, hit.KB * KBresist);
+
 
         StopAllCoroutines();
         if (blood != null) StartCoroutine(Bleed());
@@ -58,6 +62,9 @@ public class EnemyStats : HitReciever
 
     void Die()
     {
+        if (removeFactOnDeath.Count > 0) foreach (var f in removeFactOnDeath) FactManager.i.RemoveFact(f);
+        if (addFactOnDeath.Count > 0) foreach (var f in addFactOnDeath) FactManager.i.AddFact(f);
+
         StopAllCoroutines();
         blood.SetActive(false);
         if (destroy) Destroy(gameObject);

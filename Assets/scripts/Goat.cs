@@ -19,6 +19,7 @@ public class Goat : MonoBehaviour
     [SerializeField] bool debug;
 
     [Header("agro")]
+    [SerializeField] float agroRange = 10;
     [SerializeField] bool agro;
     [SerializeField] float chargeResetTime, chargeRange, chargeSpeed, overshootDist, chargeStartUpTime, chargeStunTime, chargeKB, throwKB, throwRange, throwResetTime;
     [SerializeField] int chargeDamage;
@@ -140,6 +141,7 @@ public class Goat : MonoBehaviour
         if (target == null) return;
         var dist = Vector2.Distance(transform.position, target.position);
 
+       
 
         if (dist > 1f) {
             move.gotoTarget = true;
@@ -153,13 +155,18 @@ public class Goat : MonoBehaviour
 
     void BeAgro()
     {
+        float dist = Vector3.Distance(transform.position, Player.i.transform.position);
+        if (dist > agroRange) {
+            return;
+        }
+
         if (!Player.i.enemies.Contains(move)) Player.i.enemies.Add(move);
         target = Player.i.transform;
         if (attacking) return;
 
         FaceTarget();
 
-        float dist = Vector3.Distance(transform.position, target.position);
+        
         chargeCooldown -= Time.deltaTime;
         var stats = GetComponent<EnemyStats>();
 

@@ -183,7 +183,8 @@ public class PMovement : MonoBehaviour
 
     void AlignModel()
     {
-        return;
+        if (p.enemies.Count > 0) return;
+
         Transform model = transform.GetChild(0);
 
         if (rb.velocity.magnitude <= 0.01f) {
@@ -202,7 +203,15 @@ public class PMovement : MonoBehaviour
     }
 
     Vector3 GetDashDir() {
-        return goBack ? transform.forward * -1 : (pressRight ? transform.right : (pressLeft ? transform.right * -1 : transform.forward));
+        Vector3 dir = Vector3.zero;
+        if (pressRight) dir += transform.right;
+        if (pressLeft) dir += transform.right * -1;
+        if (goForward) dir += transform.forward;
+        if (goBack) dir += transform.forward * -1;
+
+        return dir.normalized;
+
+        //return goBack ? transform.forward * -1 : (pressRight ? transform.right : (pressLeft ? transform.right * -1 : transform.forward));
     }
 
     Vector3 GetStrafeDir() {

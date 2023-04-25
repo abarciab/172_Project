@@ -43,7 +43,7 @@ public class MarkerTracker : MonoBehaviour
         if (AlreadyTracking(obj)) return;
 
         GameObject newUImarker = Instantiate(markerPrefab, markerParent);
-        newUImarker.GetComponentInChildren<Image>().sprite = img;
+        newUImarker.transform.GetChild(0).GetComponentInChildren<Image>().sprite = img;
         Marker newMarker = new Marker();
         newMarker.trackedObj = obj;
         newMarker.UImarker = newUImarker.GetComponent<RectTransform>();

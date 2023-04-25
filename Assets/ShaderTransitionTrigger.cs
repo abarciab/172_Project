@@ -13,7 +13,7 @@ public class ShaderTransitionTrigger : MonoBehaviour
         if (player) {
 
             if (!start) {
-                ShaderTransitionController.i.EndTransition();
+                ShaderTransitionController.i.EndTransition(1);
                 Destroy(this);
                 return;
             }

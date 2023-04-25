@@ -22,7 +22,12 @@ public class PAnimator : MonoBehaviour
         p = Player.i;
         move = GetComponent<PMovement>();
         fight = GetComponent<PFighting>();
-   
+        fight.OnHit.AddListener(GetHurt);
+    }
+
+    void GetHurt()
+    {
+        anim.SetTrigger("hurt");
     }
 
     private void Update()
