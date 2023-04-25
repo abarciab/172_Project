@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3691366827859238473}
+  - component: {fileID: 7245103850993392800}
   m_Layer: 0
   m_Name: CactusTallClump
   m_TagString: Untagged
@@ -37,8 +38,31 @@ Transform:
   - {fileID: 2529599755007732073}
   - {fileID: 6077653624082840406}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &7245103850993392800
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5338266095758527838}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.55
+  m_Height: 4.36
+  m_Direction: 1
+  m_Center: {x: 0.39, y: 0, z: 0.21}
 --- !u!1001 &2193057156759305346
 PrefabInstance:
   m_ObjectHideFlags: 0
