@@ -27,7 +27,6 @@ public class MarkerTracker : MonoBehaviour
     }
 
     public void RemoveMarker(Transform obj) {
-        print("REMOVING");
         if (!AlreadyTracking(obj)) return;
 
         for (int i = 0; i < activeMarkers.Count; i++) {

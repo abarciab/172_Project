@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
 
     public void SpeakerShowInterest(Speaker speaker)
     {
-        print("Show interest: " + speaker.characterName);
+        //print("Show interest: " + speaker.characterName);
         interestedSpeaker = speaker;
         GlobalUI.i.DisplayPrompt(startTalkingPrompt);
     }

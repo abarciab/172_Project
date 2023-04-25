@@ -33,7 +33,6 @@ public class GlobalUI : MonoBehaviour
 
     public void EndConversation()
     {
-        print("END");
         StopAllCoroutines();
         showHPbar = true;
         commandPrompt.gameObject.SetActive(false);

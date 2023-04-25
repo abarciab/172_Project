@@ -22,6 +22,7 @@ public class Speaker : MonoBehaviour
 
     [SerializeField] List<ConversationData> conversations = new List<ConversationData>();
     public string characterName;
+    [SerializeField] GameObject speechBubble;
 
 
     private void Start()
@@ -34,6 +35,9 @@ public class Speaker : MonoBehaviour
         for (int i = 0; i < conversations.Count; i++) {
             CheckStatus(conversations[i]);
         }
+
+        speechBubble.SetActive(false);
+        foreach (var c in conversations) if (c.enabled) speechBubble.SetActive(true);
     }
 
     void CheckStatus(ConversationData c)
@@ -51,11 +55,24 @@ public class Speaker : MonoBehaviour
     public string GetNextLine(bool reset = false)
     {
         var convoData = GetCurrentConvo();
-        if (convoData == null) return "END";
+        if (convoData == null) {
+            StartCoroutine(WaitThenShowInterest());
+            return "END";
+        }
 
         string nextLine = convoData.convo.nextLine;
         if (reset) convoData.convo.StepBack();
         return nextLine;
+    }
+
+    IEnumerator WaitThenShowInterest()
+    {
+        bool valid = false;
+        foreach (var c in conversations) if (c.enabled) valid = true;
+        if (!valid) yield break;
+
+        yield return new WaitForSeconds(0.6f);
+        Player.i.SpeakerShowInterest(this);
     }
 
     ConversationData GetCurrentConvo()
