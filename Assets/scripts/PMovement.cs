@@ -35,7 +35,7 @@ public class PMovement : MonoBehaviour
     }
 
     public void Roll() {
-        if (GetComponent<PFighting>().basicAttacking || GetComponent<PFighting>().hvyAttacking) return;
+        //if (GetComponent<PFighting>().basicAttacking || GetComponent<PFighting>().hvyAttacking) return;
 
         if (!rolling) AudioManager.instance.PlaySound(5, gameObject);
         rollDir = GetDashDir();
@@ -79,7 +79,7 @@ public class PMovement : MonoBehaviour
 
     private void Update()
     {
-        attacking = GetComponent<PFighting>().basicAttacking || GetComponent<PFighting>().hvyAttacking;
+        //attacking = GetComponent<PFighting>().basicAttacking || GetComponent<PFighting>().hvyAttacking;
         alignToEnemy = CameraState.i.GetLockedEnemy() != null;
         alignToCamera = CameraState.i.mouseControl;
         SetPlayerStats();

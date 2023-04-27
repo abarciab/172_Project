@@ -188,8 +188,6 @@ public class Goat : MonoBehaviour
 
     IEnumerator MoveToThrow()
     {
-        print("START THROW");
-
         attacking = true;
         throwCooldown = Mathf.Infinity;
 
@@ -210,8 +208,6 @@ public class Goat : MonoBehaviour
         move.gotoTarget = false;
         anim.SetTrigger("throw");
         throwSource.Play();
-
-        print("END THROW");
     }
 
     void FaceTarget(float t = 0.05f)
@@ -225,8 +221,6 @@ public class Goat : MonoBehaviour
 
     IEnumerator Charge()
     {
-        print("START CHARGE");
-
         FaceTarget(0.5f);
         move.gotoTarget = false;
         attacking = true;

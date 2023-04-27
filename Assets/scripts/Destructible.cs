@@ -5,9 +5,9 @@ using UnityEngine.Events;
 
 public class Destructible : HitReciever
 {
-    public override void Hit2(HitData hit)
+    public override void Hit(HitData hit)
     {
-        base.Hit2(hit);
+        base.Hit(hit);
 
         Destroy(gameObject);
     }

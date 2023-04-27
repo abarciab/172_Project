@@ -41,5 +41,5 @@ public class HitReciever : MonoBehaviour
         OnHit.Invoke();
     }*/
 
-    virtual public void Hit2(HitData hit) { OnHit.Invoke(); }
+    virtual public void Hit(HitData hit) { OnHit.Invoke(); }
 }

@@ -58,7 +58,6 @@ public class Player : MonoBehaviour
 
     public void SpeakerShowInterest(Speaker speaker)
     {
-        //print("Show interest: " + speaker.characterName);
         interestedSpeaker = speaker;
         GlobalUI.i.DisplayPrompt(startTalkingPrompt);
     }
@@ -83,6 +82,8 @@ public class Player : MonoBehaviour
     }
 
     private void Update() {
+        if (Input.GetKeyDown(KeyCode.K)) GameManager.i.TogglePause();
+
         if (healCooldown <= 0 && health < maxHealth) StartCoroutine(Heal());
         healCooldown -= Time.deltaTime;
 
@@ -132,7 +133,7 @@ public class Player : MonoBehaviour
         }
 
         CameraState.i.LockOnEnemy(closestEnemy.gameObject, closestEnemy.centerOffset);
-        GetComponent<PFighting>().DrawWeapon();
+        //GetComponent<PFighting>().DrawWeapon();
     }
 
     private void Start() {
@@ -151,7 +152,7 @@ public class Player : MonoBehaviour
         StopAllCoroutines();
         
         AudioManager.instance.PlaySound(2, hurtSource);
-        GetComponent<PFighting>().Inturrupt(1);
+        //GetComponent<PFighting>().Inturrupt(1);
     }
 
     void Die() {

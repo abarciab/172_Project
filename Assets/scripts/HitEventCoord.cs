@@ -56,15 +56,9 @@ public class HitEventCoord : MonoBehaviour
         if (player != null) player.StartChecking();
     }
 
-    public void EndPlayerAttack(float delay = 0)
+    public void EndPlayerAttack()
     {
         var player = GetComponentInParent<PFighting>();
-        if (player != null) player.EndAttack(delay);
-    }
-
-    public void RefreshPlayerHB()
-    {
-        var player = GetComponentInParent<PFighting>();
-        if (player != null) player.RefreshHitBox();
+        if (player != null) player.EndAttack();
     }
 }

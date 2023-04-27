@@ -23,9 +23,9 @@ public class EnemyStats : HitReciever
         if (blood != null) blood.SetActive(false);
     }
 
-    public override void Hit2(HitData hit)
+    public override void Hit(HitData hit)
     {
-        base.Hit2(hit);
+        base.Hit(hit);
 
         health -= hit.damage;
         health = Mathf.Clamp(health, 0, maxHealth);

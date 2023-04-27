@@ -7,13 +7,11 @@ using UnityEngine;
 [ExecuteAlways]
 public class TEST : MonoBehaviour 
 {
-    public bool test;
+    public float num1;
+    public Vector2 limits;
 
     private void Update()
     {
-        if (test) {
-            test = false;
-            //GetComponent<HitReciever>().Hit2(new HitReciever.HitData());
-        }
+        print(Mathf.Clamp(num1, limits.x, limits.y));
     }
 }

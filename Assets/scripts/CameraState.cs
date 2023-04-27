@@ -6,7 +6,7 @@ using UnityEngine;
 [ExecuteAlways]
 public class CameraState : MonoBehaviour
 {
-    public enum StateName {None, Follow, Sceneic, Castle, MouseFollow, Grave, LockOn};
+    public enum StateName {None, Follow, Sceneic, Castle, MouseFollow, Grave, LockOn, MouseOverShoulder};
     public enum ParentLookTarget { None, PlayerForward, Obj, Mouse};
 
     public static CameraState i;
@@ -18,13 +18,17 @@ public class CameraState : MonoBehaviour
         [HideInInspector] public string name;
         public StateName displayName;
         [HideInInspector] public bool selected;
+        
+        [Header("Camera position")]
+        public float camX;
+        public float camY, camZ = 0.5f;
+        public Vector3 camTargetOffset = Vector3.zero;
 
-        [Range(0, 1)] public float playerX, playerY, zoom = 0.5f;
-        public Vector2 limitsX = new Vector2(-1, 1), limitsY = new Vector2(-1, 1), zoomLimits = new Vector2(0, 10), parentRotLimits;
-        public Vector3 camTargetOffset = Vector3.zero, camParentPlayerOffset = Vector3.zero, objTargetOffset;
-        public bool lookAtPlayer = true, followPlayer = true, limitParentRot;
-        public ParentLookTarget parentLookTarget;
+        [Header("Parent")]
         public float parentRotSmoothness = 0.25f;
+        public ParentLookTarget parentLookTarget;
+        public bool followPlayer = true;
+        public Vector3 parentLookOffset, parentPosOffset;
 
         [Header("Object Focus")]
         public GameObject objFocus;
@@ -33,59 +37,78 @@ public class CameraState : MonoBehaviour
         [Header("Mouse Focus")]
         public float mouseXSens = 1;
         public float mouseYSens = 1;
+        public Vector2 parentRotLimitsY;
+
+        [Header("Misc")]
+        public float transitionSmoothness = 0.025f;
 
         public State() {}
 
         public State(State original)
         {
             name = original.name;
-            limitParentRot = original.limitParentRot;
             displayName = original.displayName;
             selected = original.selected;
-            playerX = original.playerX;
-            playerY = original.playerY;
-            zoom = original.zoom;
-            limitsX = original.limitsX;
-            limitsY = original.limitsY;
-            zoomLimits = original.zoomLimits;
+
+            camX = original.camX;
+            camY = original.camY;
+            camZ = original.camZ;
             camTargetOffset = original.camTargetOffset;
-            camParentPlayerOffset = original.camParentPlayerOffset;
-            objTargetOffset = original.objTargetOffset;
-            lookAtPlayer = original.lookAtPlayer;
-            followPlayer = original.followPlayer;
-            parentLookTarget = original.parentLookTarget;
+
             parentRotSmoothness = original.parentRotSmoothness;
-            parentRotLimits = original.parentRotLimits;
+            parentLookTarget = original.parentLookTarget;
+            followPlayer = original.followPlayer;
+            parentLookOffset = original.parentLookOffset;
+            parentPosOffset = original.parentPosOffset;
+
             objFocus = original.objFocus;
             focusIndex = original.focusIndex;
 
+            mouseXSens = original.mouseXSens;
+            mouseYSens = original.mouseYSens;
+            parentRotLimitsY = original.parentRotLimitsY;
+
+            transitionSmoothness = original.transitionSmoothness;
         }
 
         public bool equals(State o)
-        { 
-            if (lookAtPlayer != o.lookAtPlayer) return false;
-            if (followPlayer != o.followPlayer) return false;
-            if (limitParentRot != o.limitParentRot) return false;
-            if (focusIndex != o.focusIndex) return false;
-            
-            if (playerX != o.playerX) return false;
-            if (playerY != o.playerY) return false;
-            if (zoom != o.zoom) return false;
-            if (parentRotSmoothness != o.parentRotSmoothness) return false;
+        {
+            if (followPlayer != o.followPlayer) 
+                return false;
 
-            if (parentLookTarget != o.parentLookTarget) return false;
-            if (objFocus != o.objFocus) return false;
+            if (camX != o.camX || camY != o.camY || camZ != o.camZ || parentRotSmoothness != o.parentRotSmoothness || focusIndex != o.focusIndex ||
+                mouseXSens != o.mouseXSens || mouseYSens != o.mouseYSens || transitionSmoothness != o.transitionSmoothness)
+                return false;
 
-            if (Vector2.Distance(limitsX, o.limitsX) > 0.01f) return false;
-            if (Vector2.Distance(limitsY, o.limitsY) > 0.01f) return false;
-            if (Vector2.Distance(zoomLimits, o.zoomLimits) > 0.01f) return false;
-            if (Vector2.Distance(parentRotLimits, o.parentRotLimits) > 0.01f) return false;
+            if (Vector2.Distance(parentRotLimitsY, o.parentRotLimitsY) > 0.01f)
+                return false;
 
-            if (Vector3.Distance(camTargetOffset, o.camTargetOffset) > 0.1f) return false;
-            if (Vector3.Distance(camParentPlayerOffset, o.camParentPlayerOffset) > 0.1f) return false;
-            if (Vector3.Distance(objTargetOffset, o.objTargetOffset) > 0.1f) return false;
+            if (Vector3.Distance(camTargetOffset, o.camTargetOffset) > 0.1f) 
+                return false;
+
+            if (Vector3.Distance(parentLookOffset, o.parentLookOffset) > 0.1f) 
+                return false; 
+            if (Vector3.Distance(parentPosOffset, o.parentPosOffset) > 0.1f) 
+                return false;
 
             return true;
+        }
+
+        public void Lerp(State o)
+        {
+            float smoothness = o.transitionSmoothness;
+
+            focusIndex = o.focusIndex;
+
+            camX = Mathf.Lerp(camX, o.camX, smoothness);
+            camY = Mathf.Lerp(camY, o.camY, smoothness);
+            camZ = Mathf.Lerp(camZ, o.camZ, smoothness);
+
+            camTargetOffset = Vector3.Lerp(camTargetOffset, o.camTargetOffset, smoothness);
+            parentLookOffset = Vector3.Lerp(parentLookOffset, o.parentLookOffset, smoothness);
+            parentPosOffset = Vector3.Lerp(parentPosOffset, o.parentPosOffset, smoothness);
+
+            parentRotLimitsY = o.parentRotLimitsY;
         }
     }
 
@@ -115,7 +138,7 @@ public class CameraState : MonoBehaviour
 
     public void SwitchToState(int stateID)
     {
-        if (stateID == -1) return;
+        if (stateID == -1 || stateID == selectedState) return;
 
         selectedState = stateID;
         FindSelectedState();
@@ -125,7 +148,7 @@ public class CameraState : MonoBehaviour
 
         foreach (var s in states) {
             if (s.displayName == StateName.LockOn) {
-                s.objTargetOffset = objOffset;
+                s.parentLookOffset = objOffset;
                 s.objFocus = target;
             }
         }
