@@ -27,7 +27,6 @@ public class MarkerTracker : MonoBehaviour
     }
 
     public void RemoveMarker(Transform obj) {
-        print("REMOVING");
         if (!AlreadyTracking(obj)) return;
 
         for (int i = 0; i < activeMarkers.Count; i++) {
@@ -43,7 +42,7 @@ public class MarkerTracker : MonoBehaviour
         if (AlreadyTracking(obj)) return;
 
         GameObject newUImarker = Instantiate(markerPrefab, markerParent);
-        newUImarker.GetComponentInChildren<Image>().sprite = img;
+        newUImarker.transform.GetChild(0).GetComponentInChildren<Image>().sprite = img;
         Marker newMarker = new Marker();
         newMarker.trackedObj = obj;
         newMarker.UImarker = newUImarker.GetComponent<RectTransform>();

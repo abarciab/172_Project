@@ -22,18 +22,15 @@ public class PControls : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.i.paused) return;
+
         if (move.sitting) timeSitting += Time.deltaTime;
         if (move.sitting && timeSitting >= sitControlTime) GlobalUI.i.DisplayPrompt("press alt to stand up");
 
         if (move.posing) return;
 
         if (move.sitting && Input.GetKeyDown(standUpKey)) { move.sitting = false; GlobalUI.i.HidePrompt(); }
-
-        if (Input.GetMouseButtonDown(0) && !move.sitting) fight.StartAttack(AttackStats.AttackType.basic);
-        if (Input.GetMouseButtonDown(1) && !move.sitting) fight.StartAttack(AttackStats.AttackType.heavy);
-
         if (!move.sitting && Input.GetKeyDown(roll)) move.Roll();
-
         if (Input.GetMouseButtonDown(2)) Player.i.ToggleLockOn();
 
         move.goForward = Input.GetKey(forward);
@@ -43,9 +40,11 @@ public class PControls : MonoBehaviour
         move.running = Input.GetKey(run);
 
         if (Input.GetKeyDown(interactKey)) player.ActivateInteractable();
-
         if (!Input.GetKey(forward) && !Input.GetKey(left) && !Input.GetKey(right) && !Input.GetKey(backward)) move.running = false;
-        if (Input.GetKeyDown(run)) fight.PutAwayStaff();
+
+        if (Input.GetMouseButtonDown(0)) fight.StartAimingSpear();
+        if (Input.GetMouseButtonUp(0)) fight.ThrowStaff();
+        if (Input.GetMouseButtonDown(1)) fight.Stab();
 
         if (move.alignToCamera) return;
         move.turnRight = Input.GetKey(right);

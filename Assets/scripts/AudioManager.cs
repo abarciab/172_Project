@@ -96,6 +96,7 @@ public class AudioManager : MonoBehaviour {
     public void PlaySound(int ID, AudioSource source)
     {
         Clip clip = getClip(ID);
+        if (clip == null) return;
         ConfigureSource(clip, source);
         source.Play();
     }

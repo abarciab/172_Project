@@ -7,11 +7,16 @@ public class FactManager : MonoBehaviour
     public static FactManager i;
     private void Awake() { i = this; }
 
-    public List<Fact> facts = new List<Fact>();
+    [SerializeField] List<Fact> facts = new List<Fact>();
 
     public void AddFact(Fact fact)
     {
         if (!IsPresent(fact)) facts.Add(fact);
+    }
+
+    public void RemoveFact(Fact fact)
+    {
+        facts.Remove(fact);
     }
 
     public bool IsPresent(Fact fact)

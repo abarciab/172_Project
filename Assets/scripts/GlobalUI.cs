@@ -10,7 +10,7 @@ public class GlobalUI : MonoBehaviour
     private void Awake() { i = this; }
 
     [SerializeField] TextMeshProUGUI commandPrompt, subtitle;
-    public Slider HpBar;
+    public Slider HpBar, throwCharge;
     [SerializeField] float redFlashTime = 0.1f;
     [SerializeField] GameObject title;
     [SerializeField] Image dmgIndicator, dmgFlash;

@@ -22,7 +22,12 @@ public class PAnimator : MonoBehaviour
         p = Player.i;
         move = GetComponent<PMovement>();
         fight = GetComponent<PFighting>();
-   
+        fight.OnHit.AddListener(GetHurt);
+    }
+
+    void GetHurt()
+    {
+        anim.SetTrigger("hurt");
     }
 
     private void Update()
@@ -38,23 +43,26 @@ public class PAnimator : MonoBehaviour
         anim.SetBool("Running", move.running && !move.posing);
         anim.SetBool("TurningLeft", move.turnLeft && !moving);
         anim.SetBool("TurningRight", move.turnRight && !moving);
-        anim.SetBool("StaffDrawn", fight.staffDrawn && !move.posing);
+        
         anim.SetBool("Strafe", move.strafe && Mathf.Abs(GetComponent<Rigidbody>().velocity.x + GetComponent<Rigidbody>().velocity.z) > 0.01f);
 
         anim.SetBool("Attacking", attacking);
 
-        if (!attacking && fight.basicAttacking) {
+        if (!attacking && fight.Stabbing()) {
             attacking = true;
             anim.SetTrigger("BasicAttack");
         }
+
+        if (!fight.Stabbing()) {
+            attacking = false;
+        }
+
+        /*anim.SetBool("StaffDrawn", fight.staffDrawn && !move.posing);        
         if (!attacking && fight.hvyAttacking) {
             attacking = true;
             anim.SetTrigger("StrongAttack");
         }
-        if (!fight.hvyAttacking && !fight.basicAttacking) {
-            attacking = false;
-        }
-
+        */
 
         if (triggeredDash && !move.rolling) triggeredDash = false;
         if (move.rolling && !triggeredDash && !attacking) {

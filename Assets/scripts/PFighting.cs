@@ -1,100 +1,126 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Rendering.Universal;
-using UnityEngine.UIElements;
 
-public class PFighting : HitReciever
-{
+public class PFighting : HitReciever {
 
-    [SerializeField] AudioSource swooshSource;
-    public bool staffDrawn;
+    [SerializeField] Rigidbody staffProjectile;
+    [SerializeField] float throwForce, maxAimTime;
+    public int throwDmg;
+    [SerializeField] Vector3 offset, aimOffset;
 
-    [SerializeField] List<AttackStats> attacks = new List<AttackStats>();
+    bool hasSpear, aimed,recalling, charging, stabbing;
+    float chargeTime;
 
-    [Header("Dependencies")]
-    [SerializeField] HitBox hitBox;
+    [Header("Stab")]
+    [SerializeField] HitBox stabHB;
+    [SerializeField] int stabDmg;
+    [SerializeField] float stabKB;
 
-    [HideInInspector] public bool basicAttacking, hvyAttacking;
-    AttackStats currentAttack;
-
-    private void OnValidate()
+    public void ReturnSpear()
     {
-        foreach (var a in attacks) {
-            a.OnValidate();
-        }
+        hasSpear = true;
+        recalling = false;
     }
 
-    public void Inturrupt(float _stunTime)
+    public void ThrowStaff()
     {
-        EndAttack();
+        if (!hasSpear || !aimed) return;
+        hasSpear = aimed = charging = false;
+
+        float power = Mathf.Clamp01(chargeTime / maxAimTime);
+
+        chargeTime = 0;
+
+        AudioManager.instance.PlaySound(0, gameObject);
+        CameraState.i.SwitchToState(CameraState.StateName.MouseFollow);
+
+        staffProjectile.gameObject.SetActive(false);
+        var dir = GetAimDir();
+        staffProjectile.transform.LookAt(staffProjectile.transform.position + dir * 10);
+        staffProjectile.transform.parent = null;
+
+        staffProjectile.gameObject.SetActive(true);
+        staffProjectile.AddForce(dir * (throwForce * power));
+
+        staffProjectile.GetComponent<HitBox>().StartChecking(transform, Mathf.RoundToInt(throwDmg * power));
     }
 
-    public void PutAwayStaff()
+    public void Stab()
     {
-        EndAttack();
-        staffDrawn = false;
-    }
+        if (!hasSpear) {RetrieveSpear(); return; }
+        if (charging) return;
 
-    public void DrawWeapon()
-    {
-        staffDrawn = true;
-    }
-
-    public void RefreshHitBox()
-    {
-        hitBox.Refresh();
-    }
-
-    public void StartAttack(AttackStats.AttackType attack)
-    {
-        if (basicAttacking || hvyAttacking) return;
-        var a = GetAttackFromType(attack);
-
-        if (!staffDrawn) DrawWeapon();
-
-        basicAttacking = a.type == AttackStats.AttackType.basic;
-        hvyAttacking = !basicAttacking;
-        currentAttack = a;
+        stabbing = true;
     }
 
     public void StartChecking()
     {
-        hitBox.StartChecking(true, currentAttack.damage, currentAttack.knockBack, gameObject);
+        stabHB.StartChecking(true, stabDmg, stabKB, stabHB.gameObject);
     }
 
-    public void EndAttack(float delay)
+    public void EndAttack()
     {
-        StartCoroutine(waitThenEndAttack(delay));
+        stabHB.EndChecking();
+        stabbing = false;
     }
 
-    AttackStats GetAttackFromType(AttackStats.AttackType type)
+    public bool Stabbing()
     {
-        foreach (var a in attacks) if (a.type == type) return a;
-        return attacks[0];
+        return stabbing;
     }
 
-
-    void EndAttack() {
-        basicAttacking = hvyAttacking = false;
-        hitBox.EndChecking();
-    }
-
-    IEnumerator waitThenEndAttack(float delay)
+    public override void Hit(HitData hit)
     {
-        yield return new WaitForSeconds(delay);
-        EndAttack();
-    }
-
-    public override void Hit2(HitData hit)
-    {
-        base.Hit2(hit);
-
         if (GetComponent<PMovement>().rolling) return;
+
+        base.Hit(hit);
 
         Player.i.ChangeHealth(-hit.damage);
         GetComponent<PMovement>().KnockBack(hit.source, hit.KB, hit.offset);
     }
+
+    private void Start()
+    {
+        hasSpear = true;
+        aimed = false;
+    }
+
+    public void StartAimingSpear()
+    {
+        if (!hasSpear) { RetrieveSpear(); return; }
+        aimed = charging = true;
+
+        CameraState.i.SwitchToState(CameraState.StateName.MouseOverShoulder);
+        staffProjectile.gameObject.SetActive(false);
+
+        staffProjectile.transform.parent = transform;
+        staffProjectile.transform.localPosition = offset;
+
+        staffProjectile.gameObject.SetActive(true);
+        staffProjectile.isKinematic = true;
+        var dir = GetAimDir();
+        staffProjectile.transform.LookAt(staffProjectile.transform.position + dir * 10);
+    }
+
+    private void Update()
+    {
+        if (charging && chargeTime < maxAimTime) chargeTime += Time.deltaTime;
+        GlobalUI.i.throwCharge.value = chargeTime / maxAimTime;
+    }
+
+    void RetrieveSpear()
+    {
+        if (recalling) return;
+        recalling = true;
+        staffProjectile.GetComponent<ThrownStaff>().Recall();
+    }
+
+    
+
+    Vector3 GetAimDir()
+    {
+        return (Camera.main.transform.forward + aimOffset).normalized;
+    }
+    
 }
