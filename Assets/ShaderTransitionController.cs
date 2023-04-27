@@ -57,8 +57,13 @@ public class ShaderTransitionController : MonoBehaviour {
         transitioning = false;
     }
 
-    public void StartTransition(float _maxDist, Vector3 _transitionTarget)
+    public void StartTransition(float _maxDist, Vector3 _transitionTarget, int stage)
     {
+        shader1 = stage;
+        shader2 = stage + 1;
+        progress = 0;
+        progressLerpTarget = 0;
+
         maxDist = _maxDist;
         transitionTarget = _transitionTarget;
         transitioning = true;
