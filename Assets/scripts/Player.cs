@@ -81,8 +81,14 @@ public class Player : MonoBehaviour
         GlobalUI.i.EndConversation();
     }
 
+    public void EnterCombat()
+    {
+        GetComponent<PFighting>().DrawSpear();
+    }
+
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.K)) GameManager.i.TogglePause();
+        if (Input.GetKeyDown(KeyCode.K)) GameManager.i.RestartScene();
+        if (Input.GetKeyDown(KeyCode.L)) GameManager.i.SetCheckPointManually();
 
         if (healCooldown <= 0 && health < maxHealth) StartCoroutine(Heal());
         healCooldown -= Time.deltaTime;
@@ -156,7 +162,7 @@ public class Player : MonoBehaviour
     }
 
     void Die() {
-        health = maxHealth;
+        GameManager.i.RestartScene();
     }
 
     private void Awake()

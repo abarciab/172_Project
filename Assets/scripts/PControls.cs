@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(PMovement))]
 public class PControls : MonoBehaviour
 {
-    [SerializeField] KeyCode forward = KeyCode.W, left = KeyCode.A, backward = KeyCode.S, right = KeyCode.D, run = KeyCode.LeftShift, standUpKey = KeyCode.Space, roll = KeyCode.LeftControl, interactKey = KeyCode.E;
+    [SerializeField] KeyCode forward = KeyCode.W, left = KeyCode.A, backward = KeyCode.S, right = KeyCode.D, run = KeyCode.LeftShift, standUpKey = KeyCode.Space, roll = KeyCode.LeftControl, interactKey = KeyCode.E, abilityKey = KeyCode.E;
     [SerializeField] bool mouseMove;
     [SerializeField] float sitControlTime = 1f;
     float timeSitting;
@@ -45,6 +45,7 @@ public class PControls : MonoBehaviour
         if (Input.GetMouseButtonDown(0)) fight.StartAimingSpear();
         if (Input.GetMouseButtonUp(0)) fight.ThrowStaff();
         if (Input.GetMouseButtonDown(1)) fight.Stab();
+        if (Input.GetKeyDown(abilityKey)) fight.ActivateShockwave();
 
         if (move.alignToCamera) return;
         move.turnRight = Input.GetKey(right);

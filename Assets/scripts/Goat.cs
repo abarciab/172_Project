@@ -60,6 +60,8 @@ public class Goat : MonoBehaviour
 
     void TakeHit()
     {
+        agro = true;
+        agroRange = Mathf.Infinity;
         hurt.Play();
         JumpBack();
     }
@@ -170,9 +172,8 @@ public class Goat : MonoBehaviour
         chargeCooldown -= Time.deltaTime;
         var stats = GetComponent<EnemyStats>();
 
-        if (dist <= chargeRange/2 || (chargeCooldown > 0 && throwCooldown <= 0 && stats.health > stats.maxHealth/2)) {
-            if (throwCooldown <= 0 && stats.health > stats.maxHealth / 2) StartCoroutine(MoveToThrow());
-            else JumpBack();
+        if (dist <= chargeRange/2) {
+            JumpBack();
             return;
         }
         
@@ -255,7 +256,6 @@ public class Goat : MonoBehaviour
         move.NormalSpeed();
         chargeCooldown = chargeResetTime;
         attacking = false;
-        print("DONE CHARGING");
     }
 
     Transform GetNewTarget()

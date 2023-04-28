@@ -9,24 +9,43 @@ public class PFighting : HitReciever {
     public int throwDmg;
     [SerializeField] Vector3 offset, aimOffset;
 
-    bool hasSpear, aimed,recalling, charging, stabbing;
+    bool hasSpear, aimed, recalling, charging, spearDrawn;
+    public bool stabbing;
     float chargeTime;
+    [SerializeField] GameObject spearObj;
 
     [Header("Stab")]
     [SerializeField] HitBox stabHB;
     [SerializeField] int stabDmg;
     [SerializeField] float stabKB;
 
+    [Header("Shockwave")]
+    [SerializeField] Shockwave shockwave;
+    [SerializeField] float shockwaveResetTime, shockwaveKB;
+    [SerializeField] int shockwaveDmg;
+    float swCooldown;
+
+    public void DrawSpear()
+    {
+        spearDrawn = true;
+    }
+
+    public float GetSWcooldown()
+    {
+        return swCooldown;
+    }
+
     public void ReturnSpear()
     {
         hasSpear = true;
-        recalling = false;
+        recalling = charging = false;
     }
 
     public void ThrowStaff()
     {
+        charging = false;
         if (!hasSpear || !aimed) return;
-        hasSpear = aimed = charging = false;
+        hasSpear = aimed = false;
 
         float power = Mathf.Clamp01(chargeTime / maxAimTime);
 
@@ -43,14 +62,14 @@ public class PFighting : HitReciever {
         staffProjectile.gameObject.SetActive(true);
         staffProjectile.AddForce(dir * (throwForce * power));
 
-        staffProjectile.GetComponent<HitBox>().StartChecking(transform, Mathf.RoundToInt(throwDmg * power));
+        staffProjectile.GetComponentInChildren<HitBox>().StartChecking(transform, Mathf.RoundToInt(throwDmg * power));
     }
 
     public void Stab()
     {
+        if (!spearDrawn) { DrawSpear(); return; }
         if (!hasSpear) {RetrieveSpear(); return; }
-        if (charging) return;
-
+        if (charging || stabbing) return;
         stabbing = true;
     }
 
@@ -68,6 +87,11 @@ public class PFighting : HitReciever {
     public bool Stabbing()
     {
         return stabbing;
+    }
+
+    public bool spearOut()
+    {
+        return spearDrawn;
     }
 
     public override void Hit(HitData hit)
@@ -88,8 +112,11 @@ public class PFighting : HitReciever {
 
     public void StartAimingSpear()
     {
+        if (!spearDrawn) { DrawSpear(); return; }
+
         if (!hasSpear) { RetrieveSpear(); return; }
         aimed = charging = true;
+        stabbing = false;
 
         CameraState.i.SwitchToState(CameraState.StateName.MouseOverShoulder);
         staffProjectile.gameObject.SetActive(false);
@@ -103,8 +130,25 @@ public class PFighting : HitReciever {
         staffProjectile.transform.LookAt(staffProjectile.transform.position + dir * 10);
     }
 
+    public void ActivateShockwave()
+    {
+        if (swCooldown > 0) return;
+        AudioManager.instance.PlaySound(14, gameObject);
+        swCooldown = shockwaveResetTime;
+
+        if (hasSpear) shockwave.transform.position = transform.position;
+        else shockwave.transform.position = staffProjectile.transform.position;
+
+        shockwave.Explode(shockwaveDmg, shockwaveKB);
+    }
+
     private void Update()
     {
+        spearObj.SetActive(hasSpear);
+        var playSound = false;
+        if (swCooldown > 0) playSound = true;
+        swCooldown -= Time.deltaTime;
+        if (swCooldown <= 0 && playSound) AudioManager.instance.PlaySound(15, gameObject); 
         if (charging && chargeTime < maxAimTime) chargeTime += Time.deltaTime;
         GlobalUI.i.throwCharge.value = chargeTime / maxAimTime;
     }

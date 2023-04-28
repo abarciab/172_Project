@@ -1,41 +1,51 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class CorruptExplorer : MonoBehaviour
 {
-    [SerializeField] float agroRange = 10;
-    [SerializeField] bool debug;
-    [SerializeField] GameObject target;
-    [SerializeField] AttackStats quickAttack, lungeAttack;
-    EnemyMovement move;
-    public bool agro;
-    [SerializeField] float hitStunTime = 0.7f, lungeDist = 5;
-   
 
-    [Header("Anims")]
-    [SerializeField] Animator anim;
-    [SerializeField] float walkingThreshold = 0.1f;
-    [SerializeField] string hurtAnimParam;
 
-    Vector2 oldPos;
-    bool screaming;
-    bool busy;
-    AttackStats currentAttack;
-    bool alreadyHit;
+    [Header("RangedAttack")]
+    [SerializeField] GameObject projectilePrefab;
+    [SerializeField] Vector2 RangedRange;
+    [SerializeField] Vector3 projectileStartOffset, projectileSize; 
+    [SerializeField] float rangedResetTime, projectileAngle = 45, orbitSpeed = 1, orbitSwitchMod = 0.3f;
+    [SerializeField] int rangedDmg;
+    [SerializeField, Range(0, 1)] float goopAmount;
+    float rangedCooldown;
 
-    [Header("patterns")]
-    int currentPattern;
-    int patternStep;
-    [SerializeField] float patternSwapTime, maxPattern3WaitTime;
+    [Header("Melee Attack")]
+    [SerializeField] HitBox HB;
+    [SerializeField] Vector2 hitRange;
+    [SerializeField] int hitDmg;
+    [SerializeField] string hitAnim;
+    [SerializeField] float hitKB, hitResetTime;
+    float hitCooldown;
 
     [Header("Jump")]
     [SerializeField] float jumpDist;
     [SerializeField] float jumpheight, jumpTime;
     bool jumping;
-    float pattern3Time;
+
+    [Header("Anims")]
+    [SerializeField] Animator anim;
+    [SerializeField] float walkingThreshold = 0.1f;
+    [SerializeField] string hurtAnimParam;
+    
+    [Header("misc")]
+    [SerializeField] bool debug;
+    [SerializeField] float hitStunTime = 0.7f;
+    [SerializeField] float agroRange = 10;
+    [SerializeField] GameObject target;
+
+    
+    Vector2 oldPos;
+    bool screaming, busy, alreadyHit, agro;
+    EnemyMovement move;
 
     public void EndScream()
     {
@@ -44,18 +54,14 @@ public class CorruptExplorer : MonoBehaviour
 
     public void StartChecking()
     {
-        currentAttack.hitBox.StartChecking(true, currentAttack.damage, currentAttack.knockBack, gameObject);
+        HB.StartChecking(true, hitDmg, hitKB, gameObject);
     }
 
     public void EndAttack()
     {
-        //print("end attack: " + currentAttack.name);
         busy = false;
-        currentAttack.Cooldown = currentAttack.resetTime;
-        anim.SetBool(currentAttack.animBool, false);
-        if (!alreadyHit) CurrentPattern(_hit: 1);
-        
-        currentAttack = null;
+        hitCooldown= hitResetTime;
+        anim.SetBool(hitAnim, false);
     }
 
     private void Start()
@@ -64,11 +70,10 @@ public class CorruptExplorer : MonoBehaviour
         target = Player.i.gameObject;
         oldPos = new Vector2(transform.position.x, transform.position.z);
         var stats = GetComponent<EnemyStats>();
+        stats.OnHit.AddListener(JumpBack);
         stats.OnHit.AddListener(Stunned);
         stats.OnHit.AddListener(GetComponentInChildren<EnemySound>().TakeHit);
-        currentPattern = 1;
-        quickAttack.hitBox.OnHit.AddListener(HitTarget);
-        Player.i.enemies.Add(move);
+        
     }
 
     private void Update()
@@ -82,129 +87,91 @@ public class CorruptExplorer : MonoBehaviour
        
         if (target == null) target = Player.i.gameObject;
         float dist = Vector3.Distance(transform.position, target.transform.position);
-        quickAttack.Cooldown -= Time.deltaTime;
-        lungeAttack.Cooldown -= Time.deltaTime;
-        if (currentPattern == 3) pattern3Time += Time.deltaTime;
+        hitCooldown -= Time.deltaTime;
+        rangedCooldown -= Time.deltaTime;
 
         if (!InAgroRange(dist)) Stop();
         if (!agro || busy) return;
+        if (!Player.i.enemies.Contains(move)) Player.i.enemies.Add(move);
 
-        CurrentPattern(dist);
-
-        
-
-        /*var quickStatus = quickAttack.status(dist);
-        var lungeStatus = lungeAttack.status(dist);
-
-        if (quickAttack.TooClose(dist)) Backup();
-        else if (quickStatus == AttackStats.StatusType.ready) StartQuickAttack(); 
-        else if (lungeStatus == AttackStats.StatusType.ready) StartLunge();
-        else if (lungeAttack.TooFar(dist)) MoveTowardTarget();
-        else Stop();*/
+        if (dist > RangedRange.y) MoveTowardTarget();
+        else if (dist > RangedRange.x) RangedAttack();
+        else if (dist > Mathf.Abs(RangedRange.x - hitRange.y) + hitRange.y) Backup();
+        else if (dist > hitRange.y) MoveTowardTarget();
+        else if (dist > hitRange.x) Hit();
+        else if (dist < hitRange.x) Backup();
     }
 
-    void HitTarget()
+    void RangedAttack()
     {
-        alreadyHit = true;
-        CurrentPattern(_hit:2);
+        OrbitPlayer();
+        if (rangedCooldown > 0) return;
+        rangedCooldown = rangedResetTime;
+
+        var bullet = Instantiate(projectilePrefab, transform);
+        bullet.GetComponent<GoopProjectile>().goopAmount = goopAmount;
+        bullet.transform.localPosition = projectileStartOffset;
+        bullet.transform.parent = null;
+        bullet.transform.localScale = projectileSize;
+        bullet.GetComponent<HitBox>().StartChecking(true, rangedDmg);
+
+        AimAndFire(bullet);
     }
 
-    //1 is a miss, 2 is a hit
-    void CurrentPattern(float dist = -1, int _hit = 0)
+    void OrbitPlayer()
     {
-        switch (currentPattern) {
-            case 1:
-                Pattern1(dist, _hit);
-                break;
-            case 2:
-                Pattern2(dist, _hit);
-                break;
-            case 3:
-                Pattern3(dist, _hit);
-                break;
-        }
+        move.ChangeSpeed(orbitSpeed);
+        LookAtTarget(1);
+        bool left = Mathf.Sin((Time.time * orbitSwitchMod) % Mathf.PI) < 0.5f;
+        var targetPos = transform.position + transform.right * (left ? -1 : 1) * 2;
+        move.target = targetPos;
+        move.gotoTarget = true;
+        move.disableRotation();
     }
 
-    void Pattern1(float dist = -1, int _hit = 0)
+    void AimAndFire(GameObject bullet)
     {
-        //print("call to pattern1. dist: " + dist + ", hit: " + _hit + ", patternStep: " + patternStep);
-        if (patternStep == 0) {
-            if (lungeAttack.TooFar(dist)) { MoveTowardTarget(); return;}
+        var rb = bullet.GetComponent<Rigidbody>();
+        Vector3 targetPos = target.transform.position;
 
-            StartLunge();
-            patternStep += 1;
-        }
-        else if (patternStep == 1 && dist == -1) {
-            if (_hit == 1) {
-                Stunned();
-                SwapPattern();
-            }
-            else {
-                InturruptAttack(lungeAttack, "");
-                patternStep += 1;
-            }
-        }
-        else if (_hit == 0 && (patternStep == 2 || patternStep == 3)) {
-            StartAttack(quickAttack);
-            patternStep += 1;
-        }
-        else if (patternStep == 4) {
-            SwapPattern();
-        }
+        float gravity = Physics.gravity.magnitude;
+        // Selected angle in radians
+        float angle = projectileAngle * Mathf.Deg2Rad;
 
-        //if 0: lunge
-        //if !hit: stun, pick new pattern
-        //if hit: 2
-        //if 2: swipe, 3
-        //if 3: swipe, 4
-        //if 4: pick new pattern
+        // Positions of this object and the target on the same plane
+        Vector3 planarTarget = new Vector3(targetPos.x, 0, targetPos.z);
+        Vector3 planarPostion = new Vector3(transform.position.x, 0, transform.position.z);
+
+        // Planar distance between objects
+        float distance = Vector3.Distance(planarTarget, planarPostion);
+        // Distance along the y axis between objects
+        float yOffset = transform.position.y - targetPos.y;
+
+        float initialVelocity = (1 / Mathf.Cos(angle)) * Mathf.Sqrt((0.5f * gravity * Mathf.Pow(distance, 2)) / (distance * Mathf.Tan(angle) + yOffset));
+
+        Vector3 velocity = new Vector3(0, initialVelocity * Mathf.Sin(angle), initialVelocity * Mathf.Cos(angle));
+
+        // Rotate our velocity to match the direction between the two objects
+        float angleBetweenObjects = Vector3.Angle(Vector3.forward, planarTarget - planarPostion) * (targetPos.x > transform.position.x ? 1 : -1);
+        Vector3 finalVelocity = Quaternion.AngleAxis(angleBetweenObjects, Vector3.up) * velocity;
+
+        // Fire!
+        rb.velocity = finalVelocity;
     }
 
-    void Pattern2(float dist = -1, int _hit = 0)
+    void Hit()
     {
-        //print("call to pattern2");
-        if (patternStep == 0) {
-            if (lungeAttack.TooFar(dist)) { MoveTowardTarget(); return; }
+        if (hitCooldown > 0) { Backup(); return; }
+        hitCooldown = hitResetTime;
+        Stop();
 
-            StartLunge();
-            patternStep += 1;
-        }
-        else if (patternStep == 1 && dist == -1) {
-            if (_hit == 1) SwapPattern(3);
-            else if (_hit == 2) SwapPattern(1, 2);
-        }
+        StopAllCoroutines();
+        LookAtTarget(0.75f);       
 
-        //if 0: lunge
-        //if !hit: pattern3
-        //if hit: pattern1
-    }
+        anim.SetBool(hurtAnimParam, false);
+        anim.SetBool(hitAnim, true);
 
-    void Pattern3(float dist = -1, int _hit = 0)
-    {
-        if (pattern3Time > maxPattern3WaitTime) {
-            SwapPattern();
-        }
-        else if (patternStep == 0) {
-            JumpBack();
-            patternStep += 1;
-        }
-        else if (patternStep == 1) {
-            LookAtTarget(0.75f);
-            if (quickAttack.status(dist) == AttackStats.StatusType.ready) {
-                StartAttack(quickAttack);
-                patternStep += 1;
-            }
-        }
-        if (patternStep >= 2 && dist == -1) {
-            if (_hit == 1) SwapPattern();
-            if (_hit == 2) StartAttack(quickAttack);
-        }
-
-        //if 0: jump back from player, 1
-        //if 1: face player, move to the right
-        //if 1 & distance < quickattack: swipe
-        //while hit: swipe
-        //if miss: pick new pattern
+        busy = true;
     }
 
     void JumpBack()
@@ -252,30 +219,9 @@ public class CorruptExplorer : MonoBehaviour
         transform.position = pos;
     }
 
-    void SwapPattern(int pattern = 0, int step = 0, float stunTime = -1)
-    {
-        quickAttack.Cooldown = lungeAttack.Cooldown = 0;
-
-        if (pattern == 0) {
-            pattern = Random.Range(1, 4);
-            if (currentPattern == pattern) pattern = Random.Range(1, 4);
-        }
-        currentPattern = pattern;
-        patternStep = step;
-        if (currentPattern == 3) pattern3Time = 0;
-
-        if (stunTime != 0) {
-            busy = true;
-            StartCoroutine(_Stunned(stunTime == -1 ? patternSwapTime : stunTime));
-        }
-    }
-
     void Stunned()
     {
-        if (currentAttack == lungeAttack) return;
-        if (currentAttack == quickAttack) InturruptAttack(quickAttack, hurtAnimParam);
-        else busy = true;
-        
+        busy = true;
         StartCoroutine(_Stunned(hitStunTime));
     }
 
@@ -300,49 +246,12 @@ public class CorruptExplorer : MonoBehaviour
         oldPos = currentPos;
 
         anim.SetBool("movingForward", speed > walkingThreshold);
-        anim.SetBool("movingBackward", speed < -walkingThreshold);
-    }
-
-    void StartLunge()
-    {
-        LookAtTarget(0.9f);
-
-        var dir = (target.transform.position - transform.position).normalized;
-        var lungeTarget = transform.position + dir * lungeDist;
-
-        move.target = lungeTarget;
-        move.gotoTarget = true;
-
-        StartAttack(lungeAttack, false);
-    }
-
-    void StartQuickAttack()
-    {
-        StartAttack(quickAttack);
-    }
-
-    void StartAttack(AttackStats attack, bool stop = true)
-    {
-        if (busy) return;
-        anim.SetBool(hurtAnimParam, false);
-
-        if (stop) Stop();
-        StopAllCoroutines();
-        anim.SetBool(quickAttack.animBool, false);
-        anim.SetBool(lungeAttack.animBool, false);
-
-        //print("start attack: " + attack.name);
-        alreadyHit = false;
-        LookAtTarget(0.75f);
-        currentAttack = attack;
-        attack.Cooldown = attack.resetTime;
-        busy = true;
-        anim.SetBool(attack.animBool, true);
+        anim.SetBool("walkBack", speed < -walkingThreshold);
     }
 
     void Backup()
     {
-        //print("BACKUP");
+        move.NormalSpeed();
         move.disableRotation();
         LookAtTarget(0.9f);
         var dir = (target.transform.position - transform.position).normalized * -1;
@@ -362,6 +271,7 @@ public class CorruptExplorer : MonoBehaviour
     void MoveTowardTarget()
     {
         move.EnableRotation();
+        move.NormalSpeed();
         move.target = target.transform.position;
         move.gotoTarget = true;
     }
@@ -386,12 +296,15 @@ public class CorruptExplorer : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        quickAttack.DrawGizmos(transform.position);
-        lungeAttack.DrawGizmos(transform.position);
-
         if (!debug) return;
         
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, agroRange);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, RangedRange.x);
+        Gizmos.DrawWireSphere(transform.position, RangedRange.y);
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, hitRange.x);
+        Gizmos.DrawWireSphere(transform.position, hitRange.y);
     }
 }
