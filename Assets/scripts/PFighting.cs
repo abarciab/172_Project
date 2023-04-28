@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class PFighting : HitReciever {
@@ -30,6 +31,12 @@ public class PFighting : HitReciever {
         spearDrawn = true;
     }
 
+    public void PutAwaySpear()
+    {
+        if (stabbing || charging) return;
+        spearDrawn = false;
+    }
+
     public float GetSWcooldown()
     {
         return swCooldown;
@@ -44,7 +51,7 @@ public class PFighting : HitReciever {
     public void ThrowStaff()
     {
         charging = false;
-        if (!hasSpear || !aimed) return;
+        if (!hasSpear || !aimed || chargeTime <= maxAimTime*0.1f) return;
         hasSpear = aimed = false;
 
         float power = Mathf.Clamp01(chargeTime / maxAimTime);

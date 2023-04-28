@@ -104,6 +104,7 @@ public class Player : MonoBehaviour
         }
         if (enemies.Count == 0) {
             CameraState.i.StopLockOn();
+            if (GetComponent<PMovement>().running) GetComponent<PFighting>().PutAwaySpear();
             return;
         }
     }
