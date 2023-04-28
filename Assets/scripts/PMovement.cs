@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Player))]
 public class PMovement : MonoBehaviour
 {
-    [SerializeField] float forwardSpeed, runSpeed, stoppingFriction = 0.025f, rotationSpeed = 0.5f, cameraAlignSmoothness = 0.2f, stepSpeed, stepTime, strafeSpeed = 4, dashSpeed, dashTime, KBsmoothness = 0.5f;
+    [SerializeField] float forwardSpeed, runSpeed, stoppingFriction = 0.025f, rotationSpeed = 0.5f, cameraAlignSmoothness = 0.2f, stepSpeed, stepTime, strafeSpeed = 4, dashSpeed, dashTime, KBsmoothness = 0.5f, goopMult = 0.5f;
     [HideInInspector] public bool goForward, turnLeft, turnRight, goBack, running, alignToCamera, stepping, rolling, strafe, attacking, pressLeft, pressRight, knockedBack, posing;
     public bool sitting;
 
@@ -17,10 +17,14 @@ public class PMovement : MonoBehaviour
     Vector3 rollDir;
     Transform poseLookTarget;
 
+    [HideInInspector] public float goopTime; 
+
     Vector3 source;
 
     public void KnockBack(GameObject _source, float _KB, Vector3 offset)
     {
+        if (_source == null || _KB <= 0) return;
+
         source = _source.transform.position + offset;
         KB = _KB;
         knockedBack = true;
@@ -79,6 +83,8 @@ public class PMovement : MonoBehaviour
 
     private void Update()
     {
+        goopTime -= Time.deltaTime;
+
         //attacking = GetComponent<PFighting>().basicAttacking || GetComponent<PFighting>().hvyAttacking;
         alignToEnemy = CameraState.i.GetLockedEnemy() != null;
         alignToCamera = CameraState.i.mouseControl;
@@ -153,6 +159,7 @@ public class PMovement : MonoBehaviour
     void Move()
     {
         float speed = running ? runSpeed : forwardSpeed;
+        speed = goopTime > 0 ? speed * goopMult : speed;
         if (attacking) speed = 0;
 
         var verticalVel = rb.velocity;
@@ -183,9 +190,9 @@ public class PMovement : MonoBehaviour
 
     void AlignModel()
     {
-        if (p.enemies.Count > 0) return;
-
         Transform model = transform.GetChild(0);
+
+        if (p.enemies.Count > 0) { model.transform.localEulerAngles = Vector3.zero;  return; }
 
         if (rb.velocity.magnitude <= 0.01f) {
             model.transform.localRotation = Quaternion.Lerp(model.transform.localRotation, Quaternion.identity, 0.2f);
@@ -199,7 +206,6 @@ public class PMovement : MonoBehaviour
         targetRot.z = originalRot.z;
         model.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(originalRot), Quaternion.Euler(targetRot), 0.2f);
 
-        Debug.DrawRay(transform.position, rb.velocity.normalized, Color.blue);
     }
 
     Vector3 GetDashDir() {
@@ -210,8 +216,6 @@ public class PMovement : MonoBehaviour
         if (goBack) dir += transform.forward * -1;
 
         return dir.normalized;
-
-        //return goBack ? transform.forward * -1 : (pressRight ? transform.right : (pressLeft ? transform.right * -1 : transform.forward));
     }
 
     Vector3 GetStrafeDir() {

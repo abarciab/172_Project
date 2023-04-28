@@ -22,7 +22,7 @@ public class MusicPlayer : MonoBehaviour
     {
         if (Player.i.enemies.Count > 0 && !music2) {
             //if (ClosestDist(Player.i.enemies) > agroDist) return;
-
+            Player.i.EnterCombat();
 
             AudioManager.instance.PlaySound(10, music2Source);
             music2Vol = music2Source.volume;

@@ -35,6 +35,7 @@ public class EnemyMovement : MonoBehaviour
 
     public void KnockBack(GameObject source, float _KB)
     {
+        //print("source: " + source.name + ", amount: " + _KB);
         if (_KB == 0 || source == null) return;
         StartCoroutine(_KnockBack(source, _KB));
     }

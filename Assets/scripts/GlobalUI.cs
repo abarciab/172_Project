@@ -20,6 +20,10 @@ public class GlobalUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI nameText;
     [SerializeField] TextMeshProUGUI mainText;
 
+    [Header("Shockwave")]
+    [SerializeField] GameObject swCountdown;
+    [SerializeField] TextMeshProUGUI swCountDownText;
+
     public void DisplayLine(string speaker, string line)
     {
         showHPbar = false;
@@ -81,6 +85,10 @@ public class GlobalUI : MonoBehaviour
 
     private void Update()
     {
+        float cooldown = Player.i.GetComponent<PFighting>().GetSWcooldown();
+        swCountdown.SetActive(cooldown > 0);
+        swCountDownText.text = Mathf.CeilToInt(cooldown).ToString();
+
         HpBar.gameObject.SetActive(!title.activeInHierarchy && showHPbar);
         if (mainText.gameObject.activeInHierarchy) commandPrompt.gameObject.SetActive(false);
     }
