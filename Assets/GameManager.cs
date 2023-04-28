@@ -6,6 +6,14 @@ using UnityEngine.SceneManagement;
 [ExecuteAlways]
 public class GameManager : MonoBehaviour
 {
+    [System.Serializable] 
+    public class StoryPorgression
+    {
+        public Fact fact;
+        public bool state;
+        public string nextQuest;
+    }
+
     [System.Serializable]
     public class CheckPoint
     {
@@ -29,6 +37,9 @@ public class GameManager : MonoBehaviour
     [Header("Manual Setup")]
     [SerializeField] int startingCheckPoint;
     [SerializeField] bool setStarting;
+
+    [Header("Quest")]
+    [SerializeField] List<StoryPorgression> story = new List<StoryPorgression>();
 
     public void AddCheckPoint(Transform point, int ID)
     {
@@ -63,8 +74,8 @@ public class GameManager : MonoBehaviour
 
     public void RestartScene()
     {
-        SceneManager.LoadScene(0);
-        SceneManager.LoadScene(1, LoadSceneMode.Additive);
+        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2, LoadSceneMode.Additive);
     }
 
     public void SetCheckPointManually()
@@ -86,7 +97,19 @@ public class GameManager : MonoBehaviour
         }
 
         if (!started) RestartFromCheckPoint();
+
+        CheckStory();
         
+    }
+
+    void CheckStory()
+    {
+        if (story.Count == 0 || !Application.isPlaying) return;
+        var next = story[0];
+        if (FactManager.i.IsPresent(next.fact) != next.state) return;
+
+        GlobalUI.i.currentQuest.text = next.nextQuest;
+        story.RemoveAt(0);
     }
 
     void Awake() 

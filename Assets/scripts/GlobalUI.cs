@@ -15,6 +15,7 @@ public class GlobalUI : MonoBehaviour
     [SerializeField] GameObject title;
     [SerializeField] Image dmgIndicator, dmgFlash;
     [SerializeField] bool showHPbar;
+    public TextMeshProUGUI currentQuest;
 
     [Header("Dialogue")]
     [SerializeField] TextMeshProUGUI nameText;
@@ -68,8 +69,6 @@ public class GlobalUI : MonoBehaviour
 
     public void UpdateDmgIndicator(float health)
     {
-        
-
         var col = dmgIndicator.color;
         col.a = (1-health) * 0.8f;
         if (col.a > dmgIndicator.color.a) StartCoroutine(FlashRed());

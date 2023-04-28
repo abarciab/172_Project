@@ -39,7 +39,7 @@ public class Fence : MonoBehaviour
             fenceScript.right = this;
         }
         newPost.gameObject.name = "fencePost " + fenceScript.ID;
-        Selection.activeGameObject = newPost;
+        //Selection.activeGameObject = newPost;
     }
 
     void DrawRopes()
