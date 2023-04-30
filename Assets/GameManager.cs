@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
         public Fact fact;
         public bool state;
         public string nextQuest;
+        public int ID;
     }
 
     [System.Serializable]
@@ -36,10 +37,35 @@ public class GameManager : MonoBehaviour
 
     [Header("Manual Setup")]
     [SerializeField] int startingCheckPoint;
-    [SerializeField] bool setStarting;
+    [SerializeField] bool setStarting, resetGame;
 
     [Header("Quest")]
     [SerializeField] List<StoryPorgression> story = new List<StoryPorgression>();
+    [SerializeField] List<StoryPorgression> runtimeStory = new List<StoryPorgression>();
+
+    public int GetID()
+    {
+        if (runtimeStory.Count == 0) return -1;
+        return runtimeStory[0].ID;
+    }
+
+    public string getCurrentStory()
+    {
+        return GlobalUI.i.currentQuest.text;
+    }
+
+    public void SetCurrentStory(string text)
+    {
+        GlobalUI.i.currentQuest.text = text;
+    }
+
+    public void LoadStory(int ID)
+    {
+        if (ID == -1) { runtimeStory.Clear(); return; }
+        while (runtimeStory.Count > 0 && runtimeStory[0].ID != ID) {
+            runtimeStory.RemoveAt(0);
+        }
+    }
 
     public void AddCheckPoint(Transform point, int ID)
     {
@@ -95,6 +121,10 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("checkpoint", startingCheckPoint);
             setStarting = false;
         }
+        if (resetGame) {
+            resetGame = false;
+            GetComponent<SaveManager>().ResetGame();
+        }
 
         if (!started) RestartFromCheckPoint();
 
@@ -102,14 +132,20 @@ public class GameManager : MonoBehaviour
         
     }
 
+    private void Start()
+    {
+        runtimeStory = new List<StoryPorgression>(story);
+        GetComponent<SaveManager>().LoadGame();
+    }
+
     void CheckStory()
     {
-        if (story.Count == 0 || !Application.isPlaying) return;
-        var next = story[0];
+        if (runtimeStory.Count == 0 || !Application.isPlaying) return;
+        var next = runtimeStory[0];
         if (FactManager.i.IsPresent(next.fact) != next.state) return;
 
         GlobalUI.i.currentQuest.text = next.nextQuest;
-        story.RemoveAt(0);
+        runtimeStory.RemoveAt(0);
     }
 
     void Awake() 

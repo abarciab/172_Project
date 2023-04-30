@@ -23,8 +23,10 @@ public class CorruptExplorer : MonoBehaviour
     [SerializeField] Vector2 hitRange;
     [SerializeField] int hitDmg;
     [SerializeField] string hitAnim;
+
     [SerializeField] float hitKB, hitResetTime;
     float hitCooldown;
+    bool melee;
 
     [Header("Jump")]
     [SerializeField] float jumpDist;
@@ -83,6 +85,9 @@ public class CorruptExplorer : MonoBehaviour
             anim.SetBool("dead", true);
             enabled = false;
             Player.i.enemies.Remove(move);
+            Player.i.EndMelee(move);
+            Destroy(gameObject, 2.5f);
+            return;
         }
        
         if (target == null) target = Player.i.gameObject;
@@ -93,13 +98,19 @@ public class CorruptExplorer : MonoBehaviour
         if (!InAgroRange(dist)) Stop();
         if (!agro || busy) return;
         if (!Player.i.enemies.Contains(move)) Player.i.enemies.Add(move);
+        melee = Player.i.TryToMelee(move);
 
-        if (dist > RangedRange.y) MoveTowardTarget();
-        else if (dist > RangedRange.x) RangedAttack();
-        else if (dist > Mathf.Abs(RangedRange.x - hitRange.y) + hitRange.y) Backup();
-        else if (dist > hitRange.y) MoveTowardTarget();
-        else if (dist > hitRange.x) Hit();
-        else if (dist < hitRange.x) Backup();
+        if (melee) 
+        {
+            if (dist > hitRange.y) MoveTowardTarget();
+            else if (dist > hitRange.x) Hit();
+            else if (dist < hitRange.x) Backup();
+        }
+        else {
+            if (dist > RangedRange.y) MoveTowardTarget();
+            else if (dist > RangedRange.x) RangedAttack();
+            else if (dist < RangedRange.x) Backup();
+        }
     }
 
     void RangedAttack()

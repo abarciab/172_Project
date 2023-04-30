@@ -28,7 +28,7 @@ public class IntroController : MonoBehaviour
             started = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.E)) {
+        if (Input.GetKeyDown(KeyCode.F)) {
             fade.enabled = true;
             Player.i.GetComponent<PControls>().enabled = true;
             enabled = false;

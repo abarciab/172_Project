@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Search;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -8,7 +9,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public PAnimator animator;
     [HideInInspector] public Vector3 speed3D;
     [HideInInspector] public float forwardSpeed;
-    public List<EnemyMovement> enemies = new List<EnemyMovement>();
+   
     EnemyMovement closestEnemy;
     [SerializeField] float lockOnDist = 15, speakerEndDist;
 
@@ -29,12 +30,40 @@ public class Player : MonoBehaviour
     [SerializeField] int healRate;
     float healCooldown;
 
+    [Header("Goop")]
+    [SerializeField] int goopDmg = 1;
+    [SerializeField] float goopTick;
+    float goopTickCooldown;
+    [HideInInspector] public float goopTime;
+
+    [HideInInspector] public List<EnemyMovement> enemies = new List<EnemyMovement>();
+    List<EnemyMovement> currentMeleeEnemies = new List<EnemyMovement>();
+    public int meleeTokens = 3;
+
     public void RemoveInteractable(Gate interactable)
     {
         if (interestedInteractable == interactable) {
             interestedInteractable = null;
             GlobalUI.i.HidePrompt(interactable.prompt);
         }
+    }
+
+    public bool TryToMelee(EnemyMovement move)
+    {
+        if (currentMeleeEnemies.Contains(move)) return true;
+        if (meleeTokens == 0) return false;
+
+        currentMeleeEnemies.Add(move);
+        meleeTokens -= 1;
+        return true;
+    }
+
+    public void EndMelee(EnemyMovement move)
+    {
+        if (!currentMeleeEnemies.Contains(move)) return;
+
+        currentMeleeEnemies.Remove(move);
+        meleeTokens += 1;
     }
 
     public void AddInteractable(Gate interactable)
@@ -88,7 +117,8 @@ public class Player : MonoBehaviour
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.K)) GameManager.i.RestartScene();
-        if (Input.GetKeyDown(KeyCode.L)) GameManager.i.SetCheckPointManually();
+        if (Input.GetKeyDown(KeyCode.L)) GameManager.i.GetComponent<SaveManager>().SaveGame();
+        if (Input.GetKeyDown(KeyCode.O)) GameManager.i.GetComponent<SaveManager>().ResetGame();
 
         if (healCooldown <= 0 && health < maxHealth) StartCoroutine(Heal());
         healCooldown -= Time.deltaTime;
@@ -97,6 +127,15 @@ public class Player : MonoBehaviour
         if (interestedSpeaker != null && Vector3.Distance(transform.position, interestedSpeaker.transform.position) > speakerEndDist) {
             interestedSpeaker = null;
             GlobalUI.i.HidePrompt();
+        }
+
+        if (goopTime > 0) {
+            goopTime -= Time.deltaTime;
+            goopTickCooldown -= Time.deltaTime;
+            if (goopTickCooldown <= 0) {
+                ChangeHealth(-goopDmg);
+                goopTickCooldown = goopTick;
+            }
         }
 
         for (int i = 0; i < enemies.Count; i++) {

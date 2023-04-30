@@ -9,6 +9,20 @@ public class FactManager : MonoBehaviour
 
     [SerializeField] List<Fact> facts = new List<Fact>();
 
+    public void SetFacts(List<Fact> newFacts)
+    {
+        facts = newFacts;
+    }
+
+    public List<Fact> GetFacts()
+    {
+        return facts;
+    }
+
+    public int numFacts()
+    {
+        return facts.Count;
+    }
     public void AddFact(Fact fact)
     {
         if (!IsPresent(fact)) facts.Add(fact);
