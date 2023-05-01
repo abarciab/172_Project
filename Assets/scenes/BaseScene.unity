@@ -15,7 +15,7 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 1
-  m_FogColor: {r: 0.6886792, g: 0.5035155, b: 0.5035155, a: 1}
+  m_FogColor: {r: 0.7830189, g: 0.57485104, b: 0.52078146, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.01
   m_LinearFogStart: 0
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 1.8277053, g: 0.48892137, b: 0.48884386, a: 1}
+  m_IndirectSpecularColor: {r: 1.0539182, g: 1.0540904, b: 1.0539211, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -832,8 +832,8 @@ MonoBehaviour:
     skyBoxTint: {r: 0.03529412, g: 0.03137255, b: 0.20784315, a: 1}
     skyBoxExposure: 0.97
     sun: {fileID: 1985051648}
-  shader1: 0
-  shader2: 1
+  shader1: 1
+  shader2: 2
 --- !u!4 &91528274
 Transform:
   m_ObjectHideFlags: 0
@@ -1899,7 +1899,23 @@ MonoBehaviour:
     state: 1
     nextQuest: investigate the first obelist
     ID: 3
-  runtimeStory: []
+  runtimeStory:
+  - fact: {fileID: 11400000, guid: a2999a6d158febf4e9a3314f53e27d66, type: 2}
+    state: 1
+    nextQuest: speak with gran
+    ID: 0
+  - fact: {fileID: 11400000, guid: bd532e5cb9b6f3a448378ca4945cca4c, type: 2}
+    state: 1
+    nextQuest: defeat goat
+    ID: 1
+  - fact: {fileID: 11400000, guid: fc0e09c38ce98024dbe1efba7ea38713, type: 2}
+    state: 1
+    nextQuest: speak with gran
+    ID: 2
+  - fact: {fileID: 11400000, guid: f175e087a77adeb40bd49542430c2ce7, type: 2}
+    state: 1
+    nextQuest: investigate the first obelist
+    ID: 3
 --- !u!114 &297545239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1912,12 +1928,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27384c0f222189a45898cb7294917938, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  facts:
-  - {fileID: 11400000, guid: 21d49466c4b2691499c135cb39f950e2, type: 2}
-  - {fileID: 11400000, guid: bd532e5cb9b6f3a448378ca4945cca4c, type: 2}
-  - {fileID: 11400000, guid: fc0e09c38ce98024dbe1efba7ea38713, type: 2}
-  - {fileID: 11400000, guid: f175e087a77adeb40bd49542430c2ce7, type: 2}
-  - {fileID: 11400000, guid: b54742e7e4a92f44fb1dde2c002c089b, type: 2}
+  facts: []
 --- !u!4 &297545240
 Transform:
   m_ObjectHideFlags: 0
@@ -3606,7 +3617,7 @@ MonoBehaviour:
   m_IsGlobal: 1
   priority: 0
   blendDistance: 0
-  weight: 0
+  weight: 1
   sharedProfile: {fileID: 11400000, guid: be2af1628a8e9b944bcdc94cf1cf0935, type: 2}
 --- !u!4 &655916721
 Transform:
@@ -4847,7 +4858,7 @@ MonoBehaviour:
   healWaitTime: 10
   healRate: 1
   goopDmg: 1
-  goopTick: 0
+  goopTick: 0.5
   goopTime: 0
   enemies: []
   meleeTokens: 3
@@ -5739,7 +5750,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.9020374, b: 0.9009434, a: 1}
-  m_Intensity: 4
+  m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -5782,7 +5793,7 @@ Light:
   m_LightShadowCasterMode: 2
   m_AreaSize: {x: 7.13, y: 0.5}
   m_BounceIntensity: 1
-  m_ColorTemperature: 6432
+  m_ColorTemperature: 4894
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
@@ -5819,7 +5830,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 985183547}
-  m_LocalRotation: {x: 0.054360624, y: -0.093707606, z: 0.0051242295, w: 0.9941014}
+  m_LocalRotation: {x: 0.40205532, y: 0.46928695, z: -0.25353083, w: 0.7442066}
   m_LocalPosition: {x: 0, y: 157.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5859,7 +5870,7 @@ MonoBehaviour:
   m_IsGlobal: 1
   priority: 0
   blendDistance: 0
-  weight: 1
+  weight: 0
   sharedProfile: {fileID: 11400000, guid: ab4422cc22177a041a9665b3e0bdea93, type: 2}
 --- !u!4 &988091347
 Transform:
@@ -9299,14 +9310,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1505438922}
-  m_LocalRotation: {x: 0.23691085, y: 0.5120448, z: -0.14939289, w: 0.81201303}
+  m_LocalRotation: {x: 0.40205532, y: 0.46928695, z: -0.25353083, w: 0.7442066}
   m_LocalPosition: {x: 0, y: 157.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 91528274}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 32.53, y: 64.47, z: 0}
+  m_LocalEulerAnglesHint: {x: 56.76, y: 64.47, z: 0}
 --- !u!1 &1508113764
 GameObject:
   m_ObjectHideFlags: 0
@@ -9497,7 +9508,7 @@ MonoBehaviour:
       localVolume: 0
       localPitch: 0
       looping: 0
-    parentVolume: 0.1
+    parentVolume: 0.037
     parentPitch: 0.852
   - name: '12: goopEnemyHit'
     ID: 12

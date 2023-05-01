@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
 
     public void SetCurrentStory(string text)
     {
-        GlobalUI.i.currentQuest.text = text;
+        if (GlobalUI.i) GlobalUI.i.currentQuest.text = text;
     }
 
     public void LoadStory(int ID)

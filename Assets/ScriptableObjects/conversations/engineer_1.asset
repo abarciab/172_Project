@@ -13,14 +13,21 @@ MonoBehaviour:
   m_Name: engineer_1
   m_EditorClassIdentifier: 
   lines:
-  - Hello!
-  - Glad you made it okay - there was a big storm knocking down trees left and right
-  - Anyways, Please take this to the farmhouse down at the bottom of the hill - it's
-    a mechaical leg for Ruth.
-  - These crystals are  powerful, but they're incredibly easy to work with - me and
-    the boys have been having the time of our lives creatign thigns here.
-  - Once you've made the delivery, meet me at the cystal dig site and I'll have your
-    payment. Another job too, if you're interested
+  - "Oh, thank goodness someone came\u2026 I thought I was going to get gobbled up
+    by those monsters\u2026\r"
+  - "This whole trip is turning into a disaster. I never should have come along!\r"
+  - "We\u2019ve been doing experiments on the Sun Pillars. Boss wanted to see if
+    we could make use of their power, but\u2026 it didn\u2019t work.\r"
+  - We messed up. They only collect enough energy to power those seals on the Great
+    Door
+  - "After they deactivated we came back here to figure out how to turn them on again.
+    One of my buddies brought back some water from the river for us but when people
+    drank it they started acting\u2026 funny."
+  - "Then they turned into those\u2026 Oh, geez. Do you think the legend really is
+    true? There\u2019s something in there that turns people to monsters?"
+  - "Then we have to stop it! There\u2019s been some terrible noises from up in the
+    ruins, but\u2026 If you can clear the area, I can reactivate the Sun Pillar!"
   step: -1
-  endConvoFact: {fileID: 11400000, guid: 5b26ee9dcbfb47e40aef3ec2f80ff76e, type: 2}
-  endConvoRemoveFact: {fileID: 11400000, guid: a2999a6d158febf4e9a3314f53e27d66, type: 2}
+  endConvoFact:
+  - {fileID: 11400000, guid: 9a049b12389eb7a4e93931ece536eae2, type: 2}
+  endConvoRemoveFact: {fileID: 0}

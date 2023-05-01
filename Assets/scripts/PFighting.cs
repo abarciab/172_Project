@@ -51,16 +51,21 @@ public class PFighting : HitReciever {
     public void ThrowStaff()
     {
         charging = false;
-        if (!hasSpear || !aimed || chargeTime <= maxAimTime*0.1f) return;
-        hasSpear = aimed = false;
-
-        float power = Mathf.Clamp01(chargeTime / maxAimTime);
-
-        chargeTime = 0;
-
-        AudioManager.instance.PlaySound(0, gameObject);
+        if (!hasSpear || !aimed) return;
+        aimed = false;
         CameraState.i.SwitchToState(CameraState.StateName.MouseFollow);
 
+        if (chargeTime <= maxAimTime * 0.1f) {
+            chargeTime = 0;
+            staffProjectile.gameObject.SetActive(false);
+            return;
+        }
+
+        hasSpear = false;
+        float power = Mathf.Clamp01(chargeTime / maxAimTime);
+        chargeTime = 0;
+        AudioManager.instance.PlaySound(0, gameObject);
+        
         staffProjectile.gameObject.SetActive(false);
         var dir = GetAimDir();
         staffProjectile.transform.LookAt(staffProjectile.transform.position + dir * 10);
