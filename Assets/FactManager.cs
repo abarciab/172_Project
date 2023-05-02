@@ -8,10 +8,13 @@ public class FactManager : MonoBehaviour
     private void Awake() { i = this; }
 
     [SerializeField] List<Fact> facts = new List<Fact>();
+    [SerializeField] List<Fact> saveWhenAdded = new List<Fact>();
+    public bool autoSave;
 
     public void SetFacts(List<Fact> newFacts)
     {
         facts = newFacts;
+        FindObjectOfType<ShaderTransitionController>().LoadShaders();
     }
 
     public List<Fact> GetFacts()
@@ -25,7 +28,10 @@ public class FactManager : MonoBehaviour
     }
     public void AddFact(Fact fact)
     {
-        if (!IsPresent(fact)) facts.Add(fact);
+        if (!IsPresent(fact)) {
+            facts.Add(fact);
+            if (autoSave && saveWhenAdded.Contains(fact)) GetComponent<SaveManager>().SaveGame();
+        }
     }
 
     public void RemoveFact(Fact fact)

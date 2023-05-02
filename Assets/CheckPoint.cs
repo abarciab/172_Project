@@ -14,6 +14,7 @@ public class CheckPoint : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Player>();
-        if (player) PlayerPrefs.SetInt("checkpoint", ID);
+        if (player) PlayerPrefs.SetInt("autoCheckpoint", ID);
+        if (player && FactManager.i.autoSave) PlayerPrefs.SetInt("checkpoint", ID);
     }
 }

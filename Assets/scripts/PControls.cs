@@ -5,7 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(PMovement))]
 public class PControls : MonoBehaviour
 {
-    [SerializeField] KeyCode forward = KeyCode.W, left = KeyCode.A, backward = KeyCode.S, right = KeyCode.D, run = KeyCode.LeftShift, standUpKey = KeyCode.Space, roll = KeyCode.LeftControl, interactKey = KeyCode.E, abilityKey = KeyCode.E;
+    [SerializeField] KeyCode forward = KeyCode.W, left = KeyCode.A, backward = KeyCode.S, right = KeyCode.D, run = KeyCode.LeftShift,
+        standUpKey = KeyCode.Space, roll = KeyCode.LeftControl, interactKey = KeyCode.E, abilityKey = KeyCode.E, pauseKey = KeyCode.Escape;
     [SerializeField] bool mouseMove;
     [SerializeField] float sitControlTime = 1f;
     float timeSitting;
@@ -22,6 +23,8 @@ public class PControls : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(pauseKey) && !GameManager.i.paused) GameManager.i.TogglePause();
+
         if (GameManager.i.paused) return;
 
         if (move.sitting) timeSitting += Time.deltaTime;

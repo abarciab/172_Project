@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Xml;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
@@ -24,6 +25,7 @@ public class Scorpion : MonoBehaviour
     [SerializeField] float rangedResetTime, projectileAngle = 45, orbitSpeed = 1, orbitSwitchMod = 0.3f;
     [SerializeField] int rangedDmg;
     [SerializeField, Range(0, 1)] float goopAmount;
+    [SerializeField] string rangedAnim;
     float rangedCooldown;
 
     [Header("Snip Attack")]
@@ -50,6 +52,7 @@ public class Scorpion : MonoBehaviour
 
     [Header("Phases")]
     [SerializeField] float healthPercentThreshold = 0.5f;
+    [SerializeField] bool debug;
     bool phase2;
 
     Vector3 oldPos;
@@ -69,6 +72,7 @@ public class Scorpion : MonoBehaviour
         hitCooldown = hitResetTime;
         anim.SetBool(pinStartAnim, false);
         HB.EndChecking();
+        anim.SetBool(pinHitAnim, false);
     }
 
     private void Update()
@@ -91,16 +95,18 @@ public class Scorpion : MonoBehaviour
 
         if (busy) { Stop(); return; };
         if (!Player.i.enemies.Contains(move)) Player.i.enemies.Add(move);
+        var stats = GetComponent<EnemyStats>();
+        phase2 = (stats.health / (float) stats.maxHealth) < healthPercentThreshold;
 
         if (!phase2) {
             if (dist > RangedRange.y) MoveTowardTarget();
             else if (dist < hitRange.y) Snip(true);
             else if (dist < RangedRange.x) Backup();
-            else RangedAttack();
+            else StartRangedAttack();
         }
         else {
             if (dist > RangedRange.y) MoveTowardTarget();
-            else if (dist > RangedRange.x) { RangedAttack(); MoveTowardTarget(); }
+            else if (dist > RangedRange.x) { StartRangedAttack(); MoveTowardTarget(); }
             else if (dist < hitRange.y) Pin(true);
             else if (dist < RangedRange.x) Backup();
         }
@@ -114,15 +120,26 @@ public class Scorpion : MonoBehaviour
         var stats = GetComponent<EnemyStats>();
         stats.OnHit.AddListener(JumpBack);
         stats.OnHit.AddListener(GetComponentInChildren<EnemySound>().TakeHit);
-
+        HB.OnHit.AddListener(PinHit);
     }
 
-    void RangedAttack()
+    void PinHit()
+    {
+        anim.SetBool(pinHitAnim, true);
+    }
+
+    void StartRangedAttack()
     {
         OrbitPlayer();
         if (rangedCooldown > 0) return;
         rangedCooldown = rangedResetTime;
+        anim.SetTrigger(rangedAnim);
+        busy = true;
+        print("Ranged");
+    }
 
+    public void RangedAttack()
+    {
         var bullet = Instantiate(projectilePrefab, transform);
         bullet.GetComponent<GoopProjectile>().goopAmount = goopAmount;
         bullet.transform.localPosition = projectileStartOffset;
@@ -150,8 +167,7 @@ public class Scorpion : MonoBehaviour
         float speed = Vector2.Distance(currentPos, oldPos) / Time.deltaTime;
         oldPos = currentPos;
 
-        anim.SetBool("movingForward", speed > walkingThreshold);
-        anim.SetBool("walkBack", speed < -walkingThreshold);
+        anim.SetBool("walking", Mathf.Abs(speed) > walkingThreshold);
     }
 
     void AimAndFire(GameObject bullet)
@@ -282,6 +298,18 @@ public class Scorpion : MonoBehaviour
     void Stop()
     {
         move.gotoTarget = false;
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (!debug) return;
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, RangedRange.x);
+        Gizmos.DrawWireSphere(transform.position, RangedRange.y);
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, hitRange.x);
+        Gizmos.DrawWireSphere(transform.position, hitRange.y);
     }
 
 }

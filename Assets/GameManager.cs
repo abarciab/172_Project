@@ -6,6 +6,16 @@ using UnityEngine.SceneManagement;
 [ExecuteAlways]
 public class GameManager : MonoBehaviour
 {
+
+    [System.Serializable]
+    public class EnemyGroup
+    {
+        public Fact fact;
+        public List<GameObject> enemies = new List<GameObject>();
+        public int ID;
+        public bool enabled;
+    }
+
     [System.Serializable] 
     public class StoryPorgression
     {
@@ -43,6 +53,19 @@ public class GameManager : MonoBehaviour
     [SerializeField] List<StoryPorgression> story = new List<StoryPorgression>();
     [SerializeField] List<StoryPorgression> runtimeStory = new List<StoryPorgression>();
 
+    [Header("Enemy groups")]
+    [SerializeField] List<EnemyGroup> groups = new List<EnemyGroup>();
+
+    public void removeFromGroup(GameObject enemy, int groupID)
+    {
+        foreach (var g in groups) if (g.ID == groupID) g.enemies.Remove(enemy); 
+    }
+
+    public void AddToGroup(GameObject enemy, int groupID)
+    {
+        foreach (var g in groups) if (g.ID == groupID) { g.enemies.Add(enemy); g.enabled = true; }
+    }
+
     public int GetID()
     {
         if (runtimeStory.Count == 0) return -1;
@@ -51,12 +74,12 @@ public class GameManager : MonoBehaviour
 
     public string getCurrentStory()
     {
-        return GlobalUI.i.currentQuest.text;
+        return GlobalUI.i.GetCurrentText();
     }
 
     public void SetCurrentStory(string text)
     {
-        if (GlobalUI.i) GlobalUI.i.currentQuest.text = text;
+        if (GlobalUI.i) GlobalUI.i.UpdateQuestText(text);
     }
 
     public void LoadStory(int ID)
@@ -76,12 +99,19 @@ public class GameManager : MonoBehaviour
     {
         paused = true;
         Time.timeScale = 0;
+        GlobalUI.i.Pause();
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public void Unpause()
     {
         paused = false;
         Time.timeScale = 1;
+        if (Application.isPlaying) GlobalUI.i.Resume();
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public void TogglePause()
@@ -126,16 +156,35 @@ public class GameManager : MonoBehaviour
             GetComponent<SaveManager>().ResetGame();
         }
 
+        UpdateEnemyGroups();
+
         if (!started) RestartFromCheckPoint();
 
         CheckStory();
-        
+    }
+
+    void UpdateEnemyGroups()
+    {
+        if (!Application.isPlaying) return;
+        foreach (var g in groups) {
+            if (FactManager.i.IsPresent(g.fact)) {
+                for (int i = 0; i < g.enemies.Count; i++) {
+                    Destroy(g.enemies[i]);
+                }
+            }
+
+            for (int i = 0; i < g.enemies.Count; i++) {
+                if (g.enemies[i] == null) g.enemies.RemoveAt(i);
+            }
+            if (g.enabled && g.enemies.Count == 0) FactManager.i.AddFact(g.fact);
+        }
     }
 
     private void Start()
     {
         runtimeStory = new List<StoryPorgression>(story);
         GetComponent<SaveManager>().LoadGame();
+        Unpause();
     }
 
     void CheckStory()
@@ -144,7 +193,7 @@ public class GameManager : MonoBehaviour
         var next = runtimeStory[0];
         if (FactManager.i.IsPresent(next.fact) != next.state) return;
 
-        GlobalUI.i.currentQuest.text = next.nextQuest;
+        GlobalUI.i.UpdateQuestText(next.nextQuest);
         runtimeStory.RemoveAt(0);
     }
 

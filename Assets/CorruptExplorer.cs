@@ -23,7 +23,6 @@ public class CorruptExplorer : MonoBehaviour
     [SerializeField] Vector2 hitRange;
     [SerializeField] int hitDmg;
     [SerializeField] string hitAnim;
-
     [SerializeField] float hitKB, hitResetTime;
     float hitCooldown;
     bool melee;

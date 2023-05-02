@@ -40,6 +40,22 @@ public class Player : MonoBehaviour
     List<EnemyMovement> currentMeleeEnemies = new List<EnemyMovement>();
     public int meleeTokens = 3;
 
+    
+
+    public void FreezePlayer()
+    {
+        GetComponent<PMovement>().enabled = false;
+        GetComponent<PFighting>().enabled = false;
+        FindObjectOfType<CameraController>().enabled = false;
+    }
+
+    public void UnfreezePlayer()
+    {
+        GetComponent<PMovement>().enabled = true;
+        GetComponent<PFighting>().enabled = true;
+        FindObjectOfType<CameraController>().enabled = true;
+    }
+
     public void RemoveInteractable(Gate interactable)
     {
         if (interestedInteractable == interactable) {

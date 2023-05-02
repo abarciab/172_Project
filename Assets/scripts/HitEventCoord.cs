@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class HitEventCoord : MonoBehaviour
 {
+    public void ScorpEndAttack()
+    {
+        var scorp = GetComponentInParent<Scorpion>();
+        if (scorp) scorp.EndAttack();
+    }
+
+    public void ScorpLaunch()
+    {
+        var scorp = GetComponentInParent<Scorpion>();
+        if (scorp) scorp.RangedAttack();
+    }
     public void CorruptEndAttack()
     {
         var corrupt = GetComponentInParent<CorruptExplorer>();

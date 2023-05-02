@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -38,6 +39,8 @@ public class ShaderTransitionController : MonoBehaviour {
     Vector3 transitionTarget;
     float maxDist;
 
+    [SerializeField] List<Fact> ShaderFacts = new List<Fact>();
+
     private void Start()
     {
         if (Application.isPlaying) {
@@ -46,6 +49,17 @@ public class ShaderTransitionController : MonoBehaviour {
         }
     }
 
+    public void LoadShaders()
+    {
+        if (!Application.isPlaying) return;
+
+        var fman = FactManager.i;
+
+        if (fman.IsPresent(ShaderFacts[3])) SwitchToShader(4);
+        else if (fman.IsPresent(ShaderFacts[2])) SwitchToShader(3);
+        else if (fman.IsPresent(ShaderFacts[1])) SwitchToShader(2);
+        else SwitchToShader(1);
+    }
 
     public void EndTransition(int shaderID)
     {
@@ -53,7 +67,6 @@ public class ShaderTransitionController : MonoBehaviour {
         if (shaderID != shader2) return;
 
         progressLerpTarget = 1;
-        //next = true;
         transitioning = false;
     }
 
@@ -67,6 +80,22 @@ public class ShaderTransitionController : MonoBehaviour {
         maxDist = _maxDist;
         transitionTarget = _transitionTarget;
         transitioning = true;
+    }
+
+    void SwitchToShader(int num)
+    {
+        num -= 1;
+        shader1 = num;
+        shader2 = num + 1;
+        progress = 0;
+        progressLerpTarget = 0;
+
+        if (num == 3) {
+            shader1 = 2;
+            shader2 = 3;
+            progress = 1;
+            progressLerpTarget = 1;
+        }
     }
 
     private void Update()

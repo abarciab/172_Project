@@ -15,7 +15,14 @@ public class GlobalUI : MonoBehaviour
     [SerializeField] GameObject title;
     [SerializeField] Image dmgIndicator, dmgFlash;
     [SerializeField] bool showHPbar;
-    public TextMeshProUGUI currentQuest;
+    
+
+    [Header("Quest")]
+    [SerializeField] TextMeshProUGUI currentQuest;
+    [SerializeField] Image questBacking; 
+    [SerializeField] Color newQuestColor;
+    [SerializeField] float newQuestSmoothness;
+    float newQuestColorCooldown;
 
     [Header("Dialogue")]
     [SerializeField] TextMeshProUGUI nameText;
@@ -24,6 +31,62 @@ public class GlobalUI : MonoBehaviour
     [Header("Shockwave")]
     [SerializeField] GameObject swCountdown;
     [SerializeField] TextMeshProUGUI swCountDownText;
+
+    [Header("newItem")]
+    [SerializeField] GameObject newItem;
+    [SerializeField] Fact spearFact, tutorialDone;
+    [SerializeField] float newItemDisplayTime = 1;
+
+    [Header("Pause Menu")]
+    [SerializeField] GameObject pauseMenu;
+
+    public string GetCurrentText()
+    {
+        return currentQuest.text;
+    }
+
+    public void UpdateQuestText(string text)
+    {
+        print("TEXT: " + text);
+        currentQuest.text = text;
+        questBacking.color = newQuestColor;
+        newQuestColorCooldown = 1f;
+    }
+
+    public void Exit()
+    {
+        Save();
+        Application.Quit();
+    }
+
+    public void Pause()
+    {
+        pauseMenu.SetActive(true);
+        
+    }
+
+    public void Resume()
+    {
+        pauseMenu.SetActive(false);
+        if (GameManager.i.paused) GameManager.i.Unpause();
+    }
+
+    public void Save()
+    {
+        FactManager.i.GetComponent<SaveManager>().SaveGame();
+    }
+
+    public void Load()
+    {
+        FactManager.i.GetComponent<SaveManager>().LoadGame();
+        GameManager.i.RestartScene();
+    }
+
+    public void ResetGame()
+    {
+        FactManager.i.GetComponent<SaveManager>().ResetGame();
+        GameManager.i.RestartScene();
+    }
 
     public void DisplayLine(string speaker, string line)
     {
@@ -84,13 +147,42 @@ public class GlobalUI : MonoBehaviour
 
     private void Update()
     {
+        newQuestColorCooldown -= Time.deltaTime;
+        if (newQuestColorCooldown <= 0)  questBacking.color = Color.Lerp(questBacking.color, Color.black, newQuestSmoothness);
+
         float cooldown = Player.i.GetComponent<PFighting>().GetSWcooldown();
         swCountdown.SetActive(cooldown > 0);
         swCountDownText.text = Mathf.CeilToInt(cooldown).ToString();
 
         HpBar.gameObject.SetActive(!title.activeInHierarchy && showHPbar);
         if (mainText.gameObject.activeInHierarchy) commandPrompt.gameObject.SetActive(false);
+
+        if (FactManager.i.IsPresent(tutorialDone)) {
+            Destroy(newItem);
+            newItem = null;
+            Player.i.UnfreezePlayer();
+            if (string.IsNullOrEmpty(mainText.text))mainText.gameObject.SetActive(false);
+        }
+        if (FactManager.i.IsPresent(spearFact) && newItem != null) {
+            Player.i.FreezePlayer();
+            newItem.SetActive(true);
+        }
+        if (newItem && newItem.activeInHierarchy) {
+            newItemDisplayTime -= Time.deltaTime;
+            if (newItemDisplayTime > 0) return;
+
+            mainText.text = "";
+            mainText.gameObject.SetActive(true);
+
+            if (!Input.GetKeyDown(KeyCode.F)) return;
+            Destroy(newItem);
+            newItem = null;
+            Player.i.UnfreezePlayer();
+            mainText.gameObject.SetActive(false);
+        }
     }
+
+
 
     private void Start()
     {

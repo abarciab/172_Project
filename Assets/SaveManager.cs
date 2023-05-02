@@ -23,6 +23,11 @@ public class SaveManager : MonoBehaviour
         }
         PlayerPrefs.SetInt("story", gameMan.GetID());
         PlayerPrefs.SetString("currentStory", gameMan.getCurrentStory());
+
+        int auto = PlayerPrefs.GetInt("autoCheckpoint");
+        int checkPoint = PlayerPrefs.GetInt("checkpoint");
+        if (auto > checkPoint) PlayerPrefs.SetInt("checkpoint", auto);
+
         print("Game saved succsessfully - " + facts.Count + " facts, story stage: " + gameMan.GetID());
     }
 

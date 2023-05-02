@@ -15,9 +15,13 @@ public class EnemyStats : HitReciever
 
     [SerializeField] List<Fact> removeFactOnDeath = new List<Fact>(), addFactOnDeath = new List<Fact>();
 
+    [SerializeField] bool inGroup;
+    [SerializeField] int groupID;
+    [SerializeField] float HPBarDisplayRange = 30;
 
     private void Start()
     {
+        if (inGroup) GameManager.i.AddToGroup(gameObject, groupID);
         health = maxHealth;
         if (blood != null) blood.SetActive(false);
     }
@@ -46,6 +50,8 @@ public class EnemyStats : HitReciever
 
     void Die()
     {
+        if (inGroup) GameManager.i.removeFromGroup(gameObject, groupID);
+
         if (removeFactOnDeath.Count > 0) foreach (var f in removeFactOnDeath) FactManager.i.RemoveFact(f);
         if (addFactOnDeath.Count > 0) foreach (var f in addFactOnDeath) FactManager.i.AddFact(f);
 
@@ -57,6 +63,14 @@ public class EnemyStats : HitReciever
 
     private void Update()
     {
-        if (hpBar) hpBar.value = (float) health / maxHealth;
+        if (!hpBar) return;
+        
+        hpBar.value = (float) health / maxHealth;
+        float dist = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(Player.i.transform.position.x, Player.i.transform.position.z));
+        if (dist > HPBarDisplayRange) hpBar.gameObject.SetActive(false);
+        else {
+            hpBar.gameObject.SetActive(true);
+            HPBarDisplayRange = Mathf.Infinity;
+        }
     }
 }

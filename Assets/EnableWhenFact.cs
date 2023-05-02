@@ -18,10 +18,11 @@ public class EnableWhenFact : MonoBehaviour
 
     private void Update()
     {
+
         foreach (var i in items) if (FactManager.i.IsPresent(i.fact) == i.state) i.obj.SetActive(!i.invert);
 
         for (int i = 0; i < items.Count; i++) {
-            if (items[i].obj.activeInHierarchy || (!items[i].obj.activeInHierarchy && items[i].invert)) items.RemoveAt(i);
+            if ( items[i].obj.activeInHierarchy != items[i].invert) items.RemoveAt(i);
         }
     }
 }

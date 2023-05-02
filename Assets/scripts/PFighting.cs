@@ -79,6 +79,7 @@ public class PFighting : HitReciever {
 
     public void Stab()
     {
+        if (!enabled) return;
         if (!spearDrawn) { DrawSpear(); return; }
         if (!hasSpear) {RetrieveSpear(); return; }
         if (charging || stabbing) return;
@@ -124,6 +125,8 @@ public class PFighting : HitReciever {
 
     public void StartAimingSpear()
     {
+        if (!enabled) return;
+
         if (!spearDrawn) { DrawSpear(); return; }
 
         if (!hasSpear) { RetrieveSpear(); return; }
@@ -144,7 +147,7 @@ public class PFighting : HitReciever {
 
     public void ActivateShockwave()
     {
-        if (swCooldown > 0) return;
+        if (swCooldown > 0 || !enabled) return;
         AudioManager.instance.PlaySound(14, gameObject);
         swCooldown = shockwaveResetTime;
 
