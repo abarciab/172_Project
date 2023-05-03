@@ -100,8 +100,18 @@ public class GameManager : MonoBehaviour
         paused = true;
         Time.timeScale = 0;
         GlobalUI.i.Pause();
+        unlockCursor();
+    }
+
+    void LockCursor() {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    void unlockCursor() {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+       
     }
 
     public void Unpause()
@@ -109,9 +119,7 @@ public class GameManager : MonoBehaviour
         paused = false;
         Time.timeScale = 1;
         if (Application.isPlaying) GlobalUI.i.Resume();
-
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        LockCursor();
     }
 
     public void TogglePause()
@@ -182,9 +190,12 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        if (!Application.isPlaying) return;
+
         runtimeStory = new List<StoryPorgression>(story);
         GetComponent<SaveManager>().LoadGame();
         Unpause();
+        LockCursor();
     }
 
     void CheckStory()

@@ -40,8 +40,6 @@ public class Player : MonoBehaviour
     List<EnemyMovement> currentMeleeEnemies = new List<EnemyMovement>();
     public int meleeTokens = 3;
 
-    
-
     public void FreezePlayer()
     {
         GetComponent<PMovement>().enabled = false;
@@ -132,6 +130,9 @@ public class Player : MonoBehaviour
     }
 
     private void Update() {
+        float tokens = meleeTokens + currentMeleeEnemies.Count;
+        if (meleeTokens > currentMeleeEnemies.Count && currentMeleeEnemies.Count > 1) meleeTokens = 0;
+
         if (Input.GetKeyDown(KeyCode.K)) GameManager.i.RestartScene();
         if (Input.GetKeyDown(KeyCode.L)) GameManager.i.GetComponent<SaveManager>().SaveGame();
         if (Input.GetKeyDown(KeyCode.O)) GameManager.i.GetComponent<SaveManager>().ResetGame();

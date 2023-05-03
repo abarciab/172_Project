@@ -16,7 +16,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] float fixedToMouseTransitionTime = 1, parentMoveSmoothness = 0.5f;
     [HideInInspector] public float mouseTransitionTimeLeft;
     [SerializeField, Range(0,1 )] float inputX, inputY;
-    [SerializeField] bool debug; 
+    [SerializeField] bool debug;
 
     [Header("Dependencies")]
     [SerializeField] Player player;
@@ -32,7 +32,6 @@ public class CameraController : MonoBehaviour
         if (!Application.isPlaying) return;
         
         currentState = new CameraState.State(camState.current);
-        LockMouse();
     }
 
     private void Update()
@@ -50,19 +49,6 @@ public class CameraController : MonoBehaviour
 
         //if (Input.GetKeyDown(KeyCode.Escape)) UnlockMouse();
         //if (Input.GetMouseButtonDown(0)) LockMouse();
-    }
-
-
-    void LockMouse()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
-
-    void UnlockMouse()
-    {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
     }
 
     private void LateUpdate()

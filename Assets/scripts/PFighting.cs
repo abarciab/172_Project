@@ -33,8 +33,8 @@ public class PFighting : HitReciever {
 
     public void PutAwaySpear()
     {
-        if (stabbing || charging) return;
-        spearDrawn = false;
+        //if (stabbing || charging) return;
+        //spearDrawn = false;
     }
 
     public float GetSWcooldown()
@@ -125,10 +125,8 @@ public class PFighting : HitReciever {
 
     public void StartAimingSpear()
     {
-        if (!enabled) return;
-
+        if (!enabled || charging) return;
         if (!spearDrawn) { DrawSpear(); return; }
-
         if (!hasSpear) { RetrieveSpear(); return; }
         aimed = charging = true;
         stabbing = false;
@@ -171,8 +169,7 @@ public class PFighting : HitReciever {
     void RetrieveSpear()
     {
         if (recalling) return;
-        recalling = true;
-        staffProjectile.GetComponent<ThrownStaff>().Recall();
+        recalling = staffProjectile.GetComponent<ThrownStaff>().Recall();
     }
 
     

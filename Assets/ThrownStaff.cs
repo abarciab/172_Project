@@ -11,6 +11,7 @@ public class ThrownStaff : MonoBehaviour
     [SerializeField] float recallSpeed = 2, recallEndThreshold = 1;
     [SerializeField] Vector3 playerOffset;
     [SerializeField] AudioSource source1, source2;
+    bool landed;
 
     private void Start()
     {
@@ -21,10 +22,13 @@ public class ThrownStaff : MonoBehaviour
     {
         if (rb == null) return;
         rb.isKinematic = false;
+        landed = false;
     }
 
-    public void Recall()
+    public bool Recall()
     {
+        if (!landed) return false;
+
         AudioManager.instance.PlaySound(13, source1);
         rb.isKinematic = false;
         rb.useGravity = false;
@@ -32,6 +36,8 @@ public class ThrownStaff : MonoBehaviour
         rb.velocity = Vector3.zero;
         recalling = true;
         GetComponentInChildren<HitBox>().StartChecking(true, Player.i.GetComponent<PFighting>().throwDmg);
+
+        return true;
     }
 
     private void Update()
@@ -70,7 +76,7 @@ public class ThrownStaff : MonoBehaviour
         var player = collision.collider.GetComponentInParent<Player>();
         if (player != null) return;
 
-
+        landed = true;
         if (!rb.isKinematic) AudioManager.instance.PlaySound(12, source2);
 
         GetComponentInChildren<HitBox>().EndChecking();
