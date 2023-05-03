@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
 
 public class PFighting : HitReciever {
@@ -29,6 +28,11 @@ public class PFighting : HitReciever {
     public void DrawSpear()
     {
         spearDrawn = true;
+    }
+
+    public bool HasSpear()
+    {
+        return hasSpear;
     }
 
     public void PutAwaySpear()
@@ -102,7 +106,7 @@ public class PFighting : HitReciever {
         return stabbing;
     }
 
-    public bool spearOut()
+    public bool SpearOut()
     {
         return spearDrawn;
     }

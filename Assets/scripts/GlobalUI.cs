@@ -146,6 +146,9 @@ public class GlobalUI : MonoBehaviour
 
     private void Update()
     {
+        throwCharge.gameObject.SetActive(Player.i.GetComponent<PFighting>().HasSpear());
+        swCountdown.transform.parent.gameObject.SetActive(Player.i.GetComponent<PFighting>().enabled);
+
         currentQuest.gameObject.SetActive(!string.IsNullOrEmpty(currentQuest.text));
         newQuestColorCooldown -= Time.deltaTime;
         if (newQuestColorCooldown <= 0)  questBacking.color = Color.Lerp(questBacking.color, Color.black, newQuestSmoothness);
@@ -154,7 +157,7 @@ public class GlobalUI : MonoBehaviour
         swCountdown.SetActive(cooldown > 0);
         swCountDownText.text = Mathf.CeilToInt(cooldown).ToString();
 
-        HpBar.gameObject.SetActive(!title.activeInHierarchy && showHPbar);
+        HpBar.gameObject.SetActive(!title.activeInHierarchy && showHPbar && Player.i.InCombat());
         if (mainText.gameObject.activeInHierarchy) commandPrompt.gameObject.SetActive(false);
 
         if (FactManager.i.IsPresent(tutorialDone)) {

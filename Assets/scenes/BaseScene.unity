@@ -123,7 +123,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: 64d6a33bac73ccb498b19b460263c986, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 72510772842950b4d96a6b8e7c04a232, type: 2}
 --- !u!1001 &46926780
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1472,7 +1472,7 @@ MonoBehaviour:
   stabbing: 0
   spearObj: {fileID: 1535900523}
   stabHB: {fileID: 1449607412}
-  stabDmg: 25
+  stabDmg: 45
   stabKB: 15
   shockwave: {fileID: 1155475822}
   shockwaveResetTime: 4
@@ -1522,7 +1522,7 @@ MonoBehaviour:
   stepSpeed: 2
   stepTime: 0.05
   strafeSpeed: 3
-  dashSpeed: 3
+  dashSpeed: 8
   dashTime: 0.6
   KBsmoothness: 0.5
   goopMult: 0.3
@@ -2930,7 +2930,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.9020374, b: 0.9009434, a: 1}
+  m_Color: {r: 1, g: 0.97642326, b: 0.9019608, a: 1}
   m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
@@ -5977,7 +5977,7 @@ MonoBehaviour:
   m_IsGlobal: 1
   priority: 0
   blendDistance: 0
-  weight: 0
+  weight: 4.6e-44
   sharedProfile: {fileID: 11400000, guid: be2af1628a8e9b944bcdc94cf1cf0935, type: 2}
 --- !u!4 &809113561
 Transform:
@@ -8081,7 +8081,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00027466, y: 0}
+  m_AnchoredPosition: {x: 0.0002746582, y: 0}
   m_SizeDelta: {x: 0.00048828, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1157146959
@@ -15260,7 +15260,7 @@ MonoBehaviour:
     ID: 2
   - fact: {fileID: 11400000, guid: f175e087a77adeb40bd49542430c2ce7, type: 2}
     state: 1
-    nextQuest: cross the birdge and investigate the camp
+    nextQuest: cross the bridge and investigate the camp
     ID: 3
   - fact: {fileID: 11400000, guid: 9cd470f2f48980747a85129af216b8a2, type: 2}
     state: 1
@@ -17698,7 +17698,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af98a9182a8f23d46a5eb72501f8da35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  progress: 0
+  progress: 4.6e-44
   progressLerpTarget: 0
   next: 0
   prev: 0
@@ -17713,9 +17713,9 @@ MonoBehaviour:
     sun: {fileID: 1352063968}
   - processingVolume: {fileID: 809113560}
     skyboxMat: {fileID: 2100000, guid: b1f043a88aed2084e8c12397a933b843, type: 2}
-    fogColor: {r: 0.7830189, g: 0.57485104, b: 0.52078146, a: 1}
-    skyBoxTint: {r: 1, g: 1, b: 1, a: 1}
-    skyBoxExposure: 0.57
+    fogColor: {r: 0.78431374, g: 0.6990799, b: 0.52156866, a: 1}
+    skyBoxTint: {r: 1, g: 0.90553445, b: 0.7311321, a: 1}
+    skyBoxExposure: 0.41
     sun: {fileID: 351185198}
   - processingVolume: {fileID: 1765736061}
     skyboxMat: {fileID: 2100000, guid: 608f34e9e801331459f36811154d3dde, type: 2}

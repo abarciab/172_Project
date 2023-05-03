@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Search;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -39,6 +38,11 @@ public class Player : MonoBehaviour
     [HideInInspector] public List<EnemyMovement> enemies = new List<EnemyMovement>();
     List<EnemyMovement> currentMeleeEnemies = new List<EnemyMovement>();
     public int meleeTokens = 3;
+
+    public bool InCombat()
+    {
+        return enemies.Count > 0;
+    }
 
     public void FreezePlayer()
     {
