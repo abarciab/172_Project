@@ -47,7 +47,6 @@ public class GlobalUI : MonoBehaviour
 
     public void UpdateQuestText(string text)
     {
-        print("TEXT: " + text);
         currentQuest.text = text;
         questBacking.color = newQuestColor;
         newQuestColorCooldown = 1f;
@@ -147,6 +146,10 @@ public class GlobalUI : MonoBehaviour
 
     private void Update()
     {
+        throwCharge.gameObject.SetActive(Player.i.GetComponent<PFighting>().HasSpear());
+        swCountdown.transform.parent.gameObject.SetActive(Player.i.GetComponent<PFighting>().enabled);
+
+        currentQuest.gameObject.SetActive(!string.IsNullOrEmpty(currentQuest.text));
         newQuestColorCooldown -= Time.deltaTime;
         if (newQuestColorCooldown <= 0)  questBacking.color = Color.Lerp(questBacking.color, Color.black, newQuestSmoothness);
 
@@ -154,7 +157,7 @@ public class GlobalUI : MonoBehaviour
         swCountdown.SetActive(cooldown > 0);
         swCountDownText.text = Mathf.CeilToInt(cooldown).ToString();
 
-        HpBar.gameObject.SetActive(!title.activeInHierarchy && showHPbar);
+        HpBar.gameObject.SetActive(!title.activeInHierarchy && showHPbar && Player.i.InCombat());
         if (mainText.gameObject.activeInHierarchy) commandPrompt.gameObject.SetActive(false);
 
         if (FactManager.i.IsPresent(tutorialDone)) {
@@ -171,13 +174,16 @@ public class GlobalUI : MonoBehaviour
             newItemDisplayTime -= Time.deltaTime;
             if (newItemDisplayTime > 0) return;
 
-            mainText.text = "";
+            mainText.text = "combat info and controls in the ESC menu";
             mainText.gameObject.SetActive(true);
+            showHPbar = false;
 
             if (!Input.GetKeyDown(KeyCode.F)) return;
             Destroy(newItem);
             newItem = null;
+            mainText.text = "";
             Player.i.UnfreezePlayer();
+            showHPbar = true;
             mainText.gameObject.SetActive(false);
         }
     }
