@@ -34,7 +34,6 @@ public class PControls : MonoBehaviour
 
         if (move.sitting && Input.GetKeyDown(standUpKey)) { move.sitting = false; GlobalUI.i.HidePrompt(); }
         if (!move.sitting && Input.GetKeyDown(roll)) move.Roll();
-        if (Input.GetMouseButtonDown(2)) Player.i.ToggleLockOn();
 
         move.goForward = Input.GetKey(forward);
         move.goBack = Input.GetKey(backward);

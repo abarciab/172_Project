@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
@@ -9,7 +12,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public Vector3 speed3D;
     [HideInInspector] public float forwardSpeed;
    
-    EnemyMovement closestEnemy;
+    EnemyStats closestEnemy;
     [SerializeField] float lockOnDist = 15, speakerEndDist;
 
     [SerializeField] int maxHealth;
@@ -35,9 +38,32 @@ public class Player : MonoBehaviour
     float goopTickCooldown;
     [HideInInspector] public float goopTime;
 
-    [HideInInspector] public List<EnemyMovement> enemies = new List<EnemyMovement>();
-    List<EnemyMovement> currentMeleeEnemies = new List<EnemyMovement>();
-    public int meleeTokens = 3;
+    [SerializeField] List<BaseEnemy> enemies = new List<BaseEnemy>();
+    [SerializeField] List<BaseEnemy> currentMeleeEnemies = new List<BaseEnemy>();
+    [SerializeField] float meleeRatio = 0.5f, tokenCheckTime = 5;
+    float meleeCheckCooldown;
+
+    //closer enemies should melee
+    //higher priority melee enemies should melee
+    //don't have too many ranged or melee enemies
+
+    public bool CheckMelee(BaseEnemy enemy, int priority)
+    {
+        return currentMeleeEnemies.Contains(enemy);
+    }
+
+    public void Notify(BaseEnemy enemy, bool agro)
+    {
+        if (agro) {
+            if (enemies.Contains(enemy)) return;
+            enemies.Add(enemy);
+            return;
+        }
+
+        
+        currentMeleeEnemies.Remove(enemy);
+        enemies.Remove(enemy);
+    }
 
     public bool InCombat()
     {
@@ -64,24 +90,6 @@ public class Player : MonoBehaviour
             interestedInteractable = null;
             GlobalUI.i.HidePrompt(interactable.prompt);
         }
-    }
-
-    public bool TryToMelee(EnemyMovement move)
-    {
-        if (currentMeleeEnemies.Contains(move)) return true;
-        if (meleeTokens == 0) return false;
-
-        currentMeleeEnemies.Add(move);
-        meleeTokens -= 1;
-        return true;
-    }
-
-    public void EndMelee(EnemyMovement move)
-    {
-        if (!currentMeleeEnemies.Contains(move)) return;
-
-        currentMeleeEnemies.Remove(move);
-        meleeTokens += 1;
     }
 
     public void AddInteractable(Gate interactable)
@@ -134,8 +142,7 @@ public class Player : MonoBehaviour
     }
 
     private void Update() {
-        float tokens = meleeTokens + currentMeleeEnemies.Count;
-        if (meleeTokens > currentMeleeEnemies.Count && currentMeleeEnemies.Count > 1) meleeTokens = 0;
+        UpdateMeleeEnemies();
 
         if (Input.GetKeyDown(KeyCode.K)) GameManager.i.RestartScene();
         if (Input.GetKeyDown(KeyCode.L)) GameManager.i.GetComponent<SaveManager>().SaveGame();
@@ -169,6 +176,46 @@ public class Player : MonoBehaviour
         }
     }
 
+    void UpdateMeleeEnemies()
+    {
+        for (int i = 0; i < enemies.Count; i++) {
+            if (enemies[i] == null) enemies.RemoveAt(i);
+        }
+
+        meleeCheckCooldown -= Time.deltaTime;
+        if (meleeCheckCooldown > 0) return;
+        meleeCheckCooldown = tokenCheckTime;
+
+        currentMeleeEnemies.Clear();
+        var sortedList = SortList(enemies);
+        for (int i = 0; i < sortedList.Count; i++) {
+            if ((float) currentMeleeEnemies.Count / enemies.Count >= meleeRatio) break;
+            currentMeleeEnemies.Add(sortedList[i]);
+        }
+    }
+
+    List<BaseEnemy> SortList(List<BaseEnemy> inputList)
+    {
+        var outputList = new List<BaseEnemy>();
+
+        while (outputList.Count < inputList.Count) {
+            int currentPriority = 0;
+            for (int i = 0; i < inputList.Count; i++) {
+                var enemy = inputList[i];
+                if (outputList.Contains(enemy)) continue;
+                if (enemy.MeleePriority() == currentPriority) {
+                    int index = 0;
+                    float dist = enemy.Dist();
+
+
+                    while (enemies.Count > index + 1 && enemies[index].Dist() > dist && enemies[index + 1].MeleePriority() == enemy.MeleePriority()) index += 1;
+                    outputList.Insert(index, enemy);
+                }
+            }
+        }
+        return outputList;
+    }
+
     IEnumerator Heal()
     {
         healCooldown = Mathf.Infinity;
@@ -177,30 +224,6 @@ public class Player : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
         healCooldown = healWaitTime;
-    }
-
-    public void ToggleLockOn()
-    {
-        if (CameraState.i.GetLockedEnemy() != null) CameraState.i.StopLockOn();
-        else LockOn();
-    }
-
-    void LockOn()
-    {
-        if (enemies.Count == 0) return;
-
-        if (closestEnemy == null && enemies[0] != null) closestEnemy = enemies[0];
-
-        foreach (var e in enemies) {
-            if (Vector3.Distance(transform.position, e.transform.position) < Vector3.Distance(transform.position, closestEnemy.transform.position)) closestEnemy = e;
-        }
-        if (Vector3.Distance(transform.position, closestEnemy.transform.position) > lockOnDist) {
-            CameraState.i.StopLockOn();
-            return;
-        }
-
-        CameraState.i.LockOnEnemy(closestEnemy.gameObject, closestEnemy.centerOffset);
-        //GetComponent<PFighting>().DrawWeapon();
     }
 
     private void Start() {
@@ -219,7 +242,6 @@ public class Player : MonoBehaviour
         StopAllCoroutines();
         
         AudioManager.instance.PlaySound(2, hurtSource);
-        //GetComponent<PFighting>().Inturrupt(1);
     }
 
     void Die() {

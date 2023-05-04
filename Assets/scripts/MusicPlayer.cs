@@ -20,7 +20,7 @@ public class MusicPlayer : MonoBehaviour
 
     private void Update()
     {
-        if (Player.i.enemies.Count > 0 && !music2) {
+        if (Player.i.InCombat() && !music2) {
             //if (ClosestDist(Player.i.enemies) > agroDist) return;
             Player.i.EnterCombat();
 
@@ -29,7 +29,7 @@ public class MusicPlayer : MonoBehaviour
             music2Source.volume = 0;
             music2 = true;
         }
-        if (Player.i.enemies.Count == 0 && music2) {
+        if (!Player.i.InCombat() && music2) {
             AudioManager.instance.PlaySound(6, music1Source);
             music1Vol = music2Source.volume;
             music1Source.volume = 0;

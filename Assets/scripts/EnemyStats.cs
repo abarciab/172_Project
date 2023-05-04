@@ -19,6 +19,11 @@ public class EnemyStats : HitReciever
     [SerializeField] int groupID;
     [SerializeField] float HPBarDisplayRange = 30;
 
+    public bool dead()
+    {
+        return health <= 0;
+    }
+
     private void Start()
     {
         if (inGroup) GameManager.i.AddToGroup(gameObject, groupID);

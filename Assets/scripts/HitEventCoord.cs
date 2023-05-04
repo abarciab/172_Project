@@ -27,6 +27,12 @@ public class HitEventCoord : MonoBehaviour
         corrupt.StartChecking();
     }
 
+    public void CorruptLaunch()
+    {
+        var corrupt = GetComponentInParent<CorruptExplorer>();
+        corrupt.LaunchProjectile();
+    }
+
     public void CorruptEndScream()
     {
         var corrupt = GetComponentInParent<CorruptExplorer>();
@@ -42,23 +48,6 @@ public class HitEventCoord : MonoBehaviour
     {
         var goat = GetComponentInParent<Goat>();
         if (goat != null) goat.EndChecking();
-    }
-
-    public void GolemStartChecking()
-    {
-        var golem = GetComponentInParent<Golem>();
-        if (golem != null) golem.StartChecking();
-    }
-    public void EndGolemAttack()
-    {
-        var golem = GetComponentInParent<Golem>();
-        if (golem != null) golem.EndAttack();
-    }
-
-    public void RefreshGolemHB()
-    {
-        var golem = GetComponentInParent<Golem>();
-        if (golem != null) golem.RefreshHB();
     }
 
     public void StartPlayerCheck()

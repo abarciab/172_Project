@@ -126,7 +126,7 @@ public class Goat : MonoBehaviour
             move.gotoTarget = false;
             hoofBeats.gameObject.SetActive(false);
             hb.EndChecking();
-            Player.i.enemies.Remove(move);
+            //Player.i.enemies.Remove(move);
             return;
         }
 
@@ -162,7 +162,7 @@ public class Goat : MonoBehaviour
             return;
         }
 
-        if (!Player.i.enemies.Contains(move)) Player.i.enemies.Add(move);
+        //if (!Player.i.enemies.Contains(move)) Player.i.enemies.Add(move);
         target = Player.i.transform;
         if (attacking) return;
 

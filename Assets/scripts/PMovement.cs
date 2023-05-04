@@ -23,6 +23,8 @@ public class PMovement : MonoBehaviour
 
     public void KnockBack(GameObject _source, float _KB, Vector3 offset)
     {
+        return;
+
         if (_source == null || _KB <= 0) return;
 
         source = _source.transform.position + offset;
@@ -192,7 +194,7 @@ public class PMovement : MonoBehaviour
     {
         Transform model = transform.GetChild(0);
 
-        if (p.enemies.Count > 0) { model.transform.localEulerAngles = Vector3.zero;  return; }
+        if (p.InCombat()) { model.transform.localEulerAngles = Vector3.zero;  return; }
 
         if (rb.velocity.magnitude <= 0.01f) {
             model.transform.localRotation = Quaternion.Lerp(model.transform.localRotation, Quaternion.identity, 0.2f);
