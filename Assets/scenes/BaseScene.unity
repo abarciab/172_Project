@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 1.8275976, g: 0.48891968, b: 0.4888171, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -22206,22 +22206,22 @@ PrefabInstance:
     - target: {fileID: 4817872332485334698, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_Color.b
-      value: 0.9019608
+      value: 0.9009434
       objectReference: {fileID: 0}
     - target: {fileID: 4817872332485334698, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_Color.g
-      value: 0.97642326
+      value: 0.9020374
       objectReference: {fileID: 0}
     - target: {fileID: 4817872332485334698, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_Intensity
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4817872332485334698, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_ColorTemperature
-      value: 4894
+      value: 6432
       objectReference: {fileID: 0}
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
@@ -22236,32 +22236,62 @@ PrefabInstance:
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: shader1
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
-        type: 3}
-      propertyPath: shader2
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
-        type: 3}
-      propertyPath: progress
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
+      propertyPath: shader2
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
+        type: 3}
+      propertyPath: progress
+      value: 0.000000019599065
+      objectReference: {fileID: 0}
+    - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
+        type: 3}
+      propertyPath: shaders.Array.data[0].fogColor.b
+      value: 0.6792453
+      objectReference: {fileID: 0}
+    - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
+        type: 3}
+      propertyPath: shaders.Array.data[0].fogColor.g
+      value: 0.60607964
+      objectReference: {fileID: 0}
+    - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
+        type: 3}
+      propertyPath: shaders.Array.data[0].fogColor.r
+      value: 0.40690637
+      objectReference: {fileID: 0}
+    - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
+        type: 3}
       propertyPath: shaders.Array.data[1].fogColor.b
-      value: 0.41736382
+      value: 0.41568628
       objectReference: {fileID: 0}
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: shaders.Array.data[1].fogColor.g
-      value: 0.5882301
+      value: 0.46445435
       objectReference: {fileID: 0}
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: shaders.Array.data[1].fogColor.r
-      value: 0.7830189
+      value: 0.78431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
+        type: 3}
+      propertyPath: shaders.Array.data[0].skyBoxTint.b
+      value: 0.7649953
+      objectReference: {fileID: 0}
+    - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
+        type: 3}
+      propertyPath: shaders.Array.data[0].skyBoxTint.g
+      value: 0.48949805
+      objectReference: {fileID: 0}
+    - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
+        type: 3}
+      propertyPath: shaders.Array.data[0].skyBoxTint.r
+      value: 0.8301887
       objectReference: {fileID: 0}
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
@@ -22281,22 +22311,22 @@ PrefabInstance:
     - target: {fileID: 5364301632760274238, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7442066
+      value: 0.9941014
       objectReference: {fileID: 0}
     - target: {fileID: 5364301632760274238, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.40205532
+      value: 0.05436063
       objectReference: {fileID: 0}
     - target: {fileID: 5364301632760274238, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.46928695
+      value: -0.0937076
       objectReference: {fileID: 0}
     - target: {fileID: 5364301632760274238, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.25353083
+      value: 0.005124225
       objectReference: {fileID: 0}
     - target: {fileID: 6180193968040157515, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}

@@ -43,7 +43,7 @@ MonoBehaviour:
   active: 1
   lift:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 0.8487659, z: 0.8764069, w: 0.014255169}
+    m_Value: {x: 1, y: 0.92542064, z: 0.98129725, w: 0.014255169}
   gamma:
     m_OverrideState: 1
     m_Value: {x: 0.98664194, y: 0.956175, z: 1, w: 0}
@@ -88,13 +88,13 @@ MonoBehaviour:
     m_Value: 0.22
   contrast:
     m_OverrideState: 1
-    m_Value: 52
+    m_Value: 27
   colorFilter:
     m_OverrideState: 1
     m_Value: {r: 1.3412678, g: 1.0692182, b: 1.0816541, a: 1}
   hueShift:
     m_OverrideState: 1
-    m_Value: -2
+    m_Value: -1
   saturation:
     m_OverrideState: 1
     m_Value: -6
@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eb4b772797da9440885e8bd939e9560, type: 3}
   m_Name: ColorCurves
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   master:
     m_OverrideState: 0
     m_Value:
@@ -289,15 +289,33 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
   hueVsSat:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value:
-      <length>k__BackingField: 0
+      <length>k__BackingField: 2
       m_Loop: 1
       m_ZeroValue: 0.5
       m_Range: 1
       m_Curve:
         serializedVersion: 2
-        m_Curve: []
+        m_Curve:
+        - serializedVersion: 3
+          time: 0.2278481
+          value: 0.5
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 0.721519
+          value: 0.4557823
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
@@ -315,7 +333,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
   lumVsSat:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value:
       <length>k__BackingField: 0
       m_Loop: 0
@@ -339,13 +357,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 558a8e2b6826cf840aae193990ba9f2e, type: 3}
   m_Name: ShadowsMidtonesHighlights
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   shadows:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 0.83203703, z: 0.8836427, w: -0.38592505}
+    m_Value: {x: 0.8864946, y: 0.9949692, z: 1, w: -0.11626213}
   midtones:
-    m_OverrideState: 0
-    m_Value: {x: 1, y: 1, z: 1, w: 0}
+    m_OverrideState: 1
+    m_Value: {x: 0.94751585, y: 0.91334474, z: 1, w: -0.31460676}
   highlights:
     m_OverrideState: 0
     m_Value: {x: 1, y: 1, z: 1, w: 0}
@@ -382,16 +400,16 @@ MonoBehaviour:
     m_Value: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 4
+    m_Value: 3.13
   scatter:
-    m_OverrideState: 0
-    m_Value: 0.7
+    m_OverrideState: 1
+    m_Value: 0.729
   clamp:
     m_OverrideState: 0
     m_Value: 65472
   tint:
-    m_OverrideState: 0
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_OverrideState: 1
+    m_Value: {r: 0.9339623, g: 0.5066305, b: 0.7599922, a: 1}
   highQualityFiltering:
     m_OverrideState: 0
     m_Value: 0
