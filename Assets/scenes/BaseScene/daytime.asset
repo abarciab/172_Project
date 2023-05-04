@@ -27,7 +27,7 @@ MonoBehaviour:
     m_Value: 0
   saturation:
     m_OverrideState: 1
-    m_Value: 7
+    m_Value: 4
 --- !u!114 &-5001613401819937312
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -279,15 +279,33 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
   lumVsSat:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value:
-      <length>k__BackingField: 0
+      <length>k__BackingField: 2
       m_Loop: 0
       m_ZeroValue: 0.5
       m_Range: 1
       m_Curve:
         serializedVersion: 2
-        m_Curve: []
+        m_Curve:
+        - serializedVersion: 3
+          time: 0.24522293
+          value: 0.585034
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 0.656051
+          value: 0.5
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
@@ -326,13 +344,13 @@ MonoBehaviour:
   active: 1
   lift:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 0.86759967, z: 0.61014056, w: 0}
+    m_Value: {x: 1, y: 0.80822563, z: 0.53030217, w: 0}
   gamma:
     m_OverrideState: 1
     m_Value: {x: 0.7709508, y: 0.81075203, z: 1, w: 0}
   gain:
     m_OverrideState: 1
-    m_Value: {x: 0.82536924, y: 1, z: 0.9907451, w: 0}
+    m_Value: {x: 0.92418385, y: 0.9500486, z: 1, w: 0}
 --- !u!114 &4154178761130883426
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -379,19 +397,19 @@ MonoBehaviour:
     m_Value: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 0.9
+    m_Value: 0.95
   intensity:
     m_OverrideState: 1
-    m_Value: 2
+    m_Value: 2.33
   scatter:
-    m_OverrideState: 0
-    m_Value: 0.7
+    m_OverrideState: 1
+    m_Value: 0.606
   clamp:
     m_OverrideState: 0
     m_Value: 65472
   tint:
-    m_OverrideState: 0
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_OverrideState: 1
+    m_Value: {r: 0.7058824, g: 0.5096763, b: 0.28235298, a: 1}
   highQualityFiltering:
     m_OverrideState: 0
     m_Value: 0
