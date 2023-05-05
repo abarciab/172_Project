@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MusicPlayer : MonoBehaviour
@@ -16,22 +17,20 @@ public class MusicPlayer : MonoBehaviour
         AudioManager.instance.PlaySound(6, music1Source);
         music1Vol = music1Source.volume;
         AudioManager.instance.PlaySound(7, ambientSource);
+        AudioManager.instance.PlaySound(10, music2Source);
+        music2Source.volume = 0;
     }
 
     private void Update()
     {
         if (Player.i.InCombat() && !music2) {
-            //if (ClosestDist(Player.i.enemies) > agroDist) return;
             Player.i.EnterCombat();
-
-            AudioManager.instance.PlaySound(10, music2Source);
-            music2Vol = music2Source.volume;
+            music2Vol = AudioManager.instance.GetVol(10);
             music2Source.volume = 0;
             music2 = true;
         }
         if (!Player.i.InCombat() && music2) {
-            AudioManager.instance.PlaySound(6, music1Source);
-            music1Vol = music2Source.volume;
+            music1Vol = music2Vol = AudioManager.instance.GetVol(6);
             music1Source.volume = 0;
             music2 = false;
         }

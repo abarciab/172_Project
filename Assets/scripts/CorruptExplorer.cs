@@ -46,6 +46,12 @@ public class CorruptExplorer : BaseEnemy
         anim.SetBool(rangedAnim, false);
     }
 
+    protected override void Die()
+    {
+        base.Die();
+        anim.SetBool("dead", true);
+        Destroy(gameObject, 2.5f);
+    }
     protected override void Update()
     {
         base.Update();

@@ -1,48 +1,86 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class CorruptDefender : BaseEnemy
 {
-    [Header("RangedAttack")]
-    [SerializeField] GameObject projectilePrefab;
-    [SerializeField] Vector2 RangedRange;
-    [SerializeField] Vector3 projectileStartOffset, projectileSize;
-    [SerializeField] float rangedResetTime, projectileAngle = 45;
-    [SerializeField] int rangedDmg;
-    [SerializeField, Range(0, 1)] float goopAmount;
-    [SerializeField] string rangedAnim;
-    float rangedCooldown;
+    [Header("slam attack")]
+    [SerializeField] HitBox slamHB;
+    [SerializeField] Vector2 slamRange;
+    [SerializeField] int slamDmg;
+    [SerializeField] string slamAnim;
+    [SerializeField] float slamKB, slamResetTime;
+    float slamCooldown;
+    
 
-    [Header("Melee Attack")]
-    [SerializeField] HitBox HB;
-    [SerializeField] Vector2 hitRange;
-    [SerializeField] int hitDmg, meleePriotity;
-    [SerializeField] string hitAnim;
-    [SerializeField] float hitKB, hitResetTime;
-    float hitCooldown;
-    bool melee;
+    [Header("charge attack")]
+    [SerializeField] HitBox chargeHB;
+    [SerializeField] Vector2 chargeRange;
+    [SerializeField] int chargeDmg;
+    [SerializeField] string startChargeAnim, chargeAnim;
+    [SerializeField] float chargeKB, chargeResetTime, chargeSpeed;
+    float chargeCooldown;
+    Vector3 chargeTarget;
+    public bool charging;
+
+    [Header("")]
 
     [Header("Misc")]
     [SerializeField] Animator anim;
+    [SerializeField] int meleePriotity;
+    bool melee;
+
+    
 
     protected override void Update()
     {
         base.Update();
-        if (busy) return;
 
+        if (charging) {
+            float chargeDist = Vector3.Distance(transform.position, chargeTarget);
+            if (chargeDist < .5f) EndAttack();
+        }
+
+        if (busy || !inAgroRange) return;
         melee = Player.i.CheckMelee(this, meleePriotity);
-
+        
         if (melee) {
-            if (dist > hitRange.y) MoveTowardTarget();
-            else if (dist > hitRange.x) MeleeAttack();
-            else if (dist < hitRange.x) Backup();
+            if (dist > chargeRange.x && dist < chargeRange.y && chargeCooldown <= 0) WindUpCharge();
+            else if (dist > slamRange.y) MoveTowardTarget();
+            else if (dist > slamRange.x) MeleeAttack();
+            else if (dist < slamRange.x) Backup();
         }
         else {
-            if (dist > RangedRange.y) MoveTowardTarget();
-            else if (dist > RangedRange.x) RangedAttack();
-            else if (dist < RangedRange.x) Backup();
+            OrbitPlayer();
         }
+    }
+
+    public void Charge()
+    {
+        anim.SetBool(chargeAnim, true);
+        PickChargeTarget();
+
+        move.ChangeSpeed(chargeSpeed);
+        move.target = chargeTarget;
+        move.gotoTarget = true;
+
+        currentAttack = new AttackDetails(chargeHB, chargeAnim);
+        chargeHB.StartChecking(true, chargeDmg, chargeKB, gameObject, Vector3.right * 2);
+
+        charging = true;
+    }
+
+    void PickChargeTarget()
+    {
+        chargeTarget = target.position;
+    }
+
+    void WindUpCharge()
+    {
+        Stop();
+        anim.SetTrigger(startChargeAnim);
+        busy = true;
     }
 
     protected override void Die()
@@ -54,7 +92,7 @@ public class CorruptDefender : BaseEnemy
 
     void MeleeAttack()
     {
-        if (hitCooldown > 0) {
+        if (slamCooldown > 0) {
             Backup();
             return;
         }
@@ -62,20 +100,8 @@ public class CorruptDefender : BaseEnemy
         StopAllCoroutines();
         LookAtTarget(0.75f);
 
-        currentAttack = new AttackDetails(HB, hitAnim, hitDmg, hitResetTime, hitKB, gameObject);
+        currentAttack = new AttackDetails(chargeHB, slamAnim, slamDmg, slamResetTime, slamKB, gameObject);
         StartAttack(currentAttack, anim);
-    }
-
-    void RangedAttack()
-    {
-        OrbitPlayer();
-        if (rangedCooldown > 0) return;
-        rangedCooldown = rangedResetTime;
-
-        var projectile = InstantiateProjectile(projectilePrefab, projectileStartOffset, projectileSize);
-        projectile.GetComponent<GoopProjectile>().goopAmount = goopAmount;
-        projectile.GetComponent<HitBox>().StartChecking(transform, rangedDmg);
-        AimAndFire(projectile, projectileAngle);
     }
 
     public override void EndAttack()
@@ -83,12 +109,17 @@ public class CorruptDefender : BaseEnemy
         base.EndAttack();
         currentAttack.HB.EndChecking();
         anim.SetBool(currentAttack.animBool, false);
+        if (charging) {
+            print("end charge");
+            charging = false;
+            chargeCooldown = chargeResetTime;
+        }
     }
 
     protected override void Cooldowns()
     {
-        hitCooldown -= Time.deltaTime;
-        rangedCooldown -= Time.deltaTime;
+        slamCooldown -= Time.deltaTime;
+        chargeCooldown -= Time.deltaTime;
     }
 
     protected override void Awake()
@@ -108,10 +139,10 @@ public class CorruptDefender : BaseEnemy
         base.OnDrawGizmosSelected();
 
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, RangedRange.x);
-        Gizmos.DrawWireSphere(transform.position, RangedRange.y);
+        Gizmos.DrawWireSphere(transform.position, chargeRange.x);
+        Gizmos.DrawWireSphere(transform.position, chargeRange.y);
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, hitRange.x);
-        Gizmos.DrawWireSphere(transform.position, hitRange.y);
+        Gizmos.DrawWireSphere(transform.position, slamRange.x);
+        Gizmos.DrawWireSphere(transform.position, slamRange.y);
     }
 }

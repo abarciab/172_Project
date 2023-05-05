@@ -10,10 +10,28 @@ public class HitEventCoord : MonoBehaviour
         if (scorp) scorp.EndAttack();
     }
 
+    public void StartChecking()
+    {
+        var enemy = GetComponentInParent<BaseEnemy>();
+        if (enemy) enemy.StartChecking();
+    }
+
+    public void EndAttack()
+    {
+        var enemy = GetComponentInParent<BaseEnemy>();
+        if (enemy) enemy.EndAttack();
+    }
+
+    public void DefenderCharge()
+    {
+        var defeneder = GetComponentInParent<CorruptDefender>();
+        if (defeneder) defeneder.Charge();
+    }
+
     public void ScorpLaunch()
     {
         var scorp = GetComponentInParent<Scorpion>();
-        if (scorp) scorp.RangedAttack();
+        if (scorp) scorp.LaunchProjectile();
     }
     public void CorruptEndAttack()
     {
@@ -39,16 +57,6 @@ public class HitEventCoord : MonoBehaviour
         corrupt.EndScream();
     }
 
-    public void GoatStartCheck()
-    {
-        var goat = GetComponentInParent<Goat>();
-        if (goat != null) goat.StartChecking();
-    }
-    public void GoatEndCheck()
-    {
-        var goat = GetComponentInParent<Goat>();
-        if (goat != null) goat.EndChecking();
-    }
 
     public void StartPlayerCheck()
     {

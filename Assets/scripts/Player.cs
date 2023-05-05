@@ -198,8 +198,8 @@ public class Player : MonoBehaviour
     {
         var outputList = new List<BaseEnemy>();
 
+        int currentPriority = 0;
         while (outputList.Count < inputList.Count) {
-            int currentPriority = 0;
             for (int i = 0; i < inputList.Count; i++) {
                 var enemy = inputList[i];
                 if (outputList.Contains(enemy)) continue;
@@ -212,6 +212,7 @@ public class Player : MonoBehaviour
                     outputList.Insert(index, enemy);
                 }
             }
+            currentPriority += 1;
         }
         return outputList;
     }

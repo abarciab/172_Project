@@ -18,7 +18,8 @@ public class HitBox : MonoBehaviour
     int dmg;
     GameObject obj;
     Vector3 offset;
-    [HideInInspector] public UnityEvent OnHit;
+    [HideInInspector] public UnityEvent OnHit, onTrigger;
+    [HideInInspector] public GameObject triggeredBy;
     [SerializeField] bool checkParent;
 
     public void StartChecking(bool _hitting = false, int _dmg = 0, float _kb = 0, GameObject _obj = null, Vector3 _offset = default) {
@@ -53,12 +54,15 @@ public class HitBox : MonoBehaviour
     }
 
     private void OnTriggerStay(Collider other)
-    { 
+    {
         Check(other);
     }
 
     void Check(Collider other)
     {
+        triggeredBy = other.gameObject;
+        if (checking)onTrigger.Invoke();
+
         if (!checking) return;
 
         var reciever = other.GetComponent<HitReciever>();

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyMovement), typeof(EnemyStats))]
@@ -17,7 +16,7 @@ public class BaseEnemy : MonoBehaviour
 
         public AttackDetails() {}
 
-        public AttackDetails(HitBox HB, string animBool, int damage, float resetTime, float KB, GameObject obj = null)
+        public AttackDetails(HitBox HB, string animBool, int damage = 0, float resetTime = 0, float KB = 0, GameObject obj = null)
         {
             this.HB = HB;
             this.animBool = animBool;
@@ -134,7 +133,7 @@ public class BaseEnemy : MonoBehaviour
 
         stats.OnHit.AddListener(JumpBack);
     }
-
+    
     virtual protected void Update()
     {
         GetDist();
@@ -167,6 +166,7 @@ public class BaseEnemy : MonoBehaviour
 
     virtual protected void Die()
     {
+        Stop();
         enabled = false;
         Player.i.Notify(this, false);
     }

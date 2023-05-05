@@ -79,6 +79,12 @@ public class AudioManager : MonoBehaviour {
         instance = this;
     }
 
+    public float GetVol(int ID)
+    {
+        var clip = getClip(ID);
+        return clip.localVolume;
+    }
+
     //--1/3
     public void PlaySound(int ID)
     {

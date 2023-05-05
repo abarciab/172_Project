@@ -16,6 +16,17 @@ public class ThrownStaff : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        GetComponentInChildren<HitBox>().onTrigger.AddListener(CheckForBlocked);
+    }
+
+    void CheckForBlocked()
+    {
+        if (recalling) return;
+        var hb = GetComponentInChildren<HitBox>();
+        if (!hb.triggeredBy.CompareTag("BlockSpear")) return;
+
+        hb.EndChecking();
+        rb.velocity *= -0.5f;
     }
 
     private void OnEnable()
