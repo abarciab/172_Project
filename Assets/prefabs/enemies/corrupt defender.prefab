@@ -40,7 +40,7 @@ Transform:
   - {fileID: 6936208796117770817}
   - {fileID: 2331116838330317851}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &2207860105671316067
 NavMeshAgent:
@@ -10265,6 +10265,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: HP bar
+      objectReference: {fileID: 0}
+    - target: {fileID: 6926258469813730426, guid: aeef302edaa86a8459af4643a4ea3c57,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6926258469813730426, guid: aeef302edaa86a8459af4643a4ea3c57,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6926258469813730426, guid: aeef302edaa86a8459af4643a4ea3c57,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
