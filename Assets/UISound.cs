@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class UISound : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] Sound getItem;
+
+    [Header("Dialogue")]
+    [SerializeField] Sound oldLadySound;
+
+    private void Start()
     {
-        
+        getItem = Instantiate(getItem);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Play_GetItem()
     {
-        
+        getItem.Play(transform);
     }
 }
