@@ -468,219 +468,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6eb67cee3cdfa44a9e731525833c8ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds:
-  - name: '0: swing'
-    ID: 0
-    displayName: 
-    clips:
-    - name: '0: swing'
-      clip: {fileID: 8300000, guid: fafddf77602faa145b8ce85befcd7855, type: 3}
-      localVolume: 0
-      localPitch: 0
-      looping: 0
-    parentVolume: 1
-    parentPitch: 1
-  - name: '1: hit sound'
-    ID: 1
-    displayName: 
-    clips:
-    - name: '0: hit sound'
-      clip: {fileID: 8300000, guid: 5bd0abe935cf33343b168d7f01b6721f, type: 3}
-      localVolume: 0
-      localPitch: 0
-      looping: 0
-    parentVolume: 0.1
-    parentPitch: 1
-  - name: '2: player grunt'
-    ID: 2
-    displayName: player grunt
-    clips:
-    - name: '0: grunt1'
-      clip: {fileID: 8300000, guid: ffe4c09ae2362494eb45ab9837296558, type: 3}
-      localVolume: 0
-      localPitch: 0
-      looping: 0
-    parentVolume: 0.571
-    parentPitch: 1
-  - name: '3: player footstep'
-    ID: 3
-    displayName: player footstep
-    clips:
-    - name: '0: footsteps1'
-      clip: {fileID: 8300000, guid: ab10a1c3bf524aa4a98b4b0eeab04080, type: 3}
-      localVolume: 0
-      localPitch: 0
-      looping: 0
-    - name: '1: footsteps2'
-      clip: {fileID: 8300000, guid: e99df7610f682df409bd389a859a4261, type: 3}
-      localVolume: 0
-      localPitch: 0
-      looping: 0
-    - name: '2: footsteps3'
-      clip: {fileID: 8300000, guid: 5b39744dd3ee7a4458e6b477f3174ff8, type: 3}
-      localVolume: 0
-      localPitch: 0
-      looping: 0
-    - name: '3: footsteps4'
-      clip: {fileID: 8300000, guid: 14934a7728b951c42b243f1a99b01c59, type: 3}
-      localVolume: 0
-      localPitch: 0
-      looping: 0
-    - name: '4: footsteps5'
-      clip: {fileID: 8300000, guid: fe52a55270050854eb941196aed978da, type: 3}
-      localVolume: 0
-      localPitch: 0
-      looping: 0
-    - name: '5: footsteps6'
-      clip: {fileID: 8300000, guid: cd35830026eb0da4d959ec6e11d54bb0, type: 3}
-      localVolume: 0
-      localPitch: 0
-      looping: 0
-    parentVolume: 0.1
-    parentPitch: 1
-  - name: '4: weaponSwing'
-    ID: 4
-    displayName: weaponSwing
-    clips:
-    - name: '0: rope swishe 1'
-      clip: {fileID: 8300000, guid: 3538309673ba97a43a9362140eaf4256, type: 3}
-      localVolume: 0
-      localPitch: 0
-      looping: 0
-    parentVolume: 1
-    parentPitch: 1
-  - name: '5: roll'
-    ID: 5
-    displayName: 
-    clips:
-    - name: '0: roll'
-      clip: {fileID: 8300000, guid: a8e0976880f418d49b62c231c8444c0c, type: 3}
-      localVolume: 0
-      localPitch: 0
-      looping: 0
-    parentVolume: 0.314
-    parentPitch: 1.088
-  - name: '6: calmMusic'
-    ID: 6
-    displayName: 
-    clips:
-    - name: '0: calmMusic'
-      clip: {fileID: 8300000, guid: 3689186b6765b6e4bbb3d0f77d9b42a4, type: 3}
-      localVolume: 0
-      localPitch: 0
-      looping: 1
-    parentVolume: 0.05
-    parentPitch: 1
-  - name: '7: ambientNature'
-    ID: 7
-    displayName: 
-    clips:
-    - name: '0: ambientNature'
-      clip: {fileID: 8300000, guid: 020b7d54ed7df90409d4d123529bdd30, type: 3}
-      localVolume: 0
-      localPitch: 0
-      looping: 1
-    parentVolume: 0.05
-    parentPitch: 1
-  - name: '8: goat hurt'
-    ID: 8
-    displayName: 
-    clips:
-    - name: '0: goat hurt'
-      clip: {fileID: 8300000, guid: edca87e432819c549a31148b01152a61, type: 3}
-      localVolume: 0
-      localPitch: 0
-      looping: 0
-    parentVolume: 0.155
-    parentPitch: 1
-  - name: '9: goat hoof beats'
-    ID: 9
-    displayName: 
-    clips:
-    - name: '0: goat hoof beats'
-      clip: {fileID: 8300000, guid: 7177a951eddadfc4fb262657e211feaf, type: 3}
-      localVolume: 0
-      localPitch: 0
-      looping: 1
-    parentVolume: 1
-    parentPitch: 1
-  - name: '10: fight song'
-    ID: 10
-    displayName: fight song
-    clips:
-    - name: '0: battleLoopable'
-      clip: {fileID: 8300000, guid: 8d38f772bea5f5c4baeb521e8c52b62c, type: 3}
-      localVolume: 0
-      localPitch: 0
-      looping: 1
-    parentVolume: 0.1
-    parentPitch: 1
-  - name: '11: goop footsteps'
-    ID: 11
-    displayName: goop footsteps
-    clips:
-    - name: '0: goopy footstep1'
-      clip: {fileID: 8300000, guid: a792e612a02c21342939b7babc1ab8a2, type: 3}
-      localVolume: 0
-      localPitch: 0
-      looping: 0
-    - name: '1: goopyfootstep2'
-      clip: {fileID: 8300000, guid: 59e7e47d31b2d114987b60c642fe6465, type: 3}
-      localVolume: 0
-      localPitch: 0
-      looping: 0
-    parentVolume: 0.037
-    parentPitch: 0.852
-  - name: '12: goopEnemyHit'
-    ID: 12
-    displayName: 
-    clips:
-    - name: '0: goopEnemyHit'
-      clip: {fileID: 8300000, guid: bc91e82652b3dc748a8a36bc1728d298, type: 3}
-      localVolume: 0
-      localPitch: 0
-      looping: 0
-    parentVolume: 0.6
-    parentPitch: 1
-  - name: '13: enemyswish1'
-    ID: 13
-    displayName: 
-    clips:
-    - name: '0: enemyswish1'
-      clip: {fileID: 8300000, guid: 3703865871857e843882765c34b9848a, type: 3}
-      localVolume: 0
-      localPitch: 0
-      looping: 0
-    - name: '1: enemyswish2'
-      clip: {fileID: 8300000, guid: d05eb838ac0cc5a428c1f96301d6e96a, type: 3}
-      localVolume: 0
-      localPitch: 0
-      looping: 0
-    parentVolume: 1
-    parentPitch: 0.809
-  - name: '14: shockwave'
-    ID: 14
-    displayName: 
-    clips:
-    - name: '0: shockwave'
-      clip: {fileID: 8300000, guid: b360ba3a2e0001842aa856017cee6a1e, type: 3}
-      localVolume: 0
-      localPitch: 0
-      looping: 0
-    parentVolume: 0.353
-    parentPitch: 1
-  - name: '15: ability refreshed'
-    ID: 15
-    displayName: ability refreshed
-    clips:
-    - name: '0: abilityrdy'
-      clip: {fileID: 8300000, guid: 0a7ea553f2f30244989c128becc79271, type: 3}
-      localVolume: 0
-      localPitch: 0
-      looping: 0
-    parentVolume: 0.2
-    parentPitch: 0.9
-  masterVolume: 1
+  coordinatorPrefab: {fileID: 2297566603056730170, guid: e53ebab469c5783418f3bd5a0cc87006,
+    type: 3}
+  sfxMixer: {fileID: 24300002, guid: 1c4fc48d421abf04b9894f8f0363e46b, type: 2}
+  musicMixer: {fileID: 24300002, guid: 1c4fc48d421abf04b9894f8f0363e46b, type: 2}
+  AmbientMixer: {fileID: 24300002, guid: 1c4fc48d421abf04b9894f8f0363e46b, type: 2}
 --- !u!4 &80451801
 Transform:
   m_ObjectHideFlags: 0
@@ -1065,7 +857,6 @@ GameObject:
   - component: {fileID: 155818892}
   - component: {fileID: 155818891}
   - component: {fileID: 155818890}
-  - component: {fileID: 155818889}
   m_Layer: 6
   m_Name: player
   m_TagString: Player
@@ -1137,102 +928,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minWalkSpeed: 0.2
   anim: {fileID: 1535900525}
---- !u!82 &155818889
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 155818885}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: fafddf77602faa145b8ce85befcd7855, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!136 &155818890
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -8547,6 +8242,7 @@ GameObject:
   - component: {fileID: 1333759746}
   - component: {fileID: 1333759745}
   - component: {fileID: 1333759744}
+  - component: {fileID: 1333759750}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -8692,6 +8388,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1333759750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1333759743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f895749fab546484cb2d696dd75b79d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1345447947
 GameObject:
   m_ObjectHideFlags: 0
@@ -10198,6 +9906,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac192df5bc63a5e4c923039723c6a7e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  footstep: {fileID: 0}
+  stabSwish: {fileID: 0}
 --- !u!1 &1497396059
 GameObject:
   m_ObjectHideFlags: 0
@@ -12738,6 +12448,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac192df5bc63a5e4c923039723c6a7e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  footstep: {fileID: 11400000, guid: b5d22326f0e16f645b6cbce2fd1ba659, type: 2}
+  stabSwish: {fileID: 11400000, guid: de9dc550c4ac53949867dd023abd6d24, type: 2}
 --- !u!114 &1535900528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22218,6 +21930,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2110254960}
   m_CullTransparentMesh: 1
+--- !u!4 &758396016086769915
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6772424691879965806}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &6212135502361465270
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22426,3 +22153,34 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e19d265d67051c45821082b3370c7a9, type: 3}
+--- !u!1 &6772424691879965806
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 758396016086769915}
+  - component: {fileID: 6772424691879965807}
+  m_Layer: 0
+  m_Name: sound tester
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &6772424691879965807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6772424691879965806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24d3b33b447a2e04ebbf6bfde9069399, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound: {fileID: 11400000, guid: 81560fbf2eaa0f34fbe35b4574912abb, type: 2}
+  play: 0

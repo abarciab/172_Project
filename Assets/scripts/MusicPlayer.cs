@@ -14,10 +14,10 @@ public class MusicPlayer : MonoBehaviour
 
     private void Start()
     {
-        AudioManager.instance.PlaySound(6, music1Source);
+        //AudioManager.instance.PlaySound(6, music1Source);
         music1Vol = music1Source.volume;
-        AudioManager.instance.PlaySound(7, ambientSource);
-        AudioManager.instance.PlaySound(10, music2Source);
+        //AudioManager.instance.PlaySound(7, ambientSource);
+        //AudioManager.instance.PlaySound(10, music2Source);
         music2Source.volume = 0;
     }
 
@@ -25,12 +25,12 @@ public class MusicPlayer : MonoBehaviour
     {
         if (Player.i.InCombat() && !music2) {
             Player.i.EnterCombat();
-            music2Vol = AudioManager.instance.GetVol(10);
+            //music2Vol = AudioManager.instance.GetVol(10);
             music2Source.volume = 0;
             music2 = true;
         }
         if (!Player.i.InCombat() && music2) {
-            music1Vol = music2Vol = AudioManager.instance.GetVol(6);
+            //music1Vol = music2Vol = AudioManager.instance.GetVol(6);
             music1Source.volume = 0;
             music2 = false;
         }

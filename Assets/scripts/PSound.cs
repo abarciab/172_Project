@@ -4,17 +4,20 @@ using UnityEngine;
 
 public class PSound : MonoBehaviour
 {
-    public void PlaySwoosh() {
-        AudioManager.instance.PlaySound(0, gameObject);
+    [SerializeField] Sound footstep, stabSwish;
+
+    private void Start()
+    {
+        footstep = Instantiate(footstep);
+        stabSwish = Instantiate(stabSwish);
     }
 
-    public void PlaySound(int ID)
-    {
-        AudioManager.instance.PlaySound(ID, transform.GetChild(Random.Range(0, transform.childCount)).gameObject);
+    public void PlaySwoosh() {
+        stabSwish.Play(transform);
     }
 
     public void PlayFootStep()
     {
-        AudioManager.instance.PlaySound(3, gameObject);
+        footstep.Play(transform);
     }
 }

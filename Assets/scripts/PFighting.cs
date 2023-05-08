@@ -68,7 +68,7 @@ public class PFighting : HitReciever {
         hasSpear = false;
         float power = Mathf.Clamp01(chargeTime / maxAimTime);
         chargeTime = 0;
-        AudioManager.instance.PlaySound(0, gameObject);
+        //AudioManager.instance.PlaySound(0, gameObject);
         
         staffProjectile.gameObject.SetActive(false);
         var dir = GetAimDir();
@@ -150,7 +150,7 @@ public class PFighting : HitReciever {
     public void ActivateShockwave()
     {
         if (swCooldown > 0 || !enabled) return;
-        AudioManager.instance.PlaySound(14, gameObject);
+        //AudioManager.instance.PlaySound(14, gameObject);
         swCooldown = shockwaveResetTime;
 
         if (hasSpear) shockwave.transform.position = transform.position;
@@ -165,7 +165,7 @@ public class PFighting : HitReciever {
         var playSound = false;
         if (swCooldown > 0) playSound = true;
         swCooldown -= Time.deltaTime;
-        if (swCooldown <= 0 && playSound) AudioManager.instance.PlaySound(15, gameObject); 
+        //if (swCooldown <= 0 && playSound) AudioManager.instance.PlaySound(15, gameObject); 
         if (charging && chargeTime < maxAimTime) chargeTime += Time.deltaTime;
         GlobalUI.i.throwCharge.value = chargeTime / maxAimTime;
     }

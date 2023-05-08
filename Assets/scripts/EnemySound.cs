@@ -15,16 +15,16 @@ public class EnemySound : MonoBehaviour
 
     public void TakeHit()
     {
-        AudioManager.instance.PlaySound(hurtSound, hurtSource);
+        //AudioManager.instance.PlaySound(hurtSound, hurtSource);
     }
 
     public void PlayFootstep()
     {
-        AudioManager.instance.PlaySound(footstepSound, footstepSource);
+        //AudioManager.instance.PlaySound(footstepSound, footstepSource);
     }
 
     public void PlayAttack1()
     {
-        AudioManager.instance.PlaySound(attack1Sound, footstepSource);
+        //AudioManager.instance.PlaySound(attack1Sound, footstepSource);
     }
 }

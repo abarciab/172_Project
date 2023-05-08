@@ -242,7 +242,7 @@ public class Player : MonoBehaviour
         healCooldown = healWaitTime;
         StopAllCoroutines();
         
-        AudioManager.instance.PlaySound(2, hurtSource);
+        //AudioManager.instance.PlaySound(2, hurtSource);
     }
 
     void Die() {

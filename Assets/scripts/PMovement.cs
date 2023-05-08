@@ -43,7 +43,7 @@ public class PMovement : MonoBehaviour
     public void Roll() {
         //if (GetComponent<PFighting>().basicAttacking || GetComponent<PFighting>().hvyAttacking) return;
 
-        if (!rolling) AudioManager.instance.PlaySound(5, gameObject);
+        //if (!rolling) AudioManager.instance.PlaySound(5, gameObject);
         rollDir = GetDashDir();
         rolling = true;
         StartCoroutine(StopDash());

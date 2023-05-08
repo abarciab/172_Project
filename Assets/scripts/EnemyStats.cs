@@ -38,7 +38,7 @@ public class EnemyStats : HitReciever
         health -= hit.damage;
         health = Mathf.Clamp(health, 0, maxHealth);
         if (health <= 0) Die();
-        AudioManager.instance.PlaySound(1, gameObject);
+        //AudioManager.instance.PlaySound(1, gameObject);
 
         GetComponent<EnemyMovement>()?.KnockBack(hit.source, hit.KB * KBresist);
 

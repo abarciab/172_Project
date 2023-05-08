@@ -40,7 +40,7 @@ public class ThrownStaff : MonoBehaviour
     {
         if (!landed) return false;
 
-        AudioManager.instance.PlaySound(13, source1);
+        //AudioManager.instance.PlaySound(13, source1);
         rb.isKinematic = false;
         rb.useGravity = false;
         GetComponent<CapsuleCollider>().isTrigger = true;
@@ -88,7 +88,7 @@ public class ThrownStaff : MonoBehaviour
         if (player != null) return;
 
         landed = true;
-        if (!rb.isKinematic) AudioManager.instance.PlaySound(12, source2);
+        //if (!rb.isKinematic) AudioManager.instance.PlaySound(12, source2);
 
         GetComponentInChildren<HitBox>().EndChecking();
         rb.velocity = Vector3.zero;
