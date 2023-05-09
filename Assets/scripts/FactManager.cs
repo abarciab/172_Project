@@ -9,6 +9,8 @@ public class FactManager : MonoBehaviour
 
     [SerializeField] List<Fact> facts = new List<Fact>();
     [SerializeField] List<Fact> saveWhenAdded = new List<Fact>();
+    [SerializeField] List<Fact> SavePresets = new List<Fact>();
+    [SerializeField] bool nextPreset;
     public bool autoSave;
 
     public void SetFacts(List<Fact> newFacts)
@@ -44,8 +46,17 @@ public class FactManager : MonoBehaviour
         return (facts.Contains(fact));
     }
 
-    private void Start()
+    private void Update()
     {
-        //foreach (var f in facts) print(f.name);
+        if (!Application.isPlaying) return;
+
+        if (Input.GetKeyDown(KeyCode.M)) nextPreset = true;
+
+        if (nextPreset) {
+            nextPreset = false;
+            if (SavePresets.Count <= 0) return;
+            AddFact(SavePresets[0]);
+            SavePresets.RemoveAt(0);
+        }
     }
 }

@@ -4924,7 +4924,7 @@ Transform:
   - {fileID: 7813850154150306851}
   - {fileID: 2617639826947922522}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &8959324631095615391
 NavMeshAgent:
@@ -4991,6 +4991,7 @@ MonoBehaviour:
   inGroup: 0
   groupID: 0
   HPBarDisplayRange: 30
+  deathSound: {fileID: 11400000, guid: 4ca3a8a2f73cc274cbe6d3833793339b, type: 2}
 --- !u!114 &337496441697455699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5032,6 +5033,7 @@ MonoBehaviour:
   screamTrigger: scream
   walkAnim: movingForward
   walkThreshold: 0.1
+  launchSound: {fileID: 11400000, guid: 279eed7a547c9174f9ce7c5fc4e7216b, type: 2}
 --- !u!136 &7497822228288794679
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -10009,6 +10011,8 @@ MonoBehaviour:
   linkedBoxes: []
   ignoreTag: 
   printHits: 0
+  playSoundOnHit: 0
+  hitSound: {fileID: 0}
   OnHit:
     m_PersistentCalls:
       m_Calls: []
@@ -10817,9 +10821,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2afcf65845d10d41b8e60b42ee8ae95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  footstepSound: 11
-  hurtSound: 12
-  attack1Sound: 13
+  footstepSound: {fileID: 11400000, guid: dc73c089cdf080c498c4025f7d28d18b, type: 2}
+  hurtSound: {fileID: 0}
+  attack1Sound: {fileID: 0}
 --- !u!4 &707781889961285620 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9151524d0897d084cb44b1ea125f5556,
@@ -10991,6 +10995,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: HP bar
+      objectReference: {fileID: 0}
+    - target: {fileID: 6926258469813730426, guid: aeef302edaa86a8459af4643a4ea3c57,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6926258469813730426, guid: aeef302edaa86a8459af4643a4ea3c57,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6926258469813730426, guid: aeef302edaa86a8459af4643a4ea3c57,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

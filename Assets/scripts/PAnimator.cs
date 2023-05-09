@@ -44,6 +44,8 @@ public class PAnimator : MonoBehaviour
         anim.SetBool("TurningLeft", move.turnLeft && !moving);
         anim.SetBool("TurningRight", move.turnRight && !moving);
         anim.SetBool("StaffDrawn", fight.SpearOut());
+        anim.SetBool("chargingThrow", fight.chargingSpear());
+        anim.SetBool("hasSpear", fight.HasSpear());
         
         anim.SetBool("Strafe", move.strafe && Mathf.Abs(GetComponent<Rigidbody>().velocity.x + GetComponent<Rigidbody>().velocity.z) > 0.01f);
 

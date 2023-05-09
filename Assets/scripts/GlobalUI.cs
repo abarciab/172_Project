@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Search;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,12 +12,16 @@ public class GlobalUI : MonoBehaviour
     private void Awake() { i = this; }
 
     [SerializeField] TextMeshProUGUI commandPrompt, subtitle;
-    public Slider HpBar, throwCharge;
-    [SerializeField] float redFlashTime = 0.1f;
-    [SerializeField] GameObject title;
-    [SerializeField] Image dmgIndicator, dmgFlash;
-    [SerializeField] bool showHPbar;
     
+    [SerializeField] float redFlashTime = 0.1f;
+    [SerializeField] GameObject title, bottomLeft;
+    [SerializeField] Image dmgIndicator, dmgFlash, goopOverlay;
+
+    [Header("spear charge")]
+    public Slider throwCharge;
+    [SerializeField] GameObject chargeParent, centralMarkerShine;
+    [SerializeField] Image centralMarker;
+    [SerializeField] Color centralMarkerDefaulColor, centralMarkerFullColor;
 
     [Header("Quest")]
     [SerializeField] TextMeshProUGUI currentQuest;
@@ -28,9 +34,16 @@ public class GlobalUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI nameText;
     [SerializeField] TextMeshProUGUI mainText;
 
-    [Header("Shockwave")]
+    [Header("Abilities")]
     [SerializeField] GameObject swCountdown;
     [SerializeField] TextMeshProUGUI swCountDownText;
+    [SerializeField] Image LMBability, RMBability;
+    [SerializeField] GameObject LMBdisable, RMBdisable;
+    [SerializeField] Sprite throwSprite, stabSprite, recallSprite;
+
+    [Header("HP bar")]
+    public Slider HpBar;
+    [SerializeField] bool showHPbar;
 
     [Header("newItem")]
     [SerializeField] GameObject newItem;
@@ -40,6 +53,10 @@ public class GlobalUI : MonoBehaviour
     [Header("Pause Menu")]
     [SerializeField] GameObject pauseMenu;
 
+    [Header("Volume Sliders")]
+    [SerializeField] Slider masterSlider;
+
+    UISound sound;
     public string GetCurrentText()
     {
         return currentQuest.text;
@@ -50,6 +67,7 @@ public class GlobalUI : MonoBehaviour
         currentQuest.text = text;
         questBacking.color = newQuestColor;
         newQuestColorCooldown = 1f;
+        if (!string.IsNullOrEmpty(text))sound.NewQuest();
     }
 
     public void Exit()
@@ -105,6 +123,7 @@ public class GlobalUI : MonoBehaviour
         commandPrompt.gameObject.SetActive(false);
         nameText.gameObject.SetActive(false);
         mainText.gameObject.SetActive(false);
+        sound.TurnPage();
     }
 
     public void DisplayPrompt(string prompt)
@@ -146,18 +165,19 @@ public class GlobalUI : MonoBehaviour
 
     private void Update()
     {
-        throwCharge.gameObject.SetActive(Player.i.GetComponent<PFighting>().HasSpear());
-        swCountdown.transform.parent.gameObject.SetActive(Player.i.GetComponent<PFighting>().enabled);
+        DisplaySpearCharge();
+
+        DisplayAbilities();
+
+        DisplayOverlay();
+
+        VolumeSliders();
 
         currentQuest.gameObject.SetActive(!string.IsNullOrEmpty(currentQuest.text));
         newQuestColorCooldown -= Time.deltaTime;
         if (newQuestColorCooldown <= 0)  questBacking.color = Color.Lerp(questBacking.color, Color.black, newQuestSmoothness);
 
-        float cooldown = Player.i.GetComponent<PFighting>().GetSWcooldown();
-        swCountdown.SetActive(cooldown > 0);
-        swCountDownText.text = Mathf.CeilToInt(cooldown).ToString();
-
-        HpBar.gameObject.SetActive(!title.activeInHierarchy && showHPbar && Player.i.InCombat());
+        
         if (mainText.gameObject.activeInHierarchy) commandPrompt.gameObject.SetActive(false);
 
         if (FactManager.i.IsPresent(tutorialDone)) {
@@ -166,8 +186,9 @@ public class GlobalUI : MonoBehaviour
             Player.i.UnfreezePlayer();
             if (string.IsNullOrEmpty(mainText.text))mainText.gameObject.SetActive(false);
         }
-        if (FactManager.i.IsPresent(spearFact) && newItem != null) {
+        if (FactManager.i.IsPresent(spearFact) && newItem != null && !newItem.activeInHierarchy) {
             Player.i.FreezePlayer();
+            sound.GetItem();
             newItem.SetActive(true);
         }
         if (newItem && newItem.activeInHierarchy) {
@@ -177,8 +198,10 @@ public class GlobalUI : MonoBehaviour
             mainText.text = "combat info and controls in the ESC menu";
             mainText.gameObject.SetActive(true);
             showHPbar = false;
+            
 
             if (!Input.GetKeyDown(KeyCode.F)) return;
+            sound.TurnPage();
             Destroy(newItem);
             newItem = null;
             mainText.text = "";
@@ -188,6 +211,58 @@ public class GlobalUI : MonoBehaviour
         }
     }
 
+    void VolumeSliders()
+    {
+        AudioManager.instance.SetMasterVolume(masterSlider.value);
+    }
+
+    void DisplayOverlay()
+    {
+        int targetAlpha = Player.i.goopTime > 0 ? 1 : 0;
+        Color targetCol = Color.black;
+        targetCol.a = targetAlpha;
+        goopOverlay.color = Color.Lerp(goopOverlay.color, targetCol, 0.05f);
+        goopOverlay.gameObject.SetActive(goopOverlay.color.a > 0.01f);
+    }
+
+    void DisplayAbilities()
+    {
+        bottomLeft.SetActive((!title.activeInHierarchy && showHPbar && Player.i.InCombat()) || !Player.i.FullHealth());
+
+        var fight = Player.i.GetComponent<PFighting>();
+
+        float cooldown = fight.GetSWcooldown();
+        swCountdown.SetActive(cooldown > 0);
+        swCountDownText.text = Mathf.CeilToInt(cooldown).ToString();
+
+        bool hasSpear = fight.HasSpear();
+
+        if (!hasSpear) {
+            LMBability.sprite = RMBability.sprite = recallSprite;
+            bool recallReady = fight.RecallReady;
+            LMBdisable.SetActive(!recallReady);
+            RMBdisable.SetActive(!recallReady);
+        }
+        else {
+            LMBability.sprite = throwSprite;
+            RMBability.sprite = stabSprite;
+            LMBdisable.SetActive(fight.stabbing || fight.chargingSpear());
+            RMBdisable.SetActive(fight.stabbing || fight.chargingSpear());
+        }
+    }
+
+    void DisplaySpearCharge()
+    {
+        chargeParent.SetActive(Player.i.GetComponent<PFighting>().chargingSpear());
+        swCountdown.transform.parent.gameObject.SetActive(Player.i.GetComponent<PFighting>().enabled);
+
+        float charge = throwCharge.value;
+        centralMarker.color = Color.Lerp(centralMarkerDefaulColor, centralMarkerFullColor, charge);
+
+        bool perfect = charge > 0.85  && charge < 1;
+        if (perfect && !centralMarkerShine.activeInHierarchy) sound.FullCharge();
+        centralMarkerShine.SetActive(perfect);
+    }
 
 
     private void Start()
@@ -196,6 +271,11 @@ public class GlobalUI : MonoBehaviour
 
         mainText.gameObject.SetActive(false);
         nameText.gameObject.SetActive(false);
+
+        sound = GetComponent<UISound>();
+
+        goopOverlay.color = new Color(1, 1, 1, 0);
+        goopOverlay.gameObject.SetActive(false);
     }
 
     

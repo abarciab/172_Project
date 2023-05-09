@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,6 +20,9 @@ public class EnemyStats : HitReciever
     [SerializeField] int groupID;
     [SerializeField] float HPBarDisplayRange = 30;
 
+    [Header("Sounds")]
+    [SerializeField] Sound deathSound;
+
     public bool dead()
     {
         return health <= 0;
@@ -29,6 +33,7 @@ public class EnemyStats : HitReciever
         if (inGroup) GameManager.i.AddToGroup(gameObject, groupID);
         health = maxHealth;
         if (blood != null) blood.SetActive(false);
+        if (deathSound) deathSound = Instantiate(deathSound);
     }
 
     public override void Hit(HitData hit)
@@ -55,6 +60,8 @@ public class EnemyStats : HitReciever
 
     void Die()
     {
+        if (hpBar) hpBar.gameObject.SetActive(false);
+        HPBarDisplayRange = 0;
         if (inGroup) GameManager.i.removeFromGroup(gameObject, groupID);
 
         if (removeFactOnDeath.Count > 0) foreach (var f in removeFactOnDeath) FactManager.i.RemoveFact(f);
@@ -64,6 +71,8 @@ public class EnemyStats : HitReciever
         blood.SetActive(false);
         if (destroy) Destroy(gameObject);
         if (hpBar) hpBar.gameObject.SetActive(false);
+
+        if (deathSound) deathSound.Play(transform);
     }
 
     private void Update()

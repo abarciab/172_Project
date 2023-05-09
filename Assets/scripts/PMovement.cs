@@ -17,14 +17,15 @@ public class PMovement : MonoBehaviour
     Vector3 rollDir;
     Transform poseLookTarget;
 
+    [Header("Sounds")]
+    [SerializeField] Sound rollSound;
+
     [HideInInspector] public float goopTime; 
 
     Vector3 source;
 
     public void KnockBack(GameObject _source, float _KB, Vector3 offset)
     {
-        return;
-
         if (_source == null || _KB <= 0) return;
 
         source = _source.transform.position + offset;
@@ -43,7 +44,7 @@ public class PMovement : MonoBehaviour
     public void Roll() {
         //if (GetComponent<PFighting>().basicAttacking || GetComponent<PFighting>().hvyAttacking) return;
 
-        //if (!rolling) AudioManager.instance.PlaySound(5, gameObject);
+        if (!rolling) rollSound.Play();
         rollDir = GetDashDir();
         rolling = true;
         StartCoroutine(StopDash());
@@ -81,6 +82,7 @@ public class PMovement : MonoBehaviour
         rotation = transform.localEulerAngles.y;
         p = GetComponent<Player>();
         rb = GetComponent<Rigidbody>();
+        rollSound = Instantiate(rollSound);
     }
 
     private void Update()

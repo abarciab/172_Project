@@ -25,6 +25,12 @@ public class PFighting : HitReciever {
     [SerializeField] int shockwaveDmg;
     float swCooldown;
 
+    [Header("Sounds")]
+    [SerializeField] Sound throwSpearSound;
+    [SerializeField] Sound shockwaveSound, shockwaveReadySound, recallWoosh, spearCatch;
+
+    public bool RecallReady;
+
     public void DrawSpear()
     {
         spearDrawn = true;
@@ -50,6 +56,7 @@ public class PFighting : HitReciever {
     {
         hasSpear = true;
         recalling = charging = false;
+        spearCatch.Play();
     }
 
     public void ThrowStaff()
@@ -66,9 +73,10 @@ public class PFighting : HitReciever {
         }
 
         hasSpear = false;
+        bool perfectThrow = chargeTime > 0.85 * maxAimTime && chargeTime < maxAimTime * 1.05f;
         float power = Mathf.Clamp01(chargeTime / maxAimTime);
         chargeTime = 0;
-        //AudioManager.instance.PlaySound(0, gameObject);
+        throwSpearSound.Play(transform);
         
         staffProjectile.gameObject.SetActive(false);
         var dir = GetAimDir();
@@ -101,6 +109,11 @@ public class PFighting : HitReciever {
         stabbing = false;
     }
 
+    public bool chargingSpear()
+    {
+        return charging;
+    }
+
     public bool Stabbing()
     {
         return stabbing;
@@ -125,6 +138,11 @@ public class PFighting : HitReciever {
     {
         hasSpear = true;
         aimed = false;
+        throwSpearSound = Instantiate(throwSpearSound);
+        shockwaveSound = Instantiate(shockwaveSound);
+        shockwaveReadySound = Instantiate(shockwaveReadySound);
+        recallWoosh = Instantiate(recallWoosh);
+        spearCatch = Instantiate(spearCatch);
     }
 
     public void StartAimingSpear()
@@ -150,7 +168,7 @@ public class PFighting : HitReciever {
     public void ActivateShockwave()
     {
         if (swCooldown > 0 || !enabled) return;
-        //AudioManager.instance.PlaySound(14, gameObject);
+        shockwaveSound.Play(transform);
         swCooldown = shockwaveResetTime;
 
         if (hasSpear) shockwave.transform.position = transform.position;
@@ -161,11 +179,12 @@ public class PFighting : HitReciever {
 
     private void Update()
     {
-        spearObj.SetActive(hasSpear);
+        spearObj.SetActive(hasSpear && !charging);
+
         var playSound = false;
         if (swCooldown > 0) playSound = true;
         swCooldown -= Time.deltaTime;
-        //if (swCooldown <= 0 && playSound) AudioManager.instance.PlaySound(15, gameObject); 
+        if (swCooldown <= 0 && playSound) shockwaveReadySound.Play(transform);
         if (charging && chargeTime < maxAimTime) chargeTime += Time.deltaTime;
         GlobalUI.i.throwCharge.value = chargeTime / maxAimTime;
     }
@@ -174,6 +193,7 @@ public class PFighting : HitReciever {
     {
         if (recalling) return;
         recalling = staffProjectile.GetComponent<ThrownStaff>().Recall();
+        if (recalling) recallWoosh.Play(transform);
     }
 
     
