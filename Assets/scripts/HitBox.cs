@@ -11,7 +11,8 @@ public class HitBox : MonoBehaviour
     [HideInInspector] public List<HitReciever> targets = new List<HitReciever>();
     [SerializeField] List<HitBox> linkedBoxes = new List<HitBox>();
     [SerializeField] string ignoreTag;
-    [SerializeField] bool printHits;
+    [SerializeField] bool printHits, playSoundOnHit;
+    [SerializeField] Sound hitSound;
 
     bool hitting;
     float kb;
@@ -21,6 +22,11 @@ public class HitBox : MonoBehaviour
     [HideInInspector] public UnityEvent OnHit, onTrigger;
     [HideInInspector] public GameObject triggeredBy;
     [SerializeField] bool checkParent;
+
+    private void Start()
+    {
+        if (hitSound) hitSound = Instantiate(hitSound);
+    }
 
     public void StartChecking(bool _hitting = false, int _dmg = 0, float _kb = 0, GameObject _obj = null, Vector3 _offset = default) {
         hitting = _hitting;
@@ -70,7 +76,7 @@ public class HitBox : MonoBehaviour
         if (reciever == null || targets.Contains(reciever) || (!string.IsNullOrEmpty(ignoreTag) && reciever.gameObject.CompareTag(ignoreTag))) return;
 
         if (hitting) {
-            //if (printHits) print("hit: " + reciever.gameObject.name + ", collider: " + other.gameObject.name);
+            if (playSoundOnHit && hitSound) hitSound.Play();
             reciever.Hit(new HitReciever.HitData(dmg, obj, kb, offset));
             OnHit.Invoke();
         }

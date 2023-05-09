@@ -17,6 +17,14 @@ public class GoopManager : MonoBehaviour
     [SerializeField] float testAmount;
     [SerializeField] bool test;
 
+    [Header("sounds")]
+    [SerializeField] Sound goopSound;
+
+    private void Start()
+    {
+        if (Application.isPlaying) goopSound = Instantiate(goopSound);
+    }
+
     private void Update()
     {
         if (test) {
@@ -37,6 +45,7 @@ public class GoopManager : MonoBehaviour
         pos.y = hit.point.y;
 
         int numGlobs = Mathf.Max(Mathf.RoundToInt(amount * maxGlobs), 3);
+        GameObject mainGlob = gameObject;
         for (int i = 0; i < numGlobs; i++) {
             var newGlob = Instantiate(goopPrefab, transform);
             Vector2 circlePoint = Random.insideUnitCircle;
@@ -44,6 +53,8 @@ public class GoopManager : MonoBehaviour
             newGlob.transform.position = _pos;
             var scaleMod = (1 - (Mathf.Abs(circlePoint.x) + Mathf.Abs(circlePoint.y))/2) + 0.1f;
             newGlob.transform.localScale = maxScale * amount * scaleMod;
+            mainGlob = newGlob;
         }
+        if (goopSound.instantialized) goopSound.Play(mainGlob.transform);
     }
 }

@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class EnemySound : MonoBehaviour
 {
-    [SerializeField] int footstepSound, hurtSound, attack1Sound;
-    AudioSource footstepSource, hurtSource;
-
+    [SerializeField] Sound footstepSound, hurtSound, attack1Sound;
+    
     private void Start()
     {
-        footstepSource = gameObject.AddComponent<AudioSource>();
-        hurtSource = gameObject.AddComponent<AudioSource>();
+        if (footstepSound) footstepSound = Instantiate(footstepSound);
+        if (attack1Sound) attack1Sound = Instantiate(attack1Sound);
+        
+        return;
+        footstepSound = Instantiate(attack1Sound);
     }
 
     public void TakeHit()
@@ -20,11 +22,11 @@ public class EnemySound : MonoBehaviour
 
     public void PlayFootstep()
     {
-        //AudioManager.instance.PlaySound(footstepSound, footstepSource);
+        if (footstepSound) footstepSound.Play(transform);
     }
 
     public void PlayAttack1()
     {
-        //AudioManager.instance.PlaySound(attack1Sound, footstepSource);
+        if (attack1Sound) attack1Sound.Play(transform);
     }
 }

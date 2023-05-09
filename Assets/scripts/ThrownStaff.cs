@@ -8,15 +8,20 @@ public class ThrownStaff : MonoBehaviour
     Rigidbody rb;
 
     public bool recalling;
-    [SerializeField] float recallSpeed = 2, recallEndThreshold = 1;
+    [SerializeField] float recallSpeed = 2, recallEndThreshold = 1, maxSpeed;
     [SerializeField] Vector3 playerOffset;
-    [SerializeField] AudioSource source1, source2;
+    [SerializeField] Sound landSound, windSound, ping, blocked;
     bool landed;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         GetComponentInChildren<HitBox>().onTrigger.AddListener(CheckForBlocked);
+
+        landSound = Instantiate(landSound);
+        windSound = Instantiate(windSound);
+        ping = Instantiate(ping);
+        blocked = Instantiate(blocked);
     }
 
     void CheckForBlocked()
@@ -27,6 +32,7 @@ public class ThrownStaff : MonoBehaviour
 
         hb.EndChecking();
         rb.velocity *= -0.5f;
+        blocked.Play();
     }
 
     private void OnEnable()
@@ -34,13 +40,15 @@ public class ThrownStaff : MonoBehaviour
         if (rb == null) return;
         rb.isKinematic = false;
         landed = false;
+        windSound.PlaySilent(transform);
     }
 
     public bool Recall()
     {
         if (!landed) return false;
 
-        //AudioManager.instance.PlaySound(13, source1);
+
+        Player.i.GetComponent<PFighting>().RecallReady = false;
         rb.isKinematic = false;
         rb.useGravity = false;
         GetComponent<CapsuleCollider>().isTrigger = true;
@@ -53,17 +61,19 @@ public class ThrownStaff : MonoBehaviour
 
     private void Update()
     {
+        windSound.PercentVolume(rb.velocity.magnitude / maxSpeed, 0.025f);
+
         if (!rb.isKinematic && !recalling) transform.LookAt(transform.position + rb.velocity.normalized);
 
         if (!recalling) return;
-
 
         /*var dir = ((Player.i.transform.position + playerOffset) - transform.position).normalized;
         //rb.AddForce(dir * recallSpeed, ForceMode.VelocityChange);
         float speed = 
         rb.velocity = dir * recallSpeed;*/
-        transform.position = Vector3.Lerp(transform.position, Player.i.transform.position, 0.1f);
         //transform.LookAt(Player.i.transform);
+
+        transform.position = Vector3.Lerp(transform.position, Player.i.transform.position, 0.1f);
         transform.LookAt(transform.position + Vector3.up * 10);
 
         float dist = Vector3.Distance(transform.position, Player.i.transform.position);
@@ -88,7 +98,12 @@ public class ThrownStaff : MonoBehaviour
         if (player != null) return;
 
         landed = true;
-        //if (!rb.isKinematic) AudioManager.instance.PlaySound(12, source2);
+        if (!rb.isKinematic) {
+            landSound.Play();
+            ping.Play();
+            Player.i.GetComponent<PFighting>().RecallReady = true;
+        }
+        windSound.Stop();
 
         GetComponentInChildren<HitBox>().EndChecking();
         rb.velocity = Vector3.zero;

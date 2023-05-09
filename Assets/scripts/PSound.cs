@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class PSound : MonoBehaviour
 {
-    [SerializeField] Sound footstep, stabSwish;
+    [SerializeField] Sound footstep, stabSwish, drawSpear;
 
     private void Start()
     {
         footstep = Instantiate(footstep);
         stabSwish = Instantiate(stabSwish);
+        drawSpear = Instantiate(drawSpear);
     }
 
     public void PlaySwoosh() {
@@ -18,6 +19,11 @@ public class PSound : MonoBehaviour
 
     public void PlayFootStep()
     {
-        footstep.Play(transform);
+        footstep.Play(transform, false);
+    }
+
+    public void DrawSpear()
+    {
+        drawSpear.Play(transform);
     }
 }

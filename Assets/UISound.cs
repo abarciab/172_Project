@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UISound : MonoBehaviour
 {
-    [SerializeField] Sound getItem;
+    [SerializeField] Sound getItem, turnPage, newQuest, fullChargeSound;
 
     [Header("Dialogue")]
     [SerializeField] Sound oldLadySound;
@@ -12,10 +12,28 @@ public class UISound : MonoBehaviour
     private void Start()
     {
         getItem = Instantiate(getItem);
+        turnPage = Instantiate(turnPage);
+        newQuest = Instantiate(newQuest);
+        fullChargeSound = Instantiate(fullChargeSound);
     }
 
-    public void Play_GetItem()
+    public void FullCharge()
     {
-        getItem.Play(transform);
+        fullChargeSound.Play();
+    }
+
+    public void GetItem()
+    {
+        getItem.Play();
+    }
+
+    public void TurnPage()
+    {
+        turnPage.Play();
+    }
+
+    public void NewQuest()
+    {
+        newQuest.Play();
     }
 }

@@ -110,7 +110,7 @@ public class CorruptDefender : BaseEnemy
         currentAttack.HB.EndChecking();
         anim.SetBool(currentAttack.animBool, false);
         if (charging) {
-            print("end charge");
+            //print("end charge");
             charging = false;
             chargeCooldown = chargeResetTime;
         }

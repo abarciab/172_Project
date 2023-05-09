@@ -36,6 +36,9 @@ public class CorruptExplorer : BaseEnemy
     [SerializeField] string walkAnim;
     [SerializeField] float walkThreshold;
 
+    [Header("Sounds")]
+    [SerializeField] Sound launchSound;
+
     public void LaunchProjectile()
     {
         busy = false;
@@ -44,6 +47,7 @@ public class CorruptExplorer : BaseEnemy
         projectile.GetComponent<HitBox>().StartChecking(transform, rangedDmg);
         AimAndFire(projectile, projectileAngle);
         anim.SetBool(rangedAnim, false);
+        launchSound.Play(transform);
     }
 
     protected override void Die()
@@ -127,6 +131,9 @@ public class CorruptExplorer : BaseEnemy
     protected override void Start()
     {
         base.Start();
+
+        launchSound = Instantiate(launchSound);
+
     }
     protected override void OnDrawGizmosSelected()
     {

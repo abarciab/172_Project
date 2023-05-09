@@ -107,6 +107,7 @@ MonoBehaviour:
   inGroup: 0
   groupID: 0
   HPBarDisplayRange: 30
+  deathSound: {fileID: 11400000, guid: 4ca3a8a2f73cc274cbe6d3833793339b, type: 2}
 --- !u!114 &7107401598590842298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5177,6 +5178,8 @@ MonoBehaviour:
   linkedBoxes: []
   ignoreTag: 
   printHits: 0
+  playSoundOnHit: 0
+  hitSound: {fileID: 0}
   OnHit:
     m_PersistentCalls:
       m_Calls: []
@@ -10492,6 +10495,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2afcf65845d10d41b8e60b42ee8ae95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  footstepSound: 0
-  hurtSound: 0
-  attack1Sound: 0
+  footstepSound: {fileID: 11400000, guid: dc73c089cdf080c498c4025f7d28d18b, type: 2}
+  hurtSound: {fileID: 0}
+  attack1Sound: {fileID: 11400000, guid: c729f507f8ed7364988d0bdec6553646, type: 2}

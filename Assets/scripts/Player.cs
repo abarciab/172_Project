@@ -21,8 +21,8 @@ public class Player : MonoBehaviour
     [Header("Prompts")]
     [SerializeField] string startTalkingPrompt = "Press E to talk";
 
-    [Header("sfx")]
-    [SerializeField] AudioSource hurtSource;
+    [Header("sounds")]
+    [SerializeField] Sound hurtSound;
 
     Speaker interestedSpeaker;
     Gate interestedInteractable;
@@ -46,6 +46,11 @@ public class Player : MonoBehaviour
     //closer enemies should melee
     //higher priority melee enemies should melee
     //don't have too many ranged or melee enemies
+
+    public bool FullHealth()
+    {
+        return health == maxHealth;
+    }
 
     public bool CheckMelee(BaseEnemy enemy, int priority)
     {
@@ -229,6 +234,7 @@ public class Player : MonoBehaviour
 
     private void Start() {
         health = maxHealth;
+        hurtSound = Instantiate(hurtSound);
     }
 
     public void ChangeHealth(int delta) {
@@ -241,8 +247,8 @@ public class Player : MonoBehaviour
 
         healCooldown = healWaitTime;
         StopAllCoroutines();
-        
-        //AudioManager.instance.PlaySound(2, hurtSource);
+
+        hurtSound.Play();
     }
 
     void Die() {

@@ -41,9 +41,24 @@ public class Sound : ScriptableObject
     [SerializeField] float pitch;
     [ConditionalHide(nameof(SynchronizePitchAndVolume)), Range(0, 2)]
     [SerializeField] float volume;
+    float actualVolume;
 
     [HideInInspector] public AudioSource audioSource;
     public bool instantialized;
+
+    public void PercentVolume(float vol, float smoothness = 1)
+    {
+        if (!audioSource) return;
+        //Debug.Log("precent volume: " + vol);
+        audioSource.volume = Mathf.Lerp(audioSource.volume, actualVolume * vol, smoothness);
+    }
+
+    public void Stop()
+    {
+        if (!instantialized || !audioSource) return;
+
+        audioSource.Stop();
+    }
 
     void Awake()
     {
@@ -55,24 +70,47 @@ public class Sound : ScriptableObject
         Destroy(audioSource);
     }
 
-    public void Play(Transform caller, bool restart = true)
+    public void PlaySilent(Transform caller = null, bool restart = true)
+    {
+        if (!instantialized) {
+            Debug.LogError("PlaySilent() was called on an uninstatizlized Sound");
+            return;
+        }
+
+        if (!audioSource) FirstTimePlay(caller, restart);
+        Play(true, true);
+    }
+
+    public void SetUp(Transform caller = null, bool restart = true)
+    {
+        if (!instantialized) {
+            Debug.LogError("SetUp() was called on an uninstatizlized Sound");
+            return;
+        }
+        if (clips.Count == 0) return;
+
+        if (audioSource == null) FirstTimePlay(caller, restart);
+    }
+
+    public void Play(Transform caller = null, bool restart = true)
     {
         if (!instantialized) {
             Debug.LogError("Play() was called on an uninstatizlized Sound");
             return;
         }
         if (clips.Count == 0) return;
-
+       
         if (audioSource == null) FirstTimePlay(caller, restart);
         else Play(restart);
        
     }
-    void Play(bool restart)
+    void Play(bool restart, bool silent = false)
     {
         var clip = GetClip();
-        if (audioSource.clip == clip.clip && audioSource.isPlaying && !restart) return;
+        if (audioSource.isPlaying && !restart) return;
 
-        audioSource.volume = clip.CustomPitchAndVolume ? clip.volume : volume;
+        actualVolume = clip.CustomPitchAndVolume ? clip.volume : volume;
+        audioSource.volume = silent ? 0 : actualVolume;
         audioSource.pitch = clip.CustomPitchAndVolume ? clip.pitch : pitch;
         audioSource.loop = clip.looping;
         audioSource.clip = clip.clip;
