@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.Rendering.UI;
 
 public class HitBox : MonoBehaviour
@@ -13,6 +14,11 @@ public class HitBox : MonoBehaviour
     [SerializeField] string ignoreTag;
     [SerializeField] bool printHits, playSoundOnHit;
     [SerializeField] Sound hitSound;
+
+    [Header("Blockable")]
+    [SerializeField] bool blockable;
+    [SerializeField] string blockTag;
+    [SerializeField] Sound blockedSound;
 
     bool hitting;
     float kb;
@@ -26,6 +32,7 @@ public class HitBox : MonoBehaviour
     private void Start()
     {
         if (hitSound) hitSound = Instantiate(hitSound);
+        if (blockedSound) blockedSound = Instantiate(blockedSound);
     }
 
     public void StartChecking(bool _hitting = false, int _dmg = 0, float _kb = 0, GameObject _obj = null, Vector3 _offset = default) {
@@ -74,6 +81,15 @@ public class HitBox : MonoBehaviour
         var reciever = other.GetComponent<HitReciever>();
         if (reciever == null && checkParent) reciever = other.GetComponentInParent<HitReciever>();
         if (reciever == null || targets.Contains(reciever) || (!string.IsNullOrEmpty(ignoreTag) && reciever.gameObject.CompareTag(ignoreTag))) return;
+
+        if (blockable) {
+            if (other.gameObject.CompareTag(blockTag)) {
+                EndChecking();
+                blockedSound.Play();
+                return;
+            }
+        }
+        
 
         if (hitting) {
             if (playSoundOnHit && hitSound) hitSound.Play();

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,7 @@ public class EnemyStats : HitReciever
     [SerializeField] float KBresist;
     [SerializeField] GameObject blood;
     [SerializeField] float bloodTime = 1;
+    [SerializeField] int healSpeed;
 
     [SerializeField] List<Fact> removeFactOnDeath = new List<Fact>(), addFactOnDeath = new List<Fact>();
 
@@ -22,6 +24,23 @@ public class EnemyStats : HitReciever
 
     [Header("Sounds")]
     [SerializeField] Sound deathSound;
+
+    Coroutine currentBleed;
+
+    public void Heal(float percentGoal)
+    {
+        StartCoroutine(_Heal(percentGoal));
+    }
+    IEnumerator _Heal(float percentGoal)
+    {
+        float amountToHeal = (maxHealth * percentGoal) - health;
+        while (amountToHeal > 0) {
+            print("amountToheal: " + amountToHeal);
+            health += healSpeed;
+            amountToHeal -= healSpeed;
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
 
     public bool dead()
     {
@@ -47,8 +66,8 @@ public class EnemyStats : HitReciever
 
         GetComponent<EnemyMovement>()?.KnockBack(hit.source, hit.KB * KBresist);
 
-        StopAllCoroutines();
-        if (blood != null) StartCoroutine(Bleed());
+        if (currentBleed != null) StopCoroutine(currentBleed);
+        if (blood != null) currentBleed = StartCoroutine(Bleed());
     }
 
     IEnumerator Bleed()

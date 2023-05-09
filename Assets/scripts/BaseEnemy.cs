@@ -69,8 +69,12 @@ public class BaseEnemy : MonoBehaviour
 
     protected void AimAndFire(GameObject projectile, float verticalAngle)
     {
+        AimAndFire(projectile, verticalAngle, target.position);
+    }
+
+    protected void AimAndFire(GameObject projectile, float verticalAngle, Vector3 targetPos)
+    {
         var rb = projectile.GetComponent<Rigidbody>();
-        Vector3 targetPos = target.transform.position;
 
         float gravity = Physics.gravity.magnitude;
         // Selected angle in radians

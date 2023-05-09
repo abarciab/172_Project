@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class Scorpion : BaseEnemy 
@@ -71,12 +72,21 @@ public class Scorpion : BaseEnemy
         hitPin = true;
     }
 
+    protected override void Die()
+    {
+        base.Die();
+        Destroy(gameObject, 1);
+    }
+
     protected override void Update()
     {
         base.Update();
         if (busy) return;
 
-        if ((float)stats.health / stats.maxHealth <= phaseSwitch) phase = 2;
+        if (phase == 1 && (float)stats.health / stats.maxHealth <= phaseSwitch) {
+            phase = 2;
+            stats.Heal(1);
+        }
 
         if (phase == 1) {
             if (dist < snipRange.y) { Snip(); JumpBack(); }
@@ -85,13 +95,18 @@ public class Scorpion : BaseEnemy
             else if (dist < RangedRange.x) Backup();
         }
         else {
-            if (dist > RangedRange.x && dist < RangedRange.y) RangedAttack();
-            else if (dist > pinRange.y) MoveTowardTarget();
-            else if (dist > pinRange.x && pinCooldown <= 0) StartPin();
+            if (dist > RangedRange.x && dist < RangedRange.y && dist > pinRange.y) RangedAttack();
+
+            if (dist > pinRange.y - 0.5f) MoveTowardTarget();
+            else if (dist < pinRange.x + 0.5f) Backup();
+
+            if (dist > pinRange.x && dist < pinRange.y && pinCooldown <= 0) StartPin();
             else if (dist < snipRange.y) Snip();
         }
         DoAnims();
     }
+
+    
 
     protected override void Cooldowns()
     {
@@ -133,7 +148,8 @@ public class Scorpion : BaseEnemy
         var projectile = InstantiateProjectile(projectilePrefab, projectileStartOffset, projectileSize);
         projectile.GetComponent<GoopProjectile>().goopAmount = goopAmount;
         projectile.GetComponent<HitBox>().StartChecking(transform, rangedDmg);
-        AimAndFire(projectile, projectileAngle);
+        Vector3 targetPos = target.position + Player.i.speed3D;
+        AimAndFire(projectile, projectileAngle, targetPos);
         anim.SetBool(rangedAnim, false);
     }
 

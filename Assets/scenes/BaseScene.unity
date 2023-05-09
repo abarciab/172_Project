@@ -3012,6 +3012,9 @@ MonoBehaviour:
   printHits: 0
   playSoundOnHit: 1
   hitSound: {fileID: 11400000, guid: 3225fc9be196a134e8bffaabb057753c, type: 2}
+  blockable: 0
+  blockTag: 
+  blockedSound: {fileID: 0}
   OnHit:
     m_PersistentCalls:
       m_Calls: []
@@ -8856,6 +8859,9 @@ MonoBehaviour:
   printHits: 0
   playSoundOnHit: 1
   hitSound: {fileID: 11400000, guid: 3225fc9be196a134e8bffaabb057753c, type: 2}
+  blockable: 0
+  blockTag: 
+  blockedSound: {fileID: 0}
   OnHit:
     m_PersistentCalls:
       m_Calls: []
@@ -11382,6 +11388,9 @@ MonoBehaviour:
   printHits: 0
   playSoundOnHit: 1
   hitSound: {fileID: 11400000, guid: 3225fc9be196a134e8bffaabb057753c, type: 2}
+  blockable: 1
+  blockTag: BlockSpear
+  blockedSound: {fileID: 11400000, guid: 4a8d47bbc87a6ed44805ee2203b1c24a, type: 2}
   OnHit:
     m_PersistentCalls:
       m_Calls: []
