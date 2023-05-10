@@ -102,6 +102,7 @@ MonoBehaviour:
   KBresist: 0
   blood: {fileID: 9198307162475864487}
   bloodTime: 1
+  healSpeed: 0
   removeFactOnDeath: []
   addFactOnDeath: []
   inGroup: 0
@@ -130,7 +131,7 @@ MonoBehaviour:
   orbitSwitchMod: 0.3
   slamHB: {fileID: 7467584827853441484}
   slamRange: {x: 0.93, y: 1.5}
-  slamDmg: 15
+  slamDmg: 40
   slamAnim: slam
   slamKB: 20
   slamResetTime: 1.5
@@ -5180,6 +5181,9 @@ MonoBehaviour:
   printHits: 0
   playSoundOnHit: 0
   hitSound: {fileID: 0}
+  blockable: 0
+  blockTag: 
+  blockedSound: {fileID: 0}
   OnHit:
     m_PersistentCalls:
       m_Calls: []

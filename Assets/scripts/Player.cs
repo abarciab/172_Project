@@ -184,7 +184,10 @@ public class Player : MonoBehaviour
     void UpdateMeleeEnemies()
     {
         for (int i = 0; i < enemies.Count; i++) {
-            if (enemies[i] == null) enemies.RemoveAt(i);
+            if (enemies[i] == null || enemies[i].gameObject == null) enemies.RemoveAt(i);
+        }
+        for (int i = 0; i < currentMeleeEnemies.Count; i++) {
+            if (currentMeleeEnemies[i] == null || currentMeleeEnemies[i].gameObject == null) enemies.RemoveAt(i);
         }
 
         meleeCheckCooldown -= Time.deltaTime;
@@ -201,6 +204,8 @@ public class Player : MonoBehaviour
 
     List<BaseEnemy> SortList(List<BaseEnemy> inputList)
     {
+
+
         var outputList = new List<BaseEnemy>();
 
         int currentPriority = 0;
@@ -214,6 +219,7 @@ public class Player : MonoBehaviour
 
 
                     while (enemies.Count > index + 1 && enemies[index].Dist() > dist && enemies[index + 1].MeleePriority() == enemy.MeleePriority()) index += 1;
+                    if (index > outputList.Count) index = outputList.Count - 1;
                     outputList.Insert(index, enemy);
                 }
             }

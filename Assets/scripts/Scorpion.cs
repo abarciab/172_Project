@@ -65,7 +65,15 @@ public class Scorpion : BaseEnemy
     {
         base.EndAttack();
         if (!pinning) return;
+        StartCoroutine(Resume(1.5f));
         //print("Pin complete! hit: " + hitPin);
+    }
+
+    IEnumerator Resume(float time)
+    {
+        busy = true;
+        yield return new WaitForSeconds(time);
+        busy = false;
     }
 
     void HitPin() {

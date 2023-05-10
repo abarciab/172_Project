@@ -183,6 +183,7 @@ public class BaseEnemy : MonoBehaviour
 
     virtual protected void JumpBack()
     {
+        agroRange = Mathf.Infinity;
         if (busy) return;
 
         StopAllCoroutines();
