@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SaveManager : MonoBehaviour
 {
-    [SerializeField] List<Fact> allFacts = new List<Fact>();
-
     public void SaveGame()
     {
         var factMan = GetComponent<FactManager>();
@@ -39,9 +38,8 @@ public class SaveManager : MonoBehaviour
             savedNames.Add(PlayerPrefs.GetString("fact" + i));
         }
         for (int i = 0; i < savedNames.Count; i++) {
-            foreach (var f in allFacts) {
-                if (f.name == savedNames[i]) loadedFacts.Add(f);
-            }
+            var fact = Resources.Load<Fact>("facts/" + savedNames[i]);
+            if (fact) loadedFacts.Add(fact);
         }
         GetComponent<FactManager>().SetFacts(loadedFacts);
         GetComponent<GameManager>().SetCurrentStory(PlayerPrefs.GetString("currentStory"));
