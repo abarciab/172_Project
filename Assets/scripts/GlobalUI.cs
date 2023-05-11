@@ -35,6 +35,8 @@ public class GlobalUI : MonoBehaviour
     [Header("Abilities")]
     [SerializeField] GameObject swCountdown;
     [SerializeField] TextMeshProUGUI swCountDownText;
+    [SerializeField] GameObject swAbilityFlash, lmbRecallFlash, rmbRecallFlash;
+    [SerializeField] float abilityFlashTime = 0.1f;
     [SerializeField] Image LMBability, RMBability;
     [SerializeField] GameObject LMBdisable, RMBdisable;
     [SerializeField] Sprite throwSprite, stabSprite, recallSprite;
@@ -50,11 +52,43 @@ public class GlobalUI : MonoBehaviour
 
     [Header("Pause Menu")]
     [SerializeField] GameObject pauseMenu;
+    [SerializeField] GameObject settingsSection, savesSection, controlsSection;
 
     [Header("Volume Sliders")]
     [SerializeField] Slider masterSlider;
 
     UISound sound;
+
+    public void LoadSave(int save)
+    {
+        FactManager.i.LoadSaveState(save);
+    }
+
+    public void ToggleSaves()
+    {
+        HideMenuSections();
+        savesSection.SetActive(!savesSection.activeInHierarchy);
+    }
+
+    public void ToggleControls()
+    {
+        HideMenuSections();
+        controlsSection.SetActive(!controlsSection.activeInHierarchy);
+    }
+
+    public void ToggleSettings()
+    {
+        HideMenuSections();
+        settingsSection.SetActive(!settingsSection.activeInHierarchy);
+    }
+
+    public void HideMenuSections()
+    {
+        settingsSection.SetActive(false);
+        controlsSection.SetActive(false);
+        savesSection.SetActive(false);
+    }
+
     public string GetCurrentText()
     {
         return currentQuest.text;
@@ -226,20 +260,23 @@ public class GlobalUI : MonoBehaviour
     void DisplayAbilities()
     {
         var fight = Player.i.GetComponent<PFighting>();
-
         bottomLeft.SetActive((!title.activeInHierarchy && showHPbar && Player.i.InCombat()) || !Player.i.FullHealth() || fight.GetSWcooldown() > 0);
-
         
-
         float cooldown = fight.GetSWcooldown();
+        if (cooldown <= 0 && swCountdown.activeInHierarchy) StartCoroutine(FlashAbility(swAbilityFlash, abilityFlashTime));
         swCountdown.SetActive(cooldown > 0);
         swCountDownText.text = Mathf.CeilToInt(cooldown).ToString();
+
 
         bool hasSpear = fight.HasSpear();
 
         if (!hasSpear) {
             LMBability.sprite = RMBability.sprite = recallSprite;
             bool recallReady = fight.RecallReady;
+            if (recallReady && LMBdisable.activeInHierarchy) {
+                StartCoroutine(FlashAbility(lmbRecallFlash, abilityFlashTime));
+                StartCoroutine(FlashAbility(rmbRecallFlash, abilityFlashTime));
+            }
             LMBdisable.SetActive(!recallReady);
             RMBdisable.SetActive(!recallReady);
         }
@@ -249,6 +286,13 @@ public class GlobalUI : MonoBehaviour
             LMBdisable.SetActive(fight.stabbing || fight.chargingSpear());
             RMBdisable.SetActive(fight.stabbing || fight.chargingSpear());
         }
+    }
+
+    IEnumerator FlashAbility (GameObject flash, float time)
+    {
+        flash.SetActive(true);
+        yield return new WaitForSeconds(time);
+        flash.SetActive(false);
     }
 
     void DisplaySpearCharge()

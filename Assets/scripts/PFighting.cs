@@ -6,7 +6,7 @@ public class PFighting : HitReciever {
 
     [SerializeField] Rigidbody staffProjectile;
     [SerializeField] float throwForce, maxAimTime, critWindow, minAimTime;
-    public int throwDmg;
+    public int throwDmg, critDmg;
     [SerializeField] Vector3 offset, aimOffset;
 
     bool hasSpear, aimed, recalling, charging, spearDrawn;
@@ -79,10 +79,12 @@ public class PFighting : HitReciever {
         hasSpear = false;
         bool perfectThrow = chargeTime > (0.85 * maxAimTime) && chargeTime < (maxAimTime + 0.2f);
         float power = Mathf.Clamp01(chargeTime / maxAimTime);
+        int damage = Mathf.RoundToInt(throwDmg * power);
 
         if (perfectThrow) {
             critSucsess.Play();
             power = 1;
+            damage = critDmg;
         }
 
         chargeTime = 0;
@@ -96,7 +98,7 @@ public class PFighting : HitReciever {
         staffProjectile.gameObject.SetActive(true);
         staffProjectile.AddForce(dir * (throwForce * power));
 
-        staffProjectile.GetComponentInChildren<HitBox>().StartChecking(transform, FactManager.i.IsPresent(throwWeak) ? 0 : Mathf.RoundToInt(throwDmg * power));
+        staffProjectile.GetComponentInChildren<HitBox>().StartChecking(transform, FactManager.i.IsPresent(throwWeak) ? 0 : damage, _crit: perfectThrow);
 
         var fMan = FactManager.i;
         if (!fMan.IsPresent(anyThrow)) fMan.AddFact(anyThrow);

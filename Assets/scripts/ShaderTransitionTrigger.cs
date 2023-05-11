@@ -12,14 +12,11 @@ public class ShaderTransitionTrigger : MonoBehaviour
     {
         var player = other.GetComponent<Player>();
         if (player) {
-            print("PLAYER!");
             if (!start) {
-                print("END");
                 ShaderTransitionController.i.EndTransition(stage);
                 Destroy(this);
                 return;
             }
-            print("START");
             var dist = Vector3.Distance(destTrigger.position, player.transform.position);
             ShaderTransitionController.i.StartTransition(dist, destTrigger.position, stage);
             Destroy(this);

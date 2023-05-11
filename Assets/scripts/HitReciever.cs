@@ -14,32 +14,20 @@ public class HitReciever : MonoBehaviour
         public float KB;
         public Vector3 offset;
         public float stunTime;
+        public bool crit;
 
-        public HitData(int _damage = 0, GameObject _source = null, float _KB = 0, Vector3 _offset = default(Vector3), float _stunTime = 0)
+        public HitData(int _damage = 0, GameObject _source = null, float _KB = 0, Vector3 _offset = default(Vector3), float _stunTime = 0, bool _crit = false)
         {
             damage = _damage;
             source = _source;
             KB = _KB;
             offset = _offset;
             stunTime = _stunTime;
+            crit = _crit;
         }
     }
 
     [HideInInspector] public UnityEvent OnHit = new UnityEvent();
-    //[HideInInspector] protected int _damage;
-    //[HideInInspector] protected GameObject source;
-    //protected Vector3 hitSourceOffset;
-    //[HideInInspector] protected float KB;
-
-
-    /*public void Hit(int damage, GameObject _source, float _KB, Vector3 offset = default) {
-        hitSourceOffset = offset == default ? Vector3.zero : offset;
-        _damage = damage;
-        source = _source;
-        KB = _KB;
-
-        OnHit.Invoke();
-    }*/
 
     virtual public void Hit(HitData hit) { OnHit.Invoke(); }
 }

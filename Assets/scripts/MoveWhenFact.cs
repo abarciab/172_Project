@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteAlways]
 public class MoveWhenFact : MonoBehaviour
 {
     [System.Serializable]
@@ -15,17 +16,28 @@ public class MoveWhenFact : MonoBehaviour
     }
 
     void OnValidate() {
-        foreach (var i in items) {
-            if (!i.set || !i.obj) return;
-            i.set = false;
-            i.rotation = i.obj.transform.rotation;
-            i.Pos = i.obj.transform.position;
+        for (int i = 0; i < items.Count; i++) {
+            var item = items[i];
+            if (!item.set || !item.obj) continue;
+            item.set = false;
+            item.rotation = item.obj.transform.rotation;
+            item.Pos = item.obj.transform.position;
         }
     }
 
     [SerializeField] List<Item> items = new List<Item>();
+    [SerializeField] Sound moveSound;
+
+    private void Start()
+    {
+        if (moveSound) moveSound = Instantiate(moveSound);
+    }
 
     private void Update() {
+        OnValidate();
+        
+
+        if (!Application.isPlaying) return;
 
         for (int i = 0; i < items.Count; i++) {
             var item = items[i];
@@ -33,6 +45,7 @@ public class MoveWhenFact : MonoBehaviour
             item.obj.transform.position = item.Pos;
             item.obj.transform.rotation = item.rotation;
             items.RemoveAt(i);
+            if (moveSound) moveSound.Play(item.obj.transform);
         }
     }
 }
