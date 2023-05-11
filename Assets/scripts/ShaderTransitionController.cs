@@ -27,7 +27,8 @@ public class ShaderTransitionController : MonoBehaviour {
 
     [SerializeField, Range(0, 1)] float progress;
     [SerializeField, Range(0, 1)] float progressLerpTarget = 0;
-    public bool next, prev;
+    [SerializeField] bool _next, _prev; 
+    bool next, prev;
     [SerializeField] float transitionSmoothness = 0.025f;
 
     [SerializeField] public Light actualSun;
@@ -99,6 +100,12 @@ public class ShaderTransitionController : MonoBehaviour {
 
     private void Update()
     {
+        if (!Application.isPlaying) {
+            next = _next;
+            prev = _prev;
+            _next = _prev = false;
+        }
+
         if (transitioning) {
             float dist = Vector3.Distance(Player.i.transform.position, transitionTarget);
             float newValue = 1 - Mathf.Clamp01(dist / maxDist);
@@ -139,9 +146,7 @@ public class ShaderTransitionController : MonoBehaviour {
         RenderSettings.fogColor = Color.Lerp(A.fogColor, B.fogColor, progress);
         actualSun.transform.rotation = Quaternion.Lerp(A.sun.transform.rotation, B.sun.transform.rotation, progress);
 
-        //RenderSettings.skybox = progress < 0.5 ? A.skyboxMat : B.skyboxMat;
         LerpSkyBox(A, B, progress);
-
         LerpSunLight(A.sun, B.sun, progress);
     }
 

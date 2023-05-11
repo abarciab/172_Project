@@ -23,6 +23,7 @@ public class Speaker : MonoBehaviour
     [SerializeField] List<ConversationData> conversations = new List<ConversationData>();
     public string characterName;
     [SerializeField] GameObject speechBubble;
+    public bool talking;
 
 
     private void Start()
@@ -42,8 +43,8 @@ public class Speaker : MonoBehaviour
 
     void CheckStatus(ConversationData c)
     {
-        if (c.deleteWhenTrue != null && FactManager.i.IsPresent(c.deleteWhenTrue)) conversations.Remove(c); 
-        if (c.EnableWhenTrue != null && FactManager.i.IsPresent(c.EnableWhenTrue)) c.enabled = true; 
+        if (c.EnableWhenTrue != null && FactManager.i.IsPresent(c.EnableWhenTrue)) c.enabled = true;
+        if (c.deleteWhenTrue != null && FactManager.i.IsPresent(c.deleteWhenTrue)) c.enabled = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -90,6 +91,7 @@ public class Speaker : MonoBehaviour
 
     public void EndConversation()
     {
+        talking = false;
         var convoData = GetCurrentConvo();
         if (convoData == null) return;
 

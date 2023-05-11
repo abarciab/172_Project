@@ -227,9 +227,11 @@ public class GlobalUI : MonoBehaviour
 
     void DisplayAbilities()
     {
-        bottomLeft.SetActive((!title.activeInHierarchy && showHPbar && Player.i.InCombat()) || !Player.i.FullHealth());
-
         var fight = Player.i.GetComponent<PFighting>();
+
+        bottomLeft.SetActive((!title.activeInHierarchy && showHPbar && Player.i.InCombat()) || !Player.i.FullHealth() || fight.GetSWcooldown() > 0);
+
+        
 
         float cooldown = fight.GetSWcooldown();
         swCountdown.SetActive(cooldown > 0);

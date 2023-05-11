@@ -5,7 +5,7 @@ using UnityEngine;
 public class PFighting : HitReciever {
 
     [SerializeField] Rigidbody staffProjectile;
-    [SerializeField] float throwForce, maxAimTime;
+    [SerializeField] float throwForce, maxAimTime, critWindow, minAimTime;
     public int throwDmg;
     [SerializeField] Vector3 offset, aimOffset;
 
@@ -27,7 +27,11 @@ public class PFighting : HitReciever {
 
     [Header("Sounds")]
     [SerializeField] Sound throwSpearSound;
-    [SerializeField] Sound shockwaveSound, shockwaveReadySound, recallWoosh, spearCatch;
+    [SerializeField] Sound shockwaveSound, shockwaveReadySound, recallWoosh, spearCatch, critSucsess;
+
+    [Header("Tutorial")]
+    [SerializeField] Fact anyThrow;
+    [SerializeField] Fact recall, fullThrow, criticalThrow, stabbedOnce, shockWave, throwWeak;
 
     public bool RecallReady;
 
@@ -66,15 +70,21 @@ public class PFighting : HitReciever {
         aimed = false;
         CameraState.i.SwitchToState(CameraState.StateName.MouseFollow);
 
-        if (chargeTime <= maxAimTime * 0.1f) {
+        if (chargeTime <= minAimTime) {
             chargeTime = 0;
             staffProjectile.gameObject.SetActive(false);
             return;
         }
 
         hasSpear = false;
-        bool perfectThrow = chargeTime > 0.85 * maxAimTime && chargeTime < maxAimTime * 1.05f;
+        bool perfectThrow = chargeTime > (0.85 * maxAimTime) && chargeTime < (maxAimTime + 0.2f);
         float power = Mathf.Clamp01(chargeTime / maxAimTime);
+
+        if (perfectThrow) {
+            critSucsess.Play();
+            power = 1;
+        }
+
         chargeTime = 0;
         throwSpearSound.Play(transform);
         
@@ -86,7 +96,12 @@ public class PFighting : HitReciever {
         staffProjectile.gameObject.SetActive(true);
         staffProjectile.AddForce(dir * (throwForce * power));
 
-        staffProjectile.GetComponentInChildren<HitBox>().StartChecking(transform, Mathf.RoundToInt(throwDmg * power));
+        staffProjectile.GetComponentInChildren<HitBox>().StartChecking(transform, FactManager.i.IsPresent(throwWeak) ? 0 : Mathf.RoundToInt(throwDmg * power));
+
+        var fMan = FactManager.i;
+        if (!fMan.IsPresent(anyThrow)) fMan.AddFact(anyThrow);
+        else if (!fMan.IsPresent(fullThrow) && power == 1) fMan.AddFact(fullThrow);
+        else if (!fMan.IsPresent(criticalThrow) && perfectThrow) fMan.AddFact(criticalThrow);
     }
 
     public void Stab()
@@ -96,6 +111,7 @@ public class PFighting : HitReciever {
         if (!hasSpear) {RetrieveSpear(); return; }
         if (charging || stabbing) return;
         stabbing = true;
+        FactManager.i.AddFact(stabbedOnce);
     }
 
     public void StartChecking()
@@ -143,6 +159,7 @@ public class PFighting : HitReciever {
         shockwaveReadySound = Instantiate(shockwaveReadySound);
         recallWoosh = Instantiate(recallWoosh);
         spearCatch = Instantiate(spearCatch);
+        critSucsess = Instantiate(critSucsess);
     }
 
     public void StartAimingSpear()
@@ -170,6 +187,7 @@ public class PFighting : HitReciever {
         if (swCooldown > 0 || !enabled) return;
         shockwaveSound.Play(transform);
         swCooldown = shockwaveResetTime;
+        FactManager.i.AddFact(shockWave);
 
         if (hasSpear) shockwave.transform.position = transform.position;
         else shockwave.transform.position = staffProjectile.transform.position;
@@ -185,15 +203,18 @@ public class PFighting : HitReciever {
         if (swCooldown > 0) playSound = true;
         swCooldown -= Time.deltaTime;
         if (swCooldown <= 0 && playSound) shockwaveReadySound.Play(transform);
-        if (charging && chargeTime < maxAimTime) chargeTime += Time.deltaTime;
-        GlobalUI.i.throwCharge.value = chargeTime / maxAimTime;
+        if (charging) chargeTime += Time.deltaTime;
+        GlobalUI.i.throwCharge.value = Mathf.Min(chargeTime, maxAimTime) / maxAimTime;
     }
 
     void RetrieveSpear()
     {
         if (recalling) return;
         recalling = staffProjectile.GetComponent<ThrownStaff>().Recall();
-        if (recalling) recallWoosh.Play(transform);
+        if (recalling) {
+            recallWoosh.Play(transform);
+            FactManager.i.AddFact(recall);
+        }
     }
 
     

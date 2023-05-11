@@ -4,14 +4,44 @@ using UnityEngine;
 
 public class FactManager : MonoBehaviour
 {
+    [System.Serializable]
+    public class FactRule
+    {
+        [HideInInspector] public string name;
+        public Fact trigger;
+
+        public List<Fact> toAdd = new List<Fact>();
+        public List<Fact> toRemove = new List<Fact>();
+
+        public int triggersLeft = 1;
+    }
+
+
     public static FactManager i;
     private void Awake() { i = this; }
 
     [SerializeField] List<Fact> facts = new List<Fact>();
-    [SerializeField] List<Fact> saveWhenAdded = new List<Fact>();
+    [SerializeField] List<Fact> autosaveTriggers = new List<Fact>();
     [SerializeField] List<Fact> SavePresets = new List<Fact>();
-    [SerializeField] bool nextPreset;
+    bool loadNextPreset;
     public bool autoSave;
+
+    [Header("Rules")]
+    [SerializeField] List<FactRule> rules = new List<FactRule>();
+
+    private void Start()
+    {
+        FindObjectOfType<ShaderTransitionController>().LoadShaders();
+    }
+
+    private void OnValidate()
+    {
+        foreach (FactRule rule in rules) {
+            if (rule.trigger != null)
+                rule.name = rule.trigger.name + ": " + (rule.toAdd.Count > 0 ? "+" : (rule.toRemove.Count > 0 ? "-" : "")) +
+                    (rule.toAdd.Count > 0 && rule.toAdd[0] != null ? rule.toAdd[0].name : (rule.toRemove.Count > 0 && rule.toRemove[0] != null ? rule.toRemove[0].name: ""));
+        }
+    }
 
     public void SetFacts(List<Fact> newFacts)
     {
@@ -32,7 +62,8 @@ public class FactManager : MonoBehaviour
     {
         if (!IsPresent(fact)) {
             facts.Add(fact);
-            if (autoSave && saveWhenAdded.Contains(fact)) GetComponent<SaveManager>().SaveGame();
+            if (fact.skipToStory > 0) GameManager.i.LoadStory(fact.skipToStory);
+            if (autoSave && autosaveTriggers.Contains(fact)) GetComponent<SaveManager>().SaveGame();
         }
     }
 
@@ -50,10 +81,10 @@ public class FactManager : MonoBehaviour
     {
         if (!Application.isPlaying) return;
 
-        if (Input.GetKeyDown(KeyCode.M)) nextPreset = true;
+        if (Input.GetKeyDown(KeyCode.M)) loadNextPreset = true;
 
-        if (nextPreset) {
-            nextPreset = false;
+        if (loadNextPreset) {
+            loadNextPreset = false;
             if (SavePresets.Count <= 0) return;
             AddFact(SavePresets[0]);
             SavePresets.RemoveAt(0);

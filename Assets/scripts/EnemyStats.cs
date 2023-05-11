@@ -35,7 +35,6 @@ public class EnemyStats : HitReciever
     {
         float amountToHeal = (maxHealth * percentGoal) - health;
         while (amountToHeal > 0) {
-            print("amountToheal: " + amountToHeal);
             health += healSpeed;
             amountToHeal -= healSpeed;
             yield return new WaitForSeconds(0.5f);

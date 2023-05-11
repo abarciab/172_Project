@@ -19,6 +19,8 @@ public class MarkerTracker : MonoBehaviour
 
     [SerializeField] RectTransform markerParent;
     [SerializeField] GameObject markerPrefab;
+    [SerializeField] Sprite defaultMarker;
+    [SerializeField] bool onlyDefault;
 
     public bool AlreadyTracking(Transform obj)
     {
@@ -40,6 +42,7 @@ public class MarkerTracker : MonoBehaviour
     public void AddMarker(Transform obj, Sprite img)
     {
         if (AlreadyTracking(obj)) return;
+        if (onlyDefault) img = defaultMarker;
 
         GameObject newUImarker = Instantiate(markerPrefab, markerParent);
         newUImarker.transform.GetChild(0).GetComponentInChildren<Image>().sprite = img;
@@ -52,6 +55,12 @@ public class MarkerTracker : MonoBehaviour
 
     private void Update()
     {
+        for (int i = 0; i < activeMarkers.Count; i++) {
+            if (activeMarkers[i].trackedObj == null || !activeMarkers[i].trackedObj.gameObject.activeInHierarchy) {
+                Destroy(activeMarkers[i].UImarker.gameObject);
+                activeMarkers.RemoveAt(i);
+            }
+        }
         foreach (var m in activeMarkers) UpdateMarker(m);
     }
 

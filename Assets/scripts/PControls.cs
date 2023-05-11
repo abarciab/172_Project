@@ -14,6 +14,10 @@ public class PControls : MonoBehaviour
     PFighting fight;
     Player player;
 
+    [Header("Facts")]
+    [SerializeField] Fact throwFact;
+    [SerializeField] Fact stabFact, swFact;
+
     private void Start()
     {
         move = GetComponent<PMovement>();
@@ -44,10 +48,10 @@ public class PControls : MonoBehaviour
         if (Input.GetKeyDown(interactKey)) player.ActivateInteractable();
         if (!Input.GetKey(forward) && !Input.GetKey(left) && !Input.GetKey(right) && !Input.GetKey(backward)) move.running = false;
 
-        if (Input.GetMouseButtonDown(0)) fight.StartAimingSpear();
-        if (Input.GetMouseButtonUp(0)) fight.ThrowStaff();
-        if (Input.GetMouseButtonDown(1)) fight.Stab();
-        if (Input.GetKeyDown(abilityKey)) fight.ActivateShockwave();
+        if (Input.GetMouseButtonDown(0) && FactManager.i.IsPresent(throwFact)) fight.StartAimingSpear();
+        if (Input.GetMouseButtonUp(0) && FactManager.i.IsPresent(throwFact)) fight.ThrowStaff();
+        if (Input.GetMouseButtonDown(1) && FactManager.i.IsPresent(stabFact)) fight.Stab();
+        if (Input.GetKeyDown(abilityKey) && FactManager.i.IsPresent(swFact)) fight.ActivateShockwave();
 
         if (move.alignToCamera) return;
         move.turnRight = Input.GetKey(right);

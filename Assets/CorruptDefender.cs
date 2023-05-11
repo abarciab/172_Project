@@ -19,10 +19,11 @@ public class CorruptDefender : BaseEnemy
     [SerializeField] Vector2 chargeRange;
     [SerializeField] int chargeDmg;
     [SerializeField] string startChargeAnim, chargeAnim;
-    [SerializeField] float chargeKB, chargeResetTime, chargeSpeed;
+    [SerializeField] float chargeKB, chargeResetTime, chargeSpeed, chargeStunTime = 2;
     float chargeCooldown;
     Vector3 chargeTarget;
     public bool charging;
+    float timeCharging;
 
     [Header("")]
 
@@ -32,14 +33,14 @@ public class CorruptDefender : BaseEnemy
     bool melee;
 
     
-
     protected override void Update()
     {
         base.Update();
 
         if (charging) {
+            timeCharging += Time.deltaTime;
             float chargeDist = Vector3.Distance(transform.position, chargeTarget);
-            if (chargeDist < .5f) EndAttack();
+            if (chargeDist < .5f || timeCharging > 5) EndAttack();
         }
 
         if (busy || !inAgroRange) return;
@@ -110,9 +111,10 @@ public class CorruptDefender : BaseEnemy
         currentAttack.HB.EndChecking();
         anim.SetBool(currentAttack.animBool, false);
         if (charging) {
-            //print("end charge");
+            timeCharging = 0;
             charging = false;
             chargeCooldown = chargeResetTime;
+            Stun(chargeStunTime);
         }
     }
 

@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class FactInteract : MonoBehaviour
 {
+    [SerializeField] Fact prerequisite;
     [SerializeField] List<Fact> addWhenInteract = new List<Fact>(), removeWhenInteract = new List<Fact>();
     [SerializeField] string prompt;
     [SerializeField] KeyCode interactKey;
-    bool promptUp;
+    bool promptUp, unlocked;
 
     private void Update()
     {
+        unlocked = prerequisite == null || FactManager.i.IsPresent(prerequisite);
+
         if (promptUp && Input.GetKeyDown(interactKey)) {
             foreach (var f in addWhenInteract) FactManager.i.AddFact(f);
             foreach (var f in removeWhenInteract) FactManager.i.RemoveFact(f);
@@ -21,6 +24,8 @@ public class FactInteract : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!unlocked) return;
+
         var player = other.GetComponent<Player>();
         if (!player) player = other.GetComponentInParent<Player>();
 
@@ -32,6 +37,8 @@ public class FactInteract : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if (!unlocked) return;
+
         var player = other.GetComponent<Player>();
         if (!player) player = other.GetComponentInParent<Player>();
 

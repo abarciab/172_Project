@@ -130,7 +130,10 @@ public class Player : MonoBehaviour
 
         var nextLine = interestedSpeaker.GetNextLine();
         if (string.Equals("END", nextLine)) EndConversation();
-        else GlobalUI.i.DisplayLine(interestedSpeaker.characterName, nextLine);
+        else {
+            interestedSpeaker.talking = true;
+            GlobalUI.i.DisplayLine(interestedSpeaker.characterName, nextLine);
+        }
     }
 
     public void EndConversation()
@@ -217,10 +220,14 @@ public class Player : MonoBehaviour
                     int index = 0;
                     float dist = enemy.Dist();
 
-
                     while (enemies.Count > index + 1 && enemies[index].Dist() > dist && enemies[index + 1].MeleePriority() == enemy.MeleePriority()) index += 1;
-                    if (index > outputList.Count) index = outputList.Count - 1;
-                    outputList.Insert(index, enemy);
+                    if (outputList.Count == 0) {
+                        outputList.Add(enemy);
+                    }
+                    else {
+                        if (index > outputList.Count) index = outputList.Count - 1;
+                        outputList.Insert(index, enemy);
+                    }
                 }
             }
             currentPriority += 1;

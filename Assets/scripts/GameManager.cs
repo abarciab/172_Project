@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     [System.Serializable] 
     public class StoryPorgression
     {
+        [HideInInspector] public string name;
         public Fact fact;
         public bool state;
         public string nextQuest;
@@ -42,7 +43,7 @@ public class GameManager : MonoBehaviour
     
     public bool paused { get; private set; }
 
-    [SerializeField] List<CheckPoint> checkPoints = new List<CheckPoint>();
+    List<CheckPoint> checkPoints = new List<CheckPoint>();
     bool started;
 
     [Header("Manual Setup")]
@@ -51,10 +52,18 @@ public class GameManager : MonoBehaviour
 
     [Header("Quest")]
     [SerializeField] List<StoryPorgression> story = new List<StoryPorgression>();
-    [SerializeField] List<StoryPorgression> runtimeStory = new List<StoryPorgression>();
+    List<StoryPorgression> runtimeStory = new List<StoryPorgression>();
 
     [Header("Enemy groups")]
     [SerializeField] List<EnemyGroup> groups = new List<EnemyGroup>();
+
+    private void OnValidate()
+    {
+        for (int i = 0; i < story.Count; i++) {
+            story[i].name = story[i].nextQuest;
+            story[i].ID = i;
+        }
+    }
 
     public void removeFromGroup(GameObject enemy, int groupID)
     {
@@ -138,8 +147,8 @@ public class GameManager : MonoBehaviour
 
     public void RestartScene()
     {
-        SceneManager.LoadScene(1);
-        SceneManager.LoadScene(2, LoadSceneMode.Additive);
+        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(1, LoadSceneMode.Additive);
     }
 
     public void SetCheckPointManually()

@@ -5,5 +5,5 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Fact", menuName = "Fact")]
 public class Fact : ScriptableObject
 {
-    
+    public int skipToStory;
 }
