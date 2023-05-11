@@ -23,13 +23,12 @@ public class TitleScreen : MonoBehaviour {
         PlayerPrefs.SetInt("checkpoint", 0);
         PlayerPrefs.SetInt("savedFacts", 0);
         PlayerPrefs.SetInt("story", 0);
-        SceneManager.LoadScene(1);
-        SceneManager.LoadScene(2, LoadSceneMode.Additive);
+        LoadGame();
     }
 
     public void LoadGame()
     {
-        SceneManager.LoadScene(1);
-        SceneManager.LoadScene(2, LoadSceneMode.Additive);
+        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(1, LoadSceneMode.Additive);
     }
 }
