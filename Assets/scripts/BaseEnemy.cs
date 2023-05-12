@@ -57,6 +57,8 @@ public class BaseEnemy : MonoBehaviour
     float orbitOffset;
     protected AttackDetails currentAttack;
 
+    
+
     public float Dist()
     {
         return dist;

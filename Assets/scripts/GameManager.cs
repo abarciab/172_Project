@@ -94,6 +94,7 @@ public class GameManager : MonoBehaviour
     public void LoadStory(int ID)
     {
         if (ID == -1) { runtimeStory.Clear(); return; }
+        runtimeStory = new List<StoryPorgression>(story);
         while (runtimeStory.Count > 0 && runtimeStory[0].ID != ID) {
             runtimeStory.RemoveAt(0);
         }
@@ -184,10 +185,13 @@ public class GameManager : MonoBehaviour
     {
         if (!Application.isPlaying) return;
         foreach (var g in groups) {
-            if (FactManager.i.IsPresent(g.fact)) {
+
+            if (g.enabled && FactManager.i.IsPresent(g.fact)) {
                 for (int i = 0; i < g.enemies.Count; i++) {
                     Destroy(g.enemies[i]);
                 }
+                g.enabled = false;
+                return;
             }
 
             for (int i = 0; i < g.enemies.Count; i++) {

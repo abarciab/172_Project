@@ -27,7 +27,7 @@ public class SaveManager : MonoBehaviour
 
         //print("Game saved succsessfully - " + facts.Count + " facts, story stage: " + gameMan.GetID());
     }
-
+     
     public void LoadGame()
     {
         List<Fact> loadedFacts = new List<Fact>();

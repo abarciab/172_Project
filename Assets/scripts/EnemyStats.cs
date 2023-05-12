@@ -25,6 +25,11 @@ public class EnemyStats : HitReciever
     [Header("Sounds")]
     [SerializeField] Sound deathSound;
 
+    [Header("Materials")]
+    [SerializeField] float hitMatTime = 0.1f;
+    [SerializeField] List<SkinnedMeshRenderer> body = new List<SkinnedMeshRenderer>();
+    [SerializeField] Material normalMat, hitMat, critMat, stunnedMat;
+
     Coroutine currentBleed;
 
     public void Heal(float percentGoal)
@@ -67,6 +72,14 @@ public class EnemyStats : HitReciever
 
         if (currentBleed != null) StopCoroutine(currentBleed);
         if (blood != null) currentBleed = StartCoroutine(Bleed());
+        if (body != null) StartCoroutine(ChangeMat(hit.crit ? critMat : hitMat));
+    }
+
+    IEnumerator ChangeMat(Material mat)
+    {
+        foreach (var b in body) b.material = mat;
+        yield return new WaitForSeconds(hitMatTime);
+        foreach (var b in body) b.material = normalMat;
     }
 
     IEnumerator Bleed()
