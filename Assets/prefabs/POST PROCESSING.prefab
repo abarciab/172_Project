@@ -165,7 +165,7 @@ MonoBehaviour:
   m_IsGlobal: 1
   priority: 0
   blendDistance: 0
-  weight: 1
+  weight: 0
   sharedProfile: {fileID: 11400000, guid: ab4422cc22177a041a9665b3e0bdea93, type: 2}
 --- !u!1 &3411306121426131926
 GameObject:
@@ -214,7 +214,7 @@ MonoBehaviour:
   m_IsGlobal: 1
   priority: 0
   blendDistance: 0
-  weight: 0
+  weight: 1
   sharedProfile: {fileID: 11400000, guid: c47baf718b0c83945b03a122ead00752, type: 2}
 --- !u!1 &3516079974211479528
 GameObject:
@@ -359,14 +359,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3747038887914956789}
-  m_LocalRotation: {x: 0.8363348, y: 0.079853244, z: -0.52738184, w: 0.12663321}
+  m_LocalRotation: {x: 0.837188, y: 0.07621544, z: -0.52791977, w: 0.12086429}
   m_LocalPosition: {x: 0, y: 157.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7450381283239900737}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 162.78, y: 64.47, z: 0}
+  m_LocalEulerAnglesHint: {x: 163.57, y: 64.47, z: 0}
 --- !u!108 &6234217293576663589
 Light:
   m_ObjectHideFlags: 0
@@ -595,7 +595,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5832450309492631745}
-  m_LocalRotation: {x: 0.054360624, y: -0.093707606, z: 0.0051242295, w: 0.9941014}
+  m_LocalRotation: {x: 0.837188, y: 0.07621544, z: -0.52791977, w: 0.12086429}
   m_LocalPosition: {x: 0, y: 157.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -615,7 +615,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.9020374, b: 0.9009434, a: 1}
-  m_Intensity: 4
+  m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -658,7 +658,7 @@ Light:
   m_LightShadowCasterMode: 2
   m_AreaSize: {x: 7.13, y: 0.5}
   m_BounceIntensity: 1
-  m_ColorTemperature: 6432
+  m_ColorTemperature: 9533
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
@@ -727,7 +727,7 @@ Transform:
   - {fileID: 2927661362303812269}
   - {fileID: 2548074233487652607}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4880273609277471328
 MonoBehaviour:
@@ -743,28 +743,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   progress: 0
   progressLerpTarget: 0
-  next: 0
-  prev: 0
+  _next: 0
+  _prev: 0
   transitionSmoothness: 0.025
   actualSun: {fileID: 4817872332485334698}
   shaders:
   - processingVolume: {fileID: 6736804906458149989}
     skyboxMat: {fileID: 2100000, guid: 75a780c286898514aad8503c640547e5, type: 2}
-    fogColor: {r: 0.6886792, g: 0.5035155, b: 0.5035155, a: 1}
-    skyBoxTint: {r: 0.9150943, g: 0.5050285, b: 0.5050285, a: 1}
+    fogColor: {r: 0.40690637, g: 0.60607964, b: 0.6792453, a: 1}
+    skyBoxTint: {r: 0.8490566, g: 0.6127626, b: 0.84864455, a: 1}
     skyBoxExposure: 0.8
     sun: {fileID: 8192348736862879418}
   - processingVolume: {fileID: 2558476760895831531}
     skyboxMat: {fileID: 2100000, guid: b1f043a88aed2084e8c12397a933b843, type: 2}
-    fogColor: {r: 0.78431374, g: 0.6990799, b: 0.52156866, a: 1}
-    skyBoxTint: {r: 1, g: 0.90553445, b: 0.7311321, a: 1}
+    fogColor: {r: 0.78431374, g: 0.46445435, b: 0.41568628, a: 1}
+    skyBoxTint: {r: 0.9985386, g: 0.9098039, b: 1, a: 1}
     skyBoxExposure: 0.41
     sun: {fileID: 1498898884957147117}
   - processingVolume: {fileID: 1659594127677896662}
     skyboxMat: {fileID: 2100000, guid: 608f34e9e801331459f36811154d3dde, type: 2}
-    fogColor: {r: 0.8313726, g: 0.5019608, b: 0.26666668, a: 1}
-    skyBoxTint: {r: 0.8980392, g: 0.45490196, b: 0.25882354, a: 1}
-    skyBoxExposure: 0.63
+    fogColor: {r: 0.754717, g: 0.5602529, b: 0.40939838, a: 1}
+    skyBoxTint: {r: 0.6981132, g: 0.5616523, b: 0.3786935, a: 1}
+    skyBoxExposure: 0.7
     sun: {fileID: 6234217293576663589}
   - processingVolume: {fileID: 4776228482562501670}
     skyboxMat: {fileID: 2100000, guid: 1704180bfdc789748be1bfd53435d68f, type: 2}
@@ -772,8 +772,8 @@ MonoBehaviour:
     skyBoxTint: {r: 0.03529412, g: 0.03137255, b: 0.20784315, a: 1}
     skyBoxExposure: 0.97
     sun: {fileID: 7019570181471881407}
-  shader1: 0
-  shader2: 1
+  shader1: 2
+  shader2: 3
   ShaderFacts:
   - {fileID: 0}
   - {fileID: 11400000, guid: 120e0cda0f094ba4e831f16bf2c93221, type: 2}
