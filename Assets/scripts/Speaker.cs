@@ -17,7 +17,7 @@ public class Speaker : MonoBehaviour
 
     private void OnValidate()
     {
-        foreach (var c in conversations) c.name = c.convo.name;
+        foreach (var c in conversations) if (c.convo) c.name = c.convo.name;
     }
 
     [SerializeField] List<ConversationData> conversations = new List<ConversationData>();

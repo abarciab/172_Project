@@ -40,6 +40,9 @@ public class ShaderTransitionController : MonoBehaviour {
     Vector3 transitionTarget;
     float maxDist;
 
+
+    [HideInInspector] public int time;
+
     private void Start()
     {
         if (Application.isPlaying) {
@@ -70,6 +73,7 @@ public class ShaderTransitionController : MonoBehaviour {
 
     public void SwitchToShader(int num)
     {
+        time = num + 1;
         num -= 1;
         shader1 = num;
         shader2 = num + 1;
@@ -77,6 +81,7 @@ public class ShaderTransitionController : MonoBehaviour {
         progressLerpTarget = 0;
 
         if (num == 3) {
+            time = 4;
             shader1 = 2;
             shader2 = 3;
             progress = 1;

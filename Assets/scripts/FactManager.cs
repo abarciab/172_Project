@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
 public class FactManager : MonoBehaviour
@@ -43,6 +41,7 @@ public class FactManager : MonoBehaviour
 
     [Header("Rules")]
     [SerializeField] List<FactRule> rules = new List<FactRule>();
+
 
     private void OnValidate()
     {
@@ -97,9 +96,7 @@ public class FactManager : MonoBehaviour
         if (respectAutoSave && autoSave && autosaveTriggers.Contains(fact)) GetComponent<SaveManager>().SaveGame();
 
         for (int i = 0; i < shaderTriggers.Count; i++) {
-            if (fact != shaderTriggers[i]) continue;
-
-            print("fact: " + fact.name + ", i: " + i);
+            if (fact != shaderTriggers[i] || shaderController.time > i + 1) continue;
             shaderController.SwitchToShader(i + 1);
         }
     }
