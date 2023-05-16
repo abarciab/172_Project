@@ -54,7 +54,7 @@ public class ThrownStaff : MonoBehaviour
         GetComponent<CapsuleCollider>().isTrigger = true;
         rb.velocity = Vector3.zero;
         recalling = true;
-        GetComponentInChildren<HitBox>().StartChecking(true, Player.i.GetComponent<PFighting>().throwDmg);
+        GetComponentInChildren<HitBox>().StartChecking(true, Player.i.GetComponent<PFighting>().critDmg, _crit:true);
 
         return true;
     }

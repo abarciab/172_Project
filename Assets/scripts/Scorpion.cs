@@ -93,7 +93,7 @@ public class Scorpion : BaseEnemy
 
         if (phase == 1 && (float)stats.health / stats.maxHealth <= phaseSwitch) {
             phase = 2;
-            stats.Heal(1);
+            //stats.Heal(1);
         }
 
         if (phase == 1) {
