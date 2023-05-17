@@ -95,8 +95,8 @@ MonoBehaviour:
   OnHit:
     m_PersistentCalls:
       m_Calls: []
-  health: 200
-  maxHealth: 400
+  health: 700
+  maxHealth: 700
   hpBar: {fileID: 1642054144986487776}
   destroy: 0
   KBresist: 0
@@ -111,6 +111,12 @@ MonoBehaviour:
   groupID: 0
   HPBarDisplayRange: 30
   deathSound: {fileID: 11400000, guid: 4ca3a8a2f73cc274cbe6d3833793339b, type: 2}
+  hitMatTime: 0.1
+  body: []
+  normalMat: {fileID: 0}
+  hitMat: {fileID: 0}
+  critMat: {fileID: 0}
+  stunnedMat: {fileID: 0}
 --- !u!114 &1024008219188854257
 MonoBehaviour:
   m_ObjectHideFlags: 0
