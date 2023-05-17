@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
 public class FactManager : MonoBehaviour
@@ -25,23 +27,22 @@ public class FactManager : MonoBehaviour
         [HideInInspector] public int saveID;
     }
 
+
     public static FactManager i;
     private void Awake() { i = this; }
 
     [SerializeField] List<Fact> facts = new List<Fact>();
-    
-    [Header("Save")]
     [SerializeField] List<Fact> autosaveTriggers = new List<Fact>();
-    public bool autoSave;
     [SerializeField] List<SaveState> saveStates = new List<SaveState>();
-
-    [Header("Shaders")]
-    [SerializeField] List<Fact> shaderTriggers = new List<Fact>();
-    [SerializeField] ShaderTransitionController shaderController;
+    public bool autoSave;
 
     [Header("Rules")]
     [SerializeField] List<FactRule> rules = new List<FactRule>();
 
+    private void Start()
+    {
+        FindObjectOfType<ShaderTransitionController>().LoadShaders();
+    }
 
     private void OnValidate()
     {
@@ -59,23 +60,7 @@ public class FactManager : MonoBehaviour
     public void SetFacts(List<Fact> newFacts)
     {
         facts = new List<Fact>(newFacts);
-        CheckShaders();
-    }
-
-    void CheckShaders()
-    {
-        if (!facts.Contains(shaderTriggers[1])) {
-            shaderController.SwitchToShader(1);
-        }
-        else if (!facts.Contains(shaderTriggers[2])) {
-            shaderController.SwitchToShader(2);
-        }
-        else if (!facts.Contains(shaderTriggers[3])) {
-            shaderController.SwitchToShader(3);
-        }
-        else if (facts.Contains(shaderTriggers[3])) {
-            shaderController.SwitchToShader(4);
-        }
+        FindObjectOfType<ShaderTransitionController>().LoadShaders();
     }
 
     public List<Fact> GetFacts()
@@ -89,15 +74,10 @@ public class FactManager : MonoBehaviour
     }
     public void AddFact(Fact fact, bool respectAutoSave = true)
     {
-        if (IsPresent(fact)) return;
-
-        facts.Add(fact);
-        if (fact.skipToStory > 0 && fact.skipToStory > GameManager.i.GetID()) GameManager.i.LoadStory(fact.skipToStory);
-        if (respectAutoSave && autoSave && autosaveTriggers.Contains(fact)) GetComponent<SaveManager>().SaveGame();
-
-        for (int i = 0; i < shaderTriggers.Count; i++) {
-            if (fact != shaderTriggers[i] || shaderController.time > i + 1) continue;
-            shaderController.SwitchToShader(i + 1);
+        if (!IsPresent(fact)) {
+            facts.Add(fact);
+            if (fact.skipToStory > 0 && fact.skipToStory > GameManager.i.GetID()) GameManager.i.LoadStory(fact.skipToStory);
+            if (respectAutoSave && autoSave && autosaveTriggers.Contains(fact)) GetComponent<SaveManager>().SaveGame();
         }
     }
 
@@ -147,7 +127,7 @@ public class FactManager : MonoBehaviour
 
     void CheckRule(FactRule rule)
     {
-        if (rule.triggersLeft <= 0 || !IsPresent(rule.trigger)) return;
+        if (rule.triggersLeft == 0 || !IsPresent(rule.trigger)) return;
 
         foreach (var f in rule.toAdd) AddFact(f, false);
         foreach (var f in rule.toRemove) RemoveFact(f);

@@ -13,10 +13,7 @@ public class GlobalUI : MonoBehaviour
     
     [SerializeField] float redFlashTime = 0.1f;
     [SerializeField] GameObject title, bottomLeft;
-    public GameObject tutorialSkip;
     [SerializeField] Image dmgIndicator, dmgFlash, goopOverlay;
-    public Image fade;
-
 
     [Header("spear charge")]
     public Slider throwCharge;
@@ -230,7 +227,7 @@ public class GlobalUI : MonoBehaviour
             newItemDisplayTime -= Time.deltaTime;
             if (newItemDisplayTime > 0) return;
 
-            mainText.text = " ";
+            mainText.text = "combat info and controls in the ESC menu";
             mainText.gameObject.SetActive(true);
             showHPbar = false;
             

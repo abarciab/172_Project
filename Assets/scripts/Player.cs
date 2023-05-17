@@ -11,7 +11,6 @@ public class Player : MonoBehaviour
     [HideInInspector] public PAnimator animator;
     [HideInInspector] public Vector3 speed3D;
     [HideInInspector] public float forwardSpeed;
-    [SerializeField] Fact tutorialComplete, hasSpear;
    
     EnemyStats closestEnemy;
     [SerializeField] float lockOnDist = 15, speakerEndDist;
@@ -48,8 +47,6 @@ public class Player : MonoBehaviour
     //higher priority melee enemies should melee
     //don't have too many ranged or melee enemies
 
-    bool fightingEnabled;
-
     public bool FullHealth()
     {
         return health == maxHealth;
@@ -80,7 +77,6 @@ public class Player : MonoBehaviour
 
     public void FreezePlayer()
     {
-        fightingEnabled = GetComponent<PFighting>().enabled;
         GetComponent<PMovement>().enabled = false;
         GetComponent<PFighting>().enabled = false;
         FindObjectOfType<CameraController>().enabled = false;
@@ -88,9 +84,8 @@ public class Player : MonoBehaviour
 
     public void UnfreezePlayer()
     {
-        var fMan = FactManager.i;
         GetComponent<PMovement>().enabled = true;
-        GetComponent<PFighting>().enabled = fightingEnabled || fMan.IsPresent(tutorialComplete) || fMan.IsPresent(hasSpear);
+        GetComponent<PFighting>().enabled = true;
         FindObjectOfType<CameraController>().enabled = true;
     }
 
@@ -179,8 +174,6 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (FactManager.i.IsPresent(tutorialComplete)) GetComponent<PFighting>().enabled = true;
-
         for (int i = 0; i < enemies.Count; i++) {
             if (enemies[i] == null) enemies.RemoveAt(i);
         }
@@ -194,12 +187,10 @@ public class Player : MonoBehaviour
     void UpdateMeleeEnemies()
     {
         for (int i = 0; i < enemies.Count; i++) {
-            if (i >= enemies.Count) continue;
             if (enemies[i] == null || enemies[i].gameObject == null) enemies.RemoveAt(i);
         }
         for (int i = 0; i < currentMeleeEnemies.Count; i++) {
-            if (i >= currentMeleeEnemies.Count) continue;
-            if (currentMeleeEnemies[i] == null || currentMeleeEnemies[i].gameObject == null) currentMeleeEnemies.RemoveAt(i);
+            if (currentMeleeEnemies[i] == null || currentMeleeEnemies[i].gameObject == null) enemies.RemoveAt(i);
         }
 
         meleeCheckCooldown -= Time.deltaTime;

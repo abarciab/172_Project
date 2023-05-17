@@ -34,7 +34,6 @@ public class UISound : MonoBehaviour
 
     public void NewQuest()
     {
-        if (GlobalUI.i.fade.gameObject.activeInHierarchy) return;
         newQuest.Play();
     }
 }

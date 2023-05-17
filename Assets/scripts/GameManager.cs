@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Quest")]
     [SerializeField] List<StoryPorgression> story = new List<StoryPorgression>();
-    [SerializeField] List<StoryPorgression> runtimeStory = new List<StoryPorgression>();
+    List<StoryPorgression> runtimeStory = new List<StoryPorgression>();
 
     [Header("Enemy groups")]
     [SerializeField] List<EnemyGroup> groups = new List<EnemyGroup>();
@@ -94,7 +94,6 @@ public class GameManager : MonoBehaviour
     public void LoadStory(int ID)
     {
         if (ID == -1) { runtimeStory.Clear(); return; }
-        print("loaded: " + ID);
         runtimeStory = new List<StoryPorgression>(story);
         while (runtimeStory.Count > 0 && runtimeStory[0].ID != ID) {
             runtimeStory.RemoveAt(0);

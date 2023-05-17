@@ -40,8 +40,7 @@ public class ShaderTransitionController : MonoBehaviour {
     Vector3 transitionTarget;
     float maxDist;
 
-
-    [HideInInspector] public int time;
+    [SerializeField] List<Fact> ShaderFacts = new List<Fact>();
 
     private void Start()
     {
@@ -49,6 +48,18 @@ public class ShaderTransitionController : MonoBehaviour {
             progress = 0;
             progressLerpTarget = 0;
         }
+    }
+
+    public void LoadShaders()
+    {
+        if (!Application.isPlaying) return;
+
+        var fman = FactManager.i;
+
+        if (fman.IsPresent(ShaderFacts[3])) SwitchToShader(4);
+        else if (fman.IsPresent(ShaderFacts[2])) SwitchToShader(3);
+        else if (fman.IsPresent(ShaderFacts[1])) SwitchToShader(2);
+        else SwitchToShader(1);
     }
 
     public void EndTransition(int shaderID)
@@ -71,9 +82,8 @@ public class ShaderTransitionController : MonoBehaviour {
         transitioning = true;
     }
 
-    public void SwitchToShader(int num)
+    void SwitchToShader(int num)
     {
-        time = num + 1;
         num -= 1;
         shader1 = num;
         shader2 = num + 1;
@@ -81,13 +91,11 @@ public class ShaderTransitionController : MonoBehaviour {
         progressLerpTarget = 0;
 
         if (num == 3) {
-            time = 4;
             shader1 = 2;
             shader2 = 3;
             progress = 1;
             progressLerpTarget = 1;
         }
-        transitioning = false;
     }
 
     private void Update()
