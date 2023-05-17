@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 086995bd923b7574ca272a595da0045b, type: 3}
+  m_Name: leader_1
+  m_EditorClassIdentifier: 
+  lines:
+  - " Leave me alone- wait, no! You\u2019re not\u2026 corrupted, are you?\r\n"
+  - 'Oh, god. I thought I was done for.
+
+'
+  - "I got hit pretty hard by one of those\u2026 I don\u2019t want to call them monsters.
+    They used to be my friends-\r\n"
+  - "We just wanted to try and use the Sun Pillar\u2019s power for good- I never
+    knew it would end up like this! "
+  - " Now they\u2019re all\u2026\r\n"
+  - "\u2026 It\u2019s the river. I\u2019ve been watching that dark corruption flow
+    from behind those doors into the water. Once people started drinking it\u2026\r\n"
+  - "You should be careful. Animals drink from that river too, and I\u2019ve been
+    hearing some awful clawing from the ruins.\r\n"
+  step: -1
+  endConvoFact:
+  - {fileID: 11400000, guid: 4797b0a81d2ca6f4c97380f1bca5a189, type: 2}
+  endConvoRemoveFact: {fileID: 11400000, guid: 3d0dee9f16df76248bd9165d1d0d06e4, type: 2}
