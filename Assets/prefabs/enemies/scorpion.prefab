@@ -22,7 +22,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1084183189069778313
 Transform:
   m_ObjectHideFlags: 0
@@ -40,7 +40,7 @@ Transform:
   - {fileID: 1984304243842823527}
   - {fileID: 1345226986109738206}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 156.34, z: 0}
 --- !u!195 &2211974521691028086
 NavMeshAgent:
@@ -95,14 +95,16 @@ MonoBehaviour:
   OnHit:
     m_PersistentCalls:
       m_Calls: []
-  health: 200
-  maxHealth: 400
+  health: 700
+  maxHealth: 700
   hpBar: {fileID: 1642054144986487776}
   destroy: 0
   KBresist: 0
   blood: {fileID: 276517901316141166}
   bloodTime: 1
   healSpeed: 30
+  stunTime: 0
+  stunTimeLeft: 0
   removeFactOnDeath:
   - {fileID: 11400000, guid: 631137bd3f4e89149a881020f846ca13, type: 2}
   addFactOnDeath:
@@ -111,6 +113,12 @@ MonoBehaviour:
   groupID: 0
   HPBarDisplayRange: 30
   deathSound: {fileID: 11400000, guid: 4ca3a8a2f73cc274cbe6d3833793339b, type: 2}
+  hitMatTime: 0.1
+  body: []
+  normalMat: {fileID: 2100000, guid: 09208e6897f5e0640903857c2501ad0b, type: 2}
+  hitMat: {fileID: 2100000, guid: 018437717a7bb1b48b7421ae7987224a, type: 2}
+  critMat: {fileID: 2100000, guid: 60fc2459480549b4e8f804e469d6d332, type: 2}
+  stunnedMat: {fileID: 2100000, guid: 3bc9034cb1cba2a439bb71c1ca73caeb, type: 2}
 --- !u!114 &1024008219188854257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10454,12 +10462,12 @@ PrefabInstance:
     - target: {fileID: 761429933152914905, guid: aeef302edaa86a8459af4643a4ea3c57,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 761429933152914905, guid: aeef302edaa86a8459af4643a4ea3c57,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3972086094719578293, guid: aeef302edaa86a8459af4643a4ea3c57,
         type: 3}
@@ -10594,17 +10602,17 @@ PrefabInstance:
     - target: {fileID: 6926258469813730426, guid: aeef302edaa86a8459af4643a4ea3c57,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6926258469813730426, guid: aeef302edaa86a8459af4643a4ea3c57,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6926258469813730426, guid: aeef302edaa86a8459af4643a4ea3c57,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.453
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

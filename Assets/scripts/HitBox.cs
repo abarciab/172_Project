@@ -25,7 +25,7 @@ public class HitBox : MonoBehaviour
     int dmg;
     GameObject obj;
     Vector3 offset;
-    bool crit;
+    bool crit, stun;
     [HideInInspector] public UnityEvent OnHit, onTrigger;
     [HideInInspector] public GameObject triggeredBy;
     [SerializeField] bool checkParent;
@@ -36,13 +36,14 @@ public class HitBox : MonoBehaviour
         if (blockedSound) blockedSound = Instantiate(blockedSound);
     }
 
-    public void StartChecking(bool _hitting = false, int _dmg = 0, float _kb = 0, GameObject _obj = null, Vector3 _offset = default, bool _crit = false) {
+    public void StartChecking(bool _hitting = false, int _dmg = 0, float _kb = 0, GameObject _obj = null, Vector3 _offset = default, bool _crit = false, bool _stun = false) {
         hitting = _hitting;
         kb = _kb;
         dmg = _dmg;
         obj = _obj;
         offset = _offset;
         crit = _crit;
+        stun = _stun;
         checking = true;
         targets.Clear();
         foreach (var l in linkedBoxes) l.StartChecking(hitting, _dmg ,_kb, _obj, _offset);
@@ -95,7 +96,7 @@ public class HitBox : MonoBehaviour
 
         if (hitting) {
             if (playSoundOnHit && hitSound) hitSound.Play();
-            reciever.Hit(new HitReciever.HitData(dmg, obj, kb, offset, _crit:crit));
+            reciever.Hit(new HitReciever.HitData(dmg, obj, kb, offset, _crit:crit, _stun:stun));
             OnHit.Invoke();
         }
         targets.Add(reciever);

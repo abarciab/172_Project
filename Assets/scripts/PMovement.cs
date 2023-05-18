@@ -42,6 +42,7 @@ public class PMovement : MonoBehaviour
     }
 
     public void Roll() {
+        if (rolling) return;
         //if (GetComponent<PFighting>().basicAttacking || GetComponent<PFighting>().hvyAttacking) return;
 
         if (!rolling) rollSound.Play();
