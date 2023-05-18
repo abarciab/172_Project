@@ -165,7 +165,7 @@ MonoBehaviour:
   m_IsGlobal: 1
   priority: 0
   blendDistance: 0
-  weight: 0
+  weight: 1
   sharedProfile: {fileID: 11400000, guid: ab4422cc22177a041a9665b3e0bdea93, type: 2}
 --- !u!1 &3411306121426131926
 GameObject:
@@ -214,7 +214,7 @@ MonoBehaviour:
   m_IsGlobal: 1
   priority: 0
   blendDistance: 0
-  weight: 1
+  weight: 0
   sharedProfile: {fileID: 11400000, guid: c47baf718b0c83945b03a122ead00752, type: 2}
 --- !u!1 &3516079974211479528
 GameObject:
@@ -595,7 +595,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5832450309492631745}
-  m_LocalRotation: {x: 0.837188, y: 0.07621544, z: -0.52791977, w: 0.12086429}
+  m_LocalRotation: {x: 0.054360624, y: -0.093707606, z: 0.0051242295, w: 0.9941014}
   m_LocalPosition: {x: 0, y: 157.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -615,7 +615,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.9020374, b: 0.9009434, a: 1}
-  m_Intensity: 1
+  m_Intensity: 4
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -658,7 +658,7 @@ Light:
   m_LightShadowCasterMode: 2
   m_AreaSize: {x: 7.13, y: 0.5}
   m_BounceIntensity: 1
-  m_ColorTemperature: 9533
+  m_ColorTemperature: 6432
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
@@ -741,7 +741,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af98a9182a8f23d46a5eb72501f8da35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  progress: 0
+  progress: 4.9150123e-21
   progressLerpTarget: 0
   _next: 0
   _prev: 0
@@ -772,8 +772,8 @@ MonoBehaviour:
     skyBoxTint: {r: 0.03529412, g: 0.03137255, b: 0.20784315, a: 1}
     skyBoxExposure: 0.97
     sun: {fileID: 7019570181471881407}
-  shader1: 2
-  shader2: 3
+  shader1: 0
+  shader2: 1
   ShaderFacts:
   - {fileID: 0}
   - {fileID: 11400000, guid: 120e0cda0f094ba4e831f16bf2c93221, type: 2}
@@ -826,7 +826,7 @@ MonoBehaviour:
   m_IsGlobal: 1
   priority: 0
   blendDistance: 0
-  weight: 0
+  weight: 4.9150123e-21
   sharedProfile: {fileID: 11400000, guid: be2af1628a8e9b944bcdc94cf1cf0935, type: 2}
 --- !u!1 &9216289010945075461
 GameObject:
