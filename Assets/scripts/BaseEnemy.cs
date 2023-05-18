@@ -41,7 +41,7 @@ public class BaseEnemy : MonoBehaviour
     protected EnemyStats stats;
     protected Transform target;
     protected float dist, speed;
-    protected bool busy, inAgroRange;
+    protected bool busy, inAgroRange, stunned;
     [SerializeField] protected float agroRange;
     [SerializeField] protected bool debug;
     [SerializeField] int meleePriority;
@@ -142,6 +142,7 @@ public class BaseEnemy : MonoBehaviour
     
     virtual protected void Update()
     {
+        stunned = stats.stunTimeLeft > 0;
         GetDist();
         SetSpeed();
         Cooldowns();

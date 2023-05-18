@@ -15,6 +15,8 @@ public class EnemyStats : HitReciever
     [SerializeField] GameObject blood;
     [SerializeField] float bloodTime = 1;
     [SerializeField] int healSpeed;
+    [SerializeField] float stunTime;
+    [HideInInspector] public float stunTimeLeft;
 
     [SerializeField] List<Fact> removeFactOnDeath = new List<Fact>(), addFactOnDeath = new List<Fact>();
 
@@ -63,10 +65,12 @@ public class EnemyStats : HitReciever
     {
         base.Hit(hit);
 
+        if (stunTimeLeft > 0) hit.damage *= 2;
+        if (hit.stun) stunTimeLeft = stunTime;
+
         health -= hit.damage;
         health = Mathf.Clamp(health, 0, maxHealth);
         if (health <= 0) Die();
-        //AudioManager.instance.PlaySound(1, gameObject);
 
         GetComponent<EnemyMovement>()?.KnockBack(hit.source, hit.KB * KBresist);
 
@@ -109,6 +113,10 @@ public class EnemyStats : HitReciever
     private void Update()
     {
         if (!hpBar) return;
+
+        stunTimeLeft -= Time.deltaTime;
+        foreach (var m in body) m.material = stunTimeLeft > 0 ? stunnedMat : normalMat;
+        //foreach (var m in body) if (m.material == normalMat || m.material == stunnedMat) m.material = stunTimeLeft > 0 ? stunnedMat : normalMat;
         
         hpBar.value = (float) health / maxHealth;
         float dist = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(Player.i.transform.position.x, Player.i.transform.position.z));

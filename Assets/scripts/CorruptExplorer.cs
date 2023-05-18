@@ -54,7 +54,7 @@ public class CorruptExplorer : BaseEnemy
     protected override void Update()
     {
         base.Update();
-        if (busy || !inAgroRange) return;
+        if (busy || !inAgroRange || stunned) return;
 
         melee = Player.i.CheckMelee(this, meleePriotity);
 

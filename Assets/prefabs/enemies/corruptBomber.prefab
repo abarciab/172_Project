@@ -4987,6 +4987,8 @@ MonoBehaviour:
   blood: {fileID: 1062390160415556885}
   bloodTime: 1
   healSpeed: 0
+  stunTime: 1
+  stunTimeLeft: 0
   removeFactOnDeath: []
   addFactOnDeath: []
   inGroup: 0
@@ -5002,7 +5004,7 @@ MonoBehaviour:
   normalMat: {fileID: 2100000, guid: 4d526c0013f320747a16a560948ce633, type: 2}
   hitMat: {fileID: 2100000, guid: 018437717a7bb1b48b7421ae7987224a, type: 2}
   critMat: {fileID: 2100000, guid: 60fc2459480549b4e8f804e469d6d332, type: 2}
-  stunnedMat: {fileID: 0}
+  stunnedMat: {fileID: 2100000, guid: 3bc9034cb1cba2a439bb71c1ca73caeb, type: 2}
 --- !u!136 &7497822228288794679
 CapsuleCollider:
   m_ObjectHideFlags: 0

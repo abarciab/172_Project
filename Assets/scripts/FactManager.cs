@@ -96,16 +96,6 @@ public class FactManager : MonoBehaviour
         if (respectAutoSave && autoSave && autosaveTriggers.Contains(fact)) GetComponent<SaveManager>().SaveGame();
 
         CheckShaders();
-        return;
-
-        for (int i = 0; i < shaderTriggers.Count; i++) {
-
-            if (fact != shaderTriggers[i]) continue;
-            print("AH! " + fact.name + ", i: " + i);
-            if (shaderController.time > i + 1) continue;
-            print("ADDED");
-            shaderController.SwitchToShader(i + 1);
-        }
     }
 
     public void RemoveFact(Fact fact)

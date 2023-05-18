@@ -94,7 +94,6 @@ public class GameManager : MonoBehaviour
     public void LoadStory(int ID)
     {
         if (ID == -1) { runtimeStory.Clear(); return; }
-        print("loaded: " + ID);
         runtimeStory = new List<StoryPorgression>(story);
         while (runtimeStory.Count > 0 && runtimeStory[0].ID != ID) {
             runtimeStory.RemoveAt(0);

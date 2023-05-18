@@ -14,9 +14,9 @@ public class HitReciever : MonoBehaviour
         public float KB;
         public Vector3 offset;
         public float stunTime;
-        public bool crit;
+        public bool crit, stun;
 
-        public HitData(int _damage = 0, GameObject _source = null, float _KB = 0, Vector3 _offset = default(Vector3), float _stunTime = 0, bool _crit = false)
+        public HitData(int _damage = 0, GameObject _source = null, float _KB = 0, Vector3 _offset = default(Vector3), float _stunTime = 0, bool _crit = false, bool _stun = false)
         {
             damage = _damage;
             source = _source;
@@ -24,6 +24,7 @@ public class HitReciever : MonoBehaviour
             offset = _offset;
             stunTime = _stunTime;
             crit = _crit;
+            stun = _stun;
         }
     }
 

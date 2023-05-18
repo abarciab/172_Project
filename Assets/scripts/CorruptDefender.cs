@@ -43,7 +43,7 @@ public class CorruptDefender : BaseEnemy
             if (chargeDist < .5f || timeCharging > 5) EndAttack();
         }
 
-        if (busy || !inAgroRange) return;
+        if (busy || !inAgroRange || stunned) return;
         melee = Player.i.CheckMelee(this, meleePriotity);
         
         if (melee) {

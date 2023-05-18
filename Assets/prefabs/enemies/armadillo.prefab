@@ -103,10 +103,11 @@ MonoBehaviour:
   blood: {fileID: 276517901316141166}
   bloodTime: 1
   healSpeed: 30
-  removeFactOnDeath:
-  - {fileID: 11400000, guid: 631137bd3f4e89149a881020f846ca13, type: 2}
+  stunTime: 0
+  stunTimeLeft: 0
+  removeFactOnDeath: []
   addFactOnDeath:
-  - {fileID: 11400000, guid: 145c929df582e3f42b6c75ee63096e09, type: 2}
+  - {fileID: 11400000, guid: 67269de8472ca304484a63a03dcea2b7, type: 2}
   inGroup: 0
   groupID: 0
   HPBarDisplayRange: 30
@@ -118,7 +119,7 @@ MonoBehaviour:
   normalMat: {fileID: 2100000, guid: 4d526c0013f320747a16a560948ce633, type: 2}
   hitMat: {fileID: 2100000, guid: 018437717a7bb1b48b7421ae7987224a, type: 2}
   critMat: {fileID: 2100000, guid: 60fc2459480549b4e8f804e469d6d332, type: 2}
-  stunnedMat: {fileID: 0}
+  stunnedMat: {fileID: 2100000, guid: 3bc9034cb1cba2a439bb71c1ca73caeb, type: 2}
 --- !u!199 &386997023096378504
 ParticleSystemRenderer:
   serializedVersion: 6

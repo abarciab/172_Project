@@ -12,7 +12,7 @@ public class Shockwave : MonoBehaviour
     {
         transform.localScale = Vector3.zero;
         explodeRemaining = explodeTime;
-        GetComponent<HitBox>().StartChecking(true, damage, KB, gameObject, Vector3.down * 2);
+        GetComponent<HitBox>().StartChecking(true, damage, KB, gameObject, Vector3.down * 2, _stun:true);
     }
 
     private void Update()

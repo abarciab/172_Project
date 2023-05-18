@@ -31,7 +31,7 @@ public class CorruptBomber : BaseEnemy
         base.Update();
         DoAnims();
 
-        if (!inAgroRange || busy) return;
+        if (!inAgroRange || busy || stunned) return;
 
         if (dist > explodeRange.y) MoveTowardTarget();
         else if (dist < explodeRange.x) Backup();
