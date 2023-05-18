@@ -13,7 +13,10 @@ public class GlobalUI : MonoBehaviour
     
     [SerializeField] float redFlashTime = 0.1f;
     [SerializeField] GameObject title, bottomLeft;
+    public GameObject tutorialSkip;
     [SerializeField] Image dmgIndicator, dmgFlash, goopOverlay;
+    public Image fade;
+
 
     [Header("spear charge")]
     public Slider throwCharge;
@@ -58,10 +61,26 @@ public class GlobalUI : MonoBehaviour
     [SerializeField] Slider masterSlider;
 
     UISound sound;
+    bool loadingSave = false;
 
     public void LoadSave(int save)
     {
-        FactManager.i.LoadSaveState(save);
+        if (loadingSave) return;
+        loadingSave = true;
+        Time.timeScale = 1;
+        StartCoroutine(transition(save));   
+    }
+
+    IEnumerator transition(int save = -1) {
+        fade.GetComponent<Fade>().Appear();
+        yield return new WaitForSeconds(1.5f);
+        print("Done waiting!");
+
+        if (save != -1) FactManager.i.LoadSaveState(save);
+        else {
+            FactManager.i.GetComponent<SaveManager>().ResetGame();
+            GameManager.i.RestartScene();
+        }
     }
 
     public void ToggleSaves()
@@ -111,11 +130,11 @@ public class GlobalUI : MonoBehaviour
     public void Pause()
     {
         pauseMenu.SetActive(true);
-        
     }
 
     public void Resume()
     {
+        if (loadingSave) return;
         pauseMenu.SetActive(false);
         if (GameManager.i.paused) GameManager.i.Unpause();
     }
@@ -133,8 +152,10 @@ public class GlobalUI : MonoBehaviour
 
     public void ResetGame()
     {
-        FactManager.i.GetComponent<SaveManager>().ResetGame();
-        GameManager.i.RestartScene();
+        if (loadingSave) return;
+        loadingSave = true;
+        Time.timeScale = 1;
+        StartCoroutine(transition());
     }
 
     public void DisplayLine(string speaker, string line)
@@ -227,7 +248,7 @@ public class GlobalUI : MonoBehaviour
             newItemDisplayTime -= Time.deltaTime;
             if (newItemDisplayTime > 0) return;
 
-            mainText.text = "combat info and controls in the ESC menu";
+            mainText.text = " ";
             mainText.gameObject.SetActive(true);
             showHPbar = false;
             
@@ -311,6 +332,8 @@ public class GlobalUI : MonoBehaviour
 
     private void Start()
     {
+        fade.GetComponent<Fade>().Disapear();
+
         commandPrompt.color = subtitle.color = new Color(1, 1, 1, 0);
 
         mainText.gameObject.SetActive(false);

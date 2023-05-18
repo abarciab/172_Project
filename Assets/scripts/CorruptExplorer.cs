@@ -1,11 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using Unity.VisualScripting;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class CorruptExplorer : BaseEnemy
 {
@@ -59,7 +54,7 @@ public class CorruptExplorer : BaseEnemy
     protected override void Update()
     {
         base.Update();
-        if (busy || !inAgroRange) return;
+        if (busy || !inAgroRange || stunned) return;
 
         melee = Player.i.CheckMelee(this, meleePriotity);
 

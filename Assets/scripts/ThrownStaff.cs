@@ -8,15 +8,17 @@ public class ThrownStaff : MonoBehaviour
     Rigidbody rb;
 
     public bool recalling;
-    [SerializeField] float recallSpeed = 2, recallEndThreshold = 1, maxSpeed;
+    [SerializeField] float recallSpeed = 2, recallEndThreshold = 1, maxSpeed, maxDist = 15;
     [SerializeField] Vector3 playerOffset;
     [SerializeField] Sound landSound, windSound, ping, blocked;
     bool landed;
+    PFighting fight;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         GetComponentInChildren<HitBox>().onTrigger.AddListener(CheckForBlocked);
+        fight = Player.i.GetComponent<PFighting>();
 
         landSound = Instantiate(landSound);
         windSound = Instantiate(windSound);
@@ -45,22 +47,28 @@ public class ThrownStaff : MonoBehaviour
 
     public bool Recall()
     {
-        if (!landed) return false;
+        if (!fight.RecallReady) return false;
 
 
-        Player.i.GetComponent<PFighting>().RecallReady = false;
+        fight.RecallReady = false;
         rb.isKinematic = false;
         rb.useGravity = false;
         GetComponent<CapsuleCollider>().isTrigger = true;
         rb.velocity = Vector3.zero;
         recalling = true;
-        GetComponentInChildren<HitBox>().StartChecking(true, Player.i.GetComponent<PFighting>().throwDmg);
+        GetComponentInChildren<HitBox>().StartChecking(true, Player.i.GetComponent<PFighting>().critDmg, _crit:true);
 
         return true;
     }
 
     private void Update()
     {
+        float dist = Vector3.Distance(transform.position, Player.i.transform.position);
+        if (!recalling && dist > maxDist && !fight.RecallReady) {
+            ping.Play();
+            fight.RecallReady = true;
+        }
+
         windSound.PercentVolume(rb.velocity.magnitude / maxSpeed, 0.025f);
 
         if (!rb.isKinematic && !recalling) transform.LookAt(transform.position + rb.velocity.normalized);
@@ -74,9 +82,9 @@ public class ThrownStaff : MonoBehaviour
         //transform.LookAt(Player.i.transform);
 
         transform.position = Vector3.Lerp(transform.position, Player.i.transform.position, 0.1f);
-        transform.LookAt(transform.position + Vector3.up * 10);
+        transform.LookAt(Player.i.transform);
 
-        float dist = Vector3.Distance(transform.position, Player.i.transform.position);
+        
         if (dist <= recallEndThreshold) CompleteRecall();        
     }
 
@@ -100,8 +108,11 @@ public class ThrownStaff : MonoBehaviour
         landed = true;
         if (!rb.isKinematic) {
             landSound.Play();
-            ping.Play();
-            Player.i.GetComponent<PFighting>().RecallReady = true;
+
+            if (!fight.RecallReady) {
+                ping.Play();
+                fight.RecallReady = true;
+            }
         }
         windSound.Stop();
 
