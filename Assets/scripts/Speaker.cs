@@ -28,7 +28,7 @@ public class Speaker : MonoBehaviour
 
     private void Start()
     {
-        foreach (var c in conversations) c.convo.Init();
+        foreach (var c in conversations) c.convo.Init(transform);
     }
 
     private void Update()

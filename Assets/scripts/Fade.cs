@@ -5,8 +5,11 @@ using UnityEngine.UI;
 
 public class Fade : MonoBehaviour
 {
-    [SerializeField] bool fade = true;
+    [SerializeField] float transitionTime = 1.3f, threshold = 0.005f, delayTime = 1.5f;
     [SerializeField] Image img;
+    [SerializeField] AnimationCurve disapearCurve, appearCurve;
+    float targetA, delayTimeLeft, transitionTimer;
+    AnimationCurve currentCurve;
 
     private void Start()
     {
@@ -15,11 +18,49 @@ public class Fade : MonoBehaviour
 
     private void Update()
     {
-        if (!fade) return;
+        if (transitionTimer <= 0) return;
+        delayTimeLeft -= Time.deltaTime;
+        if (delayTimeLeft > 0) return;
 
+        transitionTimer -= Time.deltaTime;
+        float progress = 1 - (transitionTimer / transitionTime);
+        float a = currentCurve.Evaluate(progress);
+
+        SetColor(a);
+        if (Mathf.Abs(1 - progress) < threshold) {
+            SetColor(targetA);
+            gameObject.SetActive(targetA > 0);
+            print("done");
+        }
+    }
+
+    void SetColor(float alpha)
+    {
         var col = img.color;
-        col.a = Mathf.Lerp(col.a, 0, 0.025f);
+        col.a = alpha;
         img.color = col;
-        if (img.color.a <= 0.05f) gameObject.SetActive(false);
+    }
+
+    public void Appear()
+    {
+        print("appear!");
+        currentCurve = appearCurve;
+        StartTransition(0, 1);
+    }
+
+    public void Disapear()
+    {
+        print("disapear!");
+        delayTimeLeft = delayTime;
+        currentCurve = disapearCurve;
+        StartTransition(1, 0);
+    }
+
+    void StartTransition(float start, float target)
+    {
+        SetColor(start);
+        gameObject.SetActive(true);
+        targetA = target;
+        transitionTimer = transitionTime;
     }
 }
