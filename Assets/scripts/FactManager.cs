@@ -95,8 +95,15 @@ public class FactManager : MonoBehaviour
         if (fact.skipToStory > 0 && fact.skipToStory > GameManager.i.GetID()) GameManager.i.LoadStory(fact.skipToStory);
         if (respectAutoSave && autoSave && autosaveTriggers.Contains(fact)) GetComponent<SaveManager>().SaveGame();
 
+        CheckShaders();
+        return;
+
         for (int i = 0; i < shaderTriggers.Count; i++) {
-            if (fact != shaderTriggers[i] || shaderController.time > i + 1) continue;
+
+            if (fact != shaderTriggers[i]) continue;
+            print("AH! " + fact.name + ", i: " + i);
+            if (shaderController.time > i + 1) continue;
+            print("ADDED");
             shaderController.SwitchToShader(i + 1);
         }
     }

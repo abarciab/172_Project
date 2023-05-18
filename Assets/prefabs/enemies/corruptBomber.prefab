@@ -4924,7 +4924,7 @@ Transform:
   - {fileID: 7813850154150306851}
   - {fileID: 2617639826947922522}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &8959324631095615391
 NavMeshAgent:
@@ -9866,11 +9866,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3937406926281971718}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a8072c10ce29974794af26bb9d95478, type: 3}
+  m_Script: {fileID: 11500000, guid: 53259871ae2065b4c82f7e432ed2c511, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   agroRange: 16.3
-  debug: 1
+  debug: 0
   meleePriority: 2
   jumpDist: 1
   jumpheight: 0.5
@@ -9885,9 +9885,9 @@ MonoBehaviour:
   walkThreshold: 0.01
   explodeRange: {x: 0.93, y: 3.53}
   numGlobs: 4
-  globAmount: 0.716
-  explodeSound: {fileID: 0}
-  buildUpSound: {fileID: 0}
+  globAmount: 0.855
+  explodeSound: {fileID: 11400000, guid: f95be422a4a61c740bf66a9e89e187de, type: 2}
+  buildUpSound: {fileID: 11400000, guid: bfe53bf3b82a92e46b6ec18066d9fb8b, type: 2}
 --- !u!1001 &5689502482968174294
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Quest")]
     [SerializeField] List<StoryPorgression> story = new List<StoryPorgression>();
-    [SerializeField] List<StoryPorgression> runtimeStory = new List<StoryPorgression>();
+    List<StoryPorgression> runtimeStory = new List<StoryPorgression>();
 
     [Header("Enemy groups")]
     [SerializeField] List<EnemyGroup> groups = new List<EnemyGroup>();

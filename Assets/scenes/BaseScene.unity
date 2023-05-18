@@ -786,6 +786,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 69501840}
   m_CullTransparentMesh: 1
+--- !u!114 &73906270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643796490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b6a25d8fd009c942802cd03be8eeada, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 1535900523}
+  copy: {fileID: 1643587295}
 --- !u!1 &80451799
 GameObject:
   m_ObjectHideFlags: 0
@@ -6010,11 +6024,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 643796490}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f71ff3c4da2fbb43944a768642b5f1d, type: 3}
+  m_Script: {fileID: 11500000, guid: ae99cbed696846f40834b9e674ccd787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 1535900523}
-  copy: {fileID: 1643587295}
+  spear: {fileID: 1535900530}
+  spearMesh: {fileID: 0}
+  dullMat: {fileID: 2100000, guid: 7cd5f5cec8fbb3c479dfc4cf8f743523, type: 2}
+  shinyMat: {fileID: 2100000, guid: f700e1330312ba44a8930d96e5b4ff3e, type: 2}
+  extras: {fileID: 1643587295}
 --- !u!1 &635595173
 GameObject:
   m_ObjectHideFlags: 0
@@ -7995,7 +8012,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 794328749}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d270d4a7efa42a8428722714de5352bc, type: 3}
+  m_Script: {fileID: 11500000, guid: ae99cbed696846f40834b9e674ccd787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   spear: {fileID: 0}
@@ -8003,7 +8020,6 @@ MonoBehaviour:
   dullMat: {fileID: 2100000, guid: 7cd5f5cec8fbb3c479dfc4cf8f743523, type: 2}
   shinyMat: {fileID: 2100000, guid: f700e1330312ba44a8930d96e5b4ff3e, type: 2}
   extras: {fileID: 1402191389}
-  fight: {fileID: 0}
 --- !u!1 &799596692
 GameObject:
   m_ObjectHideFlags: 0
@@ -13115,11 +13131,11 @@ MonoBehaviour:
   redFlashTime: 0.08
   title: {fileID: 853021639}
   bottomLeft: {fileID: 1149758680}
-  tutorialSkip: {fileID: 0}
+  tutorialSkip: {fileID: 1545615701}
   dmgIndicator: {fileID: 1503845537}
   dmgFlash: {fileID: 88708608}
   goopOverlay: {fileID: 1731936037}
-  fade: {fileID: 0}
+  fade: {fileID: 2065980848}
   throwCharge: {fileID: 886859501}
   chargeParent: {fileID: 782707958}
   centralMarkerShine: {fileID: 1230501982}
@@ -13258,7 +13274,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1333759743}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f895749fab546484cb2d696dd75b79d6, type: 3}
+  m_Script: {fileID: 11500000, guid: 2cf99247814482d4eb896b20f2233b2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   getItem: {fileID: 11400000, guid: 81560fbf2eaa0f34fbe35b4574912abb, type: 2}
@@ -21609,6 +21625,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 4.402875
       objectReference: {fileID: 0}
+    - target: {fileID: -5568371526223589888, guid: 7e5397dfc7036764384342c17248d7f7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -4919620319347600675, guid: 7e5397dfc7036764384342c17248d7f7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -22343,6 +22364,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Bonnie
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7e5397dfc7036764384342c17248d7f7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 982036910075125688, guid: 7e5397dfc7036764384342c17248d7f7,
         type: 3}
@@ -23328,14 +23354,14 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1535900526}
-    - targetCorrespondingSourceObject: {fileID: -2401027972557467816, guid: 7e5397dfc7036764384342c17248d7f7,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1535900531}
     - targetCorrespondingSourceObject: {fileID: 3003510470200058835, guid: 7e5397dfc7036764384342c17248d7f7,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 631550531}
+    - targetCorrespondingSourceObject: {fileID: 3003510470200058835, guid: 7e5397dfc7036764384342c17248d7f7,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 73906270}
   m_SourcePrefab: {fileID: 100100000, guid: 7e5397dfc7036764384342c17248d7f7, type: 3}
 --- !u!4 &1535900521 stripped
 Transform:
@@ -23412,24 +23438,6 @@ SkinnedMeshRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 1535900520}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1535900531
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1535900523}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d270d4a7efa42a8428722714de5352bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spear: {fileID: 1535900530}
-  spearMesh: {fileID: 0}
-  dullMat: {fileID: 2100000, guid: 7cd5f5cec8fbb3c479dfc4cf8f743523, type: 2}
-  shinyMat: {fileID: 2100000, guid: f700e1330312ba44a8930d96e5b4ff3e, type: 2}
-  extras: {fileID: 1643587295}
-  fight: {fileID: 0}
 --- !u!1 &1542516617
 GameObject:
   m_ObjectHideFlags: 0
@@ -23538,8 +23546,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61d52f8b8ff928644838e26566bd84af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  promptUp: 0
-  tutorialComplete: {fileID: 0}
 --- !u!114 &1545615703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23552,7 +23558,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 276aff6541273614b959532775b06caa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fact: {fileID: 11400000, guid: d9860b0abf3606e4ba65fcd4d12ad6e9, type: 2}
 --- !u!114 &1545615704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25322,7 +25327,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1643587296
 Transform:
   m_ObjectHideFlags: 0
@@ -31298,7 +31303,6 @@ MonoBehaviour:
     state: 1
     nextQuest: THANKS FOR PLAYING! more coming soon :)
     ID: 27
-  runtimeStory: []
   groups:
   - fact: {fileID: 11400000, guid: 653455b653f1c234abccb858377f41f6, type: 2}
     enemies: []
@@ -32370,12 +32374,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06abb47859653d440b7874c4562fd271, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controlSlider: {fileID: 1636678246}
-  whiteSlider: {fileID: 1871252258}
-  delay: 0.2
-  lerpSmoothness: 0.05
-  lerpStartTime: 0
-  lerping: 0
 --- !u!114 &1871252258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39729,7 +39727,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2094291261}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cda3f460e152fe34982f933d459dd76c, type: 3}
+  m_Script: {fileID: 11500000, guid: 035b9aa8d66cdab4fb3c208358613d05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 886859501}
@@ -40535,10 +40533,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24d3b33b447a2e04ebbf6bfde9069399, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sound: {fileID: 11400000, guid: 4a8d47bbc87a6ed44805ee2203b1c24a, type: 2}
-  instanced: {fileID: 0}
-  play: 0
-  _3D: 0
-  restart: 1
-  makeNew: 0
-  makeNewAuto: 1

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 386997023096378504}
   - component: {fileID: 3925142823399293205}
   - component: {fileID: 5652803430239516570}
+  - component: {fileID: -772585180965037517}
   m_Layer: 8
   m_Name: armadillo
   m_TagString: Enemy
@@ -4972,6 +4973,34 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &-772585180965037517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43378320019879016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a85eb1a4eab617847a59744033a3b69e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agroRange: Infinity
+  debug: 0
+  meleePriority: 0
+  jumpDist: 1
+  jumpheight: 0.1
+  jumpTime: 0.2
+  orbitSpeed: 0
+  orbitSwitchMod: 0
+  swipeHB: {fileID: 0}
+  swipeRange: {x: 2.38, y: 4}
+  swipeDmg: 40
+  swipeAnim: shake
+  swipeKB: 40
+  swipeResetTime: 2
+  anim: {fileID: 8705355725421521783}
+  rollAnim: rolling
 --- !u!1 &276517901316141166
 GameObject:
   m_ObjectHideFlags: 0
@@ -10216,6 +10245,12 @@ SkinnedMeshRenderer:
 --- !u!137 &6351798820004840772 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: -1043946576389909598, guid: 9329bdda8499bd7499d8198ea434e464,
+    type: 3}
+  m_PrefabInstance: {fileID: 3000865479878842086}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &8705355725421521783 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 9329bdda8499bd7499d8198ea434e464,
     type: 3}
   m_PrefabInstance: {fileID: 3000865479878842086}
   m_PrefabAsset: {fileID: 0}
