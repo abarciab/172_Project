@@ -1,19 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class SpearVFXCoordinator : MonoBehaviour
 {
     [SerializeField] SkinnedMeshRenderer spear;
     [SerializeField] MeshRenderer spearMesh;
     [SerializeField] Material dullMat, shinyMat;
-    [SerializeField] GameObject ps_sunblast, ps_throwTrail, VFXGraph_impactHardSurface;
+    [SerializeField] GameObject ps_sunblast, ps_throwTrail, VFX_impactHardSurface, VFX_spearCatch, VFX_spearCatch2;
     PFighting fight;
 
     private void Start()
     {
         fight = Player.i.GetComponent<PFighting>();
-        VFXGraph_impactHardSurface.SetActive(false);
+        VFX_impactHardSurface.SetActive(false);
+        //VFX_spearCatch.SetActive(false);
     }
 
     private void Update()
@@ -44,8 +46,23 @@ public class SpearVFXCoordinator : MonoBehaviour
     }
 
     //Handle hard surface impact vfx
-    public void TriggerHSImpact()
+    public void EnableHSImpact()
     {
+        VFX_impactHardSurface.SetActive(true);
+
+    }
+    public void DisableHSImpact()
+    {
+        VFX_impactHardSurface.SetActive(false);
+
+    }
+
+    //Handle spear catch vfx
+    public void PlaySpearCatch()
+    {
+        //VFX_spearCatch.SetActive(true);
+        VFX_spearCatch.GetComponent<VisualEffect>().Play();
+        VFX_spearCatch2.GetComponent<VisualEffect>().Play();
 
     }
 }

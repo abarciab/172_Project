@@ -103,6 +103,9 @@ public class ThrownStaff : MonoBehaviour
         Player.i.GetComponent<PFighting>().ReturnSpear();
 
         VFXCoordinator.DisableTrailVFX(); //deactivate trail PS object
+        VFXCoordinator.DisableHSImpact();
+        VFXCoordinator.PlaySpearCatch();
+
     }
 
     
@@ -113,6 +116,7 @@ public class ThrownStaff : MonoBehaviour
         if (player != null) return;
 
         landed = true;
+        VFXCoordinator.EnableHSImpact();
         if (!rb.isKinematic) {
             landSound.Play();
 
@@ -126,5 +130,6 @@ public class ThrownStaff : MonoBehaviour
         GetComponentInChildren<HitBox>().EndChecking();
         rb.velocity = Vector3.zero;
         rb.isKinematic = true;
+
     }
 }
