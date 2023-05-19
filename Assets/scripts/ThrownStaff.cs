@@ -13,10 +13,13 @@ public class ThrownStaff : MonoBehaviour
     [SerializeField] Sound landSound, windSound, ping, blocked;
     bool landed;
 
+    private SpearVFXCoordinator VFXCoordinator;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         GetComponentInChildren<HitBox>().onTrigger.AddListener(CheckForBlocked);
+        VFXCoordinator = GetComponent<SpearVFXCoordinator>();
 
         landSound = Instantiate(landSound);
         windSound = Instantiate(windSound);
@@ -41,6 +44,7 @@ public class ThrownStaff : MonoBehaviour
         rb.isKinematic = false;
         landed = false;
         windSound.PlaySilent(transform);
+        VFXCoordinator.EnableTrailVFX(); //activate trail PS object
     }
 
     public bool Recall()
@@ -88,6 +92,8 @@ public class ThrownStaff : MonoBehaviour
         GetComponent<CapsuleCollider>().isTrigger = false;
         gameObject.SetActive(false);
         Player.i.GetComponent<PFighting>().ReturnSpear();
+
+        VFXCoordinator.DisableTrailVFX(); //deactivate trail PS object
     }
 
     

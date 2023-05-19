@@ -7,7 +7,7 @@ public class SpearVFXCoordinator : MonoBehaviour
     [SerializeField] SkinnedMeshRenderer spear;
     [SerializeField] MeshRenderer spearMesh;
     [SerializeField] Material dullMat, shinyMat;
-    [SerializeField] GameObject extras;
+    [SerializeField] GameObject ps_sunblast, ps_throwTrail, VFXGraph_impactHardSurface;
     PFighting fight;
 
     private void Start()
@@ -18,14 +18,33 @@ public class SpearVFXCoordinator : MonoBehaviour
     private void Update()
     {
         if (!fight.enabled || fight.GetSWcooldown() > 0) {
-            extras.SetActive(false);
+            ps_sunblast.SetActive(false);
             if (spear) spear.material = dullMat;
             if (spearMesh) spearMesh.material = dullMat;
         }
         else {
-            extras.SetActive(true);
+            ps_sunblast.SetActive(true);
             if (spear) spear.material = shinyMat;
             if (spearMesh) spearMesh.material = shinyMat;
         }
+
+    }
+
+    //handle throw trail vfx
+    public void EnableTrailVFX()
+    {
+        if (!ps_throwTrail.activeSelf)
+            ps_throwTrail.SetActive(true);
+    }
+    public void DisableTrailVFX()
+    {
+        if (ps_throwTrail.activeSelf)
+            ps_throwTrail.SetActive(false);
+    }
+
+    //Handle hard surface impact vfx
+    public void TriggerHSImpact()
+    {
+
     }
 }
