@@ -206,7 +206,7 @@ public class PFighting : HitReciever {
 
     private void Update()
     {
-        spearObj.SetActive(hasSpear && !staffProjectile.gameObject.activeInHierarchy);
+        spearObj.SetActive(hasSpear && (!spearDrawn || !staffProjectile.gameObject.activeInHierarchy));
 
         var playSound = false;
         if (swCooldown > 0) playSound = true;
