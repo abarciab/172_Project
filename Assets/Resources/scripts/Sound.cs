@@ -42,6 +42,7 @@ public class Sound : ScriptableObject
     [ConditionalHide(nameof(SynchronizePitchAndVolume)), Range(0, 2)]
     [SerializeField] float volume;
     float actualVolume;
+    [SerializeField] bool voiceLines;
 
     [HideInInspector] public AudioSource audioSource;
     public bool instantialized;
@@ -92,6 +93,19 @@ public class Sound : ScriptableObject
         if (audioSource == null) FirstTimePlay(caller, restart);
     }
 
+    public void PlayLine(Transform speaker, int index)
+    {
+        if (!instantialized) {
+            Debug.LogError("PlaySilent() was called on an uninstatizlized Sound");
+            return;
+        }
+
+        if (!audioSource) SetUp(speaker);
+
+        audioSource.Stop();
+        Play(true, index:index);
+    }
+
     public void Play(Transform caller = null, bool restart = true)
     {
         if (!instantialized) {
@@ -104,9 +118,10 @@ public class Sound : ScriptableObject
         else Play(restart);
        
     }
-    void Play(bool restart, bool silent = false)
+    void Play(bool restart, bool silent = false, int index = 0)
     {
         var clip = GetClip();
+        if (voiceLines) clip = clips[index];
         if (audioSource.isPlaying && !restart) return;
 
         actualVolume = clip.CustomPitchAndVolume ? clip.volume : volume;

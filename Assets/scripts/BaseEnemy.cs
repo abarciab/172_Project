@@ -235,7 +235,7 @@ public class BaseEnemy : MonoBehaviour
 
     virtual protected void Backup()
     {
-        move.NormalSpeed();
+        move.ResetSpeed();
         move.disableRotation();
         LookAtTarget(0.9f);
         var dir = (target.transform.position - transform.position).normalized * -1;
@@ -266,7 +266,7 @@ public class BaseEnemy : MonoBehaviour
     virtual protected void MoveTowardTarget()
     {
         move.EnableRotation();
-        move.NormalSpeed();
+        move.ResetSpeed();
         move.target = target.transform.position;
         move.gotoTarget = true;
     }

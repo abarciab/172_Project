@@ -173,6 +173,13 @@ public class PFighting : HitReciever {
         stabbing = false;
 
         CameraState.i.SwitchToState(CameraState.StateName.MouseOverShoulder);
+        SwapSpear();
+    }
+
+    public void SwapSpear()
+    {
+        //print("swap");
+
         staffProjectile.gameObject.SetActive(false);
 
         staffProjectile.transform.parent = transform;
@@ -199,7 +206,7 @@ public class PFighting : HitReciever {
 
     private void Update()
     {
-        spearObj.SetActive(hasSpear && !charging);
+        spearObj.SetActive(hasSpear && !staffProjectile.gameObject.activeInHierarchy);
 
         var playSound = false;
         if (swCooldown > 0) playSound = true;

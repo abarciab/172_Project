@@ -54,7 +54,7 @@ public class EnemyMovement : MonoBehaviour
         agent.enabled = true;
     }
 
-    public void NormalSpeed()
+    public void ResetSpeed()
     {
         agent.speed = originalSpeed;
     }

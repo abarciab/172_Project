@@ -17,6 +17,7 @@ public class EnemyStats : HitReciever
     [SerializeField] int healSpeed;
     [SerializeField] float stunTime;
     [HideInInspector] public float stunTimeLeft;
+    bool invincible;
 
     [SerializeField] List<Fact> removeFactOnDeath = new List<Fact>(), addFactOnDeath = new List<Fact>();
 
@@ -33,6 +34,16 @@ public class EnemyStats : HitReciever
     [SerializeField] Material normalMat, hitMat, critMat, stunnedMat;
 
     Coroutine currentBleed;
+
+    public void SetInvincible()
+    {
+        invincible = true;
+    }
+
+    public void SetVincible()
+    {
+        invincible = false;
+    }
 
     public void Heal(float percentGoal)
     {
@@ -63,6 +74,8 @@ public class EnemyStats : HitReciever
 
     public override void Hit(HitData hit)
     {
+        if (invincible) return;
+
         base.Hit(hit);
 
         if (stunTimeLeft > 0) hit.damage *= 2;
@@ -112,12 +125,13 @@ public class EnemyStats : HitReciever
 
     private void Update()
     {
-        if (!hpBar) return;
+        
 
         stunTimeLeft -= Time.deltaTime;
         foreach (var m in body) m.material = stunTimeLeft > 0 ? stunnedMat : normalMat;
-        //foreach (var m in body) if (m.material == normalMat || m.material == stunnedMat) m.material = stunTimeLeft > 0 ? stunnedMat : normalMat;
-        
+
+        if (!hpBar) return;
+
         hpBar.value = (float) health / maxHealth;
         float dist = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(Player.i.transform.position.x, Player.i.transform.position.z));
         if (dist > HPBarDisplayRange) hpBar.gameObject.SetActive(false);
@@ -125,5 +139,6 @@ public class EnemyStats : HitReciever
             hpBar.gameObject.SetActive(true);
             HPBarDisplayRange = Mathf.Infinity;
         }
+        if (invincible) hpBar.gameObject.SetActive(false);
     }
 }

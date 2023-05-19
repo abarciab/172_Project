@@ -274,7 +274,7 @@ public class Player : MonoBehaviour
     }
 
     void Die() {
-        GameManager.i.RestartScene();
+        GlobalUI.i.RestartScene();
     }
 
     private void Awake()
