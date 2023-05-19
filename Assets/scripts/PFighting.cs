@@ -27,7 +27,7 @@ public class PFighting : HitReciever {
 
     [Header("Sounds")]
     [SerializeField] Sound throwSpearSound;
-    [SerializeField] Sound shockwaveSound, shockwaveReadySound, recallWoosh, spearCatch, critSucsess;
+    [SerializeField] Sound shockwaveSound, shockwaveReadySound, recallWoosh, spearCatch, critSucsess, recallError;
 
     [Header("Tutorial")]
     [SerializeField] Fact anyThrow;
@@ -160,6 +160,7 @@ public class PFighting : HitReciever {
         shockwaveSound = Instantiate(shockwaveSound);
         shockwaveReadySound = Instantiate(shockwaveReadySound);
         recallWoosh = Instantiate(recallWoosh);
+        recallError = Instantiate(recallError);
         spearCatch = Instantiate(spearCatch);
         critSucsess = Instantiate(critSucsess);
     }
@@ -173,7 +174,7 @@ public class PFighting : HitReciever {
         stabbing = false;
 
         CameraState.i.SwitchToState(CameraState.StateName.MouseOverShoulder);
-        SwapSpear();
+        //SwapSpear();
     }
 
     public void SwapSpear()
@@ -206,7 +207,8 @@ public class PFighting : HitReciever {
 
     private void Update()
     {
-        spearObj.SetActive(hasSpear && !staffProjectile.gameObject.activeInHierarchy);
+        spearObj.SetActive(hasSpear && (!spearDrawn || (!staffProjectile.gameObject.activeInHierarchy || !charging)));
+
 
         var playSound = false;
         if (swCooldown > 0) playSound = true;
@@ -219,6 +221,8 @@ public class PFighting : HitReciever {
     void RetrieveSpear()
     {
         if (recalling) return;
+        if (!RecallReady) recallError.Play(restart: false);
+
         recalling = staffProjectile.GetComponent<ThrownStaff>().Recall();
         if (recalling) {
             recallWoosh.Play(transform);

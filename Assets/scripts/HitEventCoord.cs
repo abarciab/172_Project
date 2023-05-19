@@ -85,7 +85,7 @@ public class HitEventCoord : MonoBehaviour
     public void SwitchSpear()
     {
         var player = GetComponentInParent<PFighting>();
-        //if (player != null) player.SwapSpear();
+        if (player != null) player.SwapSpear();
     }
 
     public void EndPlayerAttack()
