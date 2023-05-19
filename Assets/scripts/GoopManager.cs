@@ -37,7 +37,7 @@ public class GoopManager : MonoBehaviour
         }
     }
 
-    public void SpawnGoop(Vector3 pos, float amount)
+    public void SpawnGoop(Vector3 pos, float amount, float time = -1)
     {
         int layerMask = 1 << 7;
         Physics.Raycast(pos + Vector3.up * 100, Vector3.down, out var hit, 150, layerMask: layerMask);
@@ -54,6 +54,7 @@ public class GoopManager : MonoBehaviour
             var scaleMod = (1 - (Mathf.Abs(circlePoint.x) + Mathf.Abs(circlePoint.y))/2) + 0.1f;
             newGlob.transform.localScale = maxScale * amount * scaleMod;
             mainGlob = newGlob;
+            if (time != -1) newGlob.GetComponent<Goop>().lifeTime = time;
         }
         if (goopSound.instantialized) goopSound.Play(mainGlob.transform);
     }

@@ -1552,11 +1552,11 @@ MonoBehaviour:
   hasSpear: {fileID: 11400000, guid: 51fee63c6e41c204a9377c814ab47668, type: 2}
   lockOnDist: 15
   speakerEndDist: 2
-  maxHealth: 200
+  maxHealth: 180
   health: 180
   startTalkingPrompt: Press F to talk
   hurtSound: {fileID: 11400000, guid: 9e9607a9670eae74db862bcf9188834a, type: 2}
-  healWaitTime: 10
+  healWaitTime: 15
   healRate: 1
   goopDmg: 5
   goopTick: 0.5
@@ -1573,7 +1573,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 155818885}
   m_LocalRotation: {x: -0, y: -0.97395694, z: -0, w: 0.22673304}
-  m_LocalPosition: {x: 99.84, y: 186.59, z: 340.91}
+  m_LocalPosition: {x: 159, y: 186.59, z: 336.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2059,7 +2059,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 177666439}
   m_LocalRotation: {x: 0, y: 0.9126916, z: 0, w: -0.40864912}
-  m_LocalPosition: {x: 99.84, y: 187.59, z: 340.91}
+  m_LocalPosition: {x: 159, y: 187.59, z: 336.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2574,12 +2574,12 @@ GameObject:
   - component: {fileID: 243169719}
   - component: {fileID: 243169718}
   m_Layer: 5
-  m_Name: start of scorp (1)
+  m_Name: start of snake
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &243169717
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2652,7 +2652,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 3
+          m_IntArgument: 9
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -7341,7 +7341,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: load scorpion fight
+  m_text: load final fight
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6f66eecc6d748164197c3f14945d0ae4, type: 2}
   m_sharedMaterial: {fileID: 7419233844488289306, guid: 6f66eecc6d748164197c3f14945d0ae4,
@@ -31315,6 +31315,10 @@ MonoBehaviour:
     enemies: []
     ID: 5
     enabled: 0
+  - fact: {fileID: 11400000, guid: 67269de8472ca304484a63a03dcea2b7, type: 2}
+    enemies: []
+    ID: 6
+    enabled: 0
 --- !u!114 &1749497968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31380,6 +31384,24 @@ MonoBehaviour:
     checkPoint: 6
     storyID: 25
     saveID: 6
+  - name: 'save: 7'
+    facts:
+    - {fileID: 11400000, guid: 58741f55b52a93d409eca8c597c958cd, type: 2}
+    checkPoint: 6
+    storyID: 25
+    saveID: 7
+  - name: 'save: 8'
+    facts:
+    - {fileID: 11400000, guid: 58741f55b52a93d409eca8c597c958cd, type: 2}
+    checkPoint: 6
+    storyID: 25
+    saveID: 8
+  - name: 'save: 9'
+    facts:
+    - {fileID: 11400000, guid: 12de2d3d1e35ff64b8d34cbf3d012d77, type: 2}
+    checkPoint: 8
+    storyID: 28
+    saveID: 9
   shaderTriggers:
   - {fileID: 0}
   - {fileID: 11400000, guid: 120e0cda0f094ba4e831f16bf2c93221, type: 2}
@@ -31462,6 +31484,18 @@ MonoBehaviour:
     toAdd:
     - {fileID: 11400000, guid: 58741f55b52a93d409eca8c597c958cd, type: 2}
     - {fileID: 11400000, guid: 4797b0a81d2ca6f4c97380f1bca5a189, type: 2}
+    toRemove: []
+    triggersLeft: 1
+  - name: 'armadillo_defeated: +armadillo_spawned'
+    trigger: {fileID: 11400000, guid: 67269de8472ca304484a63a03dcea2b7, type: 2}
+    toAdd:
+    - {fileID: 11400000, guid: 43575f859a611e34dbdb2b4e59b59d3f, type: 2}
+    toRemove: []
+    triggersLeft: 1
+  - name: 'bridge3: +armadillo_defeated'
+    trigger: {fileID: 11400000, guid: 12de2d3d1e35ff64b8d34cbf3d012d77, type: 2}
+    toAdd:
+    - {fileID: 11400000, guid: 67269de8472ca304484a63a03dcea2b7, type: 2}
     toRemove: []
     triggersLeft: 1
 --- !u!4 &1749497969
@@ -40338,12 +40372,12 @@ PrefabInstance:
     - target: {fileID: 4817872332485334698, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_Color.b
-      value: 0.9019608
+      value: 0.9009434
       objectReference: {fileID: 0}
     - target: {fileID: 4817872332485334698, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_Color.g
-      value: 0.97642326
+      value: 0.9020374
       objectReference: {fileID: 0}
     - target: {fileID: 4817872332485334698, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
@@ -40353,12 +40387,12 @@ PrefabInstance:
     - target: {fileID: 4817872332485334698, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_Intensity
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4817872332485334698, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_ColorTemperature
-      value: 4894
+      value: 6432
       objectReference: {fileID: 0}
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
@@ -40373,7 +40407,7 @@ PrefabInstance:
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: _next
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
@@ -40383,12 +40417,12 @@ PrefabInstance:
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: shader1
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: shader2
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
@@ -40463,27 +40497,37 @@ PrefabInstance:
     - target: {fileID: 5364301632760274238, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7442066
+      value: 0.9941014
       objectReference: {fileID: 0}
     - target: {fileID: 5364301632760274238, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.40205532
+      value: 0.054360624
       objectReference: {fileID: 0}
     - target: {fileID: 5364301632760274238, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.46928695
+      value: -0.093707606
       objectReference: {fileID: 0}
     - target: {fileID: 5364301632760274238, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.25353083
+      value: 0.0051242295
       objectReference: {fileID: 0}
     - target: {fileID: 6180193968040157515, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_Name
       value: POST PROCESSING
+      objectReference: {fileID: 0}
+    - target: {fileID: 7019570181471881407, guid: 4e19d265d67051c45821082b3370c7a9,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 8.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7019570181471881407, guid: 4e19d265d67051c45821082b3370c7a9,
+        type: 3}
+      propertyPath: m_ColorTemperature
+      value: 20000
       objectReference: {fileID: 0}
     - target: {fileID: 7450381283239900737, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}

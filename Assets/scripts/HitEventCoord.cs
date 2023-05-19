@@ -4,6 +4,24 @@ using UnityEngine;
 
 public class HitEventCoord : MonoBehaviour
 {
+    public void StartDigCount()
+    {
+        var arm = GetComponentInParent<Armadillo>();
+        if (arm) arm.StartDigCountdown();
+    }
+
+    public void FinishUnroll()
+    {
+        var arm = GetComponentInParent<Armadillo>();
+        if (arm) arm.FinishUnroll();
+    }
+
+    public void StartArmRoll()
+    {
+        var arm = GetComponentInParent<Armadillo>();
+        if (arm) arm.RollMove();
+    }
+
     public void ScorpEndAttack()
     {
         var scorp = GetComponentInParent<Scorpion>();
@@ -62,6 +80,12 @@ public class HitEventCoord : MonoBehaviour
     {
         var player = GetComponentInParent<PFighting>();
         if (player != null) player.StartChecking();
+    }
+
+    public void SwitchSpear()
+    {
+        var player = GetComponentInParent<PFighting>();
+        //if (player != null) player.SwapSpear();
     }
 
     public void EndPlayerAttack()

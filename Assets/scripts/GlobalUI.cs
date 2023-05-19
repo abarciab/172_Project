@@ -68,17 +68,24 @@ public class GlobalUI : MonoBehaviour
         if (loadingSave) return;
         loadingSave = true;
         Time.timeScale = 1;
-        StartCoroutine(transition(save));   
+        StartCoroutine(transition(save));
     }
 
-    IEnumerator transition(int save = -1) {
+    public void RestartScene()
+    {
+        if (loadingSave) return;
+        loadingSave = true;
+        Time.timeScale = 1;
+        StartCoroutine(transition(-1, false));   
+    }
+
+    IEnumerator transition(int save = -1, bool reset = true) {
         fade.GetComponent<Fade>().Appear();
         yield return new WaitForSeconds(1.5f);
-        print("Done waiting!");
 
         if (save != -1) FactManager.i.LoadSaveState(save);
         else {
-            FactManager.i.GetComponent<SaveManager>().ResetGame();
+            if (reset)FactManager.i.GetComponent<SaveManager>().ResetGame();
             GameManager.i.RestartScene();
         }
     }

@@ -30,7 +30,6 @@ public class Fade : MonoBehaviour
         if (Mathf.Abs(1 - progress) < threshold) {
             SetColor(targetA);
             gameObject.SetActive(targetA > 0);
-            print("done");
         }
     }
 
@@ -43,14 +42,12 @@ public class Fade : MonoBehaviour
 
     public void Appear()
     {
-        print("appear!");
         currentCurve = appearCurve;
         StartTransition(0, 1);
     }
 
     public void Disapear()
     {
-        print("disapear!");
         delayTimeLeft = delayTime;
         currentCurve = disapearCurve;
         StartTransition(1, 0);

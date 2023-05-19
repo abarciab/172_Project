@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Goop : MonoBehaviour
 {
-    [SerializeField] bool expire;
-    [SerializeField] float lifeTime = 4;
+    public bool expire;
+    public float lifeTime = 4;
     Vector3 startScale;
 
     private void Start()

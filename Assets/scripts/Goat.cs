@@ -147,7 +147,7 @@ public class Goat : BaseEnemy
 
         hoofBeats.Stop();
         anim.SetBool("charging", false);
-        move.NormalSpeed();
+        move.ResetSpeed();
         chargeCooldown = chargeResetTime;
         busy = false;
     }

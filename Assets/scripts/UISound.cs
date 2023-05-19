@@ -34,6 +34,6 @@ public class UISound : MonoBehaviour
 
     public void NewQuest()
     {
-        newQuest.Play();
+        newQuest.Play(restart:false);
     }
 }
