@@ -13,6 +13,7 @@ public class SpearVFXCoordinator : MonoBehaviour
     private void Start()
     {
         fight = Player.i.GetComponent<PFighting>();
+        VFXGraph_impactHardSurface.SetActive(false);
     }
 
     private void Update()
@@ -30,7 +31,7 @@ public class SpearVFXCoordinator : MonoBehaviour
 
     }
 
-    //handle throw trail vfx
+    //Handle throw trail vfx
     public void EnableTrailVFX()
     {
         if (!ps_throwTrail.activeSelf)
