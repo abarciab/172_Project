@@ -288,7 +288,8 @@ public class GlobalUI : MonoBehaviour
     void DisplayAbilities()
     {
         var fight = Player.i.GetComponent<PFighting>();
-        bottomLeft.SetActive((!title.activeInHierarchy && showHPbar && Player.i.InCombat()) || !Player.i.FullHealth() || fight.GetSWcooldown() > 0);
+        bottomLeft.SetActive((!title.activeInHierarchy && showHPbar && Player.i.InCombat()) || !Player.i.FullHealth() || fight.GetSWcooldown() > 0 || !FactManager.i.IsPresent(tutorialDone));
+
         
         float cooldown = fight.GetSWcooldown();
         if (cooldown <= 0 && swCountdown.activeInHierarchy) StartCoroutine(FlashAbility(swAbilityFlash, abilityFlashTime));

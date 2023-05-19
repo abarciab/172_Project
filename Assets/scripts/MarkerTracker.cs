@@ -18,7 +18,7 @@ public class MarkerTracker : MonoBehaviour
     public List<Marker> activeMarkers = new List<Marker>();
 
     [SerializeField] RectTransform markerParent;
-    [SerializeField] GameObject markerPrefab;
+    [SerializeField] GameObject markerPrefab, leftMarker, rightMarker;
     [SerializeField] Sprite defaultMarker;
     [SerializeField] bool onlyDefault;
 
@@ -77,5 +77,10 @@ public class MarkerTracker : MonoBehaviour
         m.UImarker.transform.localPosition = Vector3.Lerp(m.UImarker.transform.localPosition, targetPos, 0.2f);
 
         m.UImarker.gameObject.SetActive(targetPos.x < markerParent.rect.width / 2 && targetPos.x > -markerParent.rect.width / 2);
+
+        rightMarker.SetActive(false);
+        leftMarker.SetActive(false);
+        if (targetPos.x > markerParent.rect.width / 2) rightMarker.SetActive(true);
+        else if (targetPos.x < -markerParent.rect.width / 2) leftMarker.SetActive(true);
     }
 }
