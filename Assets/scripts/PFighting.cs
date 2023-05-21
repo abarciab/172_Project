@@ -85,6 +85,7 @@ public class PFighting : HitReciever {
 
         chargeTime = 0;
         throwSpearSound.Play(transform);
+        staffProjectile.GetComponent<ThrownStaff>().OnThrow();
         
         staffProjectile.gameObject.SetActive(false);
         var dir = GetAimDir();
