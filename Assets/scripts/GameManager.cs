@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
         public bool state;
         public string nextQuest;
         public int ID;
+        public bool playLong;
     }
 
     [System.Serializable]
@@ -88,7 +89,7 @@ public class GameManager : MonoBehaviour
 
     public void SetCurrentStory(string text)
     {
-        if (GlobalUI.i) GlobalUI.i.UpdateQuestText(text);
+        if (GlobalUI.i) GlobalUI.i.UpdateQuestText(text, false);
     }
 
     public void LoadStory(int ID)
@@ -217,7 +218,7 @@ public class GameManager : MonoBehaviour
         var next = runtimeStory[0];
         if (FactManager.i.IsPresent(next.fact) != next.state) return;
 
-        GlobalUI.i.UpdateQuestText(next.nextQuest);
+        GlobalUI.i.UpdateQuestText(next.nextQuest, next.playLong);
         runtimeStory.RemoveAt(0);
     }
 

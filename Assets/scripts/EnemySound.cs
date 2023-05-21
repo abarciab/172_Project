@@ -11,8 +11,8 @@ public class EnemySound : MonoBehaviour
         if (footstepSound) footstepSound = Instantiate(footstepSound);
         if (attack1Sound) attack1Sound = Instantiate(attack1Sound);
         
-        return;
-        footstepSound = Instantiate(attack1Sound);
+        //return;
+        //footstepSound = Instantiate(attack1Sound);
     }
 
     public void TakeHit()
@@ -22,7 +22,7 @@ public class EnemySound : MonoBehaviour
 
     public void PlayFootstep()
     {
-        if (footstepSound) footstepSound.Play(transform);
+        //if (footstepSound) footstepSound.Play(transform);
     }
 
     public void PlayAttack1()

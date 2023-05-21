@@ -4,17 +4,33 @@ using UnityEngine;
 
 public class UISound : MonoBehaviour
 {
-    [SerializeField] Sound getItem, turnPage, newQuest, fullChargeSound;
+    [SerializeField] Sound getItem, turnPage, newQuest, fullChargeSound, newQuestLong, heartBeat;
+    [SerializeField] AnimationCurve heartbeatCurve;
 
-    [Header("Dialogue")]
-    [SerializeField] Sound oldLadySound;
+    [Header("Buttons")]
+    [SerializeField] Sound buttonClick;
 
     private void Start()
     {
         getItem = Instantiate(getItem);
         turnPage = Instantiate(turnPage);
         newQuest = Instantiate(newQuest);
+        newQuestLong = Instantiate(newQuestLong);
         fullChargeSound = Instantiate(fullChargeSound);
+        buttonClick = Instantiate(buttonClick);
+        heartBeat = Instantiate(heartBeat);
+
+        heartBeat.PlaySilent();
+    }
+
+    public void Heartbeat(float healthPercent)
+    {
+        heartBeat.PercentVolume(heartbeatCurve.Evaluate(healthPercent));
+    }
+
+    public void ClickButton()
+    {
+        buttonClick.Play();
     }
 
     public void FullCharge()
@@ -32,8 +48,9 @@ public class UISound : MonoBehaviour
         turnPage.Play();
     }
 
-    public void NewQuest()
+    public void NewQuest(bool playLong)
     {
-        newQuest.Play(restart:false);
+        if (playLong)newQuestLong.Play(restart:false);
+        else newQuest.Play(restart:false);
     }
 }

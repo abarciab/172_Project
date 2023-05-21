@@ -120,12 +120,12 @@ public class GlobalUI : MonoBehaviour
         return currentQuest.text;
     }
 
-    public void UpdateQuestText(string text)
+    public void UpdateQuestText(string text, bool playLong)
     {
         currentQuest.text = text;
         questBacking.color = newQuestColor;
         newQuestColorCooldown = 1f;
-        if (!string.IsNullOrEmpty(text))sound.NewQuest();
+        if (!string.IsNullOrEmpty(text))sound.NewQuest(playLong);
     }
 
     public void Exit()
@@ -232,6 +232,8 @@ public class GlobalUI : MonoBehaviour
         DisplayOverlay();
 
         VolumeSliders();
+
+        sound.Heartbeat(1-HpBar.value);
 
         currentQuest.gameObject.SetActive(!string.IsNullOrEmpty(currentQuest.text));
         newQuestColorCooldown -= Time.deltaTime;

@@ -9,7 +9,7 @@ public class ChildrenFact : MonoBehaviour
 
     private void Update()
     {
-        if (transform.childCount == childNum) {
+        if (transform.childCount <= childNum) {
             FactManager.i.AddFact(fact);
             enabled = false;
         }

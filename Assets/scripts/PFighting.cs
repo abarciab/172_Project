@@ -45,11 +45,7 @@ public class PFighting : HitReciever {
         return hasSpear;
     }
 
-    public void PutAwaySpear()
-    {
-        //if (stabbing || charging) return;
-        //spearDrawn = false;
-    }
+    public void PutAwaySpear() {}
 
     public float GetSWcooldown()
     {
@@ -174,12 +170,12 @@ public class PFighting : HitReciever {
         stabbing = false;
 
         CameraState.i.SwitchToState(CameraState.StateName.MouseOverShoulder);
-        //SwapSpear();
+        SwapSpear(false);
     }
 
-    public void SwapSpear()
+    public void SwapSpear(bool skip = true)
     {
-        //print("swap");
+        if (skip) return;
 
         staffProjectile.gameObject.SetActive(false);
 

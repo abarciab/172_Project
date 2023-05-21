@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
 
@@ -47,6 +48,11 @@ public class ThrownStaff : MonoBehaviour
         rb.isKinematic = false;
         landed = false;
         windSound.PlaySilent(transform);
+        
+    }
+
+    public void OnThrow()
+    {
         VFXCoordinator.EnableTrailVFX(); //activate trail PS object
     }
 
@@ -73,23 +79,13 @@ public class ThrownStaff : MonoBehaviour
             ping.Play();
             fight.RecallReady = true;
         }
-
         windSound.PercentVolume(rb.velocity.magnitude / maxSpeed, 0.025f);
-
         if (!rb.isKinematic && !recalling) transform.LookAt(transform.position + rb.velocity.normalized);
-
         if (!recalling) return;
-
-        /*var dir = ((Player.i.transform.position + playerOffset) - transform.position).normalized;
-        //rb.AddForce(dir * recallSpeed, ForceMode.VelocityChange);
-        float speed = 
-        rb.velocity = dir * recallSpeed;*/
-        //transform.LookAt(Player.i.transform);
 
         transform.position = Vector3.Lerp(transform.position, Player.i.transform.position, 0.1f);
         transform.LookAt(Player.i.transform);
 
-        
         if (dist <= recallEndThreshold) CompleteRecall();        
     }
 
@@ -105,15 +101,13 @@ public class ThrownStaff : MonoBehaviour
         VFXCoordinator.DisableTrailVFX(); //deactivate trail PS object
         VFXCoordinator.DisableHSImpact();
         VFXCoordinator.PlaySpearCatch();
-
     }
-
-    
 
     private void OnCollisionEnter(Collision collision)
     {
         var player = collision.collider.GetComponentInParent<Player>();
         if (player != null) return;
+        print("collision: " + collision.gameObject.name);
 
         landed = true;
         VFXCoordinator.EnableHSImpact();

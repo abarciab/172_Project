@@ -76,6 +76,7 @@ public class HitBox : MonoBehaviour
 
     void Check(Collider other)
     {
+        if (printHits) print("hit: " + other.gameObject.name);
         triggeredBy = other.gameObject;
         if (checking)onTrigger.Invoke();
 
