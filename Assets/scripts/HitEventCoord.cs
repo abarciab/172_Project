@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class HitEventCoord : MonoBehaviour
 {
+    public void SnakeLaunch()
+    {
+        var snake = GetComponentInParent<Snake>();
+        if (snake) snake.LaunchProjectile();
+    }
+
     public void StartDigCount()
     {
         var arm = GetComponentInParent<Armadillo>();
@@ -20,12 +26,6 @@ public class HitEventCoord : MonoBehaviour
     {
         var arm = GetComponentInParent<Armadillo>();
         if (arm) arm.RollMove();
-    }
-
-    public void ScorpEndAttack()
-    {
-        var scorp = GetComponentInParent<Scorpion>();
-        if (scorp) scorp.EndAttack();
     }
 
     public void StartChecking()

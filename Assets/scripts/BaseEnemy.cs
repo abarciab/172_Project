@@ -74,8 +74,13 @@ public class BaseEnemy : MonoBehaviour
         AimAndFire(projectile, verticalAngle, target.position);
     }
 
-    protected void AimAndFire(GameObject projectile, float verticalAngle, Vector3 targetPos)
+    protected void AimAndFire(GameObject projectile, float verticalAngle, Vector3 targetPos, float _yOffset = 0, float shortDist = 0)
     {
+        if (shortDist != 0) {
+            targetPos += (target.transform.position - transform.position).normalized * shortDist;
+        }
+
+
         var rb = projectile.GetComponent<Rigidbody>();
 
         float gravity = Physics.gravity.magnitude;
@@ -87,7 +92,7 @@ public class BaseEnemy : MonoBehaviour
         Vector3 planarPostion = new Vector3(transform.position.x, 0, transform.position.z);
 
         // Distance along the y axis between objects
-        float yOffset = transform.position.y - targetPos.y;
+        float yOffset = transform.position.y + _yOffset - targetPos.y;
 
         float initialVelocity = (1 / Mathf.Cos(angle)) * Mathf.Sqrt((0.5f * gravity * Mathf.Pow(dist, 2)) / (dist * Mathf.Tan(angle) + yOffset));
         Vector3 velocity = new Vector3(0, initialVelocity * Mathf.Sin(angle), initialVelocity * Mathf.Cos(angle));
