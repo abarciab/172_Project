@@ -46,6 +46,14 @@ public class Sound : ScriptableObject
 
     [HideInInspector] public AudioSource audioSource;
     public bool instantialized;
+    Vector3 sourcePos;
+    bool setPos;
+
+    public void UpdateLocalPosition(Vector3 pos)
+    {
+        sourcePos = pos;
+        setPos = true;
+    }
 
     public void PercentVolume(float vol, float smoothness = 1)
     {
@@ -103,6 +111,7 @@ public class Sound : ScriptableObject
         if (!audioSource) SetUp(speaker);
 
         audioSource.Stop();
+        if (!voiceLines) index = Random.Range(0, clips.Count);
         Play(true, index:index);
     }
 
@@ -123,6 +132,9 @@ public class Sound : ScriptableObject
         var clip = GetClip();
         if (voiceLines) clip = clips[index];
         if (audioSource.isPlaying && !restart) return;
+
+        if (setPos) audioSource.transform.localPosition = sourcePos;
+        setPos = false;
 
         actualVolume = clip.CustomPitchAndVolume ? clip.volume : volume;
         audioSource.volume = silent ? 0 : actualVolume;

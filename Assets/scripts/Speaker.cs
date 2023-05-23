@@ -24,11 +24,14 @@ public class Speaker : MonoBehaviour
     public string characterName;
     [SerializeField] GameObject speechBubble;
     public bool talking;
+    public Vector3 cameraOffset;
+    public Vector2 speakerDistance;
+    [SerializeField] Vector3 SourceLocalPosition;
 
 
     private void Start()
     {
-        foreach (var c in conversations) c.convo.Init(transform);
+        foreach (var c in conversations) c.convo.Init(transform.GetChild(0), SourceLocalPosition);
     }
 
     private void Update()
@@ -38,7 +41,7 @@ public class Speaker : MonoBehaviour
         }
 
         speechBubble.SetActive(false);
-        foreach (var c in conversations) if (c.enabled) speechBubble.SetActive(true);
+        if (!GlobalUI.i.talking) foreach (var c in conversations) if (c.enabled) speechBubble.SetActive(true);
     }
 
     void CheckStatus(ConversationData c)
@@ -61,6 +64,7 @@ public class Speaker : MonoBehaviour
             return "END";
         }
 
+        if (reset) convoData.convo.DontPlay(1);
         string nextLine = convoData.convo.nextLine;
         if (reset) convoData.convo.StepBack();
         return nextLine;
@@ -97,5 +101,19 @@ public class Speaker : MonoBehaviour
 
         if (convoData.convo.endConvoFact.Count > 0) foreach (var f in convoData.convo.endConvoFact) FactManager.i.AddFact(f);
         if (convoData.convo.endConvoRemoveFact != null) FactManager.i.RemoveFact(convoData.convo.endConvoRemoveFact);
+    }
+
+    public Vector3 GetStandPosition()
+    {
+        Transform model = transform.GetChild(0);
+        return transform.position + (model.forward * speakerDistance.x) + (model.right * speakerDistance.y);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position + cameraOffset, 0.05f);
+        Gizmos.DrawWireSphere(GetStandPosition(), 0.05f);
+        Gizmos.DrawWireSphere(transform.position + (transform.forward * SourceLocalPosition.z), 0.05f);
     }
 }

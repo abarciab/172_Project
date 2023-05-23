@@ -128,6 +128,8 @@ public class CameraController : MonoBehaviour
             return;
         }
 
+        //if (s.parentLookTarget != CameraState.ParentLookTarget.Mouse) return;
+
         float mouseX = Input.GetAxis("Mouse X") * s.mouseXSens;
         float mouseY = Input.GetAxis("Mouse Y") * s.mouseYSens * -1;
 

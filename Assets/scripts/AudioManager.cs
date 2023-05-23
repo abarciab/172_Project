@@ -15,7 +15,7 @@ public class AudioManager : MonoBehaviour {
     [SerializeField] GameObject coordinatorPrefab;
     List<SoundCoordinator> soundCoordinators = new List<SoundCoordinator>();
     [SerializeField] AudioMixerGroup sfxMixerG, musicMixerG, AmbientMixerG;
-    [SerializeField] AudioMixer sfxMixer, musicMixer, AmbientMixer;
+    [SerializeField] AudioMixer masterMixer, sfxMixer, musicMixer, AmbientMixer;
 
     public AudioMixerGroup GetMixer(SoundType type)
     {
@@ -31,6 +31,22 @@ public class AudioManager : MonoBehaviour {
     }
 
     public void SetMasterVolume(float vol)
+    {
+        vol *= 160;
+        vol -= 80;
+        vol = Mathf.Clamp(vol, -80, 20);
+        sfxMixer.SetFloat("volume", vol);
+    }
+
+    public void SetSfxVolume(float vol)
+    {
+        vol *= 160;
+        vol -= 80;
+        vol = Mathf.Clamp(vol, -80, 20);
+        sfxMixer.SetFloat("volume", vol);
+    }
+
+    public void SetMusicVolume(float vol)
     {
         vol *= 160;
         vol -= 80;

@@ -107,7 +107,6 @@ public class ThrownStaff : MonoBehaviour
     {
         var player = collision.collider.GetComponentInParent<Player>();
         if (player != null) return;
-        print("collision: " + collision.gameObject.name);
 
         landed = true;
         VFXCoordinator.EnableHSImpact();

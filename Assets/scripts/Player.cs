@@ -136,13 +136,33 @@ public class Player : MonoBehaviour
         var nextLine = interestedSpeaker.GetNextLine();
         if (string.Equals("END", nextLine)) EndConversation();
         else {
+
+
+           
+
+            SwitchToDialogueCam();
             interestedSpeaker.talking = true;
             GlobalUI.i.DisplayLine(interestedSpeaker.characterName, nextLine);
         }
     }
 
+    void SwitchToDialogueCam()
+    {
+        if (CameraState.i.current.displayName == CameraState.StateName.dialogue) return;
+
+        CameraState.i.SwitchToState(CameraState.StateName.dialogue);
+        CameraState.i.SetDialogueTarget(interestedSpeaker.transform, interestedSpeaker.cameraOffset);
+
+        Vector3 speakerPosition = interestedSpeaker.GetStandPosition();
+        speakerPosition.y = transform.position.y;
+        transform.position = speakerPosition;
+        transform.LookAt(interestedSpeaker.transform.position);
+        transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
+    }
+
     public void EndConversation()
     {
+        CameraState.i.SwitchToState(CameraState.StateName.MouseFollow);
         interestedSpeaker.EndConversation();
         GetComponent<PMovement>().ResumeMovement();
         interestedSpeaker = null;

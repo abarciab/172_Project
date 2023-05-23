@@ -6,7 +6,7 @@ using UnityEngine;
 [ExecuteAlways]
 public class CameraState : MonoBehaviour
 {
-    public enum StateName {None, Follow, Sceneic, Castle, MouseFollow, Grave, LockOn, MouseOverShoulder};
+    public enum StateName {None, Follow, Sceneic, Castle, MouseFollow, Grave, LockOn, MouseOverShoulder, dialogue};
     public enum ParentLookTarget { None, PlayerForward, Obj, Mouse};
 
     public static CameraState i;
@@ -107,6 +107,10 @@ public class CameraState : MonoBehaviour
             camTargetOffset = Vector3.Lerp(camTargetOffset, o.camTargetOffset, smoothness);
             parentLookOffset = Vector3.Lerp(parentLookOffset, o.parentLookOffset, smoothness);
             parentPosOffset = Vector3.Lerp(parentPosOffset, o.parentPosOffset, smoothness);
+            
+            parentLookTarget = o.parentLookTarget;
+            objFocus = o.objFocus;
+            parentRotSmoothness = o.parentRotSmoothness;
 
             parentRotLimitsY = o.parentRotLimitsY;
         }
@@ -134,6 +138,17 @@ public class CameraState : MonoBehaviour
     public void SwitchToState(StateName stateName)
     {
         for (int i = 0; i < states.Count; i++) if (states[i].displayName == stateName) { SwitchToState(i); return; }
+    }
+
+    public void SetDialogueTarget(Transform speaker, Vector3 Offset)
+    {
+        foreach (var s in states) {
+            if (s.displayName == StateName.dialogue) {
+                s.parentLookTarget = ParentLookTarget.Obj;
+                s.objFocus = speaker.gameObject;
+                s.parentLookOffset = Offset;
+            }
+        }
     }
 
     public void SwitchToState(int stateID)

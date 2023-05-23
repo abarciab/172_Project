@@ -12,7 +12,7 @@ public class GlobalUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI commandPrompt, subtitle;
     
     [SerializeField] float redFlashTime = 0.1f;
-    [SerializeField] GameObject title, bottomLeft;
+    [SerializeField] GameObject title, bottomLeft, crossHair;
     public GameObject tutorialSkip;
     [SerializeField] Image dmgIndicator, dmgFlash, goopOverlay;
     public Image fade;
@@ -34,6 +34,7 @@ public class GlobalUI : MonoBehaviour
     [Header("Dialogue")]
     [SerializeField] TextMeshProUGUI nameText;
     [SerializeField] TextMeshProUGUI mainText;
+    [HideInInspector] public bool talking;
 
     [Header("Abilities")]
     [SerializeField] GameObject swCountdown;
@@ -59,6 +60,7 @@ public class GlobalUI : MonoBehaviour
 
     [Header("Volume Sliders")]
     [SerializeField] Slider masterSlider;
+    [SerializeField] Slider sfxSlider, musicSlider;
 
     UISound sound;
     bool loadingSave = false;
@@ -167,6 +169,7 @@ public class GlobalUI : MonoBehaviour
 
     public void DisplayLine(string speaker, string line)
     {
+        if (!string.IsNullOrEmpty(speaker))talking = true;
         showHPbar = false;
         commandPrompt.gameObject.SetActive(false);
 
@@ -184,6 +187,7 @@ public class GlobalUI : MonoBehaviour
         nameText.gameObject.SetActive(false);
         mainText.gameObject.SetActive(false);
         sound.TurnPage();
+        talking = false;
     }
 
     public void DisplayPrompt(string prompt)
@@ -235,7 +239,7 @@ public class GlobalUI : MonoBehaviour
 
         sound.Heartbeat(1-HpBar.value);
 
-        currentQuest.gameObject.SetActive(!string.IsNullOrEmpty(currentQuest.text));
+        currentQuest.gameObject.SetActive(!string.IsNullOrEmpty(currentQuest.text) && !talking);
         newQuestColorCooldown -= Time.deltaTime;
         if (newQuestColorCooldown <= 0)  questBacking.color = Color.Lerp(questBacking.color, Color.black, newQuestSmoothness);
 
@@ -276,6 +280,8 @@ public class GlobalUI : MonoBehaviour
     void VolumeSliders()
     {
         AudioManager.instance.SetMasterVolume(masterSlider.value);
+        //AudioManager.instance.SetSfxVolume(sfxSlider.value);
+        //AudioManager.instance.SetMusicVolume(musicSlider.value);
     }
 
     void DisplayOverlay()
@@ -291,7 +297,8 @@ public class GlobalUI : MonoBehaviour
     {
         var fight = Player.i.GetComponent<PFighting>();
         bottomLeft.SetActive((!title.activeInHierarchy && showHPbar && Player.i.InCombat()) || !Player.i.FullHealth() || fight.GetSWcooldown() > 0 || !FactManager.i.IsPresent(tutorialDone));
-
+        if (talking) bottomLeft.SetActive(false);
+        crossHair.SetActive(!talking);
         
         float cooldown = fight.GetSWcooldown();
         if (cooldown <= 0 && swCountdown.activeInHierarchy) StartCoroutine(FlashAbility(swAbilityFlash, abilityFlashTime));
