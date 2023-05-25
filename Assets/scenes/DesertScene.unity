@@ -15,7 +15,7 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 1
-  m_FogColor: {r: 0.4069064, g: 0.60607964, b: 0.6792453, a: 1}
+  m_FogColor: {r: 0.40690637, g: 0.60607964, b: 0.6792453, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.003
   m_LinearFogStart: 0
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 1.5434757, g: 0.74594116, b: 1.5418832, a: 1}
+  m_IndirectSpecularColor: {r: 1.5434759, g: 0.74594116, b: 1.5418833, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1888,6 +1888,32 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 51783217}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &52221062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b54c4e062583404688e9450addf1871, type: 3}
+  m_Name: dummyAppear(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)
+  m_EditorClassIdentifier: 
+  clips:
+  - name: 
+    clip: {fileID: 8300000, guid: dad9a8beba5ea3647b7c55faed931401, type: 3}
+    looping: 0
+    CustomPitchAndVolume: 0
+    volume: 0
+    pitch: 0
+  type: 0
+  SynchronizePitchAndVolume: 1
+  pitch: 1
+  volume: 1
+  voiceLines: 0
+  audioSource: {fileID: 0}
+  instantialized: 0
 --- !u!1001 &53306342
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2785,7 +2811,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0.3325311, z: -0, w: 0.94309235}
     Pos: {x: 180.04, y: 76.98, z: 12.9}
     set: 0
-  moveSound: {fileID: 1932607111}
+  moveSound: {fileID: 52221062}
 --- !u!1001 &96661157
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10824,6 +10850,7 @@ GameObject:
   - component: {fileID: 407004422}
   - component: {fileID: 407004421}
   - component: {fileID: 407004420}
+  - component: {fileID: 407004424}
   m_Layer: 0
   m_Name: endDaytransition
   m_TagString: Untagged
@@ -10839,7 +10866,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 407004418}
   m_LocalRotation: {x: -0, y: 0.9867018, z: -0, w: 0.16254145}
-  m_LocalPosition: {x: 117.91, y: 64.54, z: 132.88}
+  m_LocalPosition: {x: 117.91, y: 76.3, z: 132.88}
   m_LocalScale: {x: 9.149648, y: 37.61668, z: 53.164852}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10932,6 +10959,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 407004418}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &407004424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407004418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f47fb1b52a5bf6a4fa656e53c8803838, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fact: {fileID: 11400000, guid: 94c43e25006c1914c8d4c1acebbf4ef6, type: 2}
+  enableOnTrigger: {fileID: 0}
 --- !u!1001 &410682976
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -61640,32 +61681,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1930697789}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1932607111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b54c4e062583404688e9450addf1871, type: 3}
-  m_Name: dummyAppear(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)
-  m_EditorClassIdentifier: 
-  clips:
-  - name: 
-    clip: {fileID: 8300000, guid: dad9a8beba5ea3647b7c55faed931401, type: 3}
-    looping: 0
-    CustomPitchAndVolume: 0
-    volume: 0
-    pitch: 0
-  type: 0
-  SynchronizePitchAndVolume: 1
-  pitch: 1
-  volume: 1
-  voiceLines: 0
-  audioSource: {fileID: 0}
-  instantialized: 0
 --- !u!1 &1942385193
 GameObject:
   m_ObjectHideFlags: 0
@@ -67746,68 +67761,68 @@ PrefabInstance:
     - target: {fileID: 4663128797434766542, guid: 7c48be7f603bcdb4d904ea99c5abe193,
         type: 3}
       propertyPath: conversations.Array.data[0].name
-      value: gran_1(VA)
+      value: gran_1
       objectReference: {fileID: 0}
     - target: {fileID: 4663128797434766542, guid: 7c48be7f603bcdb4d904ea99c5abe193,
         type: 3}
       propertyPath: conversations.Array.data[1].name
-      value: gran_2(VA)
+      value: gran_2
       objectReference: {fileID: 0}
     - target: {fileID: 4663128797434766542, guid: 7c48be7f603bcdb4d904ea99c5abe193,
         type: 3}
       propertyPath: conversations.Array.data[2].name
-      value: gran_3(VA)
+      value: gran_3
       objectReference: {fileID: 0}
     - target: {fileID: 4663128797434766542, guid: 7c48be7f603bcdb4d904ea99c5abe193,
         type: 3}
       propertyPath: conversations.Array.data[3].name
-      value: gran_4(VA)
+      value: gran_4
       objectReference: {fileID: 0}
     - target: {fileID: 4663128797434766542, guid: 7c48be7f603bcdb4d904ea99c5abe193,
         type: 3}
       propertyPath: conversations.Array.data[4].name
-      value: gran_5(VA)
+      value: gran_5
       objectReference: {fileID: 0}
     - target: {fileID: 4663128797434766542, guid: 7c48be7f603bcdb4d904ea99c5abe193,
         type: 3}
       propertyPath: conversations.Array.data[5].name
-      value: gran_6(VA)
+      value: gran_6
       objectReference: {fileID: 0}
     - target: {fileID: 4663128797434766542, guid: 7c48be7f603bcdb4d904ea99c5abe193,
         type: 3}
       propertyPath: conversations.Array.data[0].convo
       value: 
-      objectReference: {fileID: 11400000, guid: 9c59e598b0c18ed42b711f144d84d64c,
+      objectReference: {fileID: 11400000, guid: 42023a1d59ed0c245a72a4f337e527fc,
         type: 2}
     - target: {fileID: 4663128797434766542, guid: 7c48be7f603bcdb4d904ea99c5abe193,
         type: 3}
       propertyPath: conversations.Array.data[1].convo
       value: 
-      objectReference: {fileID: 11400000, guid: d3cd4d41863523f479573146acfad13f,
+      objectReference: {fileID: 11400000, guid: a1ed04cff8873bc4a83f2582c2819a9d,
         type: 2}
     - target: {fileID: 4663128797434766542, guid: 7c48be7f603bcdb4d904ea99c5abe193,
         type: 3}
       propertyPath: conversations.Array.data[2].convo
       value: 
-      objectReference: {fileID: 11400000, guid: 8a311c5408ab5484797e24b467c8f5a9,
+      objectReference: {fileID: 11400000, guid: 4dadd0771d44a1445a68934b06a5af13,
         type: 2}
     - target: {fileID: 4663128797434766542, guid: 7c48be7f603bcdb4d904ea99c5abe193,
         type: 3}
       propertyPath: conversations.Array.data[3].convo
       value: 
-      objectReference: {fileID: 11400000, guid: 19154d43ebd14f84a8244a771c375533,
+      objectReference: {fileID: 11400000, guid: 9d0d9224fbd071841ba49a170b5f6d76,
         type: 2}
     - target: {fileID: 4663128797434766542, guid: 7c48be7f603bcdb4d904ea99c5abe193,
         type: 3}
       propertyPath: conversations.Array.data[4].convo
       value: 
-      objectReference: {fileID: 11400000, guid: 01c50ea695ca3244db8ac1f1abf57132,
+      objectReference: {fileID: 11400000, guid: 175893d5261defd4a9c5f07e9776b095,
         type: 2}
     - target: {fileID: 4663128797434766542, guid: 7c48be7f603bcdb4d904ea99c5abe193,
         type: 3}
       propertyPath: conversations.Array.data[5].convo
       value: 
-      objectReference: {fileID: 11400000, guid: 3390a3f46fa401546b6940709d9a87b9,
+      objectReference: {fileID: 11400000, guid: 5979a9c0a8c027a45a2ea9fada5f7f97,
         type: 2}
     - target: {fileID: 5974663477872641148, guid: 7c48be7f603bcdb4d904ea99c5abe193,
         type: 3}
