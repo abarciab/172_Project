@@ -57,10 +57,10 @@ public class CorruptBomber : BaseEnemy
         base.EndAttack();
 
         buildUpSound.Stop();
-        if (dist > explodeRange.y) {
+        /*if (dist > explodeRange.y) {
             anim.SetTrigger(explodeFailedTrigger);
             return;
-        }
+        }*/
         
 
         for (int i = 0; i < numGlobs; i++) {
