@@ -62,19 +62,22 @@ public class FactManager : MonoBehaviour
         CheckShaders();
     }
 
-    void CheckShaders()
+    void CheckShaders(bool onlyForward = false)
     {
         if (!facts.Contains(shaderTriggers[1])) {
-            shaderController.SwitchToShader(1);
+            if (!onlyForward) shaderController.SwitchToShader(1);
         }
         else if (!facts.Contains(shaderTriggers[2])) {
-            shaderController.SwitchToShader(2);
+            if ((onlyForward && shaderController.time < 2) || !onlyForward)
+                shaderController.SwitchToShader(2);
         }
         else if (!facts.Contains(shaderTriggers[3])) {
-            shaderController.SwitchToShader(3);
+            if ((onlyForward && shaderController.time < 3) || !onlyForward)
+                shaderController.SwitchToShader(3);
         }
         else if (facts.Contains(shaderTriggers[3])) {
-            shaderController.SwitchToShader(4);
+            if ((onlyForward && shaderController.time < 4) || !onlyForward)
+                shaderController.SwitchToShader(4);
         }
     }
 
@@ -87,7 +90,7 @@ public class FactManager : MonoBehaviour
     {
         return facts.Count;
     }
-    public void AddFact(Fact fact, bool respectAutoSave = true)
+    public void AddFact(Fact fact, bool respectAutoSave = true, bool fromRule = false)
     {
         if (IsPresent(fact)) return;
 
@@ -95,7 +98,7 @@ public class FactManager : MonoBehaviour
         if (fact.skipToStory > 0 && fact.skipToStory > GameManager.i.GetID()) GameManager.i.LoadStory(fact.skipToStory);
         if (respectAutoSave && autoSave && autosaveTriggers.Contains(fact)) GetComponent<SaveManager>().SaveGame();
 
-        CheckShaders();
+        CheckShaders(!fromRule);
     }
 
     public void RemoveFact(Fact fact)
@@ -146,7 +149,7 @@ public class FactManager : MonoBehaviour
     {
         if (rule.triggersLeft <= 0 || !IsPresent(rule.trigger)) return;
 
-        foreach (var f in rule.toAdd) AddFact(f, false);
+        foreach (var f in rule.toAdd) AddFact(f, false, true);
         foreach (var f in rule.toRemove) RemoveFact(f);
         rule.triggersLeft -= 1;
     }
