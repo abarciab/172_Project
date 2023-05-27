@@ -8,6 +8,9 @@ public class BomberSpawner : BaseEnemy
     List<GameObject> spawnedBombers = new List<GameObject>();
     [SerializeField] int maxConcurrent, numSpawnedOnDeath = 2;
     [SerializeField] float spawnResetTime, range;
+
+    [SerializeField] SpawnerVFXParent spawnVFX;
+
     float spawnCooldown;
 
     protected override void Start()
@@ -44,6 +47,9 @@ public class BomberSpawner : BaseEnemy
         var newBomber = Instantiate(bomberPrefab, transform.position, Quaternion.identity);
         spawnedBombers.Add(newBomber);
         spawnCooldown = spawnResetTime;
+
+        //play spawning vfx
+        spawnVFX.TriggerSpawnVFX();
 
         StartCoroutine(waitThenSpawn(num - 1));
     }
