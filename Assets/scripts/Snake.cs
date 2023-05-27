@@ -19,9 +19,22 @@ public class Snake : BaseEnemy
     float sprayCooldown;
     bool spraying;
 
+    [Header("tail whip")]
+    [SerializeField] Vector2 tailWhipRange;
+    [SerializeField] float tailWhipResetTime;
+    [SerializeField] int tailWhipDamage;
+    [SerializeField] HitBox tailWhipHB;
+    float tailWhipCooldown;
+
     [Header("Anims")]
     [SerializeField] Animator anim;
-    [SerializeField] string sprayAnim, spitAnim;
+    [SerializeField] string sprayAnim, spitAnim, tailWhipAnim;
+
+    public override void EndAttack()
+    {
+        base.EndAttack();
+        anim.SetBool(tailWhipAnim, false);
+    }
 
     protected override void Update()
     {
@@ -29,7 +42,15 @@ public class Snake : BaseEnemy
 
         if (busy) return;
 
-        if (dist < RangedRange.y && dist > RangedRange.x) RangedAttack();
+        if (dist < tailWhipRange.y && tailWhipCooldown <= 0) TailWhip();
+        else if (dist < RangedRange.y && dist > RangedRange.x) RangedAttack();
+    }
+
+    void TailWhip()
+    {
+        busy = true;
+        tailWhipCooldown = tailWhipResetTime;
+        anim.SetBool(tailWhipAnim, true);
     }
 
     void RangedAttack()
@@ -93,5 +114,8 @@ public class Snake : BaseEnemy
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, RangedRange.x);
         Gizmos.DrawWireSphere(transform.position, RangedRange.y);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, tailWhipRange.x);
+        Gizmos.DrawWireSphere(transform.position, tailWhipRange.y);
     }
 }
