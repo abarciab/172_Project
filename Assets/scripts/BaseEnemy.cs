@@ -81,7 +81,8 @@ public class BaseEnemy : MonoBehaviour
         }
 
 
-        var rb = projectile.GetComponent<Rigidbody>();
+        var rb = projectile.GetComponent<Rigidbody>(); 
+
 
         float gravity = Physics.gravity.magnitude;
         // Selected angle in radians
@@ -102,6 +103,7 @@ public class BaseEnemy : MonoBehaviour
         Vector3 finalVelocity = Quaternion.AngleAxis(angleBetweenObjects, Vector3.up) * velocity;
 
         // Fire!
+        if (float.IsNaN(finalVelocity.x)) return;
         rb.velocity = finalVelocity;
     }
 

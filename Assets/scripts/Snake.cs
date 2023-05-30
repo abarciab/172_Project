@@ -33,7 +33,6 @@ public class Snake : BaseEnemy
     public override void EndAttack()
     {
         base.EndAttack();
-        anim.SetBool(tailWhipAnim, false);
     }
 
     protected override void Update()
@@ -50,7 +49,8 @@ public class Snake : BaseEnemy
     {
         busy = true;
         tailWhipCooldown = tailWhipResetTime;
-        anim.SetBool(tailWhipAnim, true);
+        currentAttack = new AttackDetails(tailWhipHB, tailWhipAnim, tailWhipDamage, 0, 50, gameObject);
+        anim.SetTrigger(tailWhipAnim);
     }
 
     void RangedAttack()
