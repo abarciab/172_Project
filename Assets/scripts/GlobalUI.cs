@@ -12,11 +12,16 @@ public class GlobalUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI commandPrompt, subtitle;
     
     [SerializeField] float redFlashTime = 0.1f;
-    [SerializeField] GameObject title, bottomLeft, crossHair;
+    [SerializeField] GameObject title, bottomLeft, crossHair, compass;
     public GameObject tutorialSkip;
     [SerializeField] Image dmgIndicator, dmgFlash, goopOverlay;
     public Image fade;
 
+    [Header("boss bar")]
+    [SerializeField] GameObject bossBar;
+    public Slider bossSlider;
+    [SerializeField] TextMeshProUGUI bossName;
+    GameObject activeBoss;
 
     [Header("spear charge")]
     public Slider throwCharge;
@@ -73,17 +78,29 @@ public class GlobalUI : MonoBehaviour
         StartCoroutine(transition(save));
     }
 
+    public void StartBossFight(string name, GameObject boss)
+    {
+        bossBar.SetActive(true);
+        bossName.text = name;
+        activeBoss = boss;
+    }
+
+    public void EndBossFight()
+    {
+        bossBar.SetActive(false);
+    }
+
     public void RestartScene()
     {
         if (loadingSave) return;
         loadingSave = true;
         Time.timeScale = 1;
-        StartCoroutine(transition(-1, false));   
+        StartCoroutine(transition(-1, false, 2));   
     }
 
-    IEnumerator transition(int save = -1, bool reset = true) {
+    IEnumerator transition(int save = -1, bool reset = true, float time = 1.5f) {
         fade.GetComponent<Fade>().Appear();
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(time);
 
         if (save != -1) FactManager.i.LoadSaveState(save);
         else {
@@ -239,7 +256,14 @@ public class GlobalUI : MonoBehaviour
 
         sound.Heartbeat(1-HpBar.value);
 
-        currentQuest.gameObject.SetActive(!string.IsNullOrEmpty(currentQuest.text) && !talking);
+        bool fighting = Player.i.InCombat();
+        compass.SetActive(!fighting);
+        currentQuest.gameObject.SetActive(!string.IsNullOrEmpty(currentQuest.text) && !talking && !fighting);
+        if (activeBoss == null || !activeBoss.activeInHierarchy) {
+            EndBossFight();
+            activeBoss = null;
+        }
+
         newQuestColorCooldown -= Time.deltaTime;
         if (newQuestColorCooldown <= 0)  questBacking.color = Color.Lerp(questBacking.color, Color.black, newQuestSmoothness);
 
@@ -296,6 +320,7 @@ public class GlobalUI : MonoBehaviour
     void DisplayAbilities()
     {
         var fight = Player.i.GetComponent<PFighting>();
+        
         bottomLeft.SetActive((!title.activeInHierarchy && showHPbar && Player.i.InCombat()) || !Player.i.FullHealth() || fight.GetSWcooldown() > 0 || !FactManager.i.IsPresent(tutorialDone));
         if (talking) bottomLeft.SetActive(false);
         crossHair.SetActive(!talking);
@@ -360,6 +385,8 @@ public class GlobalUI : MonoBehaviour
 
         goopOverlay.color = new Color(1, 1, 1, 0);
         goopOverlay.gameObject.SetActive(false);
+
+        EndBossFight();
     }
 
     

@@ -17,7 +17,9 @@ public class EnemyStats : HitReciever
     [SerializeField] int healSpeed;
     [SerializeField] float stunTime;
     [HideInInspector] public float stunTimeLeft;
+    public bool boss;
     bool invincible;
+    [SerializeField] string bossName;
 
     [SerializeField] List<Fact> removeFactOnDeath = new List<Fact>(), addFactOnDeath = new List<Fact>();
 
@@ -121,6 +123,8 @@ public class EnemyStats : HitReciever
         if (hpBar) hpBar.gameObject.SetActive(false);
 
         if (deathSound) deathSound.Play(transform);
+
+        if (boss) GlobalUI.i.EndBossFight();
     }
 
     private void Update()
@@ -129,6 +133,12 @@ public class EnemyStats : HitReciever
 
         stunTimeLeft -= Time.deltaTime;
         foreach (var m in body) m.material = stunTimeLeft > 0 ? stunnedMat : normalMat;
+
+        if (boss) {
+            GlobalUI.i.StartBossFight(bossName, gameObject);
+            GlobalUI.i.bossSlider.value = (float) health / maxHealth;
+            return;
+        }
 
         if (!hpBar) return;
 
