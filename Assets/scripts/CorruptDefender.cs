@@ -108,8 +108,10 @@ public class CorruptDefender : BaseEnemy
     public override void EndAttack()
     {
         base.EndAttack();
-        currentAttack.HB.EndChecking();
-        anim.SetBool(currentAttack.animBool, false);
+        if (currentAttack != null) {
+            currentAttack.HB.EndChecking();
+            anim.SetBool(currentAttack.animBool, false);
+        }
         if (charging) {
             timeCharging = 0;
             charging = false;

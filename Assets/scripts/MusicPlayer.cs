@@ -6,6 +6,7 @@ using UnityEngine;
 public class MusicPlayer : MonoBehaviour
 {
     [SerializeField] Sound Music1, Music2, ambientWind;
+    bool fadingOut;
 
     private void Start()
     {
@@ -18,8 +19,17 @@ public class MusicPlayer : MonoBehaviour
         Music2.PlaySilent();
     }
 
+    public void FadeOut()
+    {
+        Music2.PercentVolume(0, 0.05f);
+        Music1.PercentVolume(0, 0.05f);
+        fadingOut = true;
+    }
+
     private void Update()
     {
+        if (fadingOut) return;
+
         if (Player.i.InCombat()) {
             Player.i.EnterCombat();
             Music2.PercentVolume(1, 0.05f);

@@ -42,7 +42,7 @@ public class BaseEnemy : MonoBehaviour
     protected Transform target;
     protected float dist, speed;
     protected bool busy, inAgroRange, stunned;
-    [SerializeField] protected float agroRange;
+    public float agroRange;
     [SerializeField] protected bool debug;
     [SerializeField] int meleePriority;
     Vector3 oldPos;
@@ -81,7 +81,8 @@ public class BaseEnemy : MonoBehaviour
         }
 
 
-        var rb = projectile.GetComponent<Rigidbody>();
+        var rb = projectile.GetComponent<Rigidbody>(); 
+
 
         float gravity = Physics.gravity.magnitude;
         // Selected angle in radians
@@ -102,6 +103,7 @@ public class BaseEnemy : MonoBehaviour
         Vector3 finalVelocity = Quaternion.AngleAxis(angleBetweenObjects, Vector3.up) * velocity;
 
         // Fire!
+        if (float.IsNaN(finalVelocity.x)) return;
         rb.velocity = finalVelocity;
     }
 
@@ -116,7 +118,12 @@ public class BaseEnemy : MonoBehaviour
 
     virtual public void StartChecking()
     {
-        if (currentAttack != null) currentAttack.StartChecking();
+        if (currentAttack != null) {
+            currentAttack.StartChecking();
+        }
+        else {
+            EndAttack();
+        }
     }
 
     virtual protected void StartAttack(AttackDetails attack, Animator anim)
@@ -192,7 +199,7 @@ public class BaseEnemy : MonoBehaviour
     virtual protected void JumpBack()
     {
         agroRange = Mathf.Infinity;
-        if (busy) return;
+        if (busy || stats.boss) return;
 
         StopAllCoroutines();
         StartCoroutine(_JumpBack(Player.i.transform.position));
@@ -224,7 +231,6 @@ public class BaseEnemy : MonoBehaviour
         PutOnGround();
 
         busy = false;
-        yield break;
     }
 
     virtual protected void Stun(float time)

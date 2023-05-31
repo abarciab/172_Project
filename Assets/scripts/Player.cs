@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
 
     [Header("sounds")]
     [SerializeField] Sound hurtSound;
+    [SerializeField] Sound deathSound;
 
     Speaker interestedSpeaker;
     Gate interestedInteractable;
@@ -277,6 +278,7 @@ public class Player : MonoBehaviour
     private void Start() {
         health = maxHealth;
         hurtSound = Instantiate(hurtSound);
+        deathSound = Instantiate(deathSound);
     }
 
     public void ChangeHealth(int delta) {
@@ -294,6 +296,8 @@ public class Player : MonoBehaviour
     }
 
     void Die() {
+        CameraState.i.GetComponent<MusicPlayer>().FadeOut();
+        deathSound.Play();
         GlobalUI.i.RestartScene();
     }
 
