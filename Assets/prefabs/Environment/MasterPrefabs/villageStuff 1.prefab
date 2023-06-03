@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5141867705936499233
 Transform:
@@ -48,7 +48,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1543672101502881994
 Transform:
@@ -100,7 +100,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &9089764872128561904
 Transform:
@@ -142,7 +142,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &6418214902792175187
 Transform:
@@ -197,7 +197,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &94539302238297775
 Transform:
@@ -232,6 +232,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CactusSlabs Variant (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 498812390365843037, guid: 35570aace174dcf469d2ab9d9f2203b5,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 984022866823582951, guid: 35570aace174dcf469d2ab9d9f2203b5,
         type: 3}
@@ -377,6 +382,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Plant_01 Variant (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 9136314148628565730, guid: c7710dd8c0df1474f9e6699597a36b7d,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -470,6 +480,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DesertRockSmall_01 (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9127760457326983254, guid: cd126185db9c58a4bac0d38e04f7871a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -565,6 +580,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Plant_01 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 9136314148628565730, guid: c7710dd8c0df1474f9e6699597a36b7d,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -643,6 +663,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BuildingCluster_b04
+      objectReference: {fileID: 0}
+    - target: {fileID: 5636196021864327554, guid: 5cecc25cd01d3b045a11c95f7c07f66e,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -733,6 +758,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DesertRockSmall_01 (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 9127760457326983254, guid: cd126185db9c58a4bac0d38e04f7871a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -752,6 +782,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6418214902792175187}
     m_Modifications:
+    - target: {fileID: 1346052974816330195, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 2905139792311677907, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 3691366827859238473, guid: bd7b0f796512e324592b8c3b30ae3106,
         type: 3}
       propertyPath: m_RootOrder
@@ -807,10 +847,45 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4446355408093655256, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 5003267164955588729, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 5335200180885142444, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 5338266095758527838, guid: bd7b0f796512e324592b8c3b30ae3106,
         type: 3}
       propertyPath: m_Name
       value: CactusTallClump
+      objectReference: {fileID: 0}
+    - target: {fileID: 5338266095758527838, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 6851093690377757164, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 8959003256729707029, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 9106320408512615521, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -936,6 +1011,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CactusMedium (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 5298299068634931922, guid: d36211188e0172242ba7bcec00afde7d,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1029,6 +1109,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DesertRockSmall_01 (14)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9127760457326983254, guid: cd126185db9c58a4bac0d38e04f7871a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1124,6 +1209,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Plant_01 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 9136314148628565730, guid: c7710dd8c0df1474f9e6699597a36b7d,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1217,6 +1307,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DesertRockSmall_01 (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9127760457326983254, guid: cd126185db9c58a4bac0d38e04f7871a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1317,6 +1412,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: desert rock 1 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1e6f632e4afe81c46b5f649ccf2d8b17,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1395,6 +1495,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DesertRockSmall_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 9127760457326983254, guid: cd126185db9c58a4bac0d38e04f7871a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1490,6 +1595,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DesertRockSmall_01 (13)
       objectReference: {fileID: 0}
+    - target: {fileID: 9127760457326983254, guid: cd126185db9c58a4bac0d38e04f7871a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1513,6 +1623,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CactusSlabs
+      objectReference: {fileID: 0}
+    - target: {fileID: 498812390365843037, guid: 35570aace174dcf469d2ab9d9f2203b5,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 984022866823582951, guid: 35570aace174dcf469d2ab9d9f2203b5,
         type: 3}
@@ -1592,6 +1707,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BuildingCluster_b01 Variant (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1038671187852943480, guid: 9aa67ea0e31ebe04abe4dc78a0e924cd,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1136404149637328576, guid: 9aa67ea0e31ebe04abe4dc78a0e924cd,
         type: 3}
@@ -1727,6 +1847,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: BuildingCluster_cloths04
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 09f1c98b69939cb4080034d1fc9af1eb,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 2841966243791443468, guid: 09f1c98b69939cb4080034d1fc9af1eb,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 4040080011853659356, guid: 09f1c98b69939cb4080034d1fc9af1eb,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 6677564685086585485, guid: 09f1c98b69939cb4080034d1fc9af1eb,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1805,6 +1945,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Plant_01 Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 9136314148628565730, guid: c7710dd8c0df1474f9e6699597a36b7d,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1885,6 +2030,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Plant_01 Variant (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 9136314148628565730, guid: c7710dd8c0df1474f9e6699597a36b7d,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1964,6 +2114,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BuildingCluster_b03 Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 5749314060684445619, guid: 6585a70878397354d97f1d3b3adb984b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2042,6 +2197,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BuildingCluster_b03
+      objectReference: {fileID: 0}
+    - target: {fileID: 5749314060684445619, guid: 6585a70878397354d97f1d3b3adb984b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2137,6 +2297,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Building_Shop Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 6768485409109481691, guid: bd5ed2751d9573f4baace03cc2207ea2,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2231,6 +2396,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Plant_01 Variant (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 9136314148628565730, guid: c7710dd8c0df1474f9e6699597a36b7d,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2250,6 +2420,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6418214902792175187}
     m_Modifications:
+    - target: {fileID: 1346052974816330195, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 2905139792311677907, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 3691366827859238473, guid: bd7b0f796512e324592b8c3b30ae3106,
         type: 3}
       propertyPath: m_RootOrder
@@ -2305,10 +2485,45 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4446355408093655256, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 5003267164955588729, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 5335200180885142444, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 5338266095758527838, guid: bd7b0f796512e324592b8c3b30ae3106,
         type: 3}
       propertyPath: m_Name
       value: CactusTallClump (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5338266095758527838, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 6851093690377757164, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 8959003256729707029, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 9106320408512615521, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2434,6 +2649,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CactusMedium (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 5298299068634931922, guid: d36211188e0172242ba7bcec00afde7d,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2523,6 +2743,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DesertRockSmall_01 (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 9127760457326983254, guid: cd126185db9c58a4bac0d38e04f7871a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2546,6 +2771,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SmallRocks3X (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 955298691885534821, guid: e884cff8e5f5b0e43b8c2f14df4949c2,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 2918583188259441813, guid: e884cff8e5f5b0e43b8c2f14df4949c2,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 6930860290281019910, guid: e884cff8e5f5b0e43b8c2f14df4949c2,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 7738464106998382780, guid: e884cff8e5f5b0e43b8c2f14df4949c2,
         type: 3}
@@ -2687,6 +2927,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BuildingCluster_b01
       objectReference: {fileID: 0}
+    - target: {fileID: 1038671187852943480, guid: 9aa67ea0e31ebe04abe4dc78a0e924cd,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2780,6 +3025,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DesertRockSmall_01 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9127760457326983254, guid: cd126185db9c58a4bac0d38e04f7871a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2875,6 +3125,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Building_02_WIP
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 221780e520223f3478e55a82859ced29,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 2012463350021781243, guid: 221780e520223f3478e55a82859ced29,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -2944,6 +3199,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SmallRocks3X (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 955298691885534821, guid: e884cff8e5f5b0e43b8c2f14df4949c2,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 2918583188259441813, guid: e884cff8e5f5b0e43b8c2f14df4949c2,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 3903385846752489378, guid: e884cff8e5f5b0e43b8c2f14df4949c2,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 6930860290281019910, guid: e884cff8e5f5b0e43b8c2f14df4949c2,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8965671735252552779, guid: e884cff8e5f5b0e43b8c2f14df4949c2,
         type: 3}
@@ -3023,6 +3298,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SmallRocks3X
+      objectReference: {fileID: 0}
+    - target: {fileID: 955298691885534821, guid: e884cff8e5f5b0e43b8c2f14df4949c2,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 2918583188259441813, guid: e884cff8e5f5b0e43b8c2f14df4949c2,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 3903385846752489378, guid: e884cff8e5f5b0e43b8c2f14df4949c2,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 6930860290281019910, guid: e884cff8e5f5b0e43b8c2f14df4949c2,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8965671735252552779, guid: e884cff8e5f5b0e43b8c2f14df4949c2,
         type: 3}
@@ -3173,6 +3468,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DesertRockSmall_01 (11)
       objectReference: {fileID: 0}
+    - target: {fileID: 9127760457326983254, guid: cd126185db9c58a4bac0d38e04f7871a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3192,6 +3492,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6418214902792175187}
     m_Modifications:
+    - target: {fileID: 1346052974816330195, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 2905139792311677907, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 3691366827859238473, guid: bd7b0f796512e324592b8c3b30ae3106,
         type: 3}
       propertyPath: m_RootOrder
@@ -3247,10 +3557,45 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4446355408093655256, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 5003267164955588729, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 5335200180885142444, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 5338266095758527838, guid: bd7b0f796512e324592b8c3b30ae3106,
         type: 3}
       propertyPath: m_Name
       value: CactusTallClump (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5338266095758527838, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 6851093690377757164, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 8959003256729707029, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 9106320408512615521, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3295,6 +3640,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BuildingCluster_b01 Variant (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1038671187852943480, guid: 9aa67ea0e31ebe04abe4dc78a0e924cd,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1136404149637328576, guid: 9aa67ea0e31ebe04abe4dc78a0e924cd,
         type: 3}
@@ -3430,6 +3780,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: BuildingCluster_cloths04 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 09f1c98b69939cb4080034d1fc9af1eb,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 2841966243791443468, guid: 09f1c98b69939cb4080034d1fc9af1eb,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 4040080011853659356, guid: 09f1c98b69939cb4080034d1fc9af1eb,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 6677564685086585485, guid: 09f1c98b69939cb4080034d1fc9af1eb,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3453,6 +3823,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CactusSlabs Variant (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 498812390365843037, guid: 35570aace174dcf469d2ab9d9f2203b5,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 984022866823582951, guid: 35570aace174dcf469d2ab9d9f2203b5,
         type: 3}
@@ -3537,6 +3912,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CactusSlabs Variant (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 498812390365843037, guid: 35570aace174dcf469d2ab9d9f2203b5,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 984022866823582951, guid: 35570aace174dcf469d2ab9d9f2203b5,
         type: 3}
@@ -3697,6 +4077,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DesertRockSmall_01 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 9127760457326983254, guid: cd126185db9c58a4bac0d38e04f7871a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3791,6 +4176,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DesertRockSmall_01 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 9127760457326983254, guid: cd126185db9c58a4bac0d38e04f7871a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3810,6 +4200,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6418214902792175187}
     m_Modifications:
+    - target: {fileID: 1346052974816330195, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 2905139792311677907, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 3691366827859238473, guid: bd7b0f796512e324592b8c3b30ae3106,
         type: 3}
       propertyPath: m_RootOrder
@@ -3865,10 +4265,45 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4446355408093655256, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 5003267164955588729, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 5335200180885142444, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 5338266095758527838, guid: bd7b0f796512e324592b8c3b30ae3106,
         type: 3}
       propertyPath: m_Name
       value: CactusTallClump
+      objectReference: {fileID: 0}
+    - target: {fileID: 5338266095758527838, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 6851093690377757164, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 8959003256729707029, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 9106320408512615521, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3949,6 +4384,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Plant_01
       objectReference: {fileID: 0}
+    - target: {fileID: 9136314148628565730, guid: c7710dd8c0df1474f9e6699597a36b7d,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3972,6 +4412,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DesertRockSmall_02 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 360631554367899737, guid: 23782ca942cb5b44f85541dce5c31bbf,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1029891446843708131, guid: 23782ca942cb5b44f85541dce5c31bbf,
         type: 3}
@@ -4107,6 +4552,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DesertRockSmall_01 (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 9127760457326983254, guid: cd126185db9c58a4bac0d38e04f7871a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4185,6 +4635,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Building_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 865198041575812487, guid: c500c434c29c2294ea3aefaf0f337cce,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4275,6 +4730,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CactusMedium
       objectReference: {fileID: 0}
+    - target: {fileID: 5298299068634931922, guid: d36211188e0172242ba7bcec00afde7d,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4298,6 +4758,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shrub_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 406903883390611880, guid: 47b92ae725ac9ca4eb20474aeeca269b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1075881205352180498, guid: 47b92ae725ac9ca4eb20474aeeca269b,
         type: 3}
@@ -4383,6 +4848,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6418214902792175187}
     m_Modifications:
+    - target: {fileID: 1346052974816330195, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 2905139792311677907, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 3691366827859238473, guid: bd7b0f796512e324592b8c3b30ae3106,
         type: 3}
       propertyPath: m_RootOrder
@@ -4453,10 +4928,45 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4446355408093655256, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 5003267164955588729, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 5335200180885142444, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 5338266095758527838, guid: bd7b0f796512e324592b8c3b30ae3106,
         type: 3}
       propertyPath: m_Name
       value: CactusTallClump (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5338266095758527838, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 6851093690377757164, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 8959003256729707029, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 9106320408512615521, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4481,6 +4991,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BuildingCluster_b01 Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 1038671187852943480, guid: 9aa67ea0e31ebe04abe4dc78a0e924cd,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1136404149637328576, guid: 9aa67ea0e31ebe04abe4dc78a0e924cd,
         type: 3}
@@ -4560,6 +5075,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SmallRocks3X
+      objectReference: {fileID: 0}
+    - target: {fileID: 955298691885534821, guid: e884cff8e5f5b0e43b8c2f14df4949c2,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 2918583188259441813, guid: e884cff8e5f5b0e43b8c2f14df4949c2,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 3903385846752489378, guid: e884cff8e5f5b0e43b8c2f14df4949c2,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 6930860290281019910, guid: e884cff8e5f5b0e43b8c2f14df4949c2,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8965671735252552779, guid: e884cff8e5f5b0e43b8c2f14df4949c2,
         type: 3}
@@ -4710,6 +5245,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: OldWomenHouse_v1
       objectReference: {fileID: 0}
+    - target: {fileID: 2009840514842307831, guid: 79d6d9811ad911b469385811caf2a489,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4819,6 +5359,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CactusMedium (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5298299068634931922, guid: d36211188e0172242ba7bcec00afde7d,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4842,6 +5387,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DesertRockSmall_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 360631554367899737, guid: 23782ca942cb5b44f85541dce5c31bbf,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1029891446843708131, guid: 23782ca942cb5b44f85541dce5c31bbf,
         type: 3}
@@ -4921,6 +5471,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CactusSlabs Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 498812390365843037, guid: 35570aace174dcf469d2ab9d9f2203b5,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 984022866823582951, guid: 35570aace174dcf469d2ab9d9f2203b5,
         type: 3}
@@ -5061,6 +5616,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BuildingCluster_b02
       objectReference: {fileID: 0}
+    - target: {fileID: 4332881255303907472, guid: 47d746c6911939d4a9e87d26f1666f74,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5084,6 +5644,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CactusStubby
+      objectReference: {fileID: 0}
+    - target: {fileID: 8539579862045957244, guid: d39fad86e3e3aa74d88769e1982ca517,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 9063914329205917382, guid: d39fad86e3e3aa74d88769e1982ca517,
         type: 3}
@@ -5159,6 +5724,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6418214902792175187}
     m_Modifications:
+    - target: {fileID: 1346052974816330195, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 2905139792311677907, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 3691366827859238473, guid: bd7b0f796512e324592b8c3b30ae3106,
         type: 3}
       propertyPath: m_RootOrder
@@ -5214,10 +5789,45 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4446355408093655256, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 5003267164955588729, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 5335200180885142444, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 5338266095758527838, guid: bd7b0f796512e324592b8c3b30ae3106,
         type: 3}
       propertyPath: m_Name
       value: CactusTallClump (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5338266095758527838, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 6851093690377757164, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 8959003256729707029, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 9106320408512615521, guid: bd7b0f796512e324592b8c3b30ae3106,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5302,6 +5912,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BuildingCluster_b02 Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 4332881255303907472, guid: 47d746c6911939d4a9e87d26f1666f74,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5392,6 +6007,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DesertRockSmall_01 (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 9127760457326983254, guid: cd126185db9c58a4bac0d38e04f7871a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5470,6 +6090,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Building_Shop
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768485409109481691, guid: bd5ed2751d9573f4baace03cc2207ea2,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5564,6 +6189,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DesertRockSmall_01 (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9127760457326983254, guid: cd126185db9c58a4bac0d38e04f7871a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

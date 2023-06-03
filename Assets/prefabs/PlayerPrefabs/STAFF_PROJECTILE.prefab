@@ -69,14 +69,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3479577108335950271}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0156, y: 0.0045, z: -0.0245}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -0.0156, y: 0.0045, z: 0.046}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6566086650832600034}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!2083052967 &4655589431991782465
 VisualEffect:
   m_ObjectHideFlags: 0
@@ -265,7 +265,7 @@ MonoBehaviour:
   recallSpeed: 1.5
   recallEndThreshold: 2
   maxSpeed: 24
-  maxDist: 15
+  maxDist: 25
   playerOffset: {x: 0, y: 1, z: 0}
   landSound: {fileID: 11400000, guid: 7ef19419ac048fd48b1ed34cd00de1f9, type: 2}
   windSound: {fileID: 11400000, guid: 92ac672b4ed65194f86cd82623da7dee, type: 2}
