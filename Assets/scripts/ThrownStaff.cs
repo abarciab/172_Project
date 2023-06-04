@@ -101,6 +101,8 @@ public class ThrownStaff : MonoBehaviour
         VFXCoordinator.DisableTrailVFX(); //deactivate trail PS object
         VFXCoordinator.DisableHSImpact();
         VFXCoordinator.PlaySpearCatch();
+
+        CameraShake.i.Shake();
     }
 
     private void OnCollisionEnter(Collision collision)
