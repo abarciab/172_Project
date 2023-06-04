@@ -1055,7 +1055,7 @@ RectTransform:
   m_GameObject: {fileID: 88243748}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.0255, y: 2.0255, z: 2.0255}
+  m_LocalScale: {x: 21.382565, y: 15.005309, z: 15.005309}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 470776827}
@@ -1942,12 +1942,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 177666439}
   m_LocalRotation: {x: 0, y: 0.9126916, z: 0, w: -0.40864912}
-  m_LocalPosition: {x: 159, y: 188.033, z: 336.1}
+  m_LocalPosition: {x: 79.24, y: 184.03, z: 304.16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1633489478}
-  - {fileID: 2071541633}
+  - {fileID: 1495841319}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4807,7 +4806,6 @@ GameObject:
   - component: {fileID: 470776827}
   - component: {fileID: 470776826}
   - component: {fileID: 470776825}
-  - component: {fileID: 470776824}
   - component: {fileID: 470776823}
   m_Layer: 5
   m_Name: newItem
@@ -4837,21 +4835,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &470776824
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 470776822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.8396226, g: 0.70644337, b: 0.1782218, a: 1}
-  m_EffectDistance: {x: 3, y: -3}
-  m_UseGraphicAlpha: 1
 --- !u!114 &470776825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4872,7 +4855,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a3e1faf6fe20b494b99a25437784e4dc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f83cb35b63dc32e4ea7c4ca823ae22d4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4899,7 +4882,7 @@ RectTransform:
   m_GameObject: {fileID: 470776822}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.626301, y: 3.626301, z: 3.626301}
+  m_LocalScale: {x: 0.49495265, y: 0.49495265, z: 0.49495265}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 88243749}
@@ -4909,7 +4892,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 1150, y: 750}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &476025466
 GameObject:
@@ -6017,7 +6000,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &646797639
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12375,7 +12358,7 @@ RectTransform:
   m_GameObject: {fileID: 1298722846}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.63757, y: 0.63757, z: 0.63757}
+  m_LocalScale: {x: 1.362994, y: 1.362994, z: 1.362994}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 470776827}
@@ -12789,6 +12772,7 @@ MonoBehaviour:
   dmgFlash: {fileID: 88708608}
   goopOverlay: {fileID: 1731936037}
   fade: {fileID: 2065980848}
+  tutorialDone: {fileID: 11400000, guid: d9860b0abf3606e4ba65fcd4d12ad6e9, type: 2}
   bossBar: {fileID: 659454848}
   bossSlider: {fileID: 5652015895217300521}
   bossName: {fileID: 2035462437}
@@ -12820,10 +12804,48 @@ MonoBehaviour:
   recallSprite: {fileID: 21300000, guid: 318d2b3923db2eb49b12ea4b543d4e6c, type: 3}
   HpBar: {fileID: 1636678246}
   showHPbar: 1
-  newItem: {fileID: 470776822}
-  spearFact: {fileID: 11400000, guid: 51fee63c6e41c204a9377c814ab47668, type: 2}
-  tutorialDone: {fileID: 11400000, guid: d9860b0abf3606e4ba65fcd4d12ad6e9, type: 2}
-  newItemDisplayTime: 1
+  displayImages:
+  - name: 
+    triggerFact: {fileID: 11400000, guid: 51fee63c6e41c204a9377c814ab47668, type: 2}
+    img: {fileID: 21300000, guid: f83cb35b63dc32e4ea7c4ca823ae22d4, type: 3}
+    playOnDisplay: {fileID: 11400000, guid: 81560fbf2eaa0f34fbe35b4574912abb, type: 2}
+    waitTime: 1.5
+  - name: 
+    triggerFact: {fileID: 11400000, guid: 6a6ee2881cfaeb044bad376f977827b1, type: 2}
+    img: {fileID: 21300000, guid: 748b656d9114cd1448cb442a7bec28a2, type: 3}
+    playOnDisplay: {fileID: 0}
+    waitTime: 1
+  - name: 
+    triggerFact: {fileID: 11400000, guid: d607353bc22c0b04d8d18668352b04de, type: 2}
+    img: {fileID: 21300000, guid: f41d8a0fb8e39a342a56e044727f01a6, type: 3}
+    playOnDisplay: {fileID: 0}
+    waitTime: 1
+  - name: 
+    triggerFact: {fileID: 11400000, guid: 08944f24f29109a47a252ae23de34774, type: 2}
+    img: {fileID: 21300000, guid: 4e6bb3fc08e544a41b2b78fefb542172, type: 3}
+    playOnDisplay: {fileID: 0}
+    waitTime: 1
+  - name: 
+    triggerFact: {fileID: 11400000, guid: 1583c58397ff9d5448b1efd00659a618, type: 2}
+    img: {fileID: 21300000, guid: 70f726ae9b41a784dbf70fb10558f93b, type: 3}
+    playOnDisplay: {fileID: 0}
+    waitTime: 1
+  - name: 
+    triggerFact: {fileID: 11400000, guid: 693987e3b05429f47baac509930c46a8, type: 2}
+    img: {fileID: 21300000, guid: 131341445c8fd374f8d112dae64a08d5, type: 3}
+    playOnDisplay: {fileID: 0}
+    waitTime: 1
+  - name: 
+    triggerFact: {fileID: 11400000, guid: 9bd917b47c91b0546b9fc9063b75300d, type: 2}
+    img: {fileID: 21300000, guid: 196e58ed72e96404282dec2bea4ffd2d, type: 3}
+    playOnDisplay: {fileID: 0}
+    waitTime: 1
+  - name: 
+    triggerFact: {fileID: 11400000, guid: b2ae771ca064de54aa11686566b9ce67, type: 2}
+    img: {fileID: 21300000, guid: 574a6900e571ca54a90c4dcbab2edb53, type: 3}
+    playOnDisplay: {fileID: 0}
+    waitTime: 1
+  displayObj: {fileID: 470776825}
   pauseMenu: {fileID: 237958786}
   settingsSection: {fileID: 2060918025}
   savesSection: {fileID: 646797638}
@@ -14509,6 +14531,106 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1483283482}
   m_CullTransparentMesh: 1
+--- !u!1 &1495841318
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1495841319}
+  - component: {fileID: 1495841320}
+  m_Layer: 0
+  m_Name: shakeParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1495841319
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495841318}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1633489478}
+  - {fileID: 2071541633}
+  m_Father: {fileID: 177666447}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1495841320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495841318}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bbbb09a2f0cfb448b1775638f2b8b2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  test: 0
+  testIntensity: 0.05
+  testTime: 2
+  shakeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.009433985
+      inSlope: 2.0267801
+      outSlope: 2.0267801
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.12916666
+    - serializedVersion: 3
+      time: 0.28788736
+      value: 0.043276682
+      inSlope: 1.0689179
+      outSlope: 1.0689179
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.49058816
+      value: 0.021688506
+      inSlope: 0.34020877
+      outSlope: 0.34020877
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.6792867
+      value: 0.01154232
+      inSlope: 0.19103986
+      outSlope: 0.19103986
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -0.66238457
+      outSlope: -0.66238457
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.19583333
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1499367102
 GameObject:
   m_ObjectHideFlags: 0
@@ -17065,8 +17187,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 177666447}
-  m_RootOrder: 0
+  m_Father: {fileID: 1495841319}
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1636678244
 GameObject:
@@ -18069,168 +18191,203 @@ MonoBehaviour:
     nextQuest: speak with gran
     ID: 0
     playLong: 1
+    customID: 0
   - name: fetch the spear from the chest
     fact: {fileID: 11400000, guid: 576ed86d4340f874d931fd4e50c600f2, type: 2}
     state: 1
     nextQuest: fetch the spear from the chest
     ID: 1
     playLong: 0
+    customID: 0
   - name: speak with gran
     fact: {fileID: 11400000, guid: 51fee63c6e41c204a9377c814ab47668, type: 2}
     state: 1
     nextQuest: speak with gran
     ID: 2
     playLong: 0
+    customID: 0
   - name: hold and release LMB to throw spear
     fact: {fileID: 11400000, guid: 6a6ee2881cfaeb044bad376f977827b1, type: 2}
     state: 1
     nextQuest: hold and release LMB to throw spear
     ID: 3
     playLong: 0
+    customID: 0
   - name: press LMB to recall spear
     fact: {fileID: 11400000, guid: c891c6c2eaa1ab94f892d4f9b302e11d, type: 2}
     state: 1
     nextQuest: press LMB to recall spear
     ID: 4
     playLong: 0
+    customID: 0
   - name: throw a fully charged spear to deal extra damage
     fact: {fileID: 11400000, guid: e43dd86f8fa85dc48ba49841edd4821d, type: 2}
     state: 1
     nextQuest: throw a fully charged spear to deal extra damage
     ID: 5
     playLong: 0
+    customID: 0
   - name: throw when the meter reaches the center for exta damage
     fact: {fileID: 11400000, guid: 11df60ec2b4bf054687f195753ad5e18, type: 2}
     state: 1
     nextQuest: throw when the meter reaches the center for exta damage
     ID: 6
     playLong: 0
+    customID: 0
   - name: destroy the dummy on top of the building
     fact: {fileID: 11400000, guid: adbaf4a6fc836a34c9a007872c8ed031, type: 2}
     state: 1
     nextQuest: destroy the dummy on top of the building
     ID: 7
     playLong: 0
+    customID: 0
   - name: speak with gran
     fact: {fileID: 11400000, guid: e7423bacac7bf0543bd88d2b7fc532a7, type: 2}
     state: 1
     nextQuest: speak with gran
     ID: 8
     playLong: 0
-  - name: throw the spear over the shield and recall it to destroy the dummy
+    customID: 0
+  - name: throw the spear behind the dumy
     fact: {fileID: 11400000, guid: 08944f24f29109a47a252ae23de34774, type: 2}
     state: 1
-    nextQuest: throw the spear over the shield and recall it to destroy the dummy
+    nextQuest: throw the spear behind the dumy
     ID: 9
     playLong: 0
+    customID: 0
+  - name: recall it to destroy the dummy
+    fact: {fileID: 11400000, guid: 1583c58397ff9d5448b1efd00659a618, type: 2}
+    state: 1
+    nextQuest: recall it to destroy the dummy
+    ID: -9
+    playLong: 0
+    customID: 1
   - name: speak with gran
     fact: {fileID: 11400000, guid: fc9491d3295522d4ba6b45688bc9245d, type: 2}
     state: 1
     nextQuest: speak with gran
     ID: 10
     playLong: 0
+    customID: 0
   - name: press RMB to strike at close range
     fact: {fileID: 11400000, guid: 693987e3b05429f47baac509930c46a8, type: 2}
     state: 1
     nextQuest: press RMB to strike at close range
     ID: 11
     playLong: 0
+    customID: 0
   - name: destroy the dummy by the rock
     fact: {fileID: 11400000, guid: fc4988d58af734a479c7a0e9cd2678eb, type: 2}
     state: 1
     nextQuest: destroy the dummy by the rock
     ID: 12
     playLong: 0
+    customID: 0
   - name: speak with gran
     fact: {fileID: 11400000, guid: f04b4742d1ecfbe44a8ff8b5931d7db4, type: 2}
     state: 1
     nextQuest: speak with gran
     ID: 13
     playLong: 0
+    customID: 0
   - name: press E to activate sun blast
     fact: {fileID: 11400000, guid: 9bd917b47c91b0546b9fc9063b75300d, type: 2}
     state: 1
     nextQuest: press E to activate sun blast
     ID: 14
     playLong: 0
+    customID: 0
   - name: cleanse adjacent darkness with sun blast
     fact: {fileID: 11400000, guid: b2ae771ca064de54aa11686566b9ce67, type: 2}
     state: 1
     nextQuest: cleanse adjacent darkness with sun blast
     ID: 15
     playLong: 0
+    customID: 0
   - name: throw spear then use sun blast to hit multiple dummies
     fact: {fileID: 11400000, guid: 2c1f06a4686e7954ab445d6ea7d59ccc, type: 2}
     state: 1
     nextQuest: throw spear then use sun blast to hit multiple dummies
     ID: 16
     playLong: 0
+    customID: 0
   - name: cleanse darkness at a distance with sun blast
     fact: {fileID: 11400000, guid: 764d2ee83f1456e45932a06954dc6aca, type: 2}
     state: 1
     nextQuest: cleanse darkness at a distance with sun blast
     ID: 17
     playLong: 0
+    customID: 0
   - name: speak with gran
     fact: {fileID: 11400000, guid: fd462568437b9a240a5fe4fbba949541, type: 2}
     state: 1
     nextQuest: speak with gran
     ID: 18
     playLong: 0
+    customID: 0
   - name: cross the bridge and investigate the camp
     fact: {fileID: 11400000, guid: d9860b0abf3606e4ba65fcd4d12ad6e9, type: 2}
     state: 1
     nextQuest: cross the bridge and investigate the camp
     ID: 19
     playLong: 1
+    customID: 0
   - name: defeat the monsters in the camp
     fact: {fileID: 11400000, guid: 9cd470f2f48980747a85129af216b8a2, type: 2}
     state: 1
     nextQuest: defeat the monsters in the camp
     ID: 20
     playLong: 0
+    customID: 0
   - name: speak with the survivor
     fact: {fileID: 11400000, guid: 653455b653f1c234abccb858377f41f6, type: 2}
     state: 1
     nextQuest: speak with the survivor
     ID: 21
     playLong: 0
+    customID: 0
   - name: clear the west ruins of monsters
     fact: {fileID: 11400000, guid: 9a049b12389eb7a4e93931ece536eae2, type: 2}
     state: 1
     nextQuest: clear the west ruins of monsters
     ID: 22
     playLong: 1
+    customID: 0
   - name: defeat the scorpion
     fact: {fileID: 11400000, guid: 53991789638423c47b2fb85d54bc2d98, type: 2}
     state: 1
     nextQuest: defeat the scorpion
     ID: 23
     playLong: 0
+    customID: 0
   - name: speak with the engineer
     fact: {fileID: 11400000, guid: 145c929df582e3f42b6c75ee63096e09, type: 2}
     state: 1
     nextQuest: speak with the engineer
     ID: 24
     playLong: 0
+    customID: 0
   - name: cross the bridge and investigate the other camp
     fact: {fileID: 11400000, guid: b492315fa819a5e40b08f1d9857be11b, type: 2}
     state: 1
     nextQuest: cross the bridge and investigate the other camp
     ID: 25
     playLong: 1
+    customID: 0
   - name: investigate the sounds coming from the east ruins
     fact: {fileID: 11400000, guid: 4797b0a81d2ca6f4c97380f1bca5a189, type: 2}
     state: 1
     nextQuest: investigate the sounds coming from the east ruins
     ID: 26
     playLong: 0
+    customID: 0
   - name: THANKS FOR PLAYING! more coming soon :)
     fact: {fileID: 11400000, guid: 67269de8472ca304484a63a03dcea2b7, type: 2}
     state: 1
     nextQuest: THANKS FOR PLAYING! more coming soon :)
     ID: 27
     playLong: 1
+    customID: 0
   groups:
   - fact: {fileID: 11400000, guid: 653455b653f1c234abccb858377f41f6, type: 2}
     enemies: []
@@ -21712,7 +21869,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2060918026
 RectTransform:
   m_ObjectHideFlags: 0
@@ -26837,13 +26994,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2071541632}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.25, y: 0.24, z: 3.3899999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 177666447}
-  m_RootOrder: 1
+  m_Father: {fileID: 1495841319}
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2090952956
 GameObject:
@@ -28266,6 +28423,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 964083654665622310, guid: b254029f1aaef9943ad0271662538b62,
+        type: 3}
+      propertyPath: minChargeTime
+      value: 0.13
+      objectReference: {fileID: 0}
     - target: {fileID: 1074361424527653578, guid: b254029f1aaef9943ad0271662538b62,
         type: 3}
       propertyPath: m_Layer
@@ -28279,22 +28441,22 @@ PrefabInstance:
     - target: {fileID: 1131929939906990091, guid: b254029f1aaef9943ad0271662538b62,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 159
+      value: 79.24
       objectReference: {fileID: 0}
     - target: {fileID: 1131929939906990091, guid: b254029f1aaef9943ad0271662538b62,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 187.033
+      value: 183.03
       objectReference: {fileID: 0}
     - target: {fileID: 1131929939906990091, guid: b254029f1aaef9943ad0271662538b62,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 336.1
+      value: 304.16
       objectReference: {fileID: 0}
     - target: {fileID: 1131929939906990091, guid: b254029f1aaef9943ad0271662538b62,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.22673304
+      value: -0.078206986
       objectReference: {fileID: 0}
     - target: {fileID: 1131929939906990091, guid: b254029f1aaef9943ad0271662538b62,
         type: 3}
@@ -28304,7 +28466,7 @@ PrefabInstance:
     - target: {fileID: 1131929939906990091, guid: b254029f1aaef9943ad0271662538b62,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.97395694
+      value: -0.99693716
       objectReference: {fileID: 0}
     - target: {fileID: 1131929939906990091, guid: b254029f1aaef9943ad0271662538b62,
         type: 3}
@@ -28319,7 +28481,7 @@ PrefabInstance:
     - target: {fileID: 1131929939906990091, guid: b254029f1aaef9943ad0271662538b62,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -153.79
+      value: -188.971
       objectReference: {fileID: 0}
     - target: {fileID: 1131929939906990091, guid: b254029f1aaef9943ad0271662538b62,
         type: 3}
@@ -28398,9 +28560,33 @@ PrefabInstance:
       objectReference: {fileID: 1329450020}
     - target: {fileID: 2169044377857516534, guid: b254029f1aaef9943ad0271662538b62,
         type: 3}
+      propertyPath: firstRecall
+      value: 
+      objectReference: {fileID: 11400000, guid: d607353bc22c0b04d8d18668352b04de,
+        type: 2}
+    - target: {fileID: 2169044377857516534, guid: b254029f1aaef9943ad0271662538b62,
+        type: 3}
       propertyPath: recallError
       value: 
       objectReference: {fileID: 11400000, guid: 435471cbcb4b4ce4d829c96880db4c25,
+        type: 2}
+    - target: {fileID: 2169044377857516534, guid: b254029f1aaef9943ad0271662538b62,
+        type: 3}
+      propertyPath: recallThrown
+      value: 
+      objectReference: {fileID: 11400000, guid: 1583c58397ff9d5448b1efd00659a618,
+        type: 2}
+    - target: {fileID: 2169044377857516534, guid: b254029f1aaef9943ad0271662538b62,
+        type: 3}
+      propertyPath: tutorialDone
+      value: 
+      objectReference: {fileID: 11400000, guid: d9860b0abf3606e4ba65fcd4d12ad6e9,
+        type: 2}
+    - target: {fileID: 2169044377857516534, guid: b254029f1aaef9943ad0271662538b62,
+        type: 3}
+      propertyPath: recallstarted
+      value: 
+      objectReference: {fileID: 11400000, guid: 08944f24f29109a47a252ae23de34774,
         type: 2}
     - target: {fileID: 2169044377857516534, guid: b254029f1aaef9943ad0271662538b62,
         type: 3}
@@ -28905,27 +29091,27 @@ PrefabInstance:
     - target: {fileID: 4817872332485334698, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_Color.b
-      value: 1
+      value: 0.9009434
       objectReference: {fileID: 0}
     - target: {fileID: 4817872332485334698, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_Color.g
-      value: 0.89722663
+      value: 0.9020374
       objectReference: {fileID: 0}
     - target: {fileID: 4817872332485334698, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_Color.r
-      value: 0.5330188
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4817872332485334698, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_Intensity
-      value: 8.8
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4817872332485334698, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_ColorTemperature
-      value: 20000
+      value: 6432
       objectReference: {fileID: 0}
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
@@ -28940,42 +29126,42 @@ PrefabInstance:
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: shader1
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: shader2
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: progress
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: progressLerpTarget
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5364301632760274238, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.084819295
+      value: 0.9944275
       objectReference: {fileID: 0}
     - target: {fileID: 5364301632760274238, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.84160423
+      value: 0.048026685
       objectReference: {fileID: 0}
     - target: {fileID: 5364301632760274238, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.053485934
+      value: -0.09373834
       objectReference: {fileID: 0}
     - target: {fileID: 5364301632760274238, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.5307046
+      value: 0.0045271697
       objectReference: {fileID: 0}
     - target: {fileID: 6180193968040157515, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}

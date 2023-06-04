@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
         public string nextQuest;
         public int ID;
         public bool playLong;
+        public bool customID;
     }
 
     [System.Serializable]
@@ -60,9 +61,11 @@ public class GameManager : MonoBehaviour
 
     private void OnValidate()
     {
+        int offset = 0;
         for (int i = 0; i < story.Count; i++) {
             story[i].name = story[i].nextQuest;
-            story[i].ID = i;
+            if (story[i].customID) offset += 1;
+            else story[i].ID = i-offset;
         }
     }
 

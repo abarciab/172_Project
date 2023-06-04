@@ -6,7 +6,7 @@ using UnityEngine;
 public class PAnimator : MonoBehaviour
 {
     [Header("parameters")]
-    [SerializeField] float minWalkSpeed = 0.1f;
+    [SerializeField] float minWalkSpeed = 0.1f, minChargeTime = 0.06f;
 
     [Header("Dependencies")]
     [SerializeField] Animator anim;
@@ -32,7 +32,8 @@ public class PAnimator : MonoBehaviour
 
     private void Update()
     {
-        bool moving = Mathf.Abs(p.forwardSpeed) > minWalkSpeed;
+        bool frozen = GlobalUI.i.DisplayingImage();
+        bool moving = Mathf.Abs(p.forwardSpeed) > minWalkSpeed && !frozen;
 
         if (move.posing) anim.SetBool("HandsOnHips", move.posing);
 
@@ -44,34 +45,29 @@ public class PAnimator : MonoBehaviour
         anim.SetBool("TurningLeft", move.turnLeft && !moving);
         anim.SetBool("TurningRight", move.turnRight && !moving);
         anim.SetBool("StaffDrawn", fight.SpearOut());
-        anim.SetBool("chargingThrow", fight.chargingSpear());
+        anim.SetBool("chargingThrow", fight.chargingSpear() && fight.chargeTime > minChargeTime);
         anim.SetBool("hasSpear", fight.HasSpear());
 
         anim.SetBool("Talking", GlobalUI.i.talking);
         
-        anim.SetBool("Strafe", move.strafe && Mathf.Abs(GetComponent<Rigidbody>().velocity.x + GetComponent<Rigidbody>().velocity.z) > 0.01f);
+        anim.SetBool("Strafe", !frozen && move.strafe && Mathf.Abs(GetComponent<Rigidbody>().velocity.x + GetComponent<Rigidbody>().velocity.z) > 0.01f);
 
-        anim.SetBool("Attacking", attacking);
+        
 
         if (!attacking && fight.Stabbing()) {
             attacking = true;
             anim.SetTrigger("BasicAttack");
         }
 
-        if (!fight.Stabbing()) {
+        if (!fight.Stabbing() || frozen) {
             attacking = false;
         }
-        
+
+        anim.SetBool("Attacking", attacking);
+
         if ((move.running || move.rolling || move.knockedBack) && attacking) {
             fight.EndAttack();
         }
-
-        /*anim.SetBool("StaffDrawn", fight.staffDrawn && !move.posing);        
-        if (!attacking && fight.hvyAttacking) {
-            attacking = true;
-            anim.SetTrigger("StrongAttack");
-        }
-        */
 
         if (triggeredDash && !move.rolling) triggeredDash = false;
         if (move.rolling && !triggeredDash && !attacking) {

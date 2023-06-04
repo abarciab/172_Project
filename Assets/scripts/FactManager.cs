@@ -99,6 +99,7 @@ public class FactManager : MonoBehaviour
         if (respectAutoSave && autoSave && autosaveTriggers.Contains(fact)) GetComponent<SaveManager>().SaveGame();
 
         CheckShaders(!fromRule);
+        if (!fromRule) GlobalUI.i.Inform(fact);
     }
 
     public void RemoveFact(Fact fact)
