@@ -10485,6 +10485,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1149758681}
+  - component: {fileID: 1149758682}
   m_Layer: 5
   m_Name: bottomLeft
   m_TagString: Untagged
@@ -10515,6 +10516,29 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 400.328, y: 188.7609}
   m_Pivot: {x: 0, y: 0}
+--- !u!223 &1149758682
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1149758680}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 1
+  m_TargetDisplay: 0
 --- !u!1 &1154664803
 GameObject:
   m_ObjectHideFlags: 0
@@ -12935,8 +12959,8 @@ RectTransform:
   - {fileID: 1915981732}
   - {fileID: 1298722847}
   - {fileID: 237958787}
-  - {fileID: 2065980850}
   - {fileID: 1731936039}
+  - {fileID: 2065980850}
   - {fileID: 1545615706}
   m_Father: {fileID: 0}
   m_RootOrder: 7

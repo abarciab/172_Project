@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GlobalUI : MonoBehaviour
@@ -216,7 +217,8 @@ public class GlobalUI : MonoBehaviour
     public void Exit()
     {
         Save();
-        Application.Quit();
+        SceneManager.LoadScene(0);
+        //Application.Quit();
     }
 
     public void Pause()
