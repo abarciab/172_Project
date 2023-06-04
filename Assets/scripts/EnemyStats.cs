@@ -37,6 +37,10 @@ public class EnemyStats : HitReciever
 
     Coroutine currentBleed;
 
+    public void HideBody()
+    {
+        foreach (var b in body) b.enabled = false;
+    }
     public void SetInvincible()
     {
         invincible = true;

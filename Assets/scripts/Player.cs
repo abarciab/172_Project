@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public Vector3 speed3D;
     [HideInInspector] public float forwardSpeed;
     [SerializeField] Fact tutorialComplete, hasSpear;
+    [SerializeField] float dialogueDisplaySpeed;
    
     EnemyStats closestEnemy;
     [SerializeField] float lockOnDist = 15, speakerEndDist;
@@ -45,9 +46,10 @@ public class Player : MonoBehaviour
     [SerializeField] float meleeRatio = 0.5f, tokenCheckTime = 5;
     float meleeCheckCooldown;
 
-    //closer enemies should melee
-    //higher priority melee enemies should melee
-    //don't have too many ranged or melee enemies
+    //dialogue
+    string currentLine, partialLine;
+    int partialLineIndex;
+    Coroutine displayCurrentLine;
 
     bool fightingEnabled;
 
@@ -134,14 +136,41 @@ public class Player : MonoBehaviour
 
         GetComponent<PMovement>().StopMovement();
 
-        var nextLine = interestedSpeaker.GetNextLine();
-        if (string.Equals("END", nextLine)) EndConversation();
+        if (string.IsNullOrEmpty(currentLine)) currentLine = interestedSpeaker.GetNextLine();
+
+        if (string.Equals("END", currentLine)) EndConversation();
         else {
+
             SwitchToDialogueCam();
             interestedSpeaker.talking = true;
-            GlobalUI.i.DisplayLine(interestedSpeaker.characterName, nextLine);
+
+            if (displayCurrentLine == null) { 
+                displayCurrentLine = StartCoroutine(_DisplayCurrentLine()); 
+                return; 
+            }
+
+            StopCoroutine(displayCurrentLine);
+            GlobalUI.i.DisplayLine(interestedSpeaker.characterName, currentLine);
+            currentLine = null;
+            displayCurrentLine = null;
         }
     }
+
+    IEnumerator _DisplayCurrentLine()
+    {
+        partialLine = "";
+        partialLineIndex = 0;
+        while (currentLine != null) {
+            partialLine += currentLine[partialLineIndex];
+            partialLineIndex += 1;
+            if (partialLineIndex >= currentLine.Length) currentLine = null;
+
+            GlobalUI.i.DisplayLine(interestedSpeaker.characterName, partialLine);
+            yield return new WaitForSeconds(dialogueDisplaySpeed);
+        }
+        displayCurrentLine = null;
+    }
+
 
     void SwitchToDialogueCam()
     {
@@ -163,6 +192,8 @@ public class Player : MonoBehaviour
         interestedSpeaker.EndConversation();
         GetComponent<PMovement>().ResumeMovement();
         interestedSpeaker = null;
+        displayCurrentLine = null;
+        currentLine = null;
         GlobalUI.i.EndConversation();
     }
 
@@ -289,6 +320,7 @@ public class Player : MonoBehaviour
         StopAllCoroutines();
 
         hurtSound.Play();
+        CameraShake.i.Shake();
     }
 
     void Die() {

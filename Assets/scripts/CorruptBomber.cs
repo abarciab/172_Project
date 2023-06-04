@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class CorruptBomber : BaseEnemy
@@ -13,7 +14,10 @@ public class CorruptBomber : BaseEnemy
     [Header("Explode")]
     [SerializeField] Vector2 explodeRange;
     [SerializeField] int numGlobs = 4;
-    [SerializeField, Range(0, 1)] float globAmount = 0.5f;
+    [SerializeField, Range(0, 1)] float globAmount = 0.5f, explodeSpeed;
+    [SerializeField] GameObject explodeObj;
+    [SerializeField] Vector3 explodeOffset = new Vector3(0, 1, 0);
+    [SerializeField] int explodeDamage;
 
     [Header("Sounds")]
     [SerializeField] Sound explodeSound;
@@ -50,6 +54,10 @@ public class CorruptBomber : BaseEnemy
         buildUpSound.Play(transform);
         anim.SetTrigger(explodeTrigger);
         busy = true;
+        var explosionVFX = Instantiate(explodeObj, transform.position + explodeOffset, Quaternion.identity);
+        explosionVFX.GetComponent<HitBox>().StartChecking(true, explodeDamage);
+        stats.HideBody();
+        Stop();
     }
 
     public override void EndAttack()
