@@ -53,7 +53,9 @@ public class PMovement : MonoBehaviour
 
     public void StopMovement()
     {
-        stopped = true;   
+        stopped = true;
+        rb.velocity = Vector3.zero;
+        rolling = stepping = false;
     }
 
     public void ResumeMovement()
@@ -177,7 +179,8 @@ public class PMovement : MonoBehaviour
             KBdir.y = 0;
         }
 
-        if (posing) rb.velocity = Vector3.Lerp(rb.velocity, Vector3.zero, 0.025f);
+        if (stopped) rb.velocity = Vector3.zero;
+        else if (posing) rb.velocity = Vector3.Lerp(rb.velocity, Vector3.zero, 0.025f);
         else if (knockedBack) rb.velocity = KBdir * KB + verticalVel;
         else if (rolling) rb.velocity = (rollDir * dashSpeed) + verticalVel;
         else if (stepping) rb.velocity = (transform.forward * stepSpeed) + verticalVel;
@@ -197,7 +200,7 @@ public class PMovement : MonoBehaviour
     {
         Transform model = transform.GetChild(0);
 
-        if (p.InCombat()) { model.transform.localEulerAngles = Vector3.zero;  return; }
+        if (p.InCombat() || GetComponent<PFighting>().chargingSpear()) { model.transform.localEulerAngles = Vector3.zero;  return; }
 
         if (rb.velocity.magnitude <= 0.01f) {
             model.transform.localRotation = Quaternion.Lerp(model.transform.localRotation, Quaternion.identity, 0.2f);

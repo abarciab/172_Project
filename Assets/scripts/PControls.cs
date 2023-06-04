@@ -29,7 +29,7 @@ public class PControls : MonoBehaviour
     {
         if (Input.GetKeyDown(pauseKey) && !GameManager.i.paused) GameManager.i.TogglePause();
 
-        if (GameManager.i.paused) return;
+        if (GameManager.i.paused || GlobalUI.i.DisplayingImage()) return;
 
         if (move.sitting) timeSitting += Time.deltaTime;
         if (move.sitting && timeSitting >= sitControlTime) GlobalUI.i.DisplayPrompt("press alt to stand up");
@@ -37,7 +37,7 @@ public class PControls : MonoBehaviour
         if (move.posing) return;
 
         if (move.sitting && Input.GetKeyDown(standUpKey)) { move.sitting = false; GlobalUI.i.HidePrompt(); }
-        if (!move.sitting && Input.GetKeyDown(roll)) move.Roll();
+        if (!move.sitting && !fight.stabbing && !fight.chargingSpear() && Input.GetKeyDown(roll)) move.Roll();
 
         move.goForward = Input.GetKey(forward);
         move.goBack = Input.GetKey(backward);

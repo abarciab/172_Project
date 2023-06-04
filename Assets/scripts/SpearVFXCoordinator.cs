@@ -15,7 +15,7 @@ public class SpearVFXCoordinator : MonoBehaviour
     {
         fight = Player.i.GetComponent<PFighting>();
         VFX_impactHardSurface.SetActive(false);
-        //VFX_spearCatch.SetActive(false);
+        DisableTrailVFX();
     }
 
     private void Update()

@@ -137,10 +137,6 @@ public class Player : MonoBehaviour
         var nextLine = interestedSpeaker.GetNextLine();
         if (string.Equals("END", nextLine)) EndConversation();
         else {
-
-
-           
-
             SwitchToDialogueCam();
             interestedSpeaker.talking = true;
             GlobalUI.i.DisplayLine(interestedSpeaker.characterName, nextLine);

@@ -47,7 +47,7 @@ public class Armadillo : BaseEnemy
 
     public override void EndAttack()
     {
-        print("end attack");
+        //print("end attack");
         base.EndAttack();
 
         if (digging) EndDig();
@@ -61,7 +61,7 @@ public class Armadillo : BaseEnemy
 
     void EndRoll()
     {
-        print("end roll");
+        //print("end roll");
         rollHB.EndChecking();
         busy = true;
         
@@ -83,7 +83,7 @@ public class Armadillo : BaseEnemy
 
     public void FinishUnroll()
     {
-        print("done unrolling!");
+        //print("done unrolling!");
         move.EnableRotation();
         move.target = target.position;
         move.gotoTarget = true;
@@ -93,7 +93,7 @@ public class Armadillo : BaseEnemy
 
     public void StartDigCountdown()
     {
-        print("starting countdown");
+        //print("starting countdown");
         digging = true;
         digTimeLeft = Random.Range(digTimeRange.x, digTimeRange.y);
     }
@@ -155,7 +155,7 @@ public class Armadillo : BaseEnemy
 
     void StartDig()
     {
-        print("start dig!");
+        //print("start dig!");
         if (enemyPrefab) {
             for (int i = 0; i < numEnemiesToSpawn; i++) {
                 if (minions.Count > 2) break;
@@ -174,7 +174,7 @@ public class Armadillo : BaseEnemy
 
     void StartRoll()
     {
-        print("start roll");
+        //print("start roll");
         stats.SetInvincible();
         move.target = target.transform.position;
         rollTarget = move.target;
@@ -217,7 +217,7 @@ public class Armadillo : BaseEnemy
         swipeCooldown = swipeResetTime;
         StartAttack(currentAttack, anim);
         busy = true;
-        print("swipe");
+        //print("swipe");
     }
 
     protected override void OnDrawGizmosSelected()

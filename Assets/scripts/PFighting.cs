@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Unity.Burst.Intrinsics.X86;
 
 public class PFighting : HitReciever {
 
@@ -11,7 +12,7 @@ public class PFighting : HitReciever {
 
     bool hasSpear, aimed, recalling, charging, spearDrawn;
     public bool stabbing;
-    float chargeTime;
+    [HideInInspector] public float chargeTime;
     [SerializeField] GameObject spearObj;
 
     [Header("Stab")]
@@ -31,9 +32,18 @@ public class PFighting : HitReciever {
 
     [Header("Tutorial")]
     [SerializeField] Fact anyThrow;
-    [SerializeField] Fact recall, fullThrow, criticalThrow, stabbedOnce, shockWave, throwWeak;
+    [SerializeField] Fact recall, fullThrow, criticalThrow, stabbedOnce, shockWave, throwWeak, recallstarted, recallThrown, firstRecall, tutorialDone;
 
     public bool RecallReady;
+    public void RecallReadyNotice()
+    {
+        RecallReady = true;
+
+        var fMan = FactManager.i;
+        if (fMan.IsPresent(tutorialDone)) return;
+        if (fMan.IsPresent(anyThrow)) fMan.AddFact(firstRecall);
+        if (fMan.IsPresent(recallstarted)) fMan.AddFact(recallThrown);
+    }
 
     public void DrawSpear()
     {
@@ -101,6 +111,8 @@ public class PFighting : HitReciever {
         if (!fMan.IsPresent(anyThrow)) fMan.AddFact(anyThrow);
         else if (!fMan.IsPresent(fullThrow) && power == 1) fMan.AddFact(fullThrow);
         else if (!fMan.IsPresent(criticalThrow) && perfectThrow) fMan.AddFact(criticalThrow);
+
+        
     }
 
     public void Stab()
@@ -171,20 +183,20 @@ public class PFighting : HitReciever {
         stabbing = false;
 
         CameraState.i.SwitchToState(CameraState.StateName.MouseOverShoulder);
-        SwapSpear(false);
-    }
-
-    public void SwapSpear(bool skip = true)
-    {
-        if (skip) return;
 
         staffProjectile.gameObject.SetActive(false);
 
         staffProjectile.transform.parent = transform;
         staffProjectile.transform.localPosition = offset;
 
-        staffProjectile.gameObject.SetActive(true);
         staffProjectile.isKinematic = true;
+        var dir = GetAimDir();
+        staffProjectile.transform.LookAt(staffProjectile.transform.position + dir * 10);
+       
+    }
+
+    public void SwapSpear()
+    {
         var dir = GetAimDir();
         staffProjectile.transform.LookAt(staffProjectile.transform.position + dir * 10);
     }
@@ -194,7 +206,7 @@ public class PFighting : HitReciever {
         if (swCooldown > 0 || !enabled) return;
         shockwaveSound.Play(transform);
         swCooldown = shockwaveResetTime;
-        FactManager.i.AddFact(shockWave);
+        if (!FactManager.i.IsPresent(tutorialDone)) FactManager.i.AddFact(shockWave);
 
         if (hasSpear) shockwave.transform.position = transform.position;
         else shockwave.transform.position = staffProjectile.transform.position;

@@ -2,10 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GlobalUI : MonoBehaviour
 {
+    [System.Serializable]
+    public class DisplayImageData
+    {
+        [HideInInspector] public string name;
+        public Fact triggerFact;
+        public Sprite img;
+        [SerializeField] Sound playOnDisplay;
+        public float waitTime = 1.5f;
+
+        public void PlaySound()
+        {
+            if (playOnDisplay == null) return;
+
+            if (!playOnDisplay.instantialized) playOnDisplay = Instantiate(playOnDisplay);
+            playOnDisplay.Play();
+        }
+    }
+
     public static GlobalUI i;
     private void Awake() { i = this; }
 
@@ -16,6 +35,7 @@ public class GlobalUI : MonoBehaviour
     public GameObject tutorialSkip;
     [SerializeField] Image dmgIndicator, dmgFlash, goopOverlay;
     public Image fade;
+    [SerializeField] Fact tutorialDone;
 
     [Header("boss bar")]
     [SerializeField] GameObject bossBar;
@@ -54,10 +74,10 @@ public class GlobalUI : MonoBehaviour
     public Slider HpBar;
     [SerializeField] bool showHPbar;
 
-    [Header("newItem")]
-    [SerializeField] GameObject newItem;
-    [SerializeField] Fact spearFact, tutorialDone;
-    [SerializeField] float newItemDisplayTime = 1;
+    [Header("display images")]
+    [SerializeField] List<DisplayImageData> displayImages = new List<DisplayImageData>();
+    [SerializeField] Image displayObj;
+    bool displayingImage;
 
     [Header("Pause Menu")]
     [SerializeField] GameObject pauseMenu;
@@ -69,6 +89,20 @@ public class GlobalUI : MonoBehaviour
 
     UISound sound;
     bool loadingSave = false;
+
+    public bool DisplayingImage()
+    {
+        return displayingImage;
+    }
+
+    public void Inform(Fact newFact)
+    {
+        for (int i = 0; i < displayImages.Count; i++) {
+            if (displayImages[i].triggerFact != newFact) continue;
+            DisplayImage(displayImages[i]);
+            displayImages.RemoveAt(0);
+        }
+    }
 
     public void LoadSave(int save)
     {
@@ -96,6 +130,39 @@ public class GlobalUI : MonoBehaviour
         loadingSave = true;
         Time.timeScale = 1;
         StartCoroutine(transition(-1, false, 2));   
+    }
+
+    void DisplayImage(DisplayImageData data)
+    {
+
+        displayingImage = true;
+        displayObj.sprite = data.img;
+        displayObj.gameObject.SetActive(true);
+
+        Player.i.FreezePlayer();
+        data.PlaySound();
+
+        StartCoroutine(WaitForDisplayedItem(data));
+    }
+
+    IEnumerator WaitForDisplayedItem(DisplayImageData data)
+    {
+        yield return new WaitForSeconds(data.waitTime);
+
+        DisplayLine("", "");
+
+        while (!Input.GetKeyDown(KeyCode.F)) yield return null;
+
+        EndDisplayImage(data);
+    }
+
+    void EndDisplayImage(DisplayImageData data)
+    {
+        sound.TurnPage();
+        displayObj.gameObject.SetActive(false);
+        Player.i.UnfreezePlayer();
+        mainText.gameObject.SetActive(false);
+        displayingImage = false;
     }
 
     IEnumerator transition(int save = -1, bool reset = true, float time = 1.5f) {
@@ -150,7 +217,8 @@ public class GlobalUI : MonoBehaviour
     public void Exit()
     {
         Save();
-        Application.Quit();
+        SceneManager.LoadScene(0);
+        //Application.Quit();
     }
 
     public void Pause()
@@ -198,7 +266,7 @@ public class GlobalUI : MonoBehaviour
 
     public void EndConversation()
     {
-        StopAllCoroutines();
+        if (!displayingImage) StopAllCoroutines();
         showHPbar = true;
         commandPrompt.gameObject.SetActive(false);
         nameText.gameObject.SetActive(false);
@@ -210,7 +278,6 @@ public class GlobalUI : MonoBehaviour
     public void DisplayPrompt(string prompt)
     {
         if (mainText.gameObject.activeInHierarchy) return;
-
         StopAllCoroutines();
         commandPrompt.text = prompt;
         StartCoroutine(FadeText(commandPrompt, 1));
@@ -224,8 +291,6 @@ public class GlobalUI : MonoBehaviour
     public void HidePrompt()
     {
         if (commandPrompt.color.a == 0 || !commandPrompt.gameObject.activeInHierarchy) return;
-
-        StopAllCoroutines();
         StartCoroutine(FadeText(commandPrompt, 0));
     }
 
@@ -250,15 +315,12 @@ public class GlobalUI : MonoBehaviour
 
         DisplayAbilities();
 
-        DisplayOverlay();
+        DisplayOverlays();
 
         VolumeSliders();
 
         sound.Heartbeat(1-HpBar.value);
 
-        bool fighting = Player.i.InCombat();
-        compass.SetActive(!fighting);
-        currentQuest.gameObject.SetActive(!string.IsNullOrEmpty(currentQuest.text) && !talking && !fighting);
         if (activeBoss == null || !activeBoss.activeInHierarchy) {
             EndBossFight();
             activeBoss = null;
@@ -267,38 +329,7 @@ public class GlobalUI : MonoBehaviour
         newQuestColorCooldown -= Time.deltaTime;
         if (newQuestColorCooldown <= 0)  questBacking.color = Color.Lerp(questBacking.color, Color.black, newQuestSmoothness);
 
-        
-        if (mainText.gameObject.activeInHierarchy) commandPrompt.gameObject.SetActive(false);
-
-        if (FactManager.i.IsPresent(tutorialDone)) {
-            Destroy(newItem);
-            newItem = null;
-            Player.i.UnfreezePlayer();
-            if (string.IsNullOrEmpty(mainText.text))mainText.gameObject.SetActive(false);
-        }
-        if (FactManager.i.IsPresent(spearFact) && newItem != null && !newItem.activeInHierarchy) {
-            Player.i.FreezePlayer();
-            sound.GetItem();
-            newItem.SetActive(true);
-        }
-        if (newItem && newItem.activeInHierarchy) {
-            newItemDisplayTime -= Time.deltaTime;
-            if (newItemDisplayTime > 0) return;
-
-            mainText.text = " ";
-            mainText.gameObject.SetActive(true);
-            showHPbar = false;
-            
-
-            if (!Input.GetKeyDown(KeyCode.F)) return;
-            sound.TurnPage();
-            Destroy(newItem);
-            newItem = null;
-            mainText.text = "";
-            Player.i.UnfreezePlayer();
-            showHPbar = true;
-            mainText.gameObject.SetActive(false);
-        }
+        if (mainText.gameObject.activeInHierarchy) commandPrompt.gameObject.SetActive(false);        
     }
 
     void VolumeSliders()
@@ -308,8 +339,13 @@ public class GlobalUI : MonoBehaviour
         //AudioManager.instance.SetMusicVolume(musicSlider.value);
     }
 
-    void DisplayOverlay()
+    void DisplayOverlays()
     {
+        bool fighting = Player.i.InCombat();
+
+        currentQuest.gameObject.SetActive(!string.IsNullOrEmpty(currentQuest.text) && !talking && !fighting);
+        compass.SetActive(!fighting);
+
         int targetAlpha = Player.i.goopTime > 0 ? 1 : 0;
         Color targetCol = Color.black;
         targetCol.a = targetAlpha;
@@ -371,7 +407,6 @@ public class GlobalUI : MonoBehaviour
         centralMarkerShine.SetActive(perfect);
     }
 
-
     private void Start()
     {
         fade.GetComponent<Fade>().Disapear();
@@ -388,7 +423,6 @@ public class GlobalUI : MonoBehaviour
 
         EndBossFight();
     }
-
     
     IEnumerator FadeText(TextMeshProUGUI text, float targetAlpha)
     {

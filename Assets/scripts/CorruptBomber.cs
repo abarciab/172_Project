@@ -13,7 +13,8 @@ public class CorruptBomber : BaseEnemy
     [Header("Explode")]
     [SerializeField] Vector2 explodeRange;
     [SerializeField] int numGlobs = 4;
-    [SerializeField, Range(0, 1)] float globAmount = 0.5f;
+    [SerializeField, Range(0, 1)] float globAmount = 0.5f, explodeSpeed;
+    [SerializeField] GameObject explodeObj;
 
     [Header("Sounds")]
     [SerializeField] Sound explodeSound;

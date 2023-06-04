@@ -77,7 +77,7 @@ public class ThrownStaff : MonoBehaviour
         float dist = Vector3.Distance(transform.position, Player.i.transform.position);
         if (!recalling && dist > maxDist && !fight.RecallReady) {
             ping.Play();
-            fight.RecallReady = true;
+            fight.RecallReadyNotice();
         }
         windSound.PercentVolume(rb.velocity.magnitude / maxSpeed, 0.025f);
         if (!rb.isKinematic && !recalling) transform.LookAt(transform.position + rb.velocity.normalized);
@@ -109,13 +109,14 @@ public class ThrownStaff : MonoBehaviour
         if (player != null) return;
 
         landed = true;
+        fight.RecallReadyNotice();
+
         VFXCoordinator.EnableHSImpact();
         if (!rb.isKinematic) {
             landSound.Play();
 
             if (!fight.RecallReady) {
                 ping.Play();
-                fight.RecallReady = true;
             }
         }
         windSound.Stop();
