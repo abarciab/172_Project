@@ -33,6 +33,9 @@ public class Snake : BaseEnemy
     [SerializeField] List<float> moveTriggerHpPercent = new List<float>();
     int wave = 0;
 
+    [Header("final phase")]
+    [SerializeField] GameObject postProcessing;
+
     [Header("Anims")]
     [SerializeField] Animator anim;
     [SerializeField] string sprayAnim, spitAnim, tailWhipAnim, slitherAnim;
@@ -42,6 +45,14 @@ public class Snake : BaseEnemy
         base.EndAttack();
         tailWhipHB.Refresh();
         currentAttack = null;
+    }
+
+    protected override void Die()
+    {
+        base.Die();
+        Destroy(gameObject);
+        postProcessing.SetActive(false);
+        FactManager.i.GetComponent<ShaderTransitionController>().ResumePP();
     }
 
     protected override void Update()
@@ -68,7 +79,11 @@ public class Snake : BaseEnemy
 
     IEnumerator MoveAndSpawn()
     {
-        print("MOVING!");
+        if (moveTriggerHpPercent.Count == 1) {
+            postProcessing.SetActive(true);
+            FactManager.i.GetComponent<ShaderTransitionController>().PausePP();
+            yield break;
+        }
 
         busy = true;
         moveTriggerHpPercent.RemoveAt(0);

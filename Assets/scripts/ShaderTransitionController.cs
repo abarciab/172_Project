@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -19,9 +17,10 @@ public class ShaderTransitionController : MonoBehaviour {
         [Range(0, 5)]public float skyBoxExposure;
         public Light sun;
 
-        public void Display(float progress)
+        public void Display(float progress, bool paused)
         {
-            processingVolume.weight = progress;
+            if (paused) processingVolume.weight = 0;
+            else processingVolume.weight = progress;
         }
     }
 
@@ -39,9 +38,19 @@ public class ShaderTransitionController : MonoBehaviour {
     bool transitioning;
     Vector3 transitionTarget;
     float maxDist;
-
+    bool paused;
 
     [HideInInspector] public int time;
+
+    public void PausePP()
+    {
+        paused = true;
+    }
+
+    public void ResumePP()
+    {
+        paused = false;
+    }
 
     private void Start()
     {
@@ -115,7 +124,7 @@ public class ShaderTransitionController : MonoBehaviour {
 
 
         for (int i = 0; i < shaders.Count; i++) {
-            if (i != shader1 && i != shader2) shaders[i].Display(0);
+            if (i != shader1 && i != shader2) shaders[i].Display(0, paused);
         }
 
         if (next && shader2 < shaders.Count - 1) {
@@ -137,8 +146,8 @@ public class ShaderTransitionController : MonoBehaviour {
 
         var A = shaders[shader1];
         var B = shaders[shader2];
-        A.Display(1 - progress);
-        B.Display(progress);
+        A.Display(1 - progress, paused);
+        B.Display(progress, paused);
         RenderSettings.fogColor = Color.Lerp(A.fogColor, B.fogColor, progress);
         actualSun.transform.rotation = Quaternion.Lerp(A.sun.transform.rotation, B.sun.transform.rotation, progress);
 
