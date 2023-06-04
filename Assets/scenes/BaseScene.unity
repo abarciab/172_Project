@@ -6082,7 +6082,6 @@ GameObject:
   m_Component:
   - component: {fileID: 677227840}
   - component: {fileID: 677227843}
-  - component: {fileID: 677227842}
   - component: {fileID: 677227841}
   m_Layer: 10
   m_Name: snakeEyes
@@ -6149,14 +6148,6 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
---- !u!81 &677227842
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 677227839}
-  m_Enabled: 1
 --- !u!20 &677227843
 Camera:
   m_ObjectHideFlags: 0
@@ -20510,7 +20501,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 6212135502361465270}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af98a9182a8f23d46a5eb72501f8da35, type: 3}
   m_Name: 
@@ -29430,7 +29421,7 @@ PrefabInstance:
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}

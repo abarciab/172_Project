@@ -17,7 +17,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2896752882483222899
 Transform:
@@ -119,7 +119,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &6733659835963791928
 Transform:
@@ -204,7 +204,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &692806843950682131
 Transform:
@@ -309,7 +309,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1840993770577640518
 Transform:
@@ -414,7 +414,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &7023637162123270824
 Transform:
@@ -519,7 +519,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8986320833713134973
 Transform:
@@ -685,6 +685,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: StairsWide
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1af0cc05bbb968c49ac368624a44532b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -836,10 +841,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: BrokenRuin_miscChunk_01 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6d60dd2416781ad4da460f6b64c1cc56,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6d60dd2416781ad4da460f6b64c1cc56,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1960350603896014584}
   m_SourcePrefab: {fileID: 100100000, guid: 6d60dd2416781ad4da460f6b64c1cc56, type: 3}
 --- !u!4 &527995766733655674 stripped
 Transform:
@@ -847,6 +861,34 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 61194587895277969}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &871448686882821312 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6d60dd2416781ad4da460f6b64c1cc56,
+    type: 3}
+  m_PrefabInstance: {fileID: 61194587895277969}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1960350603896014584
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871448686882821312}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4897071443562209310, guid: 6d60dd2416781ad4da460f6b64c1cc56, type: 3}
 --- !u!1001 &223398653073479196
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -914,6 +956,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BrokenRuin_pillarMid_03
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 67a4fb13591a4234489b6e2e012d4223,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1025,6 +1072,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BrokenRuin_Big_02 Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 864715218387094432, guid: 3cd8103e2fc5ebd4eae0990a1fd55640,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 1657581505833724533, guid: 3cd8103e2fc5ebd4eae0990a1fd55640,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -1084,6 +1136,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BrokenRuin_miscChunk_01 Variant 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5062680706096767253, guid: f8241650f9e07f643aa3c8fd7bec37c7,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 5551128458252221359, guid: f8241650f9e07f643aa3c8fd7bec37c7,
         type: 3}
@@ -1163,6 +1220,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BrokenRuin_miscChunk_01 Variant 1 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5062680706096767253, guid: f8241650f9e07f643aa3c8fd7bec37c7,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 5551128458252221359, guid: f8241650f9e07f643aa3c8fd7bec37c7,
         type: 3}
@@ -1308,6 +1370,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BrokenRuin_pillarTop_01 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e60be7d3d557bcc4cbb644a4492ae6ed,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1386,6 +1453,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BrokenRuin_Big_00
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 26981a53d3c3bac48ae49b36fcb8dc6f,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1502,6 +1574,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BrokenRuin_pillarBase_01 Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 4055958613875077019, guid: 779c12005d0ef1b419cd2b1cf54d9ff9,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1580,6 +1657,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BrokenRuin_pillar_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 8203853258928279343, guid: d68dc13448e86bb4ba0605b47cc4a914,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1660,6 +1742,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BrokenRuin_brickBig_01 (1) Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 6972088146761563895, guid: 5262875a0b1bb6c42a46156c6fb5aa4c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1683,6 +1770,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DesertRockSmall_02 Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 360631554367899737, guid: 23782ca942cb5b44f85541dce5c31bbf,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1029891446843708131, guid: 23782ca942cb5b44f85541dce5c31bbf,
         type: 3}
@@ -1823,6 +1915,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BrokenRuin_pillarBase_01 Variant (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4055958613875077019, guid: 779c12005d0ef1b419cd2b1cf54d9ff9,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1902,6 +1999,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: RuinsStairsMed (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 953540135177332512, guid: fc32d1b24fc20114b8500d22863990b8,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1980,6 +2082,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BrokenRuin_Big_02 Variant (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 864715218387094432, guid: 3cd8103e2fc5ebd4eae0990a1fd55640,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2064,6 +2171,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BrokenRuin_miscChunk_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6d60dd2416781ad4da460f6b64c1cc56,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2175,6 +2287,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PillarCrooked
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ff556824e6c567541987aec5acb3d41f,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2233,6 +2350,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BrokenRuin_brickBig_01 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6972088146761563895, guid: 5262875a0b1bb6c42a46156c6fb5aa4c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 7749012251870192717, guid: 5262875a0b1bb6c42a46156c6fb5aa4c,
         type: 3}
@@ -2312,6 +2434,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BrokenRuin_pillarMid_02 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1615909260369109100, guid: 90137f9548648eb4589e5c69d6f1eb00,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 2100661244756294358, guid: 90137f9548648eb4589e5c69d6f1eb00,
         type: 3}
@@ -2447,6 +2574,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BrokenRuin_miscChunk_01 (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6d60dd2416781ad4da460f6b64c1cc56,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2501,6 +2633,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BrokenRuin_pillarSegment_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 5983348010406159411, guid: 396cbf5dd81e08e4f9876b2dcb5c952a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 6359874309023661705, guid: 396cbf5dd81e08e4f9876b2dcb5c952a,
         type: 3}
@@ -2641,10 +2778,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: BrokenRuin_pillarSegment_01 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 22b722c8fe2ea034d97dd4ebad4587cf,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 22b722c8fe2ea034d97dd4ebad4587cf,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5416364436805834864}
   m_SourcePrefab: {fileID: 100100000, guid: 22b722c8fe2ea034d97dd4ebad4587cf, type: 3}
 --- !u!4 &3653901103498808581 stripped
 Transform:
@@ -2652,6 +2798,34 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3837061164723415790}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4178939258566088639 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 22b722c8fe2ea034d97dd4ebad4587cf,
+    type: 3}
+  m_PrefabInstance: {fileID: 3837061164723415790}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &5416364436805834864
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4178939258566088639}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 8145199036195069421, guid: 22b722c8fe2ea034d97dd4ebad4587cf, type: 3}
 --- !u!1001 &3974727188445884688
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2719,6 +2893,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BrokenRuin_Big_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0f5f8a8e4f35cc743986389ad24b7f5f,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2831,6 +3010,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BrokenRuin_pillar_02
       objectReference: {fileID: 0}
+    - target: {fileID: 8203853258928279343, guid: d68dc13448e86bb4ba0605b47cc4a914,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2854,6 +3038,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BrokenRuin_miscChunk_01 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2633021050413355244, guid: 258d7081883ded742982d3e127c59c30,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 3441187847484459606, guid: 258d7081883ded742982d3e127c59c30,
         type: 3}
@@ -2989,6 +3178,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BrokenRuin_miscChunk_01 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6d60dd2416781ad4da460f6b64c1cc56,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3067,6 +3261,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PillarCrooked Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 6535704693114084603, guid: bf8361fe27378514fa372d716fabdbe4,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3152,6 +3351,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BrokenRuin_pillarTop_01
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e60be7d3d557bcc4cbb644a4492ae6ed,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3203,10 +3407,20 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6733659835963791928}
     m_Modifications:
+    - target: {fileID: 3097048151707271618, guid: 02ffa2508b67d0e458a49a35515d63ab,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b55f7bf0740574b40a95a2bf23cc0602, type: 2}
     - target: {fileID: 3601209073978400791, guid: 02ffa2508b67d0e458a49a35515d63ab,
         type: 3}
       propertyPath: m_Name
       value: BrokenRuin_brickSmall_01 Variant (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3601209073978400791, guid: 02ffa2508b67d0e458a49a35515d63ab,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4229372898585164461, guid: 02ffa2508b67d0e458a49a35515d63ab,
         type: 3}
@@ -3286,6 +3500,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BrokenRuin_miscChunk_01 Variant 1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5062680706096767253, guid: f8241650f9e07f643aa3c8fd7bec37c7,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 5551128458252221359, guid: f8241650f9e07f643aa3c8fd7bec37c7,
         type: 3}
@@ -3431,6 +3650,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BrokenRuin_pillarMid_03 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 67a4fb13591a4234489b6e2e012d4223,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3486,6 +3710,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BrokenRuin_brickSmall_01 Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 3601209073978400791, guid: 02ffa2508b67d0e458a49a35515d63ab,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4229372898585164461, guid: 02ffa2508b67d0e458a49a35515d63ab,
         type: 3}
@@ -3561,10 +3790,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6733659835963791928}
     m_Modifications:
+    - target: {fileID: 533854458636978411, guid: 338f4ed5f910b8441b53e4c928b8638a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1033276647486078477, guid: 338f4ed5f910b8441b53e4c928b8638a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1451701258800972469, guid: 338f4ed5f910b8441b53e4c928b8638a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 2310827574372618530, guid: 338f4ed5f910b8441b53e4c928b8638a,
         type: 3}
       propertyPath: m_Name
       value: FireBrazier_01_Tall (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2310827574372618530, guid: 338f4ed5f910b8441b53e4c928b8638a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 3123921180148894616, guid: 338f4ed5f910b8441b53e4c928b8638a,
         type: 3}
@@ -3621,6 +3870,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4241288227876076459, guid: 338f4ed5f910b8441b53e4c928b8638a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 8024947685478081842, guid: 338f4ed5f910b8441b53e4c928b8638a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3644,6 +3903,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PillarsPair Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376942149576360711, guid: 8aea64dfd6e81664b87c4070a2c2c80a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 9154463633429715389, guid: 8aea64dfd6e81664b87c4070a2c2c80a,
         type: 3}
@@ -3789,6 +4053,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BrokenRuin_pillarSegment_01 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 22b722c8fe2ea034d97dd4ebad4587cf,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3808,10 +4077,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6733659835963791928}
     m_Modifications:
+    - target: {fileID: 533854458636978411, guid: 338f4ed5f910b8441b53e4c928b8638a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1033276647486078477, guid: 338f4ed5f910b8441b53e4c928b8638a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1451701258800972469, guid: 338f4ed5f910b8441b53e4c928b8638a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 2310827574372618530, guid: 338f4ed5f910b8441b53e4c928b8638a,
         type: 3}
       propertyPath: m_Name
       value: FireBrazier_01_Tall
+      objectReference: {fileID: 0}
+    - target: {fileID: 2310827574372618530, guid: 338f4ed5f910b8441b53e4c928b8638a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 3123921180148894616, guid: 338f4ed5f910b8441b53e4c928b8638a,
         type: 3}
@@ -3868,6 +4157,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4241288227876076459, guid: 338f4ed5f910b8441b53e4c928b8638a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 8024947685478081842, guid: 338f4ed5f910b8441b53e4c928b8638a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3904,6 +4203,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.x
       value: 1.9727
       objectReference: {fileID: 0}
+    - target: {fileID: 812178518257429484, guid: 091902b758410b54dbde117cc8ca5e89,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 1172497755562592825, guid: 091902b758410b54dbde117cc8ca5e89,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -3929,6 +4233,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 7940785c752fe0940bbd927825d45b7c, type: 2}
+    - target: {fileID: 5997283304352266969, guid: 091902b758410b54dbde117cc8ca5e89,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 6002596739194835237, guid: 091902b758410b54dbde117cc8ca5e89,
         type: 3}
       propertyPath: m_RootOrder
@@ -3984,10 +4293,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6667313851062028650, guid: 091902b758410b54dbde117cc8ca5e89,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 6943950505966701112, guid: 091902b758410b54dbde117cc8ca5e89,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 7055947915707542353, guid: 091902b758410b54dbde117cc8ca5e89,
         type: 3}
       propertyPath: m_Name
       value: Obelisk 1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7055947915707542353, guid: 091902b758410b54dbde117cc8ca5e89,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8255073911406704097, guid: 091902b758410b54dbde117cc8ca5e89,
         type: 3}
@@ -4136,6 +4460,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BrokenRuin_pillarBase_01 Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 4055958613875077019, guid: 779c12005d0ef1b419cd2b1cf54d9ff9,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4230,6 +4559,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DesertRockSmall_01 Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 9127760457326983254, guid: cd126185db9c58a4bac0d38e04f7871a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4249,6 +4583,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6733659835963791928}
     m_Modifications:
+    - target: {fileID: 298717881209768761, guid: fc32d1b24fc20114b8500d22863990b8,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 3197892274595191946, guid: 349e0c6743bf0e041a56f3146c6e7a33,
+        type: 3}
     - target: {fileID: 464001740788923802, guid: fc32d1b24fc20114b8500d22863990b8,
         type: 3}
       propertyPath: m_RootOrder
@@ -4309,6 +4649,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: RuinsStairsMed (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 953540135177332512, guid: fc32d1b24fc20114b8500d22863990b8,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4337,6 +4682,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BrokenRuin_pillarSegment_01 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5983348010406159411, guid: 396cbf5dd81e08e4f9876b2dcb5c952a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 6359874309023661705, guid: 396cbf5dd81e08e4f9876b2dcb5c952a,
         type: 3}
@@ -4485,7 +4835,7 @@ PrefabInstance:
     - target: {fileID: 2371702057156079432, guid: 1794547c80bc8624abea5a1ff24fc2bc,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 8
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4510,6 +4860,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BrokenRuin_pillarMid_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 1615909260369109100, guid: 90137f9548648eb4589e5c69d6f1eb00,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 2100661244756294358, guid: 90137f9548648eb4589e5c69d6f1eb00,
         type: 3}
@@ -4645,6 +5000,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PillarCrooked Variant (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6535704693114084603, guid: bf8361fe27378514fa372d716fabdbe4,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4729,6 +5089,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BrokenRuin_pillarTop_03
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4abe5630ce5693e44bac0eea24e16d13,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4779,6 +5144,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6733659835963791928}
     m_Modifications:
+    - target: {fileID: 298717881209768761, guid: fc32d1b24fc20114b8500d22863990b8,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 3197892274595191946, guid: 349e0c6743bf0e041a56f3146c6e7a33,
+        type: 3}
     - target: {fileID: 464001740788923802, guid: fc32d1b24fc20114b8500d22863990b8,
         type: 3}
       propertyPath: m_RootOrder
@@ -4838,6 +5209,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RuinsStairsMed
+      objectReference: {fileID: 0}
+    - target: {fileID: 953540135177332512, guid: fc32d1b24fc20114b8500d22863990b8,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4917,6 +5293,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BrokenRuin_pillarMid_04
+      objectReference: {fileID: 0}
+    - target: {fileID: 5641443827783462620, guid: 618fda2e2521efc48b04a7249ebc5a03,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5002,11 +5383,48 @@ PrefabInstance:
       propertyPath: m_Name
       value: BrokenRuin_miscChunk_01 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6d60dd2416781ad4da460f6b64c1cc56,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6d60dd2416781ad4da460f6b64c1cc56,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 113251549019585215}
   m_SourcePrefab: {fileID: 100100000, guid: 6d60dd2416781ad4da460f6b64c1cc56, type: 3}
+--- !u!1 &8589638930601831636 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6d60dd2416781ad4da460f6b64c1cc56,
+    type: 3}
+  m_PrefabInstance: {fileID: 8932307983341080965}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &113251549019585215
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8589638930601831636}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4897071443562209310, guid: 6d60dd2416781ad4da460f6b64c1cc56, type: 3}
 --- !u!4 &8970985415193605742 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6d60dd2416781ad4da460f6b64c1cc56,
@@ -5081,6 +5499,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BrokenRuin_Big_03
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 917f954b25a59764a80b0a6bc870d270,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5100,6 +5523,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6733659835963791928}
     m_Modifications:
+    - target: {fileID: 298717881209768761, guid: fc32d1b24fc20114b8500d22863990b8,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 3197892274595191946, guid: 349e0c6743bf0e041a56f3146c6e7a33,
+        type: 3}
     - target: {fileID: 464001740788923802, guid: fc32d1b24fc20114b8500d22863990b8,
         type: 3}
       propertyPath: m_RootOrder
@@ -5160,6 +5589,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: RuinsStairsMed (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 953540135177332512, guid: fc32d1b24fc20114b8500d22863990b8,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5183,6 +5617,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BrokenRuin_pillar_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 8187472099664148542, guid: 5de8ae8f9a02dcf48b7a82159f3c929a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8850821017092186756, guid: 5de8ae8f9a02dcf48b7a82159f3c929a,
         type: 3}
