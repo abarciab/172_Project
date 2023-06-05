@@ -1912,7 +1912,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0.3325311, z: -0, w: 0.94309235}
     Pos: {x: 180.04, y: 76.98, z: 12.9}
     set: 0
-  moveSound: {fileID: 894887753}
+  moveSound: {fileID: 266431524}
 --- !u!1001 &96661157
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5092,6 +5092,32 @@ Terrain:
   m_AllowAutoConnect: 1
   m_EnableHeightmapRayTracing: 1
   m_EnableTreesAndDetailsRayTracing: 0
+--- !u!114 &266431524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b54c4e062583404688e9450addf1871, type: 3}
+  m_Name: dummyAppear(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)
+  m_EditorClassIdentifier: 
+  clips:
+  - name: 
+    clip: {fileID: 8300000, guid: dad9a8beba5ea3647b7c55faed931401, type: 3}
+    looping: 0
+    CustomPitchAndVolume: 0
+    volume: 0
+    pitch: 0
+  type: 0
+  SynchronizePitchAndVolume: 1
+  pitch: 1
+  volume: 1
+  voiceLines: 0
+  audioSource: {fileID: 0}
+  instantialized: 0
 --- !u!1 &279292088
 GameObject:
   m_ObjectHideFlags: 0
@@ -11647,66 +11673,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 672544376}
     m_Modifications:
-    - target: {fileID: 61873984899643624, guid: 24dce47f0f2a251478d2cd8b0c569e0f,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 68.023026
-      objectReference: {fileID: 0}
-    - target: {fileID: 61873984899643624, guid: 24dce47f0f2a251478d2cd8b0c569e0f,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 427.4698
-      objectReference: {fileID: 0}
-    - target: {fileID: 543579959187824786, guid: 24dce47f0f2a251478d2cd8b0c569e0f,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 119.79
-      objectReference: {fileID: 0}
-    - target: {fileID: 543579959187824786, guid: 24dce47f0f2a251478d2cd8b0c569e0f,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 23.27
-      objectReference: {fileID: 0}
-    - target: {fileID: 543579959187824786, guid: 24dce47f0f2a251478d2cd8b0c569e0f,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 118.58
-      objectReference: {fileID: 0}
-    - target: {fileID: 543579959187824786, guid: 24dce47f0f2a251478d2cd8b0c569e0f,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.9112252
-      objectReference: {fileID: 0}
-    - target: {fileID: 543579959187824786, guid: 24dce47f0f2a251478d2cd8b0c569e0f,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 3.899118e-17
-      objectReference: {fileID: 0}
-    - target: {fileID: 543579959187824786, guid: 24dce47f0f2a251478d2cd8b0c569e0f,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.4119087
-      objectReference: {fileID: 0}
-    - target: {fileID: 543579959187824786, guid: 24dce47f0f2a251478d2cd8b0c569e0f,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 7.732103e-17
-      objectReference: {fileID: 0}
-    - target: {fileID: 543579959187824786, guid: 24dce47f0f2a251478d2cd8b0c569e0f,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 408.65
-      objectReference: {fileID: 0}
-    - target: {fileID: 743904144926053598, guid: 24dce47f0f2a251478d2cd8b0c569e0f,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 156.22302
-      objectReference: {fileID: 0}
-    - target: {fileID: 743904144926053598, guid: 24dce47f0f2a251478d2cd8b0c569e0f,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 418.66998
-      objectReference: {fileID: 0}
     - target: {fileID: 3037427321273894942, guid: 24dce47f0f2a251478d2cd8b0c569e0f,
         type: 3}
       propertyPath: m_Name
@@ -11766,16 +11732,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6515949711520535937, guid: 24dce47f0f2a251478d2cd8b0c569e0f,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 97.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6515949711520535937, guid: 24dce47f0f2a251478d2cd8b0c569e0f,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 457.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -21996,32 +21952,6 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &894887753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b54c4e062583404688e9450addf1871, type: 3}
-  m_Name: dummyAppear(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)
-  m_EditorClassIdentifier: 
-  clips:
-  - name: 
-    clip: {fileID: 8300000, guid: dad9a8beba5ea3647b7c55faed931401, type: 3}
-    looping: 0
-    CustomPitchAndVolume: 0
-    volume: 0
-    pitch: 0
-  type: 0
-  SynchronizePitchAndVolume: 1
-  pitch: 1
-  volume: 1
-  voiceLines: 0
-  audioSource: {fileID: 0}
-  instantialized: 0
 --- !u!1001 &897779779
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -47878,11 +47808,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 672544376}
     m_Modifications:
-    - target: {fileID: 709282771955563867, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 2100000, guid: 57ec2281010bdec4e99bff82c848ab22, type: 2}
     - target: {fileID: 4016555319564262503, guid: a6558fd68804b754195cfa0100792001,
         type: 3}
       propertyPath: m_RootOrder
