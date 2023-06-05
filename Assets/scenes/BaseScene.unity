@@ -29279,6 +29279,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: d3e3ccf7df06dbf4cbb6b5707a7191bc,
         type: 2}
+    - target: {fileID: 8143559751821159365, guid: b254029f1aaef9943ad0271662538b62,
+        type: 3}
+      propertyPath: healthRegenSound
+      value: 
+      objectReference: {fileID: 11400000, guid: 0ea6f8eb2f26ac34b8447b8cad4ad669,
+        type: 2}
     - target: {fileID: 8375415524734942817, guid: b254029f1aaef9943ad0271662538b62,
         type: 3}
       propertyPath: m_Layer
@@ -29386,17 +29392,17 @@ PrefabInstance:
     - target: {fileID: 4817872332485334698, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_Intensity
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4817872332485334698, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_ColorTemperature
-      value: 6432
+      value: 9533
       objectReference: {fileID: 0}
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: _next
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
@@ -29406,12 +29412,12 @@ PrefabInstance:
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: shader1
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: shader2
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
@@ -29431,22 +29437,22 @@ PrefabInstance:
     - target: {fileID: 5364301632760274238, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9944275
+      value: 0.12086429
       objectReference: {fileID: 0}
     - target: {fileID: 5364301632760274238, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.048026685
+      value: 0.837188
       objectReference: {fileID: 0}
     - target: {fileID: 5364301632760274238, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.09373834
+      value: 0.07621544
       objectReference: {fileID: 0}
     - target: {fileID: 5364301632760274238, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0045271697
+      value: -0.52791977
       objectReference: {fileID: 0}
     - target: {fileID: 6180193968040157515, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
@@ -29534,7 +29540,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &6772424691879965807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29547,7 +29553,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47396e3601ba2f84a997d9b26a0aebc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sound: {fileID: 11400000, guid: aa346c340af38e741992aa92d86b9fd9, type: 2}
+  sound: {fileID: 11400000, guid: 0ea6f8eb2f26ac34b8447b8cad4ad669, type: 2}
   play: 0
   _3D: 0
   restart: 1

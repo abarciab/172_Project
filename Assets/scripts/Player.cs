@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
     [Header("sounds")]
     [SerializeField] Sound hurtSound;
     [SerializeField] Sound deathSound;
+    [SerializeField] Sound healthRegenSound;
 
     Speaker interestedSpeaker;
     Gate interestedInteractable;
@@ -209,7 +210,10 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L)) GameManager.i.GetComponent<SaveManager>().SaveGame();
         if (Input.GetKeyDown(KeyCode.O)) GameManager.i.GetComponent<SaveManager>().ResetGame();
 
-        if (healCooldown <= 0 && health < maxHealth) StartCoroutine(Heal());
+        if (healCooldown <= 0 && health < maxHealth){
+            StartCoroutine(Heal());
+            healthRegenSound.Play();
+        }
         healCooldown -= Time.deltaTime;
 
         if (interestedSpeaker == null) GlobalUI.i.HidePrompt(startTalkingPrompt);
@@ -306,6 +310,7 @@ public class Player : MonoBehaviour
         health = maxHealth;
         hurtSound = Instantiate(hurtSound);
         deathSound = Instantiate(deathSound);
+        healthRegenSound = Instantiate(healthRegenSound);
     }
 
     public void ChangeHealth(int delta) {

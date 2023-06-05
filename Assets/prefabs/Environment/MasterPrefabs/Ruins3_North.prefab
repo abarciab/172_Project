@@ -3142,8 +3142,35 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: eefa74207a7c14841ba53869af8a92c9,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7710069761894016727}
   m_SourcePrefab: {fileID: 100100000, guid: eefa74207a7c14841ba53869af8a92c9, type: 3}
+--- !u!1 &265688028887117438 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: eefa74207a7c14841ba53869af8a92c9,
+    type: 3}
+  m_PrefabInstance: {fileID: 1111966943326163759}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7710069761894016727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265688028887117438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bcd9b0d195681f4388506bb8cf7cde6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  factCondition:
+  - {fileID: 11400000, guid: e9e6926a530d0214cb4f2ef976a74ae3, type: 2}
+  unless: {fileID: 11400000, guid: 99a1ac19ef5dbb2428e5fec98e50846f, type: 2}
+  track: 0
+  trackerIcon: {fileID: 0}
 --- !u!4 &640700227511366852 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: eefa74207a7c14841ba53869af8a92c9,
@@ -4736,7 +4763,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 723b9f466fb52c547b93e8d1f476eea7, type: 2}
+      objectReference: {fileID: 2100000, guid: cec932707a3e73d4989682c1a787dc6a, type: 2}
     - target: {fileID: 919132149155446097, guid: d425c1fbab736df4992189644f13c6cb,
         type: 3}
       propertyPath: m_Name
@@ -6606,17 +6633,17 @@ PrefabInstance:
     - target: {fileID: 8467160801203049560, guid: c7710dd8c0df1474f9e6699597a36b7d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 181.82
+      value: 182.25
       objectReference: {fileID: 0}
     - target: {fileID: 8467160801203049560, guid: c7710dd8c0df1474f9e6699597a36b7d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 95.47
+      value: 94.42
       objectReference: {fileID: 0}
     - target: {fileID: 8467160801203049560, guid: c7710dd8c0df1474f9e6699597a36b7d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 209.01999
+      value: 209.37
       objectReference: {fileID: 0}
     - target: {fileID: 8467160801203049560, guid: c7710dd8c0df1474f9e6699597a36b7d,
         type: 3}
