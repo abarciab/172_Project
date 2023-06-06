@@ -12,6 +12,7 @@ public class Snake : BaseEnemy
     [SerializeField] float spitResetTime, projectileAngle = 45, shortDist;
     [SerializeField] int rangedDmg;
     [SerializeField, Range(0, 1)] float goopAmount;
+    [SerializeField] Sound goopThrowSound;
     float spitCooldown;
 
     [Header("Spray")]
@@ -48,6 +49,7 @@ public class Snake : BaseEnemy
     {
         base.Start();
         transitionSound = Instantiate(transitionSound);
+        goopThrowSound = Instantiate(goopThrowSound);
     }
 
     public override void EndAttack()
@@ -68,8 +70,6 @@ public class Snake : BaseEnemy
     protected override void Update()
     {
         base.Update();
-
-        //print("busy: " + busy + ", wipcooldown: " + tailWhipCooldown);
 
         if (busy) return;
 
@@ -118,6 +118,8 @@ public class Snake : BaseEnemy
             yield break;
         }
 
+        stats.SetInvincible();
+
         busy = true;
         moveTriggerHpPercent.RemoveAt(0);
         wave += 1;
@@ -155,6 +157,7 @@ public class Snake : BaseEnemy
         } while (_dist > 1f);
         FinishMove();
 
+        stats.SetVincible();
         busy = false;
     }
 
@@ -236,10 +239,12 @@ public class Snake : BaseEnemy
         projectile.GetComponent<HitBox>().StartChecking(transform, rangedDmg);
         Vector3 targetPos = target.position + Player.i.speed3D;
         AimAndFire(projectile, projectileAngle, targetPos, projectileStartOffset.y, shortDist);
+        goopThrowSound.Play();
 
         anim.SetBool(spitAnim, false);
         anim.SetBool(sprayAnim, false);
     }
+
 
     IEnumerator LaunchAfterDelay(float delay)
     {

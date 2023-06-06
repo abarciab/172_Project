@@ -22,7 +22,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1084183189069778313
 Transform:
   m_ObjectHideFlags: 0
@@ -4997,7 +4997,7 @@ MonoBehaviour:
   orbitSwitchMod: 0
   projectilePrefab: {fileID: 8124543167177156648, guid: f1e9b153d47510d45bcf29c19258a932,
     type: 3}
-  RangedRange: {x: 26.02, y: 61.9}
+  RangedRange: {x: 15.2, y: 61.9}
   projectileStartOffset: {x: 0, y: 2, z: 0}
   projectileSize: {x: 1, y: 1, z: 1}
   spitResetTime: 1
@@ -5005,6 +5005,7 @@ MonoBehaviour:
   shortDist: 2500
   rangedDmg: 35
   goopAmount: 1
+  goopThrowSound: {fileID: 11400000, guid: c8119af66ef0b6b45b4e32dbbcc7009d, type: 2}
   sprayResetTime: 3
   sprayDelay: 0.2
   tailWhipRange: {x: 0, y: 27.8}
@@ -11184,6 +11185,55 @@ MonoBehaviour:
       m_Calls: []
   triggeredBy: {fileID: 0}
   checkParent: 0
+--- !u!1 &3744991640154277549
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 29055093971101382}
+  - component: {fileID: 5732056725589277962}
+  m_Layer: 0
+  m_Name: snake PP
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &29055093971101382
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3744991640154277549}
+  m_LocalRotation: {x: -0, y: -0.9787596, z: -0, w: 0.2050114}
+  m_LocalPosition: {x: 0.17580742, y: -36.802486, z: 152.64423}
+  m_LocalScale: {x: 1.0289323, y: 1.0289323, z: 1.0289323}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1084183189069778313}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5732056725589277962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3744991640154277549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: cd88e56fadeff074b9f3962407dabfe6, type: 2}
 --- !u!1 &3929299395230340000
 GameObject:
   m_ObjectHideFlags: 0
@@ -13330,6 +13380,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -1018664272722485354, guid: e3b9eaffbed2f2d49882320033b3c0d9,
         type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -1018664272722485354, guid: e3b9eaffbed2f2d49882320033b3c0d9,
+        type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -13413,6 +13468,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -0.0000058436285
       objectReference: {fileID: 0}
+    - target: {fileID: 1807313774895318939, guid: e3b9eaffbed2f2d49882320033b3c0d9,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 00047f7fc1aa43c4b85f880856e379f7, type: 2}
     - target: {fileID: 3223985595779401922, guid: e3b9eaffbed2f2d49882320033b3c0d9,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
