@@ -19,6 +19,10 @@ public class PSound : MonoBehaviour
     public void PlaySwoosh() {
         stabSwish.Play(transform);
     }
+    public void SetSoftSurface(bool isSoft)
+    {
+        isDirtSurface = isSoft;
+    }
 
     public void PlayFootStep()
     {
@@ -33,8 +37,5 @@ public class PSound : MonoBehaviour
         drawSpear.Play(transform);
     }
 
-    public void IsSoftSurface(bool isSoft)
-    {
-        isDirtSurface = isSoft;
-    }
+
 }

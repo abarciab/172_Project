@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     [SerializeField] Sound hurtSound;
     [SerializeField] Sound deathSound;
     [SerializeField] Sound healthRegenSound;
+    private PSound pSound;
 
     Speaker interestedSpeaker;
     Gate interestedInteractable;
@@ -306,11 +307,13 @@ public class Player : MonoBehaviour
         healCooldown = healWaitTime;
     }
 
+
     private void Start() {
         health = maxHealth;
         hurtSound = Instantiate(hurtSound);
         deathSound = Instantiate(deathSound);
         healthRegenSound = Instantiate(healthRegenSound);
+        pSound = GameObject.FindGameObjectWithTag("Bonnie").GetComponent<PSound>();
     }
 
     public void ChangeHealth(int delta) {
@@ -338,6 +341,14 @@ public class Player : MonoBehaviour
     {
         i = this;
         animator = GetComponent<PAnimator>();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "StoneSurface")
+            pSound.SetSoftSurface(false);
+        else
+            pSound.SetSoftSurface(true);
     }
 
 }
