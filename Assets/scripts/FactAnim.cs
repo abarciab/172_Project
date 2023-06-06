@@ -13,6 +13,6 @@ public class FactAnim : MonoBehaviour
     private void Update()
     {
         if (FactManager.i.IsPresent(fact1)) anim.SetBool(anim1, true);
-        anim.SetBool(speakerTalkingAnim, speaker.talking);
+        if (speaker) anim.SetBool(speakerTalkingAnim, speaker.talking);
     }
 }

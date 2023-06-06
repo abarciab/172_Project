@@ -35,10 +35,20 @@ public class Snake : BaseEnemy
 
     [Header("final phase")]
     [SerializeField] GameObject postProcessing;
+    [SerializeField] GameObject rotatePivot, playerTPtarget, snakeTPtarget;
+    [SerializeField] float rotateSpeed = 1, finalScale;
+    [SerializeField] Sound transitionSound;
+    bool finalPhase;
 
     [Header("Anims")]
     [SerializeField] Animator anim;
-    [SerializeField] string sprayAnim, spitAnim, tailWhipAnim, slitherAnim;
+    [SerializeField] string sprayAnim, spitAnim, tailWhipAnim, slitherAnim, coiledAnim = "coiled";
+
+    protected override void Start()
+    {
+        base.Start();
+        transitionSound = Instantiate(transitionSound);
+    }
 
     public override void EndAttack()
     {
@@ -50,9 +60,9 @@ public class Snake : BaseEnemy
     protected override void Die()
     {
         base.Die();
-        Destroy(gameObject);
         postProcessing.SetActive(false);
-        FactManager.i.GetComponent<ShaderTransitionController>().ResumePP();
+        ShaderTransitionController.i.ResumePP();
+        Destroy(gameObject);
     }
 
     protected override void Update()
@@ -63,25 +73,48 @@ public class Snake : BaseEnemy
 
         if (busy) return;
 
+        if (finalPhase) {
+            FinalPhaseBehavior();
+            return;
+        }
+
         if (moveTriggerHpPercent.Count > 0 && (float) stats.health/ stats.maxHealth <= moveTriggerHpPercent[0]) {
             StartCoroutine(MoveAndSpawn());
             return;
         }
+        
+
         if (dist < tailWhipRange.y && tailWhipCooldown <= 0) TailWhip();
         else if (dist < RangedRange.y && dist > RangedRange.x) RangedAttack();
 
         if (!move.gotoTarget) {
             LookAtTarget(0.05f);
         }
+    }
 
-        //StartChecking
+    void FinalPhaseBehavior()
+    {
+        Stop();
+        rotatePivot.transform.Rotate(new Vector3(0, rotateSpeed * Time.deltaTime, 0));
+    }
+
+    void StartFinalPhase()
+    {
+        postProcessing.SetActive(true);
+        ShaderTransitionController.i.PausePP();
+        anim.SetBool(coiledAnim, true);
+        finalPhase = true;
+        GlobalUI.i.BlackOut(0.5f);
+        transform.localScale = Vector3.one * finalScale;
+        Player.i.transform.position = playerTPtarget.transform.position;
+        transform.position = snakeTPtarget.transform.position;
     }
 
     IEnumerator MoveAndSpawn()
     {
         if (moveTriggerHpPercent.Count == 1) {
-            postProcessing.SetActive(true);
-            FactManager.i.GetComponent<ShaderTransitionController>().PausePP();
+            moveTriggerHpPercent.Clear();
+            StartFinalPhase();
             yield break;
         }
 
@@ -95,7 +128,6 @@ public class Snake : BaseEnemy
         GoToNextMoveTarget();
         _dist = 10;
         do {
-            print("moving to first point");
             yield return new WaitForEndOfFrame();
             _dist = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(move.target.x, move.target.z));
         } while (_dist > 1f);
@@ -107,7 +139,6 @@ public class Snake : BaseEnemy
         GoToNextMoveTarget();
         _dist = 10;
         do {
-            print("moving to second point");
             yield return new WaitForEndOfFrame();
             _dist = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(move.target.x, move.target.z));
         } while (_dist > 1f);
@@ -119,15 +150,15 @@ public class Snake : BaseEnemy
         GoToNextMoveTarget();
         _dist = 10;
         do {
-            print("moving to third point");
             yield return new WaitForEndOfFrame();
             _dist = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(move.target.x, move.target.z));
         } while (_dist > 1f);
         FinishMove();
 
-        print("DONE MOVING!");
         busy = false;
     }
+
+    
 
     void GoToNextMoveTarget()
     {

@@ -35,9 +35,10 @@ Transform:
   m_LocalScale: {x: 2.8359494, y: 2.8359494, z: 2.8359494}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6083732751547082033}
+  - {fileID: 283493895982446197}
   - {fileID: 1984304243842823527}
   - {fileID: 1345226986109738206}
-  - {fileID: 2773397283760704967}
   m_Father: {fileID: 0}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 156.34, z: 0}
@@ -5028,11 +5029,15 @@ MonoBehaviour:
   - 0.75
   - 0.5
   - 0.25
+  postProcessing: {fileID: 2291929154782599880}
+  rotatePivot: {fileID: 2568540477041247378}
+  rotateSpeed: 1
   anim: {fileID: 2272639541864170218}
   sprayAnim: spray
   spitAnim: spit
   tailWhipAnim: tailWhip
   slitherAnim: slither
+  coiledAnim: coiled
 --- !u!1 &49619333576104098
 GameObject:
   m_ObjectHideFlags: 0
@@ -10547,6 +10552,87 @@ MonoBehaviour:
       m_Calls: []
   triggeredBy: {fileID: 0}
   checkParent: 0
+--- !u!1 &2291929154782599880
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 283493895982446197}
+  - component: {fileID: 4396034401488882513}
+  m_Layer: 0
+  m_Name: snake PP
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &283493895982446197
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2291929154782599880}
+  m_LocalRotation: {x: -0, y: -0.9787596, z: -0, w: 0.2050114}
+  m_LocalPosition: {x: 0.17580742, y: -36.802486, z: 152.64423}
+  m_LocalScale: {x: 1.0289323, y: 1.0289323, z: 1.0289323}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1084183189069778313}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4396034401488882513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2291929154782599880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: cd88e56fadeff074b9f3962407dabfe6, type: 2}
+--- !u!1 &2568540477041247378
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6083732751547082033}
+  m_Layer: 8
+  m_Name: pivotPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6083732751547082033
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2568540477041247378}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.63, y: 0, z: -0.33}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2773397283760704967}
+  m_Father: {fileID: 1084183189069778313}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2767552676587641591
 GameObject:
   m_ObjectHideFlags: 0
@@ -12940,12 +13026,12 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1084183189069778313}
+    m_TransformParent: {fileID: 6083732751547082033}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: e3b9eaffbed2f2d49882320033b3c0d9,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e3b9eaffbed2f2d49882320033b3c0d9,
         type: 3}
@@ -12965,7 +13051,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: e3b9eaffbed2f2d49882320033b3c0d9,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.01
+      value: 2.6400006
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e3b9eaffbed2f2d49882320033b3c0d9,
         type: 3}
@@ -12975,7 +13061,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: e3b9eaffbed2f2d49882320033b3c0d9,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.79
+      value: 1.1200005
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e3b9eaffbed2f2d49882320033b3c0d9,
         type: 3}
@@ -12985,17 +13071,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: e3b9eaffbed2f2d49882320033b3c0d9,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e3b9eaffbed2f2d49882320033b3c0d9,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e3b9eaffbed2f2d49882320033b3c0d9,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e3b9eaffbed2f2d49882320033b3c0d9,
         type: 3}
@@ -13146,6 +13232,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -17.989204
+      objectReference: {fileID: 0}
+    - target: {fileID: -2633090059857585371, guid: e3b9eaffbed2f2d49882320033b3c0d9,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -2196866771775880630, guid: e3b9eaffbed2f2d49882320033b3c0d9,
         type: 3}
@@ -13773,7 +13864,7 @@ MeshCollider:
     m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
-  m_ProvidesContacts: 0
+  m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 5
   m_Convex: 1

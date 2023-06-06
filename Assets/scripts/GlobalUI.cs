@@ -31,7 +31,7 @@ public class GlobalUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI commandPrompt, subtitle;
     
     [SerializeField] float redFlashTime = 0.1f;
-    [SerializeField] GameObject title, bottomLeft, crossHair, compass;
+    [SerializeField] GameObject title, bottomLeft, crossHair, compass, blackOut;
     public GameObject tutorialSkip;
     [SerializeField] Image dmgIndicator, dmgFlash, goopOverlay;
     public Image fade;
@@ -82,6 +82,7 @@ public class GlobalUI : MonoBehaviour
     [Header("Pause Menu")]
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject settingsSection, savesSection, controlsSection;
+    [SerializeField] Sound openMenuSound;
 
     [Header("Volume Sliders")]
     [SerializeField] Slider masterSlider;
@@ -89,6 +90,18 @@ public class GlobalUI : MonoBehaviour
 
     UISound sound;
     bool loadingSave = false;
+
+    public void BlackOut(float delay)
+    {
+        blackOut.SetActive(true);
+        StartCoroutine(_BackOut(delay));
+    }
+
+    IEnumerator _BackOut(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        blackOut.SetActive(false);
+    }
 
     public bool DisplayingImage()
     {
@@ -223,6 +236,7 @@ public class GlobalUI : MonoBehaviour
 
     public void Pause()
     {
+        openMenuSound.Play();
         pauseMenu.SetActive(true);
     }
 
@@ -422,6 +436,8 @@ public class GlobalUI : MonoBehaviour
         goopOverlay.gameObject.SetActive(false);
 
         EndBossFight();
+
+        openMenuSound = Instantiate(openMenuSound);
     }
     
     IEnumerator FadeText(TextMeshProUGUI text, float targetAlpha)
