@@ -22,7 +22,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1084183189069778313
 Transform:
   m_ObjectHideFlags: 0
@@ -30,7 +30,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 43378320019879016}
-  m_LocalRotation: {x: -0, y: 0.9787596, z: -0, w: 0.2050114}
+  m_LocalRotation: {x: 0, y: 0.9787601, z: 0, w: 0.20500863}
   m_LocalPosition: {x: 22.54777, y: 76.14, z: 108.12291}
   m_LocalScale: {x: 1.6554661, y: 1.6554661, z: 1.6554661}
   m_ConstrainProportionsScale: 0
@@ -95,7 +95,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   health: 700
-  maxHealth: 700
+  maxHealth: 2000
   hpBar: {fileID: 0}
   destroy: 0
   KBresist: 0
@@ -104,18 +104,20 @@ MonoBehaviour:
   healSpeed: 30
   stunTime: 0
   stunTimeLeft: 0
-  boss: 0
+  boss: 1
+  bossName: corrupted scorpion
   removeFactOnDeath:
   - {fileID: 11400000, guid: 631137bd3f4e89149a881020f846ca13, type: 2}
   addFactOnDeath:
   - {fileID: 11400000, guid: 145c929df582e3f42b6c75ee63096e09, type: 2}
-  inGroup: 0
-  groupID: 0
+  inGroup: 1
+  groupID: 3
   HPBarDisplayRange: 30
   deathSound: {fileID: 11400000, guid: 4ca3a8a2f73cc274cbe6d3833793339b, type: 2}
   hitMatTime: 0.1
-  body: []
-  normalMat: {fileID: 2100000, guid: 09208e6897f5e0640903857c2501ad0b, type: 2}
+  body:
+  - {fileID: 1999011490794991835}
+  normalMat: {fileID: 2100000, guid: 4d526c0013f320747a16a560948ce633, type: 2}
   hitMat: {fileID: 2100000, guid: 018437717a7bb1b48b7421ae7987224a, type: 2}
   critMat: {fileID: 2100000, guid: 60fc2459480549b4e8f804e469d6d332, type: 2}
   stunnedMat: {fileID: 2100000, guid: 3bc9034cb1cba2a439bb71c1ca73caeb, type: 2}
@@ -149,6 +151,7 @@ MonoBehaviour:
   rangedDmg: 30
   goopAmount: 0.916
   rangedAnim: launch
+  goopThrowSound: {fileID: 11400000, guid: c8119af66ef0b6b45b4e32dbbcc7009d, type: 2}
   snipHB: {fileID: 2172248402309171651}
   snipRange: {x: 0, y: 5.78}
   snipDmg: 35
@@ -163,7 +166,7 @@ MonoBehaviour:
   pinKB: 0
   pinResetTime: 3
   anim: {fileID: 7473008656524261882}
-  phaseSwitch: 0.5
+  phaseSwitch: 0.66
   walkAnim: walking
   walkThreshold: 0.01
 --- !u!199 &386997023096378504
@@ -11470,7 +11473,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   footstepSound: {fileID: 0}
   hurtSound: {fileID: 0}
-  attack1Sound: {fileID: 0}
+  attack1Sound: {fileID: 11400000, guid: f685372b08699a440bef4889658b0ecd, type: 2}
 --- !u!114 &5641191571713100329
 MonoBehaviour:
   m_ObjectHideFlags: 0

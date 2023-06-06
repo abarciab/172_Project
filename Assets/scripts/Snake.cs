@@ -12,6 +12,7 @@ public class Snake : BaseEnemy
     [SerializeField] float spitResetTime, projectileAngle = 45, shortDist;
     [SerializeField] int rangedDmg;
     [SerializeField, Range(0, 1)] float goopAmount;
+    [SerializeField] Sound goopThrowSound;
     float spitCooldown;
 
     [Header("Spray")]
@@ -40,6 +41,12 @@ public class Snake : BaseEnemy
     [SerializeField] Animator anim;
     [SerializeField] string sprayAnim, spitAnim, tailWhipAnim, slitherAnim;
 
+    protected override void Start()
+    {
+        base.Start();
+
+        goopThrowSound = Instantiate(goopThrowSound);
+    }
     public override void EndAttack()
     {
         base.EndAttack();
@@ -205,10 +212,12 @@ public class Snake : BaseEnemy
         projectile.GetComponent<HitBox>().StartChecking(transform, rangedDmg);
         Vector3 targetPos = target.position + Player.i.speed3D;
         AimAndFire(projectile, projectileAngle, targetPos, projectileStartOffset.y, shortDist);
+        goopThrowSound.Play();
 
         anim.SetBool(spitAnim, false);
         anim.SetBool(sprayAnim, false);
     }
+
 
     IEnumerator LaunchAfterDelay(float delay)
     {

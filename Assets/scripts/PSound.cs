@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class PSound : MonoBehaviour
 {
-    [SerializeField] Sound footstep, stabSwish, drawSpear;
+    [SerializeField] Sound footstep, footstepHard, stabSwish, drawSpear;
+    private bool isDirtSurface = true;
 
     private void Start()
     {
         footstep = Instantiate(footstep);
+        footstepHard = Instantiate(footstepHard);
         stabSwish = Instantiate(stabSwish);
         drawSpear = Instantiate(drawSpear);
+
     }
 
     public void PlaySwoosh() {
@@ -19,11 +22,19 @@ public class PSound : MonoBehaviour
 
     public void PlayFootStep()
     {
-        footstep.Play(transform, false);
+        if (isDirtSurface)
+            footstep.Play(transform, false);
+        else
+            footstepHard.Play(transform, false);
     }
 
     public void DrawSpear()
     {
         drawSpear.Play(transform);
+    }
+
+    public void IsSoftSurface(bool isSoft)
+    {
+        isDirtSurface = isSoft;
     }
 }

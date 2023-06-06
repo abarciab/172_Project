@@ -24,6 +24,7 @@ public class Scorpion : BaseEnemy
     [SerializeField] int rangedDmg;
     [SerializeField, Range(0, 1)] float goopAmount;
     [SerializeField] string rangedAnim;
+    [SerializeField] Sound goopThrowSound;
     float rangedCooldown;
 
     [Header("Snip Attack")]
@@ -58,6 +59,10 @@ public class Scorpion : BaseEnemy
         phase = 1;
         agroRange = Mathf.Infinity;
         pinHB.OnHit.AddListener(HitPin);
+
+        //initiate sfx
+        goopThrowSound = Instantiate(goopThrowSound);
+
     }
 
     public override void EndAttack()
@@ -158,6 +163,7 @@ public class Scorpion : BaseEnemy
         Vector3 targetPos = target.position + Player.i.speed3D;
         AimAndFire(projectile, projectileAngle, targetPos);
         anim.SetBool(rangedAnim, false);
+        goopThrowSound.Play();
     }
 
     void StartPin()
