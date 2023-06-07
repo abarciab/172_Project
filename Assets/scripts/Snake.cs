@@ -38,7 +38,7 @@ public class Snake : BaseEnemy
     [SerializeField] GameObject postProcessing;
     [SerializeField] GameObject rotatePivot, playerTPtarget, snakeTPtarget;
     [SerializeField] float rotateSpeed = 1, finalScale;
-    [SerializeField] Sound transitionSound;
+    [SerializeField] Sound transitionSound, slitherSound, battleStartSound, hissSound;
     bool finalPhase;
 
     [Header("Anims")]
@@ -49,7 +49,12 @@ public class Snake : BaseEnemy
     {
         base.Start();
         transitionSound = Instantiate(transitionSound);
+        battleStartSound = Instantiate(battleStartSound);
+        slitherSound = Instantiate(slitherSound);
+        hissSound = Instantiate(hissSound);
         goopThrowSound = Instantiate(goopThrowSound);
+
+        battleStartSound.Play();
     }
 
     public override void EndAttack()
@@ -167,6 +172,8 @@ public class Snake : BaseEnemy
     {
         move.target = moveTargets[0].transform.position;
         move.gotoTarget = true;
+        slitherSound.Play();
+        hissSound.Play();
         anim.SetBool(slitherAnim, true);
     }
 
@@ -175,6 +182,7 @@ public class Snake : BaseEnemy
         moveTargets.Add(moveTargets[0]);
         moveTargets.RemoveAt(0);
         move.gotoTarget = false;
+        slitherSound.Stop();
         anim.SetBool(slitherAnim, false);
     }
 
