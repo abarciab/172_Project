@@ -13,7 +13,7 @@ public class SnakeRoarsSource : MonoBehaviour
     public void PlayRoar()
     {
         roar1.Play();
-        CameraShake.i.Shake(0.02f, 0.2f);
+        CameraShake.i.Shake(0.03f, 1.2f);
     }
 
 

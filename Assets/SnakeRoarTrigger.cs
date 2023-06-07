@@ -11,6 +11,7 @@ public class SnakeRoarTrigger : MonoBehaviour
         if (player)
         {
             snakeSource.GetComponent<SnakeRoarsSource>().PlayRoar();
+            Object.Destroy(this.gameObject);
         }
     }
 }

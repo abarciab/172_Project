@@ -13018,7 +13018,7 @@ MonoBehaviour:
   bottomLeft: {fileID: 1149758680}
   crossHair: {fileID: 52016851}
   compass: {fileID: 1894008296}
-  blackOut: {fileID: 976053838}
+  blackOut: {fileID: 0}
   tutorialSkip: {fileID: 1545615701}
   dmgIndicator: {fileID: 1503845537}
   dmgFlash: {fileID: 88708608}
@@ -13243,6 +13243,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   buttonClick: {fileID: 11400000, guid: 08a08241e5dd75d4b8553307c038ed63, type: 2}
+  menuClose: {fileID: 11400000, guid: 9d479690418974c42bc16fea8741cafd, type: 2}
 --- !u!1 &1344886021
 GameObject:
   m_ObjectHideFlags: 0
@@ -16527,7 +16528,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1333759750}
         m_TargetAssemblyTypeName: UISound, Assembly-CSharp
-        m_MethodName: ClickButton
+        m_MethodName: MenuClose
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

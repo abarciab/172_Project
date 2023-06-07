@@ -9,6 +9,7 @@ public class UISound : MonoBehaviour
 
     [Header("Buttons")]
     [SerializeField] Sound buttonClick;
+    [SerializeField] Sound menuClose;
 
     private void Start()
     {
@@ -18,6 +19,7 @@ public class UISound : MonoBehaviour
         newQuestLong = Instantiate(newQuestLong);
         fullChargeSound = Instantiate(fullChargeSound);
         buttonClick = Instantiate(buttonClick);
+        menuClose = Instantiate(menuClose);
         heartBeat = Instantiate(heartBeat);
 
         heartBeat.PlaySilent();
@@ -31,6 +33,11 @@ public class UISound : MonoBehaviour
     public void ClickButton()
     {
         buttonClick.Play();
+    }
+
+    public void MenuClose()
+    {
+        menuClose.Play();
     }
 
     public void FullCharge()
@@ -53,4 +60,5 @@ public class UISound : MonoBehaviour
         if (playLong)newQuestLong.Play(restart:false);
         else newQuest.Play(restart:false);
     }
+
 }
