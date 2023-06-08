@@ -4990,6 +4990,8 @@ MonoBehaviour:
   healSpeed: 0
   stunTime: 4
   stunTimeLeft: 0
+  boss: 0
+  bossName: 
   removeFactOnDeath: []
   addFactOnDeath: []
   inGroup: 1
@@ -9909,6 +9911,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SpawnerVFX_Parent
+      objectReference: {fileID: 0}
+    - target: {fileID: 2151480062551622630, guid: 6e310a8c24512f341baa4b4a7008024e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5128083519287009640, guid: 6e310a8c24512f341baa4b4a7008024e,
         type: 3}
