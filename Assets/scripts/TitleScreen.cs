@@ -31,6 +31,11 @@ public class TitleScreen : MonoBehaviour {
         fade.GetComponent<Image>().color = Color.Lerp(fade.GetComponent<Image>().color, Color.black, 0.2f);
     }
 
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
     public void StartGame()
     {
         if (fading) return;
@@ -63,4 +68,10 @@ public class TitleScreen : MonoBehaviour {
         SceneManager.LoadScene(2);
         SceneManager.LoadScene(1, LoadSceneMode.Additive);
     }
+
+    public void Credits()
+    {
+        SceneManager.LoadScene(3);
+    }
+
 }
