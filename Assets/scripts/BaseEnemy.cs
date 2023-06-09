@@ -74,10 +74,12 @@ public class BaseEnemy : MonoBehaviour
         AimAndFire(projectile, verticalAngle, target.position);
     }
 
-    protected void AimAndFire(GameObject projectile, float verticalAngle, Vector3 targetPos, float _yOffset = 0, float shortDist = 0)
+    protected void AimAndFire(GameObject projectile, float verticalAngle, Vector3 targetPos, float _yOffset = 0, float shortDist = 0, GameObject source = null)
     {
+        if (source == null) source = gameObject;
+
         if (shortDist != 0) {
-            targetPos += (target.transform.position - transform.position).normalized * shortDist;
+            targetPos += (target.transform.position - source.transform.position).normalized * shortDist;
         }
 
 
@@ -90,16 +92,16 @@ public class BaseEnemy : MonoBehaviour
 
         // Positions of this object and the target on the same plane
         Vector3 planarTarget = new Vector3(targetPos.x, 0, targetPos.z);
-        Vector3 planarPostion = new Vector3(transform.position.x, 0, transform.position.z);
+        Vector3 planarPostion = new Vector3(source.transform.position.x, 0, source.transform.position.z);
 
         // Distance along the y axis between objects
-        float yOffset = transform.position.y + _yOffset - targetPos.y;
+        float yOffset = source.transform.position.y + _yOffset - targetPos.y;
 
         float initialVelocity = (1 / Mathf.Cos(angle)) * Mathf.Sqrt((0.5f * gravity * Mathf.Pow(dist, 2)) / (dist * Mathf.Tan(angle) + yOffset));
         Vector3 velocity = new Vector3(0, initialVelocity * Mathf.Sin(angle), initialVelocity * Mathf.Cos(angle));
 
         // Rotate our velocity to match the direction between the two objects
-        float angleBetweenObjects = Vector3.Angle(Vector3.forward, planarTarget - planarPostion) * (targetPos.x > transform.position.x ? 1 : -1);
+        float angleBetweenObjects = Vector3.Angle(Vector3.forward, planarTarget - planarPostion) * (targetPos.x > source.transform.position.x ? 1 : -1);
         Vector3 finalVelocity = Quaternion.AngleAxis(angleBetweenObjects, Vector3.up) * velocity;
 
         // Fire!

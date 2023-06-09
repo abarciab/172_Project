@@ -69,6 +69,11 @@ public class PFighting : HitReciever {
         spearCatch.Play();
     }
 
+    public int CritDmg()
+    {
+        return FactManager.i.IsPresent(throwWeak) ? 0 : critDmg;
+    }
+
     public void ThrowStaff()
     {
         charging = false;
@@ -176,7 +181,7 @@ public class PFighting : HitReciever {
 
     public void StartAimingSpear()
     {
-        if (!enabled || charging) return;
+        if (!enabled || charging || GlobalUI.i.talking) return;
         if (!spearDrawn) { DrawSpear(); return; }
         if (!hasSpear) { RetrieveSpear(); return; }
         aimed = charging = true;
@@ -203,7 +208,7 @@ public class PFighting : HitReciever {
 
     public void ActivateShockwave()
     {
-        if (swCooldown > 0 || !enabled) return;
+        if (swCooldown > 0 || !enabled || GlobalUI.i.talking) return;
         shockwaveSound.Play(transform);
         swCooldown = shockwaveResetTime;
         if (!FactManager.i.IsPresent(tutorialDone)) FactManager.i.AddFact(shockWave);

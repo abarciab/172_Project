@@ -15,7 +15,7 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 1
-  m_FogColor: {r: 0.40690637, g: 0.60607964, b: 0.6792453, a: 1}
+  m_FogColor: {r: 0.18039216, g: 0.1882353, b: 0.4509804, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.003
   m_LinearFogStart: 0
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 1.5433913, g: 0.74593616, b: 1.5418073, a: 1}
+  m_IndirectSpecularColor: {r: 0.009438679, g: 0.008389292, b: 0.12298736, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1917,7 +1917,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0.3325311, z: -0, w: 0.94309235}
     Pos: {x: 180.04, y: 76.98, z: 12.9}
     set: 0
-  moveSound: {fileID: 529137220}
+  moveSound: {fileID: 661681647}
 --- !u!1001 &96661157
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2261,6 +2261,12 @@ GameObject:
 --- !u!4 &99679354 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1084183189069778313, guid: 4cc4bfbdf4adc1b439d8cb7f40464483,
+    type: 3}
+  m_PrefabInstance: {fileID: 369342867}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &110083732 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6650694410123813462, guid: 4cc4bfbdf4adc1b439d8cb7f40464483,
     type: 3}
   m_PrefabInstance: {fileID: 369342867}
   m_PrefabAsset: {fileID: 0}
@@ -6288,6 +6294,37 @@ Transform:
   m_Father: {fileID: 672544376}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &338879901
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 338879902}
+  m_Layer: 10
+  m_Name: headProjetileSource
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &338879902
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 338879901}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 6.5300035, z: -0.000010066097}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 536897179}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &344113973
 GameObject:
   m_ObjectHideFlags: 0
@@ -6642,6 +6679,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2509208298989353458, guid: 4cc4bfbdf4adc1b439d8cb7f40464483,
         type: 3}
+      propertyPath: body
+      value: 
+      objectReference: {fileID: 110083732}
+    - target: {fileID: 2509208298989353458, guid: 4cc4bfbdf4adc1b439d8cb7f40464483,
+        type: 3}
+      propertyPath: head
+      value: 
+      objectReference: {fileID: 338879901}
+    - target: {fileID: 2509208298989353458, guid: 4cc4bfbdf4adc1b439d8cb7f40464483,
+        type: 3}
       propertyPath: blockTag
       value: BlockSpear
       objectReference: {fileID: 0}
@@ -6661,6 +6708,11 @@ PrefabInstance:
       propertyPath: rotateSpeed
       value: -15
       objectReference: {fileID: 0}
+    - target: {fileID: 2509208298989353458, guid: 4cc4bfbdf4adc1b439d8cb7f40464483,
+        type: 3}
+      propertyPath: headCollider
+      value: 
+      objectReference: {fileID: 1136663069}
     - target: {fileID: 2509208298989353458, guid: 4cc4bfbdf4adc1b439d8cb7f40464483,
         type: 3}
       propertyPath: slitherSound
@@ -6712,6 +6764,38 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 2509208298989353458, guid: 4cc4bfbdf4adc1b439d8cb7f40464483,
         type: 3}
+      propertyPath: projectileSpread
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2509208298989353458, guid: 4cc4bfbdf4adc1b439d8cb7f40464483,
+        type: 3}
+      propertyPath: wave2.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2509208298989353458, guid: 4cc4bfbdf4adc1b439d8cb7f40464483,
+        type: 3}
+      propertyPath: wave3.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2509208298989353458, guid: 4cc4bfbdf4adc1b439d8cb7f40464483,
+        type: 3}
+      propertyPath: finalPhaseMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 00047f7fc1aa43c4b85f880856e379f7, type: 2}
+    - target: {fileID: 2509208298989353458, guid: 4cc4bfbdf4adc1b439d8cb7f40464483,
+        type: 3}
+      propertyPath: wave1.Array.data[1]
+      value: 
+      objectReference: {fileID: 402171061839891094, guid: cbd9e33276aabb54ca7fb1325da2a9b0,
+        type: 3}
+    - target: {fileID: 2509208298989353458, guid: 4cc4bfbdf4adc1b439d8cb7f40464483,
+        type: 3}
+      propertyPath: wave2.Array.data[2]
+      value: 
+      objectReference: {fileID: 3937406926281971718, guid: 15b326be86d422f41ac630291504aeac,
+        type: 3}
+    - target: {fileID: 2509208298989353458, guid: 4cc4bfbdf4adc1b439d8cb7f40464483,
+        type: 3}
       propertyPath: moveTargets.Array.data[0]
       value: 
       objectReference: {fileID: 866512483}
@@ -6728,12 +6812,17 @@ PrefabInstance:
     - target: {fileID: 2509208298989353458, guid: 4cc4bfbdf4adc1b439d8cb7f40464483,
         type: 3}
       propertyPath: moveTriggerHpPercent.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2509208298989353458, guid: 4cc4bfbdf4adc1b439d8cb7f40464483,
         type: 3}
       propertyPath: moveTriggerHpPercent.Array.data[0]
       value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 2509208298989353458, guid: 4cc4bfbdf4adc1b439d8cb7f40464483,
+        type: 3}
+      propertyPath: moveTriggerHpPercent.Array.data[1]
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2509208298989353458, guid: 4cc4bfbdf4adc1b439d8cb7f40464483,
         type: 3}
@@ -6747,12 +6836,30 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 00047f7fc1aa43c4b85f880856e379f7, type: 2}
     - target: {fileID: 5776804828169958842, guid: 4cc4bfbdf4adc1b439d8cb7f40464483,
         type: 3}
+      propertyPath: m_Name
+      value: eyes
+      objectReference: {fileID: 0}
+    - target: {fileID: 5776804828169958842, guid: 4cc4bfbdf4adc1b439d8cb7f40464483,
+        type: 3}
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 8827844535414026505, guid: 4cc4bfbdf4adc1b439d8cb7f40464483,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 6214007024327720138, guid: 4cc4bfbdf4adc1b439d8cb7f40464483,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 338879902}
+    - targetCorrespondingSourceObject: {fileID: 6214007024327720138, guid: 4cc4bfbdf4adc1b439d8cb7f40464483,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1136663070}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4cc4bfbdf4adc1b439d8cb7f40464483, type: 3}
 --- !u!1001 &376805581
@@ -7858,10 +7965,16 @@ MonoBehaviour:
     EnableWhenTrue: {fileID: 11400000, guid: 67269de8472ca304484a63a03dcea2b7, type: 2}
   - name: leader_4
     convo: {fileID: 11400000, guid: 42e671b3a53836c439385b61d107a91b, type: 2}
-    enabled: 1
+    enabled: 0
     priority: 0
     deleteWhenTrue: {fileID: 0}
     EnableWhenTrue: {fileID: 11400000, guid: e9e6926a530d0214cb4f2ef976a74ae3, type: 2}
+  - name: leader_5
+    convo: {fileID: 11400000, guid: 0d65c38f5ae15954ab526e87fa96fd97, type: 2}
+    enabled: 0
+    priority: 1
+    deleteWhenTrue: {fileID: 0}
+    EnableWhenTrue: {fileID: 11400000, guid: 99a1ac19ef5dbb2428e5fec98e50846f, type: 2}
   characterName: Leader
   speechBubble: {fileID: 766905202}
   talking: 0
@@ -13005,32 +13118,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 525893913}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &529137220
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b54c4e062583404688e9450addf1871, type: 3}
-  m_Name: dummyAppear(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)
-  m_EditorClassIdentifier: 
-  clips:
-  - name: 
-    clip: {fileID: 8300000, guid: dad9a8beba5ea3647b7c55faed931401, type: 3}
-    looping: 0
-    CustomPitchAndVolume: 0
-    volume: 0
-    pitch: 0
-  type: 0
-  SynchronizePitchAndVolume: 1
-  pitch: 1
-  volume: 1
-  voiceLines: 0
-  audioSource: {fileID: 0}
-  instantialized: 0
 --- !u!1001 &529143086
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13223,6 +13310,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1075881205352180498, guid: 47b92ae725ac9ca4eb20474aeeca269b,
     type: 3}
   m_PrefabInstance: {fileID: 533208006}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &536897179 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6214007024327720138, guid: 4cc4bfbdf4adc1b439d8cb7f40464483,
+    type: 3}
+  m_PrefabInstance: {fileID: 369342867}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &537608037
 PrefabInstance:
@@ -15948,6 +16041,32 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 654392514}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &661681647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b54c4e062583404688e9450addf1871, type: 3}
+  m_Name: dummyAppear(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)
+  m_EditorClassIdentifier: 
+  clips:
+  - name: 
+    clip: {fileID: 8300000, guid: dad9a8beba5ea3647b7c55faed931401, type: 3}
+    looping: 0
+    CustomPitchAndVolume: 0
+    volume: 0
+    pitch: 0
+  type: 0
+  SynchronizePitchAndVolume: 1
+  pitch: 1
+  volume: 1
+  voiceLines: 0
+  audioSource: {fileID: 0}
+  instantialized: 0
 --- !u!1001 &665983531
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16261,9 +16380,9 @@ MonoBehaviour:
     Pos: {x: 99.15, y: 183.268, z: 311.55}
     set: 0
   - fact: {fileID: 11400000, guid: 99a1ac19ef5dbb2428e5fec98e50846f, type: 2}
-    obj: {fileID: 1062066867}
-    rotation: {x: -0, y: -0.07880898, z: -0, w: 0.9968898}
-    Pos: {x: 99.15, y: 183.268, z: 311.55}
+    obj: {fileID: 378141132}
+    rotation: {x: -0, y: -0.78586125, z: -0, w: 0.61840296}
+    Pos: {x: 87.4, y: 183.294, z: 306.1}
     set: 0
   - fact: {fileID: 11400000, guid: afba318ef7e36f04dab58be2d4975b0e, type: 2}
     obj: {fileID: 400949476}
@@ -22938,8 +23057,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 929029517}
-  m_LocalRotation: {x: -0, y: 0.61869025, z: -0, w: 0.78563505}
-  m_LocalPosition: {x: 2.0863364, y: -0.33339673, z: -4.775214}
+  m_LocalRotation: {x: -0, y: 0.19206387, z: -0, w: 0.9813825}
+  m_LocalPosition: {x: 3.9450588, y: -0.33339673, z: 3.382771}
   m_LocalScale: {x: 8.3, y: 8.3, z: 8.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -24400,7 +24519,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 976053838}
   m_LocalRotation: {x: -0, y: -0.9936915, z: -0, w: 0.11214839}
-  m_LocalPosition: {x: 1.3492197, y: 0.024846548, z: -0.7427412}
+  m_LocalPosition: {x: -1.12, y: 0.024846548, z: 3.56}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -26123,6 +26242,12 @@ MonoBehaviour:
     priority: 0
     deleteWhenTrue: {fileID: 0}
     EnableWhenTrue: {fileID: 11400000, guid: b492315fa819a5e40b08f1d9857be11b, type: 2}
+  - name: engineer_5
+    convo: {fileID: 11400000, guid: 9967c6f8f6b8be845857daed18cafe4e, type: 2}
+    enabled: 0
+    priority: 1
+    deleteWhenTrue: {fileID: 0}
+    EnableWhenTrue: {fileID: 11400000, guid: 99a1ac19ef5dbb2428e5fec98e50846f, type: 2}
   characterName: Engineer
   speechBubble: {fileID: 978396955}
   talking: 0
@@ -27519,6 +27644,111 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &1136663069
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1136663070}
+  - component: {fileID: 1136663073}
+  - component: {fileID: 1136663072}
+  - component: {fileID: 1136663071}
+  m_Layer: 10
+  m_Name: head collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1136663070
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1136663069}
+  m_LocalRotation: {x: 0, y: -0.21643952, z: 0, w: 0.97629607}
+  m_LocalPosition: {x: -0.04, y: 2.74, z: -0.13}
+  m_LocalScale: {x: 1, y: 6.4939327, z: 4.6351933}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 536897179}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: -25, z: 0}
+--- !u!65 &1136663071
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1136663069}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1136663072
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1136663069}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1136663073
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1136663069}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &1138613567
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -48365,7 +48595,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1870220876}
   m_LocalRotation: {x: -0, y: -0.99856144, z: -0, w: 0.053619944}
-  m_LocalPosition: {x: 68, y: 187.57, z: 330.7}
+  m_LocalPosition: {x: 48.73, y: 165.33, z: 273.47}
   m_LocalScale: {x: 22.108873, y: 4.6044, z: 2.9835274}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -54537,6 +54767,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4663128797434766542, guid: 7c48be7f603bcdb4d904ea99c5abe193,
         type: 3}
+      propertyPath: conversations.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663128797434766542, guid: 7c48be7f603bcdb4d904ea99c5abe193,
+        type: 3}
       propertyPath: conversations.Array.data[0].name
       value: gran_1
       objectReference: {fileID: 0}
@@ -54564,6 +54799,11 @@ PrefabInstance:
         type: 3}
       propertyPath: conversations.Array.data[5].name
       value: gran_6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663128797434766542, guid: 7c48be7f603bcdb4d904ea99c5abe193,
+        type: 3}
+      propertyPath: conversations.Array.data[7].name
+      value: gran_8
       objectReference: {fileID: 0}
     - target: {fileID: 4663128797434766542, guid: 7c48be7f603bcdb4d904ea99c5abe193,
         type: 3}
@@ -54600,6 +54840,34 @@ PrefabInstance:
       propertyPath: conversations.Array.data[5].convo
       value: 
       objectReference: {fileID: 11400000, guid: 5979a9c0a8c027a45a2ea9fada5f7f97,
+        type: 2}
+    - target: {fileID: 4663128797434766542, guid: 7c48be7f603bcdb4d904ea99c5abe193,
+        type: 3}
+      propertyPath: conversations.Array.data[7].convo
+      value: 
+      objectReference: {fileID: 11400000, guid: 3df8c9d776bf7bc46a71e3b81fefb5da,
+        type: 2}
+    - target: {fileID: 4663128797434766542, guid: 7c48be7f603bcdb4d904ea99c5abe193,
+        type: 3}
+      propertyPath: conversations.Array.data[6].priority
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663128797434766542, guid: 7c48be7f603bcdb4d904ea99c5abe193,
+        type: 3}
+      propertyPath: conversations.Array.data[7].priority
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663128797434766542, guid: 7c48be7f603bcdb4d904ea99c5abe193,
+        type: 3}
+      propertyPath: conversations.Array.data[6].deleteWhenTrue
+      value: 
+      objectReference: {fileID: 11400000, guid: afba318ef7e36f04dab58be2d4975b0e,
+        type: 2}
+    - target: {fileID: 4663128797434766542, guid: 7c48be7f603bcdb4d904ea99c5abe193,
+        type: 3}
+      propertyPath: conversations.Array.data[7].EnableWhenTrue
+      value: 
+      objectReference: {fileID: 11400000, guid: 99a1ac19ef5dbb2428e5fec98e50846f,
         type: 2}
     - target: {fileID: 5974663477872641148, guid: 7c48be7f603bcdb4d904ea99c5abe193,
         type: 3}

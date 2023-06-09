@@ -89,7 +89,22 @@ public class GlobalUI : MonoBehaviour
     [SerializeField] Slider sfxSlider, musicSlider;
 
     UISound sound;
-    bool loadingSave = false;
+    bool loadingSave = false, gameOver;
+
+    public void FadeToCredits(float delay)
+    {
+        StartCoroutine(_FadeToCredits(delay));
+    }
+
+    public IEnumerator _FadeToCredits(float delay)
+    {
+        if (gameOver) yield break;
+        gameOver = true;
+
+        fade.GetComponent<Fade>().Appear();
+        yield return new WaitForSeconds(delay + 0.5f);
+        SceneManager.LoadScene(3);
+    }
 
     public void BlackOut(float delay)
     {

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 086995bd923b7574ca272a595da0045b, type: 3}
+  m_Name: leader_5
+  m_EditorClassIdentifier: 
+  lines:
+  - We did it. Thank goodness
+  - " Believe me, I\u2019ll be keeping well away from those ruins from now on.\r\n"
+  - "I\u2019m thankful you were here to save us. Your bravery is unmatched!\r\n"
+  step: -1
+  endConvoFact:
+  - {fileID: 11400000, guid: 4b8c88366617ca54a98fd0ef9417c6cc, type: 2}
+  endConvoRemoveFact: {fileID: 11400000, guid: 3d0dee9f16df76248bd9165d1d0d06e4, type: 2}
+  voiceLines: {fileID: 11400000, guid: a116bac113b5f4644a4216025c4bb00c, type: 2}
