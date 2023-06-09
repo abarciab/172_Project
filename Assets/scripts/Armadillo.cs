@@ -60,6 +60,7 @@ public class Armadillo : BaseEnemy
         move.EnableRotation();
 
         rollCooldown = rollResetTime;
+        swipeHB.EndChecking();
     }
 
     void EndRoll()
