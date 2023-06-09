@@ -14,8 +14,8 @@ public class CreditsScreen : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        if (background.transform.position.y < backgroundTarget) background.transform.position += Vector3.up * backgroundSpeed;
-        if (text.transform.position.y < textTarget) text.transform.position += Vector3.up * textSpeed;
+        if (background.transform.position.y < backgroundTarget) background.transform.position += Vector3.up * backgroundSpeed * 100 * Time.deltaTime;
+        if (text.transform.position.y < textTarget) text.transform.position += Vector3.up * textSpeed * 100 * Time.deltaTime;
     }
 
     public void Quit()
