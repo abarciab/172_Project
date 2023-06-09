@@ -38,11 +38,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Armadillo|Burrow
-      takeName: Armadillo|Burrow
+      name: Armadillo|Unburrow (1)
+      takeName: Armadillo|Unburrow
       internalID: -7384070019826797688
       firstFrame: 0
-      lastFrame: 35
+      lastFrame: 19
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -62,8 +62,16 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.6972222
-        functionName: StartDigCount
+      - time: 0.2405303
+        functionName: TriggerErruption
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 9cd79bcf0164a1948b9165dba8da92b9,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.82642573
+        functionName: EndAttack
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 04e21306de9dc36438f3257d61282239,
           type: 3}
@@ -252,11 +260,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armadillo|Unburrow
-      takeName: Armadillo|Unburrow
+      name: Armadillo|Burrow
+      takeName: Armadillo|Burrow
       internalID: -5768618078349506868
       firstFrame: 0
-      lastFrame: 19
+      lastFrame: 35
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -277,7 +285,7 @@ ModelImporter:
       curves: []
       events:
       - time: 0.95
-        functionName: EndAttack
+        functionName: StartDigCount
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 04e21306de9dc36438f3257d61282239,
           type: 3}

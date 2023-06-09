@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class Armadillo : BaseEnemy
 {
@@ -29,8 +30,10 @@ public class Armadillo : BaseEnemy
     [SerializeField] int digDamage;
     [SerializeField] float digResetTime, digKB;
     [SerializeField] HitBox digHB;
-    public float digCooldown, digTimeLeft;
-    public bool digging;
+    [SerializeField] GameObject erruptionVFX;
+    [SerializeField] float ERRUPTION_TIME;
+    public float digCooldown, digTimeLeft, erruptionCooldown;
+    public bool digging, errupting = false;
     public int numEnemiesToSpawn = 1;
     List<GameObject> minions = new List<GameObject>();
 
@@ -103,6 +106,7 @@ public class Armadillo : BaseEnemy
         base.Start();
         rollCooldown = rollResetTime;
         digCooldown = digResetTime;
+        erruptionVFX.GetComponent<VisualEffect>().Stop();
     }
 
     protected override void Update()
@@ -136,12 +140,21 @@ public class Armadillo : BaseEnemy
                 transform.position = surfaceDecal.transform.position;
                 PutOnGround();
                 anim.SetBool(digAnim, false);
+
+
                 return;
             }
             surfaceDecal.transform.position = target.transform.position + Vector3.up;
             surfaceDecal.SetActive(true);
             digHB.StartChecking(transform, digDamage, digKB);
             digTimeLeft = 1;
+        }
+
+        //handle erruption vfx
+        if (erruptionCooldown <= 0 && errupting){
+            erruptionVFX.GetComponent<VisualEffect>().Stop();
+            errupting = false;
+            //print("erruptionVFX cooldown: " + erruptionCooldown);
         }
 
         if (busy) return;
@@ -200,6 +213,7 @@ public class Armadillo : BaseEnemy
         swipeCooldown -= Time.deltaTime;
         rollCooldown -= Time.deltaTime;
         digCooldown -= Time.deltaTime;
+        erruptionCooldown -= Time.deltaTime;
     }
 
     void Swipe()
@@ -234,5 +248,16 @@ public class Armadillo : BaseEnemy
         Gizmos.DrawWireSphere(transform.position, rollRange.y);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, digMinDist);
+    }
+    
+    public void TriggerErruptionVFX()
+    {
+        if (!errupting)
+        {
+            erruptionVFX.GetComponent<VisualEffect>().Play();
+            errupting = true;
+            erruptionCooldown = ERRUPTION_TIME;
+            //print("erruptionVFX cooldown: " + erruptionCooldown);
+        }
     }
 }
