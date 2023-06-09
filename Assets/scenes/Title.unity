@@ -968,13 +968,13 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1097237223}
         m_TargetAssemblyTypeName: TitleScreen, Assembly-CSharp
-        m_MethodName: StartGame
-        m_Mode: 1
+        m_MethodName: LoadGame
+        m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
+          m_FloatArgument: 1.5
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -1444,6 +1444,7 @@ MonoBehaviour:
   continueButton: {fileID: 395766833}
   valid: {r: 0.85882354, g: 0.57254905, b: 0.3137255, a: 1}
   Invalid: {r: 0.85882354, g: 0.57254905, b: 0.3137255, a: 0.36862746}
+  fading: 0
   fade: {fileID: 1123008065}
   video: {fileID: 1748957924}
   videoPlayer: {fileID: 1475795059}

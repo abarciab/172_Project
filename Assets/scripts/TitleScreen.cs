@@ -17,6 +17,7 @@ public class TitleScreen : MonoBehaviour {
     {
         fade.GetComponent<Image>().color = new Color(0, 0, 0, 0);
         fading = false;
+        Time.timeScale = 1;
     }
 
     private void Update()
@@ -43,6 +44,8 @@ public class TitleScreen : MonoBehaviour {
     {
         if (fading) return;
         fading = true;
+        
+        StopAllCoroutines();
         StartCoroutine(_StartGame(1.5f));
     }
 
@@ -59,7 +62,7 @@ public class TitleScreen : MonoBehaviour {
         video.SetActive(true);
 
         while (!videoPlayer.isPlaying) yield return null;
-        while (videoPlayer.isPlaying) yield return null;
+        while (videoPlayer.isPlaying && !Input.GetKeyDown(KeyCode.Escape)) yield return null;
 
         PlayerPrefs.SetInt("checkpoint", 0);
         PlayerPrefs.SetInt("savedFacts", 0);
