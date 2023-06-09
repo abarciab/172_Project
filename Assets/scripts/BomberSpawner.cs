@@ -8,6 +8,8 @@ public class BomberSpawner : BaseEnemy
     List<GameObject> spawnedBombers = new List<GameObject>();
     [SerializeField] int maxConcurrent, numSpawnedOnDeath = 2;
     [SerializeField] float spawnResetTime, range;
+    [SerializeField] bool useManualAgro = false;
+    [SerializeField] float manualAgroRange = 45;
 
     [SerializeField] SpawnerVFXParent spawnVFX;
 
@@ -45,6 +47,8 @@ public class BomberSpawner : BaseEnemy
         if (num == 0) return;
 
         var newBomber = Instantiate(bomberPrefab, transform.position, Quaternion.identity);
+        newBomber.GetComponent<EnemyStats>().inGroup = false;
+        if (useManualAgro) newBomber.GetComponent<BaseEnemy>().agroRange = manualAgroRange;
         spawnedBombers.Add(newBomber);
         spawnCooldown = spawnResetTime;
 

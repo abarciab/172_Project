@@ -59,6 +59,10 @@ public class GameManager : MonoBehaviour
     [Header("Enemy groups")]
     [SerializeField] List<EnemyGroup> groups = new List<EnemyGroup>();
 
+    [Header("Ending")]
+    [SerializeField] Fact granEnd;
+    [SerializeField] Fact engineerEnd, leaderEnd;
+
     private void OnValidate()
     {
         int offset = 0;
@@ -169,6 +173,11 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        var f = FactManager.i;
+        if (f && f.IsPresent(granEnd) && f.IsPresent(engineerEnd) && f.IsPresent(leaderEnd)) {
+            GlobalUI.i.FadeToCredits(3);
+        }
+
         if (setStarting) {
             PlayerPrefs.SetInt("checkpoint", startingCheckPoint);
             setStarting = false;
@@ -184,6 +193,8 @@ public class GameManager : MonoBehaviour
 
         CheckStory();
     }
+
+    
 
     void UpdateEnemyGroups()
     {

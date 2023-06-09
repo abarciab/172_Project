@@ -174,7 +174,9 @@ public class Armadillo : BaseEnemy
             for (int i = 0; i < numEnemiesToSpawn; i++) {
                 if (minions.Count > 2) break;
                 Vector3 offset = new Vector3(Random.Range(-2, 2), 0, Random.Range(-2, 2));
-                minions.Add(Instantiate(enemyPrefab, transform.position + offset, Quaternion.identity));
+                var newMinion = Instantiate(enemyPrefab, transform.position + offset, Quaternion.identity);
+                newMinion.GetComponent<EnemyStats>().inGroup = false;
+                minions.Add(newMinion);
             }
         }
         LookAtTarget(1);

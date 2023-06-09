@@ -38,15 +38,19 @@ public class Snake : BaseEnemy
     [Header("final phase")]
     [SerializeField] GameObject postProcessing;
     [SerializeField] GameObject rotatePivot, playerTPtarget, snakeTPtarget;
-    [SerializeField] float rotateSpeed = 1, finalScale, finalSpitCooldown = 5;
+    [SerializeField] float rotateSpeed = 1, finalScale, finalSpitCooldown = 5, projectileSpread = 5;
     [SerializeField] Sound transitionSound, slitherSound, battleStartSound, hissSound;
-    [SerializeField] GameObject nonBlocking, finalPhaseSpit;
+    [SerializeField] GameObject head, finalPhaseSpit, body, headCollider;
     [SerializeField] string blockTag, vulnerableTag;
+    [SerializeField] Material finalPhaseMaterial;
     bool finalPhase;
 
     [Header("Anims")]
     [SerializeField] Animator anim;
     [SerializeField] string sprayAnim, spitAnim, tailWhipAnim, slitherAnim, coiledAnim = "coiled";
+
+    GameObject projectileSource;
+    List<GameObject> spawners = new List<GameObject>();
 
     protected override void Start()
     {
@@ -56,8 +60,10 @@ public class Snake : BaseEnemy
         slitherSound = Instantiate(slitherSound);
         hissSound = Instantiate(hissSound);
         goopThrowSound = Instantiate(goopThrowSound);
-
+        
         battleStartSound.Play();
+
+        projectileSource = gameObject;
     }
 
     public override void EndAttack()
@@ -109,6 +115,7 @@ public class Snake : BaseEnemy
 
     void StartFinalPhase()
     {
+        GoopManager.i.ClearAllFloorGoop();
         postProcessing.SetActive(true);
         ShaderTransitionController.i.PausePP();
         anim.SetBool(coiledAnim, true);
@@ -119,16 +126,25 @@ public class Snake : BaseEnemy
         transform.position = snakeTPtarget.transform.position;
         spitResetTime = finalSpitCooldown;
         projectilePrefab = finalPhaseSpit;
+        projectileSource = head;
+        stats.normalMat = finalPhaseMaterial;
+        shortDist = 0;
+        projectileAngle = 0;
 
-        //UpdateTagRecursive(transform);
-        transform.tag = vulnerableTag;
+        for (int i = 0; i < spawners.Count; i++) {
+            if (spawners[i]) Destroy(spawners[i]);
+        }
+
+        UpdateTagRecursive(transform);
+        headCollider.tag = vulnerableTag;
+        body.GetComponent<Collider>().enabled = false;
     }
 
     void UpdateTagRecursive(Transform parent)
     {
         parent.tag = blockTag;
-        for (int i = 0; i < transform.childCount; i++) {
-            UpdateTagRecursive(transform.GetChild(i));
+        for (int i = 0; i < parent.childCount; i++) {
+            UpdateTagRecursive(parent.GetChild(i));
         }
     }
 
@@ -183,6 +199,7 @@ public class Snake : BaseEnemy
 
         anim.SetBool(slitherAnim, false);
         stats.SetVincible();
+        if (spawners.Count > 0) Destroy(spawners[0]);
         busy = false;
     }
 
@@ -211,6 +228,7 @@ public class Snake : BaseEnemy
             var enemy = Instantiate(e, transform.position, Quaternion.identity);
             enemy.GetComponent<EnemyStats>().inGroup = false;
             enemy.GetComponent<BaseEnemy>().agroRange = Mathf.Infinity;
+            if (enemy.GetComponent<BomberSpawner>()) spawners.Add(enemy);
             yield return new WaitForSeconds(1f);
         }
     }
@@ -253,19 +271,26 @@ public class Snake : BaseEnemy
     }
 
 
-    public void LaunchProjectile()
+    public void LaunchProjectile(bool fresh = true)
     {
         if (spraying) {
             spraying = false;
             StartCoroutine(LaunchAfterDelay(sprayDelay));
             StartCoroutine(LaunchAfterDelay(sprayDelay * 2));
         }
+        if (finalPhase && fresh) {
+            StartCoroutine(LaunchAfterDelay(sprayDelay, 3));
+        }
+
         busy = false;
         var projectile = InstantiateProjectile(projectilePrefab, projectileStartOffset, projectileSize);
         projectile.GetComponent<GoopProjectile>().goopAmount = goopAmount;
         projectile.GetComponent<HitBox>().StartChecking(transform, rangedDmg);
         Vector3 targetPos = target.position + Player.i.speed3D;
-        AimAndFire(projectile, projectileAngle, targetPos, projectileStartOffset.y, shortDist);
+        if (finalPhase) targetPos += new Vector3(Random.Range(-projectileSpread, projectileSpread), 0, Random.Range(-projectileSpread, projectileSpread));
+        
+        if (finalPhase) projectile.transform.position = projectileSource.transform.position;
+        AimAndFire(projectile, projectileAngle, targetPos, projectileStartOffset.y, shortDist, source: projectileSource);
         goopThrowSound.Play();
 
         anim.SetBool(spitAnim, false);
@@ -273,10 +298,13 @@ public class Snake : BaseEnemy
     }
 
 
-    IEnumerator LaunchAfterDelay(float delay)
+    IEnumerator LaunchAfterDelay(float delay, int recurse = 0)
     {
+        if (recurse < 0) yield break;
         yield return new WaitForSeconds(delay);
-        LaunchProjectile();
+        LaunchProjectile(false);
+
+        if (recurse > 0) StartCoroutine(LaunchAfterDelay(delay, recurse - 1));
     }
 
     protected override void OnDrawGizmosSelected()

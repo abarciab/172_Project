@@ -33,7 +33,7 @@ public class EnemyStats : HitReciever
     [Header("Materials")]
     [SerializeField] float hitMatTime = 0.1f;
     [SerializeField] List<SkinnedMeshRenderer> body = new List<SkinnedMeshRenderer>();
-    [SerializeField] Material normalMat, hitMat, critMat, stunnedMat;
+    public Material normalMat, hitMat, critMat, stunnedMat;
 
     Coroutine currentBleed;
 

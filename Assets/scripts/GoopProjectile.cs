@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class GoopProjectile : MonoBehaviour
 {
-    public float goopAmount;
+    public float goopAmount, homingAmount;
+
+    private void Update()
+    {
+        var dir = transform.position - Player.i.transform.position;
+        GetComponent<Rigidbody>().velocity += dir * Time.deltaTime * homingAmount;
+    }
 
     private void OnTriggerEnter(Collider other)
     {

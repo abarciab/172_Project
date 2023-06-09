@@ -4901,7 +4901,7 @@ GameObject:
   - component: {fileID: 4898247593441349181}
   - component: {fileID: 4924370019583019867}
   m_Layer: 8
-  m_Name: bomberSpawner
+  m_Name: snakeBomberSpawner
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4981,7 +4981,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   health: 200
-  maxHealth: 600
+  maxHealth: 350
   hpBar: {fileID: 6022520287535750107}
   destroy: 0
   KBresist: 0
@@ -9890,11 +9890,11 @@ MonoBehaviour:
   orbitSwitchMod: 0
   bomberPrefab: {fileID: 3937406926281971718, guid: 3b415055d19ecd54f84df551d3de344d,
     type: 3}
-  maxConcurrent: 3
+  maxConcurrent: 2
   numSpawnedOnDeath: 2
   spawnResetTime: 3.5
-  range: 14.3
-  useManualAgro: 0
+  range: 80
+  useManualAgro: 1
   manualAgroRange: 45
   spawnVFX: {fileID: 2082290238236031426}
 --- !u!1001 &2922422761936717032
@@ -10546,7 +10546,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -5568371526223589888, guid: 94091358a790d124986f9022c2611571,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1797376726220718248}
+      addedObject: {fileID: 1094607444964172622}
   m_SourcePrefab: {fileID: 100100000, guid: 94091358a790d124986f9022c2611571, type: 3}
 --- !u!137 &30831754224870014 stripped
 SkinnedMeshRenderer:
@@ -10617,7 +10617,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 6834725872972505362}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &1797376726220718248
+--- !u!65 &1094607444964172622
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

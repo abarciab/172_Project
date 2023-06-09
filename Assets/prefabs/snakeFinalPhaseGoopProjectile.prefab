@@ -149,6 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goopAmount: 0
+  homingAmount: -0.75
 --- !u!135 &2364231434396986354
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -189,6 +190,7 @@ MonoBehaviour:
   printHits: 0
   playSoundOnHit: 0
   hitSound: {fileID: 0}
+  SpawnOnHit: {fileID: 0}
   blockable: 0
   blockTag: 
   blockedSound: {fileID: 0}
