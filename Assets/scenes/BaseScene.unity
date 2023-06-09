@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 1.5434763, g: 0.74594116, b: 1.5418836, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1610,11 +1610,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3466358106996184544, guid: 0b10cfa70229af84cb1005f521e3be91,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -3282112465140020554, guid: bc51c938ad92ffa4895fd54d7182a2ed,
+        type: 3}
     - target: {fileID: 5722463811611699907, guid: 0b10cfa70229af84cb1005f521e3be91,
         type: 3}
       propertyPath: m_Name
       value: shockwave
       objectReference: {fileID: 0}
+    - target: {fileID: 8812430536830275183, guid: 0b10cfa70229af84cb1005f521e3be91,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e5c1c27935a55e842bbebf085ae24db8, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11140,6 +11151,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HIT CHECKER
       objectReference: {fileID: 0}
+    - target: {fileID: 4830304686421806717, guid: aec15c5c3163210488e1ec0591dfffc3,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6566086650832600034, guid: aec15c5c3163210488e1ec0591dfffc3,
         type: 3}
       propertyPath: m_RootOrder
@@ -11204,7 +11220,8 @@ PrefabInstance:
         type: 3}
       propertyPath: SpawnOnHit
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 3273569551324316427, guid: 24286a06d49b94c4eb8a3f5d84ed159d,
+        type: 3}
     - target: {fileID: 7467569357150008763, guid: aec15c5c3163210488e1ec0591dfffc3,
         type: 3}
       propertyPath: VFX_spearCatch
@@ -11215,6 +11232,11 @@ PrefabInstance:
       propertyPath: VFX_spearCatch2
       value: 
       objectReference: {fileID: 1596076761}
+    - target: {fileID: 8045839014961115483, guid: aec15c5c3163210488e1ec0591dfffc3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8456390839927953677, guid: aec15c5c3163210488e1ec0591dfffc3,
         type: 3}
       propertyPath: m_IsActive
@@ -29490,32 +29512,32 @@ PrefabInstance:
     - target: {fileID: 4776228482562501670, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: weight
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4817872332485334698, guid: 4e19d265d67051c45821082b3370c7a9,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 0.9009434
-      objectReference: {fileID: 0}
-    - target: {fileID: 4817872332485334698, guid: 4e19d265d67051c45821082b3370c7a9,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 0.9020374
-      objectReference: {fileID: 0}
-    - target: {fileID: 4817872332485334698, guid: 4e19d265d67051c45821082b3370c7a9,
-        type: 3}
-      propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4817872332485334698, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4817872332485334698, guid: 4e19d265d67051c45821082b3370c7a9,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.89722663
+      objectReference: {fileID: 0}
+    - target: {fileID: 4817872332485334698, guid: 4e19d265d67051c45821082b3370c7a9,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.5330188
+      objectReference: {fileID: 0}
+    - target: {fileID: 4817872332485334698, guid: 4e19d265d67051c45821082b3370c7a9,
+        type: 3}
       propertyPath: m_Intensity
-      value: 4
+      value: 8.8
       objectReference: {fileID: 0}
     - target: {fileID: 4817872332485334698, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_ColorTemperature
-      value: 6432
+      value: 20000
       objectReference: {fileID: 0}
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
@@ -29530,17 +29552,17 @@ PrefabInstance:
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: shader1
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: shader2
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: progress
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
@@ -29550,27 +29572,27 @@ PrefabInstance:
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: progressLerpTarget
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5364301632760274238, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9944275
+      value: 0.084819295
       objectReference: {fileID: 0}
     - target: {fileID: 5364301632760274238, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.048026685
+      value: 0.84160423
       objectReference: {fileID: 0}
     - target: {fileID: 5364301632760274238, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.09373834
+      value: 0.053485934
       objectReference: {fileID: 0}
     - target: {fileID: 5364301632760274238, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0045271697
+      value: -0.5307046
       objectReference: {fileID: 0}
     - target: {fileID: 6180193968040157515, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}

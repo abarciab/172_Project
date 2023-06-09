@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 4655589431991782465}
   - component: {fileID: 5276667604234748629}
   m_Layer: 0
-  m_Name: VFXGraph_Impact_Tut
+  m_Name: VFXGraph_ImpactHARD_Tut
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -196,8 +196,9 @@ Transform:
   - {fileID: 6770893816375064623}
   - {fileID: 110265622126293254}
   - {fileID: 6751939150173849728}
+  - {fileID: 6884983400251883992}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &644261176780500218
 CapsuleCollider:
@@ -482,6 +483,7 @@ MonoBehaviour:
   ps_sunblast: {fileID: 6247970961882571911}
   ps_throwTrail: {fileID: 7797237927570417307}
   VFX_impactHardSurface: {fileID: 3479577108335950271}
+  VFX_impactGOOP: {fileID: 8045839014961115483}
   VFX_spearCatch: {fileID: 0}
   VFX_spearCatch2: {fileID: 0}
 --- !u!1 &4347603200648636067
@@ -10563,3 +10565,88 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!1001 &4811676039027946064
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6566086650832600034}
+    m_Modifications:
+    - target: {fileID: 2110743679978009480, guid: 24286a06d49b94c4eb8a3f5d84ed159d,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2110743679978009480, guid: 24286a06d49b94c4eb8a3f5d84ed159d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.0156
+      objectReference: {fileID: 0}
+    - target: {fileID: 2110743679978009480, guid: 24286a06d49b94c4eb8a3f5d84ed159d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0045
+      objectReference: {fileID: 0}
+    - target: {fileID: 2110743679978009480, guid: 24286a06d49b94c4eb8a3f5d84ed159d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.046
+      objectReference: {fileID: 0}
+    - target: {fileID: 2110743679978009480, guid: 24286a06d49b94c4eb8a3f5d84ed159d,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 2110743679978009480, guid: 24286a06d49b94c4eb8a3f5d84ed159d,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 2110743679978009480, guid: 24286a06d49b94c4eb8a3f5d84ed159d,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2110743679978009480, guid: 24286a06d49b94c4eb8a3f5d84ed159d,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2110743679978009480, guid: 24286a06d49b94c4eb8a3f5d84ed159d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 2110743679978009480, guid: 24286a06d49b94c4eb8a3f5d84ed159d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2110743679978009480, guid: 24286a06d49b94c4eb8a3f5d84ed159d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3273569551324316427, guid: 24286a06d49b94c4eb8a3f5d84ed159d,
+        type: 3}
+      propertyPath: m_Name
+      value: VFXGraph_ImpactGoop
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 24286a06d49b94c4eb8a3f5d84ed159d, type: 3}
+--- !u!4 &6884983400251883992 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2110743679978009480, guid: 24286a06d49b94c4eb8a3f5d84ed159d,
+    type: 3}
+  m_PrefabInstance: {fileID: 4811676039027946064}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8045839014961115483 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3273569551324316427, guid: 24286a06d49b94c4eb8a3f5d84ed159d,
+    type: 3}
+  m_PrefabInstance: {fileID: 4811676039027946064}
+  m_PrefabAsset: {fileID: 0}
