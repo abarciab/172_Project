@@ -14872,6 +14872,7 @@ MonoBehaviour:
   test: 0
   testIntensity: 0.02
   testTime: 0.2
+  testMod: 0
   shakeCurveX:
     serializedVersion: 2
     m_Curve:
@@ -18765,6 +18766,13 @@ MonoBehaviour:
     state: 1
     nextQuest: go confront the beast
     ID: 28
+    playLong: 1
+    customID: 0
+  - name: 'speak with everyone '
+    fact: {fileID: 11400000, guid: 99a1ac19ef5dbb2428e5fec98e50846f, type: 2}
+    state: 1
+    nextQuest: 'speak with everyone '
+    ID: 29
     playLong: 1
     customID: 0
   groups:
