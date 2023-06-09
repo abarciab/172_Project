@@ -64,6 +64,7 @@ public class Snake : BaseEnemy
         battleStartSound.Play();
 
         projectileSource = gameObject;
+        busy = true;
     }
 
     public override void EndAttack()

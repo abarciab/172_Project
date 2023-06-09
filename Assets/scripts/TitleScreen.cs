@@ -9,13 +9,14 @@ public class TitleScreen : MonoBehaviour {
 
     public Image continueButton;
     [SerializeField] Color valid, Invalid;
-    bool fading;
+    public bool fading;
     [SerializeField] GameObject fade, video;
     [SerializeField] VideoPlayer videoPlayer;
 
     private void Start()
     {
         fade.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+        fading = false;
     }
 
     private void Update()
