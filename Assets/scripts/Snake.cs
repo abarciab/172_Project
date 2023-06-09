@@ -50,7 +50,7 @@ public class Snake : BaseEnemy
     [SerializeField] string sprayAnim, spitAnim, tailWhipAnim, slitherAnim, coiledAnim = "coiled";
 
     GameObject projectileSource;
-    List<GameObject> spawners = new List<GameObject>();
+    List<GameObject> spawners = new List<GameObject>(), spawnedEnemies = new List<GameObject>();
 
     protected override void Start()
     {
@@ -78,6 +78,10 @@ public class Snake : BaseEnemy
         base.Die();
         postProcessing.SetActive(false);
         ShaderTransitionController.i.ResumePP();
+        for (int i = 0; i < spawnedEnemies.Count; i++) {
+            if (spawnedEnemies[i]) Destroy(spawnedEnemies[i]);
+        }
+
         Destroy(gameObject);
     }
 
@@ -115,12 +119,16 @@ public class Snake : BaseEnemy
 
     void StartFinalPhase()
     {
+        finalPhase = true;
+        Player.i.FreezePlayer();
         GoopManager.i.ClearAllFloorGoop();
+
         postProcessing.SetActive(true);
         ShaderTransitionController.i.PausePP();
-        anim.SetBool(coiledAnim, true);
-        finalPhase = true;
         GlobalUI.i.BlackOut(0.5f);
+
+        anim.SetBool(coiledAnim, true);
+        
         transform.localScale = Vector3.one * finalScale;
         Player.i.transform.position = playerTPtarget.transform.position;
         transform.position = snakeTPtarget.transform.position;
@@ -138,6 +146,14 @@ public class Snake : BaseEnemy
         UpdateTagRecursive(transform);
         headCollider.tag = vulnerableTag;
         body.GetComponent<Collider>().enabled = false;
+
+        StartCoroutine(_UnfreezePlayer(1));
+    }
+
+    IEnumerator _UnfreezePlayer(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Player.i.UnfreezePlayer();
     }
 
     void UpdateTagRecursive(Transform parent)
@@ -228,6 +244,7 @@ public class Snake : BaseEnemy
             var enemy = Instantiate(e, transform.position, Quaternion.identity);
             enemy.GetComponent<EnemyStats>().inGroup = false;
             enemy.GetComponent<BaseEnemy>().agroRange = Mathf.Infinity;
+            spawnedEnemies.Add(enemy);
             if (enemy.GetComponent<BomberSpawner>()) spawners.Add(enemy);
             yield return new WaitForSeconds(1f);
         }
