@@ -18,12 +18,12 @@ public class EnemyStats : HitReciever
     [SerializeField] float stunTime;
     [HideInInspector] public float stunTimeLeft;
     public bool boss;
-    bool invincible;
+    [HideInInspector] public bool invincible;
     [SerializeField] string bossName;
 
     [SerializeField] List<Fact> removeFactOnDeath = new List<Fact>(), addFactOnDeath = new List<Fact>();
 
-    [SerializeField] bool inGroup;
+    public bool inGroup;
     [SerializeField] int groupID;
     [SerializeField] float HPBarDisplayRange = 30;
 
