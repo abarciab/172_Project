@@ -22,7 +22,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1084183189069778313
 Transform:
   m_ObjectHideFlags: 0
@@ -39,8 +39,9 @@ Transform:
   - {fileID: 283493895982446197}
   - {fileID: 1984304243842823527}
   - {fileID: 1345226986109738206}
+  - {fileID: 29055093971101382}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 156.34, z: 0}
 --- !u!195 &2211974521691028086
 NavMeshAgent:
@@ -5032,7 +5033,14 @@ MonoBehaviour:
   - 0.25
   postProcessing: {fileID: 2291929154782599880}
   rotatePivot: {fileID: 2568540477041247378}
+  playerTPtarget: {fileID: 0}
+  snakeTPtarget: {fileID: 0}
   rotateSpeed: 1
+  finalScale: 0
+  transitionSound: {fileID: 0}
+  slitherSound: {fileID: 0}
+  battleStartSound: {fileID: 0}
+  hissSound: {fileID: 0}
   anim: {fileID: 2272639541864170218}
   sprayAnim: spray
   spitAnim: spit

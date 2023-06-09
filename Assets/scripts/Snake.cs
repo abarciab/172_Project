@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Properties;
 using UnityEngine;
 
 public class Snake : BaseEnemy
@@ -37,8 +38,10 @@ public class Snake : BaseEnemy
     [Header("final phase")]
     [SerializeField] GameObject postProcessing;
     [SerializeField] GameObject rotatePivot, playerTPtarget, snakeTPtarget;
-    [SerializeField] float rotateSpeed = 1, finalScale;
+    [SerializeField] float rotateSpeed = 1, finalScale, finalSpitCooldown = 5;
     [SerializeField] Sound transitionSound, slitherSound, battleStartSound, hissSound;
+    [SerializeField] GameObject nonBlocking, finalPhaseSpit;
+    [SerializeField] string blockTag, vulnerableTag;
     bool finalPhase;
 
     [Header("Anims")]
@@ -76,7 +79,7 @@ public class Snake : BaseEnemy
     {
         base.Update();
 
-        if (busy) return;
+        if (busy || stats.invincible) return;
 
         if (finalPhase) {
             FinalPhaseBehavior();
@@ -100,7 +103,8 @@ public class Snake : BaseEnemy
     void FinalPhaseBehavior()
     {
         Stop();
-        rotatePivot.transform.Rotate(new Vector3(0, rotateSpeed * Time.deltaTime, 0));
+        if (spitCooldown > 0) rotatePivot.transform.Rotate(new Vector3(0, rotateSpeed * Time.deltaTime, 0));
+        if (spitCooldown <= -1) Spit();
     }
 
     void StartFinalPhase()
@@ -113,6 +117,19 @@ public class Snake : BaseEnemy
         transform.localScale = Vector3.one * finalScale;
         Player.i.transform.position = playerTPtarget.transform.position;
         transform.position = snakeTPtarget.transform.position;
+        spitResetTime = finalSpitCooldown;
+        projectilePrefab = finalPhaseSpit;
+
+        //UpdateTagRecursive(transform);
+        transform.tag = vulnerableTag;
+    }
+
+    void UpdateTagRecursive(Transform parent)
+    {
+        parent.tag = blockTag;
+        for (int i = 0; i < transform.childCount; i++) {
+            UpdateTagRecursive(transform.GetChild(i));
+        }
     }
 
     IEnumerator MoveAndSpawn()
@@ -129,7 +146,9 @@ public class Snake : BaseEnemy
         moveTriggerHpPercent.RemoveAt(0);
         wave += 1;
         StartCoroutine(SpawnEnemies());
-        yield return new WaitForSeconds(3);
+        anim.SetBool(slitherAnim, true);
+
+        yield return new WaitForSeconds(2);
         float _dist;
 
         GoToNextMoveTarget();
@@ -162,6 +181,7 @@ public class Snake : BaseEnemy
         } while (_dist > 1f);
         FinishMove();
 
+        anim.SetBool(slitherAnim, false);
         stats.SetVincible();
         busy = false;
     }
@@ -174,7 +194,6 @@ public class Snake : BaseEnemy
         move.gotoTarget = true;
         slitherSound.Play();
         hissSound.Play();
-        anim.SetBool(slitherAnim, true);
     }
 
     void FinishMove()
@@ -183,7 +202,6 @@ public class Snake : BaseEnemy
         moveTargets.RemoveAt(0);
         move.gotoTarget = false;
         slitherSound.Stop();
-        anim.SetBool(slitherAnim, false);
     }
 
     IEnumerator SpawnEnemies()
@@ -191,6 +209,7 @@ public class Snake : BaseEnemy
         var enemies = wave == 1 ? wave1 : (wave == 2 ? wave2 : wave3);
         foreach (var e in enemies) {
             var enemy = Instantiate(e, transform.position, Quaternion.identity);
+            enemy.GetComponent<EnemyStats>().inGroup = false;
             enemy.GetComponent<BaseEnemy>().agroRange = Mathf.Infinity;
             yield return new WaitForSeconds(1f);
         }

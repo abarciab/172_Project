@@ -14,6 +14,7 @@ public class HitBox : MonoBehaviour
     [SerializeField] string ignoreTag;
     [SerializeField] bool printHits, playSoundOnHit;
     [SerializeField] Sound hitSound;
+    [SerializeField] GameObject SpawnOnHit;
 
     [Header("Blockable")]
     [SerializeField] bool blockable;
@@ -99,6 +100,7 @@ public class HitBox : MonoBehaviour
             if (playSoundOnHit && hitSound) hitSound.Play();
             reciever.Hit(new HitReciever.HitData(dmg, obj, kb, offset, _crit:crit, _stun:stun));
             OnHit.Invoke();
+            if (SpawnOnHit) Instantiate(SpawnOnHit, transform.position, Quaternion.identity);
         }
         targets.Add(reciever);
     }
