@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class TitleScreen : MonoBehaviour {
 
     public Image continueButton;
     [SerializeField] Color valid, Invalid;
     bool fading;
-    [SerializeField] GameObject fade;
+    [SerializeField] GameObject fade, video;
+    [SerializeField] VideoPlayer videoPlayer;
 
     private void Start()
     {
@@ -45,7 +47,18 @@ public class TitleScreen : MonoBehaviour {
 
     IEnumerator _StartGame(float delay)
     {
-        yield return new WaitForSeconds(delay);
+        var source = GetComponent<AudioSource>();
+
+        while (delay > 0) {
+            yield return new WaitForEndOfFrame();
+            delay -= Time.deltaTime;
+            source.volume = Mathf.Lerp(source.volume, 0, 0.05f);
+        }
+
+        video.SetActive(true);
+
+        while (!videoPlayer.isPlaying) yield return null;
+        while (videoPlayer.isPlaying) yield return null;
 
         PlayerPrefs.SetInt("checkpoint", 0);
         PlayerPrefs.SetInt("savedFacts", 0);
