@@ -909,6 +909,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goopAmount: 0
   homingAmount: 0
+  destroyedBySpear: 0
+  actualCollider: {fileID: 2723046179155295915}
+  bouncedHit:
+    damage: 150
+    source: {fileID: 0}
+    KB: 0
+    offset: {x: 0, y: 0, z: 0}
+    stunTime: 0
+    crit: 0
+    stun: 0
+  meshes:
+  - {fileID: 1719636133317498126}
+  - {fileID: 4069530074583448601}
+  - {fileID: 3715258484380417852}
+  - {fileID: 1418116968032337405}
+  - {fileID: 6677413363166914187}
+  - {fileID: 2569926655298989981}
+  - {fileID: 6540823861109143961}
+  - {fileID: 339515611525062098}
+  - {fileID: 7410847333054973447}
+  - {fileID: 5283728668080477010}
+  - {fileID: 593243077375269076}
+  glowingMat: {fileID: 2100000, guid: 9d60912063da405489a90be15b56138a, type: 2}
+  normalMat: {fileID: 2100000, guid: 09208e6897f5e0640903857c2501ad0b, type: 2}
 --- !u!135 &2364231434396986354
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -946,7 +970,7 @@ MonoBehaviour:
   targets: []
   linkedBoxes: []
   ignoreTag: Enemy
-  printHits: 1
+  printHits: 0
   playSoundOnHit: 0
   hitSound: {fileID: 0}
   SpawnOnHit: {fileID: 0}

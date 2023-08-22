@@ -44,9 +44,12 @@ public class Snake : BaseEnemy
     [SerializeField] Animator anim;
     [SerializeField] string sprayAnim, spitAnim, tailWhipAnim, slitherAnim, coiledAnim = "coiled";
 
+    [Header("phases")]
     [SerializeField] int Phase = 1;
+    [SerializeField] GameObject phase2Spawners;
 
     GameObject projectileSource;
+
 
     protected override void Start()
     {
@@ -95,8 +98,12 @@ public class Snake : BaseEnemy
 
     void Phase2Behavior()
     {
+        phase2Spawners.SetActive(true);
         if (orbCooldown <= 0) FireOrb();
-        if (stats.health <= 1000) Phase = 2;
+        if (stats.health <= 1000) {
+            Phase = 3;
+            phase2Spawners.SetActive(false);
+        }
     }
 
     void Phase3Behavior()

@@ -13,6 +13,8 @@ public class Droppable : HitReciever
     [SerializeField] float dropTime;
     float timeLeft;
     [SerializeField] HitData hitData;
+    [SerializeField] Material glowingMat, normalMat;
+    [SerializeField] List<Renderer> meshes = new List<Renderer>();
 
     private void Start()
     {
@@ -37,15 +39,21 @@ public class Droppable : HitReciever
             transform.localEulerAngles = originalRot;
             GetComponent<Collider>().isTrigger = false;
         }
+
+        if (Application.isPlaying) 
+            foreach (var r in meshes) r.material = Player.i.poweredUp && transform.localPosition == originalPos ? glowingMat : normalMat;
     }
 
     public override void Hit(HitData hit)
     {
         base.Hit(hit);
-        if (hit.crit) Drop();
+        if (Player.i.poweredUp) {
+            Drop();
+            Player.i.poweredUp = false;
+        }
     }
 
-    void Drop()
+        void Drop()
     {
         GetComponent<Collider>().isTrigger = true;
         StartCoroutine(AnimateDrop());

@@ -17,7 +17,7 @@ public class EnemyStats : HitReciever
     [SerializeField] float stunTime;
     [HideInInspector] public float stunTimeLeft;
     public bool boss;
-    [HideInInspector] public bool invincible;
+    public bool invincible;
     [SerializeField] string bossName;
 
     [SerializeField] List<Fact> removeFactOnDeath = new List<Fact>(), addFactOnDeath = new List<Fact>();
@@ -35,6 +35,9 @@ public class EnemyStats : HitReciever
     public Material normalMat, hitMat, critMat, stunnedMat;
 
     Coroutine currentBleed;
+
+    [Space()]
+    [SerializeField] GameObject dropWhenDie;
 
     public void HideBody()
     {
@@ -137,6 +140,8 @@ public class EnemyStats : HitReciever
         if (deathSound) deathSound.Play(transform);
 
         if (boss) GlobalUI.i.EndBossFight();
+
+        if (dropWhenDie != null) Instantiate(dropWhenDie, transform.position, Quaternion.identity);
     }
 
     private void Update()

@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class BomberSpawner : BaseEnemy
 {
-    [SerializeField] GameObject bomberPrefab;
+    [SerializeField] GameObject bomberPrefab, rarePrefab;
     List<GameObject> spawnedBombers = new List<GameObject>();
     [SerializeField] int maxConcurrent, numSpawnedOnDeath = 2;
     [SerializeField] float spawnResetTime, range;
+    [SerializeField, Range(0, 1)] float rareChance;
     [SerializeField] bool useManualAgro = false;
     [SerializeField] float manualAgroRange = 45;
 
@@ -19,6 +20,7 @@ public class BomberSpawner : BaseEnemy
     {
         base.Start();
         PutOnGround();
+        spawnCooldown = Random.Range(0, spawnResetTime);
     }
 
     protected override void Die()
@@ -46,7 +48,8 @@ public class BomberSpawner : BaseEnemy
     {
         if (num == 0) return;
 
-        var newBomber = Instantiate(bomberPrefab, transform.position, Quaternion.identity);
+        var prefab = Random.Range(0.0f, 1) < rareChance ? rarePrefab : bomberPrefab;
+        var newBomber = Instantiate(prefab, transform.position, Quaternion.identity);
         newBomber.GetComponent<EnemyStats>().inGroup = false;
         if (useManualAgro) newBomber.GetComponent<BaseEnemy>().agroRange = manualAgroRange;
         spawnedBombers.Add(newBomber);

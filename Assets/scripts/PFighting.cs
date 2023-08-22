@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Unity.Burst.Intrinsics.X86;
 
 public class PFighting : HitReciever {
 
@@ -33,6 +32,10 @@ public class PFighting : HitReciever {
     [Header("Tutorial")]
     [SerializeField] Fact anyThrow;
     [SerializeField] Fact recall, fullThrow, criticalThrow, stabbedOnce, shockWave, throwWeak, recallstarted, recallThrown, firstRecall, tutorialDone;
+
+    [Header("powerBall")]
+    [SerializeField] GameObject spearTipBall;
+    [SerializeField] GameObject thrownSpearBall;
 
     public bool RecallReady;
     public void RecallReadyNotice()
@@ -222,7 +225,8 @@ public class PFighting : HitReciever {
     private void Update()
     {
         spearObj.SetActive(hasSpear && (!spearDrawn || (!staffProjectile.gameObject.activeInHierarchy || !charging)));
-
+        spearTipBall.SetActive(hasSpear && Player.i.poweredUp);
+        thrownSpearBall.SetActive(!hasSpear && Player.i.poweredUp);
 
         var playSound = false;
         if (swCooldown > 0) playSound = true;
