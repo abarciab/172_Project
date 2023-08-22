@@ -55,6 +55,15 @@ public class Player : MonoBehaviour
 
     bool fightingEnabled;
 
+    [Header("PowerUp")]
+    [SerializeField] GameObject powerBall;
+    [HideInInspector] public bool poweredUp;
+
+    public void PowerUp()
+    {
+        poweredUp = true;
+        powerBall.SetActive(true);
+    }
     public bool FullHealth()
     {
         return health == maxHealth;
@@ -314,6 +323,7 @@ public class Player : MonoBehaviour
         deathSound = Instantiate(deathSound);
         healthRegenSound = Instantiate(healthRegenSound);
         pSound = GameObject.FindGameObjectWithTag("Bonnie").GetComponent<PSound>();
+        powerBall.SetActive(false);
     }
 
     public void ChangeHealth(int delta) {

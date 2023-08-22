@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,7 +17,7 @@ public class EnemyStats : HitReciever
     [SerializeField] float stunTime;
     [HideInInspector] public float stunTimeLeft;
     public bool boss;
-    [HideInInspector] public bool invincible;
+    public bool invincible;
     [SerializeField] string bossName;
 
     [SerializeField] List<Fact> removeFactOnDeath = new List<Fact>(), addFactOnDeath = new List<Fact>();
@@ -36,6 +35,9 @@ public class EnemyStats : HitReciever
     public Material normalMat, hitMat, critMat, stunnedMat;
 
     Coroutine currentBleed;
+
+    [Space()]
+    [SerializeField] GameObject dropWhenDie;
 
     public void HideBody()
     {
@@ -80,9 +82,18 @@ public class EnemyStats : HitReciever
 
     public override void Hit(HitData hit)
     {
-        if (invincible) return;
+        Hit(hit, false);
+    }
+
+    public override void Hit(HitData hit, bool willHit = false)
+    {
+        if (invincible && !willHit) {
+            print("I'm invincible!");
+            return;
+        }
 
         base.Hit(hit);
+
 
         if (stunTimeLeft > 0) hit.damage *= 2;
         if (hit.stun) stunTimeLeft = stunTime;
@@ -129,6 +140,8 @@ public class EnemyStats : HitReciever
         if (deathSound) deathSound.Play(transform);
 
         if (boss) GlobalUI.i.EndBossFight();
+
+        if (dropWhenDie != null) Instantiate(dropWhenDie, transform.position, Quaternion.identity);
     }
 
     private void Update()

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteAlways]
+//[ExecuteAlways]
 public class Clouds : MonoBehaviour
 {
     [SerializeField] Vector2 Bounds;

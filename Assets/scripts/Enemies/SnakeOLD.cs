@@ -4,7 +4,7 @@ using TMPro;
 using Unity.Properties;
 using UnityEngine;
 
-public class Snake : BaseEnemy
+public class SnakeOLD : BaseEnemy
 {
     [Header("Spit")]
     [SerializeField] GameObject projectilePrefab;

@@ -7,6 +7,7 @@ public class MusicPlayer : MonoBehaviour
 {
     [SerializeField] Sound Music1, Music2, ambientWind;
     bool fadingOut;
+    [SerializeField] bool muted;
 
     private void Start()
     {
@@ -23,11 +24,23 @@ public class MusicPlayer : MonoBehaviour
     {
         Music2.PercentVolume(0, 0.05f);
         Music1.PercentVolume(0, 0.05f);
+        ambientWind.PercentVolume(0, 0.05f);
         fadingOut = true;
     }
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.M)) {
+            muted = !muted;
+        }
+
+        if (muted) {
+            Music1.PercentVolume(0);
+            Music2.PercentVolume(0);
+            ambientWind.PercentVolume(0);
+            return;
+        }
+
         if (fadingOut) return;
 
         if (Player.i.InCombat()) {

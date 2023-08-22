@@ -31,4 +31,6 @@ public class HitReciever : MonoBehaviour
     [HideInInspector] public UnityEvent OnHit = new UnityEvent();
 
     virtual public void Hit(HitData hit) { OnHit.Invoke(); }
+
+    virtual public void Hit(HitData hit, bool willHit = false) { OnHit.Invoke(); }
 }

@@ -105,7 +105,10 @@ public class BaseEnemy : MonoBehaviour
         Vector3 finalVelocity = Quaternion.AngleAxis(angleBetweenObjects, Vector3.up) * velocity;
 
         // Fire!
-        if (float.IsNaN(finalVelocity.x)) return;
+        if (float.IsNaN(finalVelocity.x)) {
+            print("is NaN!");
+            return;
+        }
         rb.velocity = finalVelocity;
     }
 

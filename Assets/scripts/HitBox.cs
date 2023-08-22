@@ -94,7 +94,6 @@ public class HitBox : MonoBehaviour
                 return;
             }
         }
-        
 
         if (hitting) {
             if (playSoundOnHit && hitSound) hitSound.Play();
