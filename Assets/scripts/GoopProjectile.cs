@@ -16,7 +16,10 @@ public class GoopProjectile : MonoBehaviour
     {
         var spear = other.GetComponent<ThrownStaff>();
         if (!spear) spear = other.GetComponentInParent<ThrownStaff>();
-        if (spear) Destroy(gameObject);
+        if (spear) {
+            print("hit by spear");
+            Destroy(gameObject);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -26,6 +29,7 @@ public class GoopProjectile : MonoBehaviour
 
     void Explode()
     {
+        print("explode!");
         GoopManager.i.SpawnGoop(transform.position, goopAmount);
         Destroy(gameObject);
     }

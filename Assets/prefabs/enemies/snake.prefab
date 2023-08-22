@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 386997023096378504}
   - component: {fileID: 3925142823399293205}
   - component: {fileID: 5652803430239516570}
-  - component: {fileID: 2509208298989353458}
+  - component: {fileID: 410813884090075331}
   m_Layer: 8
   m_Name: snake
   m_TagString: Enemy
@@ -107,6 +107,7 @@ MonoBehaviour:
   stunTime: 0
   stunTimeLeft: 0
   boss: 1
+  invincible: 0
   bossName: the beast
   removeFactOnDeath: []
   addFactOnDeath:
@@ -4976,7 +4977,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!114 &2509208298989353458
+--- !u!114 &410813884090075331
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4985,7 +4986,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 43378320019879016}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65b72734c25cff04bbaa59e661553136, type: 3}
+  m_Script: {fileID: 11500000, guid: c0b55faed60229143b07a155f1530c31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   agroRange: Infinity
@@ -4998,49 +4999,25 @@ MonoBehaviour:
   orbitSwitchMod: 0
   projectilePrefab: {fileID: 8124543167177156648, guid: f1e9b153d47510d45bcf29c19258a932,
     type: 3}
-  RangedRange: {x: 15.2, y: 61.9}
+  RangedRange: {x: 15.2, y: 62}
   projectileStartOffset: {x: 0, y: 2, z: 0}
-  projectileSize: {x: 1, y: 1, z: 1}
+  projectileSize: {x: 0, y: 1, z: 1}
   spitResetTime: 1
   projectileAngle: 45
   shortDist: 2500
   rangedDmg: 35
   goopAmount: 1
-  goopThrowSound: {fileID: 11400000, guid: c8119af66ef0b6b45b4e32dbbcc7009d, type: 2}
   sprayResetTime: 3
   sprayDelay: 0.2
   tailWhipRange: {x: 0, y: 27.8}
   tailWhipResetTime: 5
   tailWhipDamage: 50
   tailWhipHB: {fileID: 8361076466891776419}
-  moveTargets:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  wave1:
-  - {fileID: 3937406926281971718, guid: cdf2a4fdd3fc44a4ea93e0126b813a03, type: 3}
-  - {fileID: 3937406926281971718, guid: cdf2a4fdd3fc44a4ea93e0126b813a03, type: 3}
-  wave2:
-  - {fileID: 3937406926281971718, guid: cdf2a4fdd3fc44a4ea93e0126b813a03, type: 3}
-  - {fileID: 402171061839891094, guid: cbd9e33276aabb54ca7fb1325da2a9b0, type: 3}
-  wave3:
-  - {fileID: 3937406926281971718, guid: 70a2dca782ccd2f429c9cd6287490fc6, type: 3}
-  - {fileID: 402171061839891094, guid: cbd9e33276aabb54ca7fb1325da2a9b0, type: 3}
-  - {fileID: 3937406926281971718, guid: cdf2a4fdd3fc44a4ea93e0126b813a03, type: 3}
-  moveTriggerHpPercent:
-  - 0.75
-  - 0.5
-  - 0.25
-  postProcessing: {fileID: 2291929154782599880}
-  rotatePivot: {fileID: 2568540477041247378}
-  playerTPtarget: {fileID: 0}
-  snakeTPtarget: {fileID: 0}
-  rotateSpeed: 1
-  finalScale: 0
-  transitionSound: {fileID: 0}
-  slitherSound: {fileID: 0}
-  battleStartSound: {fileID: 0}
-  hissSound: {fileID: 0}
+  goopThrowSound: {fileID: 11400000, guid: 279eed7a547c9174f9ce7c5fc4e7216b, type: 2}
+  transitionSound: {fileID: 11400000, guid: 1aad6c31e8e30b045833c90c7eac90b3, type: 2}
+  slitherSound: {fileID: 11400000, guid: bdccf7a94152f3045aeb63b0306afac0, type: 2}
+  battleStartSound: {fileID: 11400000, guid: 76525f2b73d0aaf4fafad15466418f24, type: 2}
+  hissSound: {fileID: 11400000, guid: e58ca59779988164e80e7981a1913fe5, type: 2}
   anim: {fileID: 2272639541864170218}
   sprayAnim: spray
   spitAnim: spit
@@ -5173,6 +5150,7 @@ MonoBehaviour:
   printHits: 0
   playSoundOnHit: 0
   hitSound: {fileID: 0}
+  SpawnOnHit: {fileID: 0}
   blockable: 0
   blockTag: 
   blockedSound: {fileID: 0}
@@ -10138,6 +10116,7 @@ MonoBehaviour:
   printHits: 0
   playSoundOnHit: 0
   hitSound: {fileID: 0}
+  SpawnOnHit: {fileID: 0}
   blockable: 0
   blockTag: 
   blockedSound: {fileID: 0}
@@ -10275,6 +10254,7 @@ MonoBehaviour:
   printHits: 0
   playSoundOnHit: 0
   hitSound: {fileID: 0}
+  SpawnOnHit: {fileID: 0}
   blockable: 0
   blockTag: 
   blockedSound: {fileID: 0}
@@ -10413,6 +10393,7 @@ MonoBehaviour:
   printHits: 0
   playSoundOnHit: 0
   hitSound: {fileID: 0}
+  SpawnOnHit: {fileID: 0}
   blockable: 0
   blockTag: 
   blockedSound: {fileID: 0}
@@ -10550,6 +10531,7 @@ MonoBehaviour:
   printHits: 0
   playSoundOnHit: 0
   hitSound: {fileID: 0}
+  SpawnOnHit: {fileID: 0}
   blockable: 0
   blockTag: 
   blockedSound: {fileID: 0}
@@ -10768,6 +10750,7 @@ MonoBehaviour:
   printHits: 0
   playSoundOnHit: 0
   hitSound: {fileID: 0}
+  SpawnOnHit: {fileID: 0}
   blockable: 0
   blockTag: 
   blockedSound: {fileID: 0}
@@ -10904,6 +10887,7 @@ MonoBehaviour:
   printHits: 0
   playSoundOnHit: 0
   hitSound: {fileID: 0}
+  SpawnOnHit: {fileID: 0}
   blockable: 0
   blockTag: 
   blockedSound: {fileID: 0}
@@ -11041,6 +11025,7 @@ MonoBehaviour:
   printHits: 0
   playSoundOnHit: 0
   hitSound: {fileID: 0}
+  SpawnOnHit: {fileID: 0}
   blockable: 0
   blockTag: 
   blockedSound: {fileID: 0}
@@ -11182,6 +11167,7 @@ MonoBehaviour:
   printHits: 0
   playSoundOnHit: 0
   hitSound: {fileID: 0}
+  SpawnOnHit: {fileID: 0}
   blockable: 0
   blockTag: 
   blockedSound: {fileID: 0}
@@ -11368,6 +11354,7 @@ MonoBehaviour:
   printHits: 0
   playSoundOnHit: 0
   hitSound: {fileID: 0}
+  SpawnOnHit: {fileID: 0}
   blockable: 0
   blockTag: 
   blockedSound: {fileID: 0}
@@ -11506,6 +11493,7 @@ MonoBehaviour:
   printHits: 0
   playSoundOnHit: 0
   hitSound: {fileID: 0}
+  SpawnOnHit: {fileID: 0}
   blockable: 0
   blockTag: 
   blockedSound: {fileID: 0}
@@ -11643,6 +11631,7 @@ MonoBehaviour:
   printHits: 0
   playSoundOnHit: 0
   hitSound: {fileID: 0}
+  SpawnOnHit: {fileID: 0}
   blockable: 0
   blockTag: 
   blockedSound: {fileID: 0}
@@ -11780,6 +11769,7 @@ MonoBehaviour:
   printHits: 0
   playSoundOnHit: 0
   hitSound: {fileID: 0}
+  SpawnOnHit: {fileID: 0}
   blockable: 0
   blockTag: 
   blockedSound: {fileID: 0}
@@ -11917,6 +11907,7 @@ MonoBehaviour:
   printHits: 0
   playSoundOnHit: 0
   hitSound: {fileID: 0}
+  SpawnOnHit: {fileID: 0}
   blockable: 0
   blockTag: 
   blockedSound: {fileID: 0}
@@ -12054,6 +12045,7 @@ MonoBehaviour:
   printHits: 0
   playSoundOnHit: 0
   hitSound: {fileID: 0}
+  SpawnOnHit: {fileID: 0}
   blockable: 0
   blockTag: 
   blockedSound: {fileID: 0}
@@ -12191,6 +12183,7 @@ MonoBehaviour:
   printHits: 0
   playSoundOnHit: 0
   hitSound: {fileID: 0}
+  SpawnOnHit: {fileID: 0}
   blockable: 0
   blockTag: 
   blockedSound: {fileID: 0}
@@ -12327,6 +12320,7 @@ MonoBehaviour:
   printHits: 0
   playSoundOnHit: 0
   hitSound: {fileID: 0}
+  SpawnOnHit: {fileID: 0}
   blockable: 0
   blockTag: 
   blockedSound: {fileID: 0}
@@ -12463,6 +12457,7 @@ MonoBehaviour:
   printHits: 0
   playSoundOnHit: 0
   hitSound: {fileID: 0}
+  SpawnOnHit: {fileID: 0}
   blockable: 0
   blockTag: 
   blockedSound: {fileID: 0}
@@ -12656,6 +12651,7 @@ MonoBehaviour:
   printHits: 0
   playSoundOnHit: 0
   hitSound: {fileID: 0}
+  SpawnOnHit: {fileID: 0}
   blockable: 0
   blockTag: 
   blockedSound: {fileID: 0}
@@ -12793,6 +12789,7 @@ MonoBehaviour:
   printHits: 0
   playSoundOnHit: 0
   hitSound: {fileID: 0}
+  SpawnOnHit: {fileID: 0}
   blockable: 0
   blockTag: 
   blockedSound: {fileID: 0}
@@ -12930,6 +12927,7 @@ MonoBehaviour:
   printHits: 0
   playSoundOnHit: 0
   hitSound: {fileID: 0}
+  SpawnOnHit: {fileID: 0}
   blockable: 0
   blockTag: 
   blockedSound: {fileID: 0}
@@ -13067,6 +13065,7 @@ MonoBehaviour:
   printHits: 0
   playSoundOnHit: 0
   hitSound: {fileID: 0}
+  SpawnOnHit: {fileID: 0}
   blockable: 0
   blockTag: 
   blockedSound: {fileID: 0}

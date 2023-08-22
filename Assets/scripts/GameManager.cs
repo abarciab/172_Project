@@ -106,6 +106,7 @@ public class GameManager : MonoBehaviour
         while (runtimeStory.Count > 0 && runtimeStory[0].ID != ID) {
             runtimeStory.RemoveAt(0);
         }
+        UpdateStoryDisplay();
     }
 
     public void AddCheckPoint(Transform point, int ID)
@@ -190,11 +191,8 @@ public class GameManager : MonoBehaviour
         UpdateEnemyGroups();
 
         if (!started) RestartFromCheckPoint();
-
         CheckStory();
     }
-
-    
 
     void UpdateEnemyGroups()
     {
@@ -232,8 +230,13 @@ public class GameManager : MonoBehaviour
         var next = runtimeStory[0];
         if (FactManager.i.IsPresent(next.fact) != next.state) return;
 
-        GlobalUI.i.UpdateQuestText(next.nextQuest, next.playLong);
+        UpdateStoryDisplay();
         runtimeStory.RemoveAt(0);
+    }
+
+    void UpdateStoryDisplay()
+    {
+        GlobalUI.i.UpdateQuestText(runtimeStory[0].nextQuest, runtimeStory[0].playLong);
     }
 
     void Awake() 
