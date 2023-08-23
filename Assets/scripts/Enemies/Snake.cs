@@ -225,7 +225,6 @@ public class Snake : BaseEnemy
 
     void StartPhase3Darkness()
     {
-        movingLeft = !movingLeft;
         buildUp.Play();
         buildingUp = true;
 
@@ -257,7 +256,6 @@ public class Snake : BaseEnemy
         float distRight = Vector2.Distance(transform.position, rightPos.position);
         if (movingLeft && distLeft < 0.1f) movingLeft = false;
         if (!movingLeft && distRight < 0.1f) movingLeft = true;
-        print("distLeft: " + distLeft + ", distRight: " + distRight + ", movingleft: " + movingLeft + ", casting sanity check: " + (Vector2)rightPos.position);
     }
 
     void TPandLockPlayer()
