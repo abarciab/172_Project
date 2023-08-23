@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 [ExecuteAlways]
 public class ShaderTransitionController : MonoBehaviour {
@@ -41,6 +42,35 @@ public class ShaderTransitionController : MonoBehaviour {
     bool paused;
 
     [HideInInspector] public int time;
+
+    [Header("final fight settings")]
+    [SerializeField] float brighterExposure = -1.5f;
+    [SerializeField] float darkerExposure = -7f;
+
+    public void DarkenNight()
+    {
+        StartCoroutine(LerpExposure(darkerExposure));
+    }
+
+    IEnumerator LerpExposure(float targetExposure, float time = 1)
+    {
+        ColorAdjustments color;
+        shaders[shader2].processingVolume.profile.TryGet(out color);
+
+        float timePassed = 0;
+        float originalExposure = color.postExposure.value;
+        while (timePassed < time) {
+            color.postExposure.value = Mathf.Lerp(originalExposure, targetExposure, timePassed / time);
+            timePassed += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
+    public void BrightenNight()
+    {
+        
+        StartCoroutine(LerpExposure(brighterExposure));
+    }
 
     public void PausePP()
     {

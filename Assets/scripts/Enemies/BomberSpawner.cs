@@ -9,7 +9,7 @@ public class BomberSpawner : BaseEnemy
     [SerializeField] int maxConcurrent, numSpawnedOnDeath = 2;
     [SerializeField] float spawnResetTime, range;
     [SerializeField, Range(0, 1)] float rareChance;
-    [SerializeField] bool useManualAgro = false;
+    [SerializeField] bool useManualAgro = false, spawnAsChild;
     [SerializeField] float manualAgroRange = 45;
 
     [SerializeField] SpawnerVFXParent spawnVFX;
@@ -54,6 +54,7 @@ public class BomberSpawner : BaseEnemy
         if (useManualAgro) newBomber.GetComponent<BaseEnemy>().agroRange = manualAgroRange;
         spawnedBombers.Add(newBomber);
         spawnCooldown = spawnResetTime;
+        if (spawnAsChild) newBomber.transform.parent = transform;
 
         //play spawning vfx
         spawnVFX.TriggerSpawnVFX();

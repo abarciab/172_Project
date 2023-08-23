@@ -3153,7 +3153,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &237958787
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19436,7 +19436,7 @@ MonoBehaviour:
     playLong: 1
     customID: 0
   - name: go confront the beast
-    fact: {fileID: 11400000, guid: e9e6926a530d0214cb4f2ef976a74ae3, type: 2}
+    fact: {fileID: 11400000, guid: afba318ef7e36f04dab58be2d4975b0e, type: 2}
     state: 1
     nextQuest: go confront the beast
     ID: 28
@@ -21297,7 +21297,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1915981732
 RectTransform:
   m_ObjectHideFlags: 0
@@ -30338,6 +30338,11 @@ PrefabInstance:
     - target: {fileID: 1659594127677896662, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: weight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3516079974211479528, guid: 4e19d265d67051c45821082b3370c7a9,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4776228482562501670, guid: 4e19d265d67051c45821082b3370c7a9,

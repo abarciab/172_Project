@@ -8,6 +8,7 @@ using UnityEngine;
 public class Snake : BaseEnemy
 {
 
+
     [Header("Spit")]
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] Vector2 RangedRange;
@@ -38,7 +39,7 @@ public class Snake : BaseEnemy
 
     [Header("Sounds")]
     [SerializeField] Sound goopThrowSound;
-    [SerializeField] Sound transitionSound, slitherSound, battleStartSound, hissSound;
+    [SerializeField] Sound transitionSound, slitherSound, battleStartSound, hissSound, buildUp, strike;
 
     [Header("Anims")]
     [SerializeField] Animator anim;
@@ -46,7 +47,36 @@ public class Snake : BaseEnemy
 
     [Header("phases")]
     [SerializeField] int Phase = 1;
-    [SerializeField] GameObject phase2Spawners;
+    [SerializeField] GameObject phase1Pickups, phase2Spawners;
+
+    [Header("p3 shooting")]
+    [SerializeField] float phase3ShootResetTime;
+    [SerializeField] float phase3SustainTime, p3ShootSpeed, p3ProjectileMass, p3TargetOffset, p3ShootPredictMult = 2, p3ShootAngle = 30, p3ShortDist, p3RandomizeRadius;
+    [SerializeField] int p3ShootDamage = 15;
+    float p3ShootTimeCooldown;
+
+    [Header("p3 darkness")]
+    [SerializeField] Transform playerTPtarget;
+    [SerializeField] float p3strikeBuildUpResetTime = 7, p3VulnerableTime = 2, p3StrikeTime = 5, p3TransitionTime;
+    float darknessPhaseTimePassed;
+    [SerializeField] HitReciever.HitData p3Strike;
+    int p3DarknessStartingHealth;
+    [SerializeField] Material snakeEyesMat, pickupMat;
+    [Space()]
+    [SerializeField] Transform restingPos;
+    [SerializeField] Transform leftPos, rightPos;
+    [SerializeField] float snakeMoveLeftRightSpeed;
+
+    [Header("p3 obstacles")]
+    [SerializeField] int obstacleRound = 1;
+    [SerializeField] int obstacleCount;
+    [SerializeField] float obstacleRevealTime = 1, obstacleHiddenYPos = -10f, obstacleRevealedYPos = 7.5f;
+    [SerializeField] Transform p3ObstacleParent;
+    [SerializeField] AnimationCurve obstacleRevealCurve;
+    [SerializeField] GameObject snakeEyes;
+    [SerializeField] int snakeEyesLayer, defaultLayer;
+    float phase3shootCooldown;
+    bool obstaclesRevealed, buildingUp, vulnerable, movingLeft;
 
     GameObject projectileSource;
 
@@ -58,6 +88,8 @@ public class Snake : BaseEnemy
         battleStartSound = Instantiate(battleStartSound);
         slitherSound = Instantiate(slitherSound);
         hissSound = Instantiate(hissSound);
+        buildUp = Instantiate(buildUp);
+        strike = Instantiate(strike);
         goopThrowSound = Instantiate(goopThrowSound);
         
         battleStartSound.Play();
@@ -91,24 +123,172 @@ public class Snake : BaseEnemy
 
     void Phase1Behavior()
     {
+        if (stats.health <= 2000) {
+            Phase = 2;
+            phase1Pickups.SetActive(false);
+            return;
+        }
+
+        phase1Pickups.SetActive(true);
         stats.invincible = true;
         if (dist < RangedRange.y && dist > RangedRange.x) RangedAttack();
-        if (stats.health <= 2000) Phase = 2;
+        
     }
 
     void Phase2Behavior()
     {
+        if (stats.health <= 1000) {
+            Player.i.SetSpearDamage(340);
+            StartPhase3Shooting();
+            return;
+        }
+
         phase2Spawners.SetActive(true);
         if (orbCooldown <= 0) FireOrb();
-        if (stats.health <= 1000) {
-            Phase = 3;
-            phase2Spawners.SetActive(false);
-        }
-    }
+    }    
 
     void Phase3Behavior()
     {
+        p3ShootTimeCooldown -= Time.deltaTime;
+        if (p3ShootTimeCooldown <= 0) {
+            if (obstaclesRevealed) {
+                StartPhase3Darkness();
+            }
+            if (stats.health < p3DarknessStartingHealth) {
+                EndVulnerable();
+                StartPhase3Shooting();
+                return;
+            }
 
+            MoveBackAndForth();
+            darknessPhaseTimePassed += Time.deltaTime;
+            if (darknessPhaseTimePassed > p3strikeBuildUpResetTime && buildingUp) BecomeVulnerable();
+            if (darknessPhaseTimePassed > p3strikeBuildUpResetTime + p3VulnerableTime && vulnerable) p3StrikeAttack();
+            if (darknessPhaseTimePassed > p3strikeBuildUpResetTime + p3VulnerableTime + p3StrikeTime) StartPhase3Shooting();
+
+            return;
+        }
+
+        if (p3ShootTimeCooldown <= p3TransitionTime) {
+            print("In transition!");
+            return;
+        }
+
+        phase3shootCooldown -= Time.deltaTime;
+        if (phase3shootCooldown <= 0) {
+            p3LaunchProjectile();
+            phase3shootCooldown = phase3ShootResetTime;
+        }
+    }
+
+    void BecomeVulnerable()
+    {
+        vulnerable = true;
+        buildingUp = false;
+        stats.invincible = false;
+        snakeEyes.GetComponent<Renderer>().material = pickupMat;
+    }
+
+    void EndVulnerable()
+    {
+        vulnerable = false;
+        stats.invincible = true;
+        snakeEyes.GetComponent<Renderer>().material = snakeEyesMat;
+    }
+
+    void p3LaunchProjectile()
+    {
+        var projectile = InstantiateProjectile(projectilePrefab, projectileStartOffset, projectileSize);
+        projectile.GetComponent<GoopProjectile>().goopAmount = goopAmount;
+        projectile.GetComponent<HitBox>().StartChecking(transform, p3ShootDamage);
+        var variation = Random.insideUnitSphere * p3RandomizeRadius;
+        Vector3 targetPos = target.position + Player.i.speed3D * p3ShootPredictMult + variation;    
+
+        AimAndFire(projectile, p3ShootAngle, targetPos, projectileStartOffset.y, shortDist:0, source: projectileSource);
+        goopThrowSound.Play();
+    }
+
+    void StartPhase3Shooting()
+    {
+        transform.position = restingPos.position;
+        stats.invincible = true;
+        p3ShootTimeCooldown = phase3SustainTime + p3TransitionTime;
+        StopAllCoroutines();
+        Phase = 3;
+        phase2Spawners.SetActive(false);
+        ShaderTransitionController.i.BrightenNight();
+        snakeEyes.layer = defaultLayer;
+        StartCoroutine(SummonObstacles());
+        Player.i.UnfreezePlayer();
+        Player.i.SetSpearLayer(default);
+    }
+
+    void StartPhase3Darkness()
+    {
+        movingLeft = !movingLeft;
+        buildUp.Play();
+        buildingUp = true;
+
+        GoopManager.i.ClearAllFloorGoop();
+        darknessPhaseTimePassed = 0;
+        p3DarknessStartingHealth = stats.health;
+        HideObstacles();
+        snakeEyes.layer = snakeEyesLayer;
+        ShaderTransitionController.i.DarkenNight();
+        TPandLockPlayer();
+        Player.i.SetSpearLayer(snakeEyesLayer);
+    }
+
+    void p3StrikeAttack()
+    {
+        strike.Play();
+        CameraShake.i.Shake();
+        EndVulnerable();
+        Player.i.GetComponent<HitReciever>().Hit(p3Strike);
+    }
+
+    void MoveBackAndForth()
+    {
+        var dir = movingLeft ? leftPos.position - transform.position : rightPos.position - transform.position;
+        dir.y = 0;
+        transform.position +=  snakeMoveLeftRightSpeed * Time.deltaTime * dir.normalized;
+
+        float distLeft = Vector2.Distance(transform.position, leftPos.position);
+        float distRight = Vector2.Distance(transform.position, rightPos.position);
+        if (movingLeft && distLeft < 0.1f) movingLeft = false;
+        if (!movingLeft && distRight < 0.1f) movingLeft = true;
+        print("distLeft: " + distLeft + ", distRight: " + distRight + ", movingleft: " + movingLeft + ", casting sanity check: " + (Vector2)rightPos.position);
+    }
+
+    void TPandLockPlayer()
+    {
+        target.transform.position = playerTPtarget.position;
+        Player.i.FreezePlayer();
+    }
+
+    void HideObstacles()
+    {
+        obstaclesRevealed = false;
+        foreach (Transform o in p3ObstacleParent) o.localPosition = new Vector3(o.localPosition.x, obstacleHiddenYPos, o.localPosition.z);
+    }
+
+    IEnumerator SummonObstacles()
+    {
+        var chosenObstacles = new List<Transform>();
+        for (int i = 0; i < obstacleCount; i++) {
+            chosenObstacles.Add(p3ObstacleParent.GetChild(Random.Range(0, p3ObstacleParent.childCount)));
+        }
+
+        float timePassed = 0;
+        while (timePassed < obstacleRevealTime) {
+            timePassed += Time.deltaTime;
+            var progress = timePassed / obstacleRevealTime;
+            progress = obstacleRevealCurve.Evaluate(progress);
+            var y = Mathf.Lerp(obstacleHiddenYPos, obstacleRevealedYPos, progress);
+            foreach (var o in chosenObstacles) o.localPosition = new Vector3(o.localPosition.x, y, o.localPosition.z);
+            yield return new WaitForEndOfFrame();
+        }
+        obstaclesRevealed = true;
     }
 
     void FireOrb()
@@ -122,7 +302,7 @@ public class Snake : BaseEnemy
 
         Vector3 targetPos = target.position + Player.i.speed3D;
         var dir =  (targetPos + Vector3.down * orbTargetOffset) - (transform.position + projectileStartOffset*2);
-        orb.GetComponent<Rigidbody>().AddForce(orbSpeed * Time.deltaTime * dir.normalized);
+        orb.GetComponent<Rigidbody>().AddForce(orbSpeed * dir.normalized);
 
         goopThrowSound.Play();
     }
@@ -155,7 +335,6 @@ public class Snake : BaseEnemy
 
     void Spray()
     {
-        print("spraying!");
         spraying = true;
         sprayCooldown = sprayResetTime;
         anim.SetBool(sprayAnim, true);
@@ -164,13 +343,12 @@ public class Snake : BaseEnemy
     
     void Spit()
     {
-        print("spitting");
         spitCooldown = spitResetTime;
         anim.SetBool(spitAnim, true);
     }
 
 
-    public void LaunchProjectile()
+    public void LaunchProjectile(float predictMultiplier = 1)
     {
         if (spraying) {
             spraying = false;
@@ -182,7 +360,7 @@ public class Snake : BaseEnemy
         var projectile = InstantiateProjectile(projectilePrefab, projectileStartOffset, projectileSize);
         projectile.GetComponent<GoopProjectile>().goopAmount = goopAmount;
         projectile.GetComponent<HitBox>().StartChecking(transform, rangedDmg);
-        Vector3 targetPos = target.position + Player.i.speed3D;
+        Vector3 targetPos = target.position + Player.i.speed3D * predictMultiplier;
         
         AimAndFire(projectile, projectileAngle, targetPos, projectileStartOffset.y, shortDist, source: projectileSource);
         goopThrowSound.Play();

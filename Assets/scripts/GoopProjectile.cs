@@ -67,13 +67,7 @@ public class GoopProjectile : MonoBehaviour
 
     void Explode()
     {
-        print("explode!");
         GoopManager.i.SpawnGoop(transform.position, goopAmount);
         Destroy(gameObject);
-    }
-
-    private void OnDestroy()
-    {
-        print("dead!");
     }
 }
