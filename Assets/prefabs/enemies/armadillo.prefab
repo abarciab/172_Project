@@ -108,6 +108,7 @@ MonoBehaviour:
   stunTime: 0
   stunTimeLeft: 0
   boss: 1
+  invincible: 0
   bossName: corrupted burrower
   removeFactOnDeath: []
   addFactOnDeath:
@@ -5000,12 +5001,12 @@ MonoBehaviour:
   rollResetTime: 2.5
   rollKB: 80
   rollGoopRate: 0.2
-  goopLifeTime: 240
+  goopLifeTime: 50
   goopAmount: 0.54
   rollDamage: 30
   rollHB: {fileID: 4305458669642792697}
   rolling: 0
-  digMinDist: 6.5
+  digMinDist: 8.08
   digTimeRange: {x: 1, y: 2}
   surfaceDecal: {fileID: 0}
   enemyPrefab: {fileID: 3937406926281971718, guid: cdf2a4fdd3fc44a4ea93e0126b813a03,
@@ -15188,6 +15189,7 @@ MonoBehaviour:
   printHits: 0
   playSoundOnHit: 0
   hitSound: {fileID: 0}
+  SpawnOnHit: {fileID: 0}
   blockable: 0
   blockTag: 
   blockedSound: {fileID: 0}
