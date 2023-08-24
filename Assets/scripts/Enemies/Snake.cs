@@ -157,6 +157,7 @@ public class Snake : BaseEnemy
             if (stats.health < p3DarknessStartingHealth) {
                 EndVulnerable();
                 StartPhase3Shooting();
+                buildUp.Stop();
                 return;
             }
 

@@ -25,7 +25,7 @@ public class SaveManager : MonoBehaviour
         int checkPoint = PlayerPrefs.GetInt("checkpoint");
         if (auto > checkPoint) PlayerPrefs.SetInt("checkpoint", auto);
 
-        //print("Game saved succsessfully - " + facts.Count + " facts, story stage: " + gameMan.GetID());
+        AudioManager.instance.SaveVolume();
     }
      
     public void LoadGame()
@@ -53,6 +53,7 @@ public class SaveManager : MonoBehaviour
         PlayerPrefs.SetInt("checkpoint", 0);
         PlayerPrefs.SetInt("story", 0);
         PlayerPrefs.SetString("currentStory", "");
+        AudioManager.instance.ResetVolumeSaveData();
         //print("Game reset sucsessfully");
     }
 }

@@ -14,8 +14,56 @@ public class AudioManager : MonoBehaviour {
 
     [SerializeField] GameObject coordinatorPrefab;
     List<SoundCoordinator> soundCoordinators = new List<SoundCoordinator>();
-    [SerializeField] AudioMixerGroup sfxMixerG, musicMixerG, AmbientMixerG;
-    [SerializeField] AudioMixer masterMixer, sfxMixer, musicMixer, AmbientMixer;
+    [SerializeField] AudioMixerGroup sfxMixerG, musicMixerG;
+    [SerializeField] AudioMixer sfxMixer, musicMixer;
+    [SerializeField] Vector2 volumeRange = new Vector2(0, 20);
+    [SerializeField] float masterStartVol, sfxStartVol, musicStartVol;
+    [Space()]
+    [SerializeField] float masterVolume;
+    [SerializeField] float sfxVolume, musicVolume;
+
+    private void Start()
+    {
+        LoadVolumeValuesFromSaveData();
+
+        SetMasterVolume(masterStartVol);
+        SetMusicVolume(musicStartVol);
+        SetSfxVolume(sfxStartVol);
+
+        GlobalUI.i.SetSliderPositions(masterVolume, sfxVolume, musicVolume);
+    }
+
+    public void SaveVolume()
+    {
+        PlayerPrefs.SetFloat("masterVolume", masterVolume);
+        PlayerPrefs.SetFloat("sfxVolume", sfxVolume);
+        PlayerPrefs.SetFloat("musicVolume", musicVolume);
+
+        print("SAVED!" + masterVolume + ", " + sfxVolume + ", " + musicVolume);
+    }
+
+    public void ResetVolumeSaveData()
+    {
+        return;
+
+        PlayerPrefs.SetFloat("masterVolume", -100);
+        PlayerPrefs.SetFloat("sfxVolume", -100);
+        PlayerPrefs.SetFloat("musicVolume", -100);
+
+        print("RESET VOLUME DATA");
+    }
+
+    void LoadVolumeValuesFromSaveData()
+    {
+        var master = PlayerPrefs.GetFloat("masterVolume", -100);
+        if (master > 0) masterStartVol = master;
+        var sfx = PlayerPrefs.GetFloat("sfxVolume", -100);
+        if (sfx > 0) sfxStartVol = sfx;
+        var music = PlayerPrefs.GetFloat("musicVolume", -100);
+        if (music > 0) musicStartVol = music;
+
+        print("LOADED: " + masterStartVol + ", " + sfxStartVol + ", " + musicStartVol + ", savedValues: " + music + ", " + sfx + ", " + music);
+    }
 
     public AudioMixerGroup GetMixer(SoundType type)
     {
@@ -24,35 +72,45 @@ public class AudioManager : MonoBehaviour {
                 return sfxMixerG;
             case SoundType.music:
                 return musicMixerG;
-            case SoundType.ambient:
-                return AmbientMixerG;
         }
         return null;
     }
 
     public void SetMasterVolume(float vol)
     {
-        vol *= 160;
-        vol -= 80;
-        vol = Mathf.Clamp(vol, -80, 20);
-        sfxMixer.SetFloat("volume", vol);
+        masterVolume = vol;
+        UpdateActualVolume();
     }
 
     public void SetSfxVolume(float vol)
     {
-        vol *= 160;
-        vol -= 80;
-        vol = Mathf.Clamp(vol, -80, 20);
-        sfxMixer.SetFloat("volume", vol);
+        sfxVolume = vol;
+        UpdateActualVolume();
     }
 
     public void SetMusicVolume(float vol)
     {
-        vol *= 160;
-        vol -= 80;
-        vol = Mathf.Clamp(vol, -80, 20);
-        sfxMixer.SetFloat("volume", vol);
+        musicVolume = vol;
+        UpdateActualVolume();
     }
+
+    float MapToVolumeRange(float input)
+    {
+        input *= volumeRange.y - volumeRange.x;
+        input += volumeRange.x;
+        return Mathf.Clamp(input, volumeRange.x, volumeRange.y);
+    }
+
+    void UpdateActualVolume()
+    {
+        var _sfxVol = MapToVolumeRange(sfxVolume * masterVolume);
+        sfxMixer.SetFloat("volume", _sfxVol);
+
+        var _musicVol = MapToVolumeRange(musicVolume * masterVolume);
+        musicMixer.SetFloat("volume", _musicVol);
+    }
+
+    
 
     private void Awake()
     {
