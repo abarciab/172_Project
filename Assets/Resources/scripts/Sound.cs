@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public enum SoundType { sfx, music, ambient}
+public enum SoundType { sfx, music}
 
 [CreateAssetMenu(fileName = "New Sound", menuName = "Sound")]
 public class Sound : ScriptableObject

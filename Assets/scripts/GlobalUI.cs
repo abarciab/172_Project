@@ -338,6 +338,14 @@ public class GlobalUI : MonoBehaviour
         dmgFlash.gameObject.SetActive(false);
     }
 
+    public void SetSliderPositions(float master, float sfx, float music)
+    {
+        print("setting sliderPos: " + master + ", " + sfx + ", " + music);
+        masterSlider.value = master;
+        sfxSlider.value = sfx;
+        musicSlider.value = music;
+    }
+
     private void Update()
     {
         DisplaySpearCharge();
@@ -363,9 +371,11 @@ public class GlobalUI : MonoBehaviour
 
     void VolumeSliders()
     {
+        if (!pauseMenu.activeInHierarchy) return;
+
         AudioManager.instance.SetMasterVolume(masterSlider.value);
-        //AudioManager.instance.SetSfxVolume(sfxSlider.value);
-        //AudioManager.instance.SetMusicVolume(musicSlider.value);
+        AudioManager.instance.SetSfxVolume(sfxSlider.value);
+        AudioManager.instance.SetMusicVolume(musicSlider.value);
     }
 
     void DisplayOverlays()
