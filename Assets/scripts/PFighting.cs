@@ -38,6 +38,18 @@ public class PFighting : HitReciever {
     [SerializeField] GameObject thrownSpearBall;
 
     public bool RecallReady;
+
+    public void SetSpearLayer(int layer)
+    {
+        staffProjectile.gameObject.layer = layer;
+    }
+
+    public void SetSpearDmg(int dmg)
+    {
+        throwDmg = dmg;
+        critDmg = dmg;
+    }
+
     public void RecallReadyNotice()
     {
         RecallReady = true;

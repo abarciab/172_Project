@@ -92,12 +92,22 @@ public class Player : MonoBehaviour
         return enemies.Count > 0;
     }
 
+    public void SetSpearDamage(int damage)
+    {
+        GetComponent<PFighting>().SetSpearDmg(damage);
+    }
+
+    public void SetSpearLayer(int layer)
+    {
+        GetComponent<PFighting>().SetSpearLayer(layer);
+    }
+
     public void FreezePlayer()
     {
         fightingEnabled = GetComponent<PFighting>().enabled;
         GetComponent<PMovement>().enabled = false;
         GetComponent<PFighting>().enabled = false;
-        FindObjectOfType<CameraController>().enabled = false;
+        //FindObjectOfType<CameraController>().enabled = false;
     }
 
     public void UnfreezePlayer()
@@ -105,7 +115,7 @@ public class Player : MonoBehaviour
         var fMan = FactManager.i;
         GetComponent<PMovement>().enabled = true;
         GetComponent<PFighting>().enabled = fightingEnabled || fMan.IsPresent(tutorialComplete) || fMan.IsPresent(hasSpear);
-        FindObjectOfType<CameraController>().enabled = true;
+        //FindObjectOfType<CameraController>().enabled = true;
     }
 
     public void RemoveInteractable(Gate interactable)
