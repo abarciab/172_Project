@@ -15,7 +15,7 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 1
-  m_FogColor: {r: 0.78431374, g: 0.46445435, b: 0.41568628, a: 1}
+  m_FogColor: {r: 0.754717, g: 0.5602529, b: 0.40939838, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.003
   m_LinearFogStart: 0
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.7386415, g: 0.45704085, b: 0.19638287, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1858,7 +1858,7 @@ MonoBehaviour:
     rotation: {x: -0, y: -0.3325311, z: -0, w: 0.94309235}
     Pos: {x: 180.04, y: 76.98, z: 12.9}
     set: 0
-  moveSound: {fileID: 619583080}
+  moveSound: {fileID: 1539168387}
 --- !u!1001 &96661157
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12372,32 +12372,6 @@ Transform:
   m_Father: {fileID: 861416827}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &619583080
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b54c4e062583404688e9450addf1871, type: 3}
-  m_Name: dummyAppear(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)
-  m_EditorClassIdentifier: 
-  clips:
-  - name: 
-    clip: {fileID: 8300000, guid: dad9a8beba5ea3647b7c55faed931401, type: 3}
-    looping: 0
-    CustomPitchAndVolume: 0
-    volume: 0
-    pitch: 0
-  type: 0
-  SynchronizePitchAndVolume: 1
-  pitch: 1
-  volume: 1
-  voiceLines: 0
-  audioSource: {fileID: 0}
-  instantialized: 0
 --- !u!1 &621500434
 GameObject:
   m_ObjectHideFlags: 0
@@ -38320,6 +38294,9 @@ MonoBehaviour:
   deathSound: {fileID: 0}
   spawnSound: {fileID: 0}
   hurtSound: {fileID: 0}
+  stunnedHurtSound: {fileID: 0}
+  getStunnedSound: {fileID: 0}
+  playDeathGlobal: 0
   hitMatTime: 0.1
   body: []
   normalMat: {fileID: 0}
@@ -38556,6 +38533,32 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &1539168387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b54c4e062583404688e9450addf1871, type: 3}
+  m_Name: dummyAppear(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)
+  m_EditorClassIdentifier: 
+  clips:
+  - name: 
+    clip: {fileID: 8300000, guid: dad9a8beba5ea3647b7c55faed931401, type: 3}
+    looping: 0
+    CustomPitchAndVolume: 0
+    volume: 0
+    pitch: 0
+  type: 0
+  SynchronizePitchAndVolume: 1
+  pitch: 1
+  volume: 1
+  voiceLines: 0
+  audioSource: {fileID: 0}
+  instantialized: 0
 --- !u!1 &1548257374
 GameObject:
   m_ObjectHideFlags: 0
@@ -38866,7 +38869,7 @@ PrefabInstance:
     - target: {fileID: 1751579061680798200, guid: 1794547c80bc8624abea5a1ff24fc2bc,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.16
+      value: -0.2
       objectReference: {fileID: 0}
     - target: {fileID: 1751579061680798200, guid: 1794547c80bc8624abea5a1ff24fc2bc,
         type: 3}
@@ -38986,7 +38989,7 @@ PrefabInstance:
     - target: {fileID: 3181955475257479705, guid: 1794547c80bc8624abea5a1ff24fc2bc,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -43535,56 +43538,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 672544376}
     m_Modifications:
-    - target: {fileID: 221254826216958680, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 121.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 221254826216958680, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 349
-      objectReference: {fileID: 0}
-    - target: {fileID: 221254826216958680, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.71024376
-      objectReference: {fileID: 0}
-    - target: {fileID: 221254826216958680, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.7039559
-      objectReference: {fileID: 0}
-    - target: {fileID: 221254826216958680, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -449.491
-      objectReference: {fileID: 0}
-    - target: {fileID: 399988621610440762, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 69.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 399988621610440762, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 354.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 399988621610440762, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.6077445
-      objectReference: {fileID: 0}
-    - target: {fileID: 399988621610440762, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.79413265
-      objectReference: {fileID: 0}
-    - target: {fileID: 399988621610440762, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -254.853
-      objectReference: {fileID: 0}
     - target: {fileID: 4016555319564262503, guid: a6558fd68804b754195cfa0100792001,
         type: 3}
       propertyPath: m_RootOrder
@@ -43640,225 +43593,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5315025335510298270, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 93.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 5315025335510298270, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 134.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 5315025335510298270, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 314.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5315025335510298270, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.9488934
-      objectReference: {fileID: 0}
-    - target: {fileID: 5315025335510298270, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.027819632
-      objectReference: {fileID: 0}
-    - target: {fileID: 5315025335510298270, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.31423312
-      objectReference: {fileID: 0}
-    - target: {fileID: 5315025335510298270, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.009212679
-      objectReference: {fileID: 0}
-    - target: {fileID: 5315025335510298270, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 3.359
-      objectReference: {fileID: 0}
-    - target: {fileID: 5315025335510298270, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -396.645
-      objectReference: {fileID: 0}
-    - target: {fileID: 5522701274696164440, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 115.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5522701274696164440, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 329.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5522701274696164440, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.92221296
-      objectReference: {fileID: 0}
-    - target: {fileID: 5522701274696164440, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.38668245
-      objectReference: {fileID: 0}
-    - target: {fileID: 5522701274696164440, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -405.497
-      objectReference: {fileID: 0}
-    - target: {fileID: 5721216079467586755, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 117.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5721216079467586755, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 369.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5721216079467586755, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.40278867
-      objectReference: {fileID: 0}
-    - target: {fileID: 5721216079467586755, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.0016115693
-      objectReference: {fileID: 0}
-    - target: {fileID: 5721216079467586755, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.91529024
-      objectReference: {fileID: 0}
-    - target: {fileID: 5721216079467586755, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.0015971849
-      objectReference: {fileID: 0}
-    - target: {fileID: 5721216079467586755, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -132.495
-      objectReference: {fileID: 0}
-    - target: {fileID: 5752270854293648389, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 66.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5752270854293648389, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 337.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 5752270854293648389, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.61717385
-      objectReference: {fileID: 0}
-    - target: {fileID: 5752270854293648389, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.78682685
-      objectReference: {fileID: 0}
-    - target: {fileID: 5752270854293648389, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -256.22
-      objectReference: {fileID: 0}
     - target: {fileID: 6242746682352984889, guid: a6558fd68804b754195cfa0100792001,
         type: 3}
       propertyPath: m_Name
       value: Ruins3_North
-      objectReference: {fileID: 0}
-    - target: {fileID: 7067171722243079640, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 73.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 7067171722243079640, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 366.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7067171722243079640, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.36921555
-      objectReference: {fileID: 0}
-    - target: {fileID: 7067171722243079640, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.000059146398
-      objectReference: {fileID: 0}
-    - target: {fileID: 7067171722243079640, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.9293411
-      objectReference: {fileID: 0}
-    - target: {fileID: 7067171722243079640, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.002268182
-      objectReference: {fileID: 0}
-    - target: {fileID: 7067171722243079640, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -223.335
-      objectReference: {fileID: 0}
-    - target: {fileID: 7079940960222951431, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 63.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7079940960222951431, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 134.68
-      objectReference: {fileID: 0}
-    - target: {fileID: 7079940960222951431, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 321.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7079940960222951431, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.58647484
-      objectReference: {fileID: 0}
-    - target: {fileID: 7079940960222951431, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.004340961
-      objectReference: {fileID: 0}
-    - target: {fileID: 7079940960222951431, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.80995417
-      objectReference: {fileID: 0}
-    - target: {fileID: 7079940960222951431, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.0016407425
-      objectReference: {fileID: 0}
-    - target: {fileID: 7079940960222951431, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -0.444
-      objectReference: {fileID: 0}
-    - target: {fileID: 7079940960222951431, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -251.814
-      objectReference: {fileID: 0}
-    - target: {fileID: 7079940960222951431, guid: a6558fd68804b754195cfa0100792001,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -0.293
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -51686,11 +51424,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SnakeBeginTrigger
       objectReference: {fileID: 0}
-    - target: {fileID: 3800817410114957501, guid: 38a86dc9d1c585647a42c48b1246cd39,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4253699955944472871, guid: 38a86dc9d1c585647a42c48b1246cd39,
         type: 3}
       propertyPath: greatDoors
@@ -51704,7 +51437,7 @@ PrefabInstance:
     - target: {fileID: 6301666070965052420, guid: 38a86dc9d1c585647a42c48b1246cd39,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 49.71
+      value: 73.81
       objectReference: {fileID: 0}
     - target: {fileID: 6301666070965052420, guid: 38a86dc9d1c585647a42c48b1246cd39,
         type: 3}
@@ -51714,12 +51447,12 @@ PrefabInstance:
     - target: {fileID: 6301666070965052420, guid: 38a86dc9d1c585647a42c48b1246cd39,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 323.21
+      value: 327.91
       objectReference: {fileID: 0}
     - target: {fileID: 6301666070965052420, guid: 38a86dc9d1c585647a42c48b1246cd39,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9986755
+      value: 0.968409
       objectReference: {fileID: 0}
     - target: {fileID: 6301666070965052420, guid: 38a86dc9d1c585647a42c48b1246cd39,
         type: 3}
@@ -51729,7 +51462,7 @@ PrefabInstance:
     - target: {fileID: 6301666070965052420, guid: 38a86dc9d1c585647a42c48b1246cd39,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.05145196
+      value: 0.24936716
       objectReference: {fileID: 0}
     - target: {fileID: 6301666070965052420, guid: 38a86dc9d1c585647a42c48b1246cd39,
         type: 3}
@@ -51744,7 +51477,7 @@ PrefabInstance:
     - target: {fileID: 6301666070965052420, guid: 38a86dc9d1c585647a42c48b1246cd39,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 5.899
+      value: 28.88
       objectReference: {fileID: 0}
     - target: {fileID: 6301666070965052420, guid: 38a86dc9d1c585647a42c48b1246cd39,
         type: 3}
