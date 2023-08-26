@@ -7,6 +7,12 @@ public class Destructible : HitReciever
 {
     [SerializeField] Fact prerequisiteFact;
     [SerializeField] List<Fact> addWhenDestroy = new List<Fact>();
+    [SerializeField] Sound playWhenDestroyed;
+
+    private void Start()
+    {
+        if (playWhenDestroyed) playWhenDestroyed = Instantiate(playWhenDestroyed);
+    }
 
     public override void Hit(HitData hit)
     {
@@ -15,7 +21,10 @@ public class Destructible : HitReciever
         base.Hit(hit);
 
         if (hit.damage == 0) { print("0 dmg"); return; }
+
+        if (playWhenDestroyed) playWhenDestroyed.Play();
         Destroy(gameObject);
+
         foreach (var f in addWhenDestroy) FactManager.i.AddFact(f);
     }
 

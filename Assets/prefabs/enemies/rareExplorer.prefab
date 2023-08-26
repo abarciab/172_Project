@@ -5178,6 +5178,11 @@ MonoBehaviour:
   groupID: 1
   HPBarDisplayRange: 30
   deathSound: {fileID: 11400000, guid: 4ca3a8a2f73cc274cbe6d3833793339b, type: 2}
+  spawnSound: {fileID: 0}
+  hurtSound: {fileID: 0}
+  stunnedHurtSound: {fileID: 11400000, guid: bab133f935b45864ba776903bd10f769, type: 2}
+  getStunnedSound: {fileID: 11400000, guid: 80bd8499fae04064fa69527ac8b6958a, type: 2}
+  playDeathGlobal: 0
   hitMatTime: 0.1
   body:
   - {fileID: 8370913979315080391}
@@ -5249,10 +5254,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2.0171204
+  m_Radius: 0.57608956
+  m_Height: 2.80039
   m_Direction: 1
-  m_Center: {x: 0, y: 1.0149689, z: 0}
+  m_Center: {x: 0, y: 0.6233345, z: 0}
 --- !u!199 &4685028790053342449
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -15095,6 +15100,7 @@ MonoBehaviour:
   printHits: 0
   playSoundOnHit: 0
   hitSound: {fileID: 0}
+  altSound: {fileID: 0}
   SpawnOnHit: {fileID: 0}
   blockable: 0
   blockTag: 
@@ -15909,7 +15915,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   footstepSound: {fileID: 11400000, guid: dc73c089cdf080c498c4025f7d28d18b, type: 2}
   hurtSound: {fileID: 0}
-  attack1Sound: {fileID: 0}
+  attack1Sound: {fileID: 11400000, guid: 94ff522bae9bb334db02bd62d5f9874f, type: 2}
+  attack2Sound: {fileID: 11400000, guid: 8fa7f1cc50222194ca8873c4430db3c6, type: 2}
+  attack3Sound: {fileID: 0}
 --- !u!4 &707781889961285620 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9151524d0897d084cb44b1ea125f5556,

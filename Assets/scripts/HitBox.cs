@@ -13,7 +13,7 @@ public class HitBox : MonoBehaviour
     [SerializeField] List<HitBox> linkedBoxes = new List<HitBox>();
     [SerializeField] string ignoreTag;
     [SerializeField] bool printHits, playSoundOnHit;
-    [SerializeField] Sound hitSound;
+    [SerializeField] Sound hitSound, altSound;
     [SerializeField] GameObject SpawnOnHit;
 
     [Header("Blockable")]
@@ -34,6 +34,7 @@ public class HitBox : MonoBehaviour
     private void Start()
     {
         if (hitSound) hitSound = Instantiate(hitSound);
+        if (altSound) altSound = Instantiate(altSound);
         if (blockedSound) blockedSound = Instantiate(blockedSound);
     }
 
@@ -96,6 +97,11 @@ public class HitBox : MonoBehaviour
         }
 
         if (hitting) {
+            if (playSoundOnHit) {
+                bool recalling = FindObjectOfType<PFighting>().Recalling();
+                if (hitSound && !recalling) hitSound.Play();
+                if (altSound && recalling) altSound.Play();
+            }
             if (playSoundOnHit && hitSound) hitSound.Play();
             reciever.Hit(new HitReciever.HitData(dmg, obj, kb, offset, _crit:crit, _stun:stun));
             OnHit.Invoke();

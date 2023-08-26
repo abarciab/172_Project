@@ -7,9 +7,11 @@ public class Goop : MonoBehaviour
     public bool expire;
     public float lifeTime = 4;
     Vector3 startScale;
+    [SerializeField] Sound popSound;
 
     private void Start()
     {
+        if (popSound) popSound = Instantiate(popSound);
         if (expire) Destroy(gameObject, lifeTime);
         startScale = transform.localScale;
     }
@@ -31,6 +33,9 @@ public class Goop : MonoBehaviour
         }
 
         var shockwave = other.GetComponent<Shockwave>();
-        if (shockwave) Destroy(gameObject);
+        if (shockwave) {
+            if (popSound) popSound.Play();
+            Destroy(gameObject);
+        }
     }
 }

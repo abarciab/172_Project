@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using TMPro;
+using UnityEngine.UI;
 
 [ExecuteAlways]
 public class ShaderTransitionController : MonoBehaviour {
@@ -46,6 +48,12 @@ public class ShaderTransitionController : MonoBehaviour {
     [Header("final fight settings")]
     [SerializeField] float brighterExposure = -1.5f;
     [SerializeField] float darkerExposure = -7f;
+
+    [Header("questText")]
+    [SerializeField] Color morningColor;
+    [SerializeField] Color dayColor, eveningColor, nightColor;
+    [SerializeField] TextMeshProUGUI questText;
+    [SerializeField] Image questUnderline;
 
     public void DarkenNight()
     {
@@ -141,6 +149,8 @@ public class ShaderTransitionController : MonoBehaviour {
             _next = _prev = false;
         }
 
+        UpdateQuestTextColor();
+
         if (transitioning) {
             float dist = Vector3.Distance(Player.i.transform.position, transitionTarget);
             float newValue = 1 - Mathf.Clamp01(dist / maxDist);
@@ -183,6 +193,20 @@ public class ShaderTransitionController : MonoBehaviour {
 
         LerpSkyBox(A, B, progress);
         LerpSunLight(A.sun, B.sun, progress);
+    }
+
+    void UpdateQuestTextColor()
+    {
+        if (!questText || !questUnderline) return;
+
+        var color = morningColor;
+        int current = progress > 0.5f ? shader2 : shader1;
+        if (current == 1) color = dayColor;
+        if (current == 2) color = eveningColor;
+        if (current == 3) color = nightColor;
+
+        questText.color = Color.Lerp(questText.color, color, 0.05f);
+        questUnderline.color = Color.Lerp(questUnderline.color, color, 0.05f);
     }
 
     void LerpSkyBox(ShaderSettings A, ShaderSettings B, float progress)

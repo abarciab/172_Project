@@ -27,15 +27,28 @@ public class Speaker : MonoBehaviour
     public Vector3 cameraOffset;
     public Vector2 speakerDistance;
     [SerializeField] Vector3 SourceLocalPosition;
+    [SerializeField] Vector2 callRange = new Vector2(2, 5);
+    float callCooldown;
+    Sound convoSound;
 
 
     private void Start()
     {
         foreach (var c in conversations) c.convo.Init(transform.GetChild(0), SourceLocalPosition);
+        callCooldown = Random.Range(callRange.x, callRange.y);
+        if (conversations.Count > 0 && conversations[0].convo.voiceLines != null) convoSound = Instantiate(conversations[0].convo.voiceLines);
     }
 
     private void Update()
     {
+        callCooldown -= Time.deltaTime;
+        if (!GlobalUI.i.talking && callCooldown <= 0) {
+            callCooldown = Random.Range(callRange.x, callRange.y);
+            //print("Activating");
+            if (convoSound) convoSound.Play(transform);
+        }
+        if (GlobalUI.i.talking) convoSound.Stop();
+
         for (int i = 0; i < conversations.Count; i++) {
             CheckStatus(conversations[i]);
         }

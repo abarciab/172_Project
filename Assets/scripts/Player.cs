@@ -155,6 +155,8 @@ public class Player : MonoBehaviour
     {
         if (interestedSpeaker == null) return;
 
+        if (!GlobalUI.i.talking) pSound.StartConversation();
+
         GetComponent<PMovement>().StopMovement();
 
         if (string.IsNullOrEmpty(currentLine)) currentLine = interestedSpeaker.GetNextLine();

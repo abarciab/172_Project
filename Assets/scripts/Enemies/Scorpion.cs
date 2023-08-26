@@ -24,7 +24,6 @@ public class Scorpion : BaseEnemy
     [SerializeField] int rangedDmg;
     [SerializeField, Range(0, 1)] float goopAmount;
     [SerializeField] string rangedAnim;
-    [SerializeField] Sound goopThrowSound;
     float rangedCooldown;
 
     [Header("Snip Attack")]
@@ -49,6 +48,10 @@ public class Scorpion : BaseEnemy
     [SerializeField] float phaseSwitch = 0.5f;
     int phase;
 
+    [Header("sounds")]
+    [SerializeField] Sound WalkLoop;
+    [SerializeField] Sound goopThrowSound;
+
     [Header("Anims")]
     [SerializeField] string walkAnim;
     [SerializeField] float walkThreshold;
@@ -60,9 +63,9 @@ public class Scorpion : BaseEnemy
         agroRange = Mathf.Infinity;
         pinHB.OnHit.AddListener(HitPin);
 
-        //initiate sfx
         goopThrowSound = Instantiate(goopThrowSound);
-
+        WalkLoop = Instantiate(WalkLoop);
+        WalkLoop.PlaySilent(transform);
     }
 
     public override void EndAttack()
@@ -70,7 +73,6 @@ public class Scorpion : BaseEnemy
         base.EndAttack();
         if (!pinning) return;
         StartCoroutine(Resume(1.5f));
-        //print("Pin complete! hit: " + hitPin);
     }
 
     IEnumerator Resume(float time)
@@ -92,6 +94,10 @@ public class Scorpion : BaseEnemy
 
     protected override void Update()
     {
+        if (move.gotoTarget) WalkLoop.PercentVolume(1, 0.05f);
+        else WalkLoop.PercentVolume(0, 0.05f);
+
+
         base.Update();
         if (busy) return;
 

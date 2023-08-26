@@ -6,4 +6,6 @@ using UnityEngine;
 public class Fact : ScriptableObject
 {
     public int skipToStory;
+    public bool doNotSave;
+    public Fact addWhenSaving;
 }

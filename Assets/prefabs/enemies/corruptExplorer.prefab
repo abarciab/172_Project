@@ -5030,7 +5030,7 @@ VFXRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2260861950839617923}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -5104,7 +5104,7 @@ Transform:
   - {fileID: 2617639826947922522}
   - {fileID: 2659612381229316340}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &8959324631095615391
 NavMeshAgent:
@@ -5170,6 +5170,7 @@ MonoBehaviour:
   stunTime: 4
   stunTimeLeft: 0
   boss: 0
+  invincible: 0
   bossName: 
   removeFactOnDeath: []
   addFactOnDeath: []
@@ -5177,6 +5178,11 @@ MonoBehaviour:
   groupID: 1
   HPBarDisplayRange: 30
   deathSound: {fileID: 11400000, guid: 4ca3a8a2f73cc274cbe6d3833793339b, type: 2}
+  spawnSound: {fileID: 0}
+  hurtSound: {fileID: 0}
+  stunnedHurtSound: {fileID: 11400000, guid: bab133f935b45864ba776903bd10f769, type: 2}
+  getStunnedSound: {fileID: 11400000, guid: 80bd8499fae04064fa69527ac8b6958a, type: 2}
+  playDeathGlobal: 0
   hitMatTime: 0.1
   body:
   - {fileID: 8370913979315080391}
@@ -5186,6 +5192,7 @@ MonoBehaviour:
   hitMat: {fileID: 2100000, guid: 018437717a7bb1b48b7421ae7987224a, type: 2}
   critMat: {fileID: 2100000, guid: 60fc2459480549b4e8f804e469d6d332, type: 2}
   stunnedMat: {fileID: 2100000, guid: 3bc9034cb1cba2a439bb71c1ca73caeb, type: 2}
+  dropWhenDie: {fileID: 0}
 --- !u!114 &337496441697455699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5247,10 +5254,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2.0171204
+  m_Radius: 0.57608956
+  m_Height: 2.80039
   m_Direction: 1
-  m_Center: {x: 0, y: 1.0149689, z: 0}
+  m_Center: {x: 0, y: 0.6233345, z: 0}
 --- !u!199 &4685028790053342449
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -15093,6 +15100,8 @@ MonoBehaviour:
   printHits: 0
   playSoundOnHit: 0
   hitSound: {fileID: 0}
+  altSound: {fileID: 0}
+  SpawnOnHit: {fileID: 0}
   blockable: 0
   blockTag: 
   blockedSound: {fileID: 0}
@@ -15906,7 +15915,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   footstepSound: {fileID: 11400000, guid: dc73c089cdf080c498c4025f7d28d18b, type: 2}
   hurtSound: {fileID: 0}
-  attack1Sound: {fileID: 0}
+  attack1Sound: {fileID: 11400000, guid: 94ff522bae9bb334db02bd62d5f9874f, type: 2}
+  attack2Sound: {fileID: 11400000, guid: 8fa7f1cc50222194ca8873c4430db3c6, type: 2}
+  attack3Sound: {fileID: 0}
 --- !u!4 &707781889961285620 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9151524d0897d084cb44b1ea125f5556,
@@ -15954,12 +15965,12 @@ PrefabInstance:
     - target: {fileID: 761429933152914905, guid: aeef302edaa86a8459af4643a4ea3c57,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 761429933152914905, guid: aeef302edaa86a8459af4643a4ea3c57,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3972086094719578293, guid: aeef302edaa86a8459af4643a4ea3c57,
         type: 3}
@@ -16094,17 +16105,17 @@ PrefabInstance:
     - target: {fileID: 6926258469813730426, guid: aeef302edaa86a8459af4643a4ea3c57,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6926258469813730426, guid: aeef302edaa86a8459af4643a4ea3c57,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6926258469813730426, guid: aeef302edaa86a8459af4643a4ea3c57,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.453
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

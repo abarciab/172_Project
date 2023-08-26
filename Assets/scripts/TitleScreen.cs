@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Video;
@@ -8,13 +10,15 @@ using UnityEngine.Video;
 public class TitleScreen : MonoBehaviour {
 
     public Image continueButton;
-    [SerializeField] Color valid, Invalid;
     public bool fading;
     [SerializeField] GameObject fade, video;
+    [SerializeField] float activeA, inactiveA;
     [SerializeField] VideoPlayer videoPlayer;
+    [SerializeField] Sound sunBlastSound;
 
     private void Start()
     {
+        sunBlastSound = Instantiate(sunBlastSound);
         fade.GetComponent<Image>().color = new Color(0, 0, 0, 0);
         fading = false;
         Time.timeScale = 1;
@@ -22,9 +26,14 @@ public class TitleScreen : MonoBehaviour {
 
     private void Update()
     {
-        continueButton.color = PlayerPrefs.GetInt("savedFacts", 0) > 0 ? valid : Invalid;
-        continueButton.GetComponent<Outline>().enabled = PlayerPrefs.GetInt("savedFacts", 0) > 0;
-        continueButton.GetComponent<Button>().enabled = PlayerPrefs.GetInt("savedFacts", 0) > 0;
+        bool continueEnabled = PlayerPrefs.GetInt("savedFacts", 0) > 0;
+        continueButton.GetComponent<Button>().enabled = continueEnabled;
+        continueButton.GetComponent<EventTrigger>().enabled = continueEnabled;
+
+        var continueText = continueButton.GetComponentInChildren<TextMeshProUGUI>();
+        var continueColor = continueText.color;
+        continueColor.a = continueEnabled ? activeA : inactiveA;
+        continueText.color = continueColor;
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -46,7 +55,12 @@ public class TitleScreen : MonoBehaviour {
         fading = true;
         
         StopAllCoroutines();
-        StartCoroutine(_StartGame(1.5f));
+        StartCoroutine(_StartGame(2.5f));
+    }
+
+    public void PlaySunBlastSound()
+    {
+        sunBlastSound.Play();
     }
 
     IEnumerator _StartGame(float delay)

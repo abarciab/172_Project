@@ -152,6 +152,18 @@ MonoBehaviour:
   homingAmount: 0
   destroyedBySpear: 1
   actualCollider: {fileID: 2723046179155295915}
+  bouncedHit:
+    damage: 0
+    source: {fileID: 0}
+    KB: 0
+    offset: {x: 0, y: 0, z: 0}
+    stunTime: 0
+    crit: 0
+    stun: 0
+  meshes: []
+  glowingMat: {fileID: 0}
+  normalMat: {fileID: 0}
+  flySound: {fileID: 11400000, guid: 264166f72072c24469743f367991d479, type: 2}
 --- !u!135 &2364231434396986354
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -192,6 +204,7 @@ MonoBehaviour:
   printHits: 0
   playSoundOnHit: 0
   hitSound: {fileID: 0}
+  altSound: {fileID: 0}
   SpawnOnHit: {fileID: 0}
   blockable: 0
   blockTag: 
