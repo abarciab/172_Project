@@ -28,6 +28,8 @@ public class EnemyStats : HitReciever
 
     [Header("Sounds")]
     [SerializeField] Sound deathSound;
+    [SerializeField] Sound spawnSound, hurtSound, stunnedHurtSound, getStunnedSound;
+    [SerializeField] bool playDeathGlobal;
 
     [Header("Materials")]
     [SerializeField] float hitMatTime = 0.1f;
@@ -77,7 +79,22 @@ public class EnemyStats : HitReciever
         if (inGroup) GameManager.i.AddToGroup(gameObject, groupID);
         health = maxHealth;
         if (blood != null) blood.SetActive(false);
+
         if (deathSound) deathSound = Instantiate(deathSound);
+        if (hurtSound) hurtSound = Instantiate(hurtSound);
+        if (stunnedHurtSound) stunnedHurtSound = Instantiate(stunnedHurtSound);
+        if (getStunnedSound) getStunnedSound = Instantiate(getStunnedSound);
+        if (spawnSound) {
+            spawnSound = Instantiate(spawnSound);
+            StartCoroutine(PlaySpawnSound());
+        }
+    }
+
+    IEnumerator PlaySpawnSound()
+    {
+        yield return new WaitForSeconds(0.2f);
+
+        if (gameObject.activeInHierarchy) spawnSound.Play();
     }
 
     public override void Hit(HitData hit)
@@ -87,15 +104,16 @@ public class EnemyStats : HitReciever
 
     public override void Hit(HitData hit, bool willHit = false)
     {
-        if (invincible && !willHit) {
-            print("I'm invincible!");
-            return;
-        }
-
+        if (invincible && !willHit) return;
+        bool newlyStunned = stunTimeLeft <= 0 && hit.stun;
         base.Hit(hit);
 
-
-        if (stunTimeLeft > 0) hit.damage *= 2;
+        if (newlyStunned && getStunnedSound) getStunnedSound.Play(transform);
+        if (hurtSound && (!stunnedHurtSound || stunTimeLeft <= 0 || newlyStunned)) hurtSound.Play(transform);
+        if (stunTimeLeft > 0) {
+            hit.damage *= 2;
+            if (stunnedHurtSound && !newlyStunned) stunnedHurtSound.Play(transform);
+        }
         if (hit.stun) stunTimeLeft = stunTime;
 
         health -= hit.damage;
@@ -137,7 +155,7 @@ public class EnemyStats : HitReciever
         if (destroy) Destroy(gameObject);
         if (hpBar) hpBar.gameObject.SetActive(false);
 
-        if (deathSound) deathSound.Play(transform);
+        if (deathSound) if (playDeathGlobal) deathSound.Play(transform); else deathSound.Play();
 
         if (boss) GlobalUI.i.EndBossFight();
 

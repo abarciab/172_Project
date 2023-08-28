@@ -14,8 +14,18 @@ public class GoopProjectile : MonoBehaviour
     [SerializeField] List<Renderer> meshes = new List<Renderer>();
     [SerializeField] Material glowingMat, normalMat;
 
+    [Space()]
+    [SerializeField] Sound flySound;
 
-    private void Update()
+    private void Start()
+    {
+        if (flySound) {
+            flySound = Instantiate(flySound);
+            flySound.Play(transform);
+        }
+    }
+
+        private void Update()
     {
         var dir = transform.position - Player.i.transform.position;
         GetComponent<Rigidbody>().velocity += dir * Time.deltaTime * homingAmount;

@@ -4,11 +4,18 @@ using UnityEngine;
 
 public class FactInteract : MonoBehaviour
 {
+
     [SerializeField] Fact prerequisite;
     [SerializeField] List<Fact> addWhenInteract = new List<Fact>(), removeWhenInteract = new List<Fact>();
     [SerializeField] string prompt;
     [SerializeField] KeyCode interactKey;
     bool promptUp, unlocked;
+    [SerializeField] Sound PlayWhenInteract;
+
+    private void Start()
+    {
+        if (PlayWhenInteract) PlayWhenInteract = Instantiate(PlayWhenInteract);
+    }
 
     private void Update()
     {
@@ -18,6 +25,7 @@ public class FactInteract : MonoBehaviour
             foreach (var f in addWhenInteract) FactManager.i.AddFact(f);
             foreach (var f in removeWhenInteract) FactManager.i.RemoveFact(f);
             GlobalUI.i.HidePrompt(prompt);
+            if (PlayWhenInteract) PlayWhenInteract.Play();
             Destroy(this);
         }
     }

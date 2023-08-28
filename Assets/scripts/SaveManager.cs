@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class SaveManager : MonoBehaviour
@@ -16,6 +15,11 @@ public class SaveManager : MonoBehaviour
 
         PlayerPrefs.SetInt("savedFacts", facts.Count);
         for (int i = 0; i < facts.Count; i++) {
+            if (facts[i].doNotSave) continue;
+            if (facts[i].addWhenSaving != null) {
+                print("saving exrta fact: " + facts[i].addWhenSaving.name);
+                PlayerPrefs.SetString("fact" + (i + 1), facts[i].addWhenSaving.name);
+            }
             PlayerPrefs.SetString("fact" + i, facts[i].name);
         }
         PlayerPrefs.SetInt("story", gameMan.GetID());

@@ -27,7 +27,7 @@ public class PFighting : HitReciever {
 
     [Header("Sounds")]
     [SerializeField] Sound throwSpearSound;
-    [SerializeField] Sound shockwaveSound, shockwaveReadySound, recallWoosh, spearCatch, critSucsess, recallError;
+    [SerializeField] Sound shockwaveSound, shockwaveReadySound, recallWoosh, spearCatch, critSucsess, recallError, spearBuildUp, sunBlastError;
 
     [Header("Tutorial")]
     [SerializeField] Fact anyThrow;
@@ -38,6 +38,11 @@ public class PFighting : HitReciever {
     [SerializeField] GameObject thrownSpearBall;
 
     public bool RecallReady;
+
+    public bool Recalling()
+    {
+        return recalling;
+    }
 
     public void SetSpearLayer(int layer)
     {
@@ -91,6 +96,7 @@ public class PFighting : HitReciever {
 
     public void ThrowStaff()
     {
+        spearBuildUp.Stop();
         charging = false;
         if (!hasSpear || !aimed) return;
         aimed = false;
@@ -185,6 +191,7 @@ public class PFighting : HitReciever {
     {
         hasSpear = true;
         aimed = false;
+
         throwSpearSound = Instantiate(throwSpearSound);
         shockwaveSound = Instantiate(shockwaveSound);
         shockwaveReadySound = Instantiate(shockwaveReadySound);
@@ -192,6 +199,8 @@ public class PFighting : HitReciever {
         recallError = Instantiate(recallError);
         spearCatch = Instantiate(spearCatch);
         critSucsess = Instantiate(critSucsess);
+        spearBuildUp = Instantiate(spearBuildUp);
+        sunBlastError = Instantiate(sunBlastError);
     }
 
     public void StartAimingSpear()
@@ -201,6 +210,7 @@ public class PFighting : HitReciever {
         if (!hasSpear) { RetrieveSpear(); return; }
         aimed = charging = true;
         stabbing = false;
+        spearBuildUp.Play();
 
         CameraState.i.SwitchToState(CameraState.StateName.MouseOverShoulder);
 
@@ -223,7 +233,12 @@ public class PFighting : HitReciever {
 
     public void ActivateShockwave()
     {
-        if (swCooldown > 0 || !enabled || GlobalUI.i.talking) return;
+        if (swCooldown > 0) {
+            sunBlastError.Play();
+            return;
+        }
+
+        if (!enabled || GlobalUI.i.talking) return;
         shockwaveSound.Play(transform);
         swCooldown = shockwaveResetTime;
         if (!FactManager.i.IsPresent(tutorialDone)) FactManager.i.AddFact(shockWave);

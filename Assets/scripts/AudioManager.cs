@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -22,6 +21,18 @@ public class AudioManager : MonoBehaviour {
     [SerializeField] float masterVolume;
     [SerializeField] float sfxVolume, musicVolume;
 
+    [SerializeField] bool setVolumeToStartVolume;
+
+    private void Update()
+    {
+        if (setVolumeToStartVolume) {
+            setVolumeToStartVolume = false;
+            SetMasterVolume(masterStartVol);
+            SetMusicVolume(musicStartVol);
+            SetSfxVolume(sfxStartVol);
+        }
+    }
+
     private void Start()
     {
         LoadVolumeValuesFromSaveData();
@@ -30,7 +41,7 @@ public class AudioManager : MonoBehaviour {
         SetMusicVolume(musicStartVol);
         SetSfxVolume(sfxStartVol);
 
-        GlobalUI.i.SetSliderPositions(masterVolume, sfxVolume, musicVolume);
+        if (GlobalUI.i != null) GlobalUI.i.SetSliderPositions(masterVolume, sfxVolume, musicVolume);
     }
 
     public void SaveVolume()
@@ -38,19 +49,10 @@ public class AudioManager : MonoBehaviour {
         PlayerPrefs.SetFloat("masterVolume", masterVolume);
         PlayerPrefs.SetFloat("sfxVolume", sfxVolume);
         PlayerPrefs.SetFloat("musicVolume", musicVolume);
-
-        print("SAVED!" + masterVolume + ", " + sfxVolume + ", " + musicVolume);
     }
 
     public void ResetVolumeSaveData()
     {
-        return;
-
-        PlayerPrefs.SetFloat("masterVolume", -100);
-        PlayerPrefs.SetFloat("sfxVolume", -100);
-        PlayerPrefs.SetFloat("musicVolume", -100);
-
-        print("RESET VOLUME DATA");
     }
 
     void LoadVolumeValuesFromSaveData()
@@ -61,8 +63,6 @@ public class AudioManager : MonoBehaviour {
         if (sfx > 0) sfxStartVol = sfx;
         var music = PlayerPrefs.GetFloat("musicVolume", -100);
         if (music > 0) musicStartVol = music;
-
-        print("LOADED: " + masterStartVol + ", " + sfxStartVol + ", " + musicStartVol + ", savedValues: " + music + ", " + sfx + ", " + music);
     }
 
     public AudioMixerGroup GetMixer(SoundType type)
@@ -143,5 +143,10 @@ public class AudioManager : MonoBehaviour {
         var coord = coordObj.GetComponent<SoundCoordinator>();
         soundCoordinators.Add(coord);
         return coord;
+    }
+
+    private void OnDestroy()
+    {
+        if (instance == this) instance = null;
     }
 }

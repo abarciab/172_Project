@@ -23,6 +23,12 @@ public class FactManager : MonoBehaviour
         public List<Fact> facts = new List<Fact>();
         public int checkPoint, storyID;
         [HideInInspector] public int saveID;
+        public override string ToString()
+        {
+            string s = "Facts: ";
+            foreach (var f in facts) s += f.name + ", ";
+            return s;
+        }
     }
 
     public static FactManager i;
@@ -117,6 +123,8 @@ public class FactManager : MonoBehaviour
         var state = GetState(stateID);
         if (state == null) return;
 
+        print("facts: " + state);
+
         SetFacts(state.facts);
         GameManager.i.LoadStory(state.storyID);
         PlayerPrefs.SetInt("checkpoint", state.checkPoint);
@@ -129,6 +137,7 @@ public class FactManager : MonoBehaviour
     SaveState GetState(int ID)
     {
         foreach (var s in saveStates) if (s.saveID == ID) return s;
+        print("could not find state: " + ID);
         return null;
     }
 

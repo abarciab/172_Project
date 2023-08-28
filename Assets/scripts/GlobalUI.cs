@@ -36,6 +36,7 @@ public class GlobalUI : MonoBehaviour
     [SerializeField] Image dmgIndicator, dmgFlash, goopOverlay;
     public Image fade;
     [SerializeField] Fact tutorialDone;
+    bool hidingBL, hidingCompass, wasFighting;
 
     [Header("boss bar")]
     [SerializeField] GameObject bossBar;
@@ -51,10 +52,8 @@ public class GlobalUI : MonoBehaviour
 
     [Header("Quest")]
     [SerializeField] TextMeshProUGUI currentQuest;
-    [SerializeField] Image questBacking; 
-    [SerializeField] Color newQuestColor;
-    [SerializeField] float newQuestSmoothness;
-    float newQuestColorCooldown;
+    [SerializeField] GameObject newQuestFlash;
+    bool hidingQuest;
 
     [Header("Dialogue")]
     [SerializeField] TextMeshProUGUI nameText;
@@ -237,8 +236,7 @@ public class GlobalUI : MonoBehaviour
     public void UpdateQuestText(string text, bool playLong)
     {
         currentQuest.text = text;
-        questBacking.color = newQuestColor;
-        newQuestColorCooldown = 1f;
+        newQuestFlash.SetActive(true);
         if (!string.IsNullOrEmpty(text))sound.NewQuest(playLong);
     }
 
@@ -302,6 +300,7 @@ public class GlobalUI : MonoBehaviour
         mainText.gameObject.SetActive(false);
         sound.TurnPage();
         talking = false;
+        sound.EndConversation();
     }
 
     public void DisplayPrompt(string prompt)
@@ -340,7 +339,6 @@ public class GlobalUI : MonoBehaviour
 
     public void SetSliderPositions(float master, float sfx, float music)
     {
-        print("setting sliderPos: " + master + ", " + sfx + ", " + music);
         masterSlider.value = master;
         sfxSlider.value = sfx;
         musicSlider.value = music;
@@ -363,9 +361,6 @@ public class GlobalUI : MonoBehaviour
             activeBoss = null;
         }
 
-        newQuestColorCooldown -= Time.deltaTime;
-        if (newQuestColorCooldown <= 0)  questBacking.color = Color.Lerp(questBacking.color, Color.black, newQuestSmoothness);
-
         if (mainText.gameObject.activeInHierarchy) commandPrompt.gameObject.SetActive(false);        
     }
 
@@ -382,8 +377,28 @@ public class GlobalUI : MonoBehaviour
     {
         bool fighting = Player.i.InCombat();
 
-        currentQuest.gameObject.SetActive(!string.IsNullOrEmpty(currentQuest.text) && !talking && !fighting);
-        compass.SetActive(!fighting);
+        bool showQuest = !string.IsNullOrEmpty(currentQuest.text) && !talking && !fighting;
+        if (showQuest && !currentQuest.gameObject.activeInHierarchy) {
+            currentQuest.gameObject.SetActive(true);
+            hidingQuest = false;
+        }
+        if (!showQuest && currentQuest.gameObject.activeInHierarchy && !hidingQuest) {
+            currentQuest.GetComponent<UIEventCoord>().SetTrigger("Exit");
+            hidingQuest = true;
+        }
+
+        bool showCompass = !fighting && !talking;
+        if (fighting) wasFighting = true;
+        if (!showCompass && compass.activeInHierarchy && !hidingCompass) {
+            compass.GetComponent<UIEventCoord>().SetTrigger("Exit");
+            hidingCompass = true;
+        }
+        if (showCompass && !compass.activeInHierarchy) {
+            compass.SetActive(true);
+            hidingCompass = false;
+            if (wasFighting) sound.EndCombat();
+            wasFighting = false;
+        }
 
         int targetAlpha = Player.i.goopTime > 0 ? 1 : 0;
         Color targetCol = Color.black;
@@ -396,9 +411,19 @@ public class GlobalUI : MonoBehaviour
     {
         var fight = Player.i.GetComponent<PFighting>();
         
-        bottomLeft.SetActive((!title.activeInHierarchy && showHPbar && Player.i.InCombat()) || !Player.i.FullHealth() || fight.GetSWcooldown() > 0 || !FactManager.i.IsPresent(tutorialDone));
-        if (talking) bottomLeft.SetActive(false);
-        crossHair.SetActive(!talking);
+        var showBottomLeft = (!title.activeInHierarchy && showHPbar && Player.i.InCombat()) || !Player.i.FullHealth() || fight.GetSWcooldown() > 0 || !FactManager.i.IsPresent(tutorialDone);
+        if (talking) showBottomLeft = false;
+
+        if (bottomLeft.activeInHierarchy && !showBottomLeft && !hidingBL) {
+            bottomLeft.GetComponent<UIEventCoord>().SetTrigger("Exit");
+            hidingBL = true;
+        }
+        if (!bottomLeft.activeInHierarchy && showBottomLeft) {
+            bottomLeft.SetActive(true);
+            hidingBL = false;
+        }
+
+       crossHair.SetActive(!talking);
         
         float cooldown = fight.GetSWcooldown();
         if (cooldown <= 0 && swCountdown.activeInHierarchy) StartCoroutine(FlashAbility(swAbilityFlash, abilityFlashTime));

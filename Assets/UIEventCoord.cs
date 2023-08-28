@@ -5,7 +5,14 @@ using UnityEngine;
 public class UIEventCoord : MonoBehaviour
 {
     [SerializeField] Animator anim;
+    [SerializeField] Sound hoverSound, clickSound;
     [SerializeField] string hoverBool = "Hover";
+
+    private void Start()
+    {
+        if (hoverSound != null) hoverSound = Instantiate(hoverSound);
+        if (clickSound != null) clickSound = Instantiate(clickSound);
+    }
 
     public void SetTrigger(string trigger)
     {
@@ -17,8 +24,14 @@ public class UIEventCoord : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    public void Click()
+    {
+        if (clickSound != null) clickSound.Play();
+    }
+
     public void Hover()
     {
+        if (hoverSound != null) hoverSound.Play();
         anim.SetBool(hoverBool, true);
     }
 
