@@ -14,6 +14,9 @@ public class BomberSpawner : BaseEnemy
 
     [SerializeField] SpawnerVFXParent spawnVFX;
 
+    [Space()]
+    [SerializeField] Sound activateSound;
+
     float spawnCooldown;
 
     protected override void Start()
@@ -21,6 +24,8 @@ public class BomberSpawner : BaseEnemy
         base.Start();
         PutOnGround();
         spawnCooldown = Random.Range(0, spawnResetTime);
+
+        activateSound = Instantiate(activateSound);
     }
 
     protected override void Die()
@@ -58,6 +63,7 @@ public class BomberSpawner : BaseEnemy
 
         //play spawning vfx
         spawnVFX.TriggerSpawnVFX();
+        activateSound.Play(transform);
 
         StartCoroutine(waitThenSpawn(num - 1));
     }
