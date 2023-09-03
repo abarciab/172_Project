@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class HitEventCoord : MonoBehaviour
 {
+    public void SnakeEndBusy()
+    {
+        var snake = GetComponentInParent<Snake>();
+        if (snake) snake.SetBusy(false);
+    }
+
     public void SnakeLaunch()
     {
         var snake = GetComponentInParent<Snake>();

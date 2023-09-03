@@ -43,7 +43,7 @@ public class Snake : BaseEnemy
 
     [Header("Anims")]
     [SerializeField] Animator anim;
-    [SerializeField] string sprayAnim, spitAnim, tailWhipAnim, slitherAnim, coiledAnim = "coiled";
+    [SerializeField] string sprayAnim, spitAnim, tailWhipAnim, slitherAnim, coiledAnim = "coiled", pillarHitAnim = "pillarHit", spikeHitAnim = "spikeHit";
 
     [Header("phases")]
     [SerializeField] int Phase = 1;
@@ -95,6 +95,24 @@ public class Snake : BaseEnemy
         battleStartSound.Play();
         projectileSource = gameObject;
         busy = true;
+        stats.OnHit.AddListener(HitRecieved);
+    }
+
+    public void SetBusy(bool state)
+    {
+        busy = state;
+    }
+
+    void HitRecieved()
+    {
+        if (Phase == 1) {
+            anim.SetTrigger(pillarHitAnim);
+            busy = true;
+        }
+        if (Phase == 2) {
+            anim.SetTrigger(spikeHitAnim);
+            busy = false;
+        }
     }
 
     public override void EndAttack()
