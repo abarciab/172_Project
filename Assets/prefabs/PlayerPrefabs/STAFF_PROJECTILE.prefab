@@ -199,7 +199,7 @@ Transform:
   - {fileID: 6884983400251883992}
   - {fileID: 7994013198051276755}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &644261176780500218
 CapsuleCollider:
@@ -500,7 +500,7 @@ GameObject:
   - component: {fileID: 4197243318935913165}
   - component: {fileID: 7052320390695778391}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: HIT CHECKER
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -611,7 +611,9 @@ MonoBehaviour:
   printHits: 0
   playSoundOnHit: 1
   hitSound: {fileID: 11400000, guid: 3225fc9be196a134e8bffaabb057753c, type: 2}
-  SpawnOnHit: {fileID: 0}
+  altSound: {fileID: 11400000, guid: 71e09a58a8202e24fa991530892054f5, type: 2}
+  SpawnOnHit: {fileID: 3273569551324316427, guid: 24286a06d49b94c4eb8a3f5d84ed159d,
+    type: 3}
   blockable: 0
   blockTag: 
   blockedSound: {fileID: 0}
@@ -10657,6 +10659,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6566086650832600034}
     m_Modifications:
+    - target: {fileID: 130095693663009837, guid: 24286a06d49b94c4eb8a3f5d84ed159d,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2110743679978009480, guid: 24286a06d49b94c4eb8a3f5d84ed159d,
         type: 3}
       propertyPath: m_RootOrder
@@ -10716,6 +10723,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: VFXGraph_ImpactGoop
+      objectReference: {fileID: 0}
+    - target: {fileID: 3273569551324316427, guid: 24286a06d49b94c4eb8a3f5d84ed159d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
