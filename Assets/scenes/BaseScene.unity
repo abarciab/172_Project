@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.009439826, g: 0.008394808, b: 0.12298823, a: 1}
+  m_IndirectSpecularColor: {r: 0.00943874, g: 0.008389332, b: 0.122987375, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7565,6 +7565,12 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 27}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &726762543 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7679503908780900668, guid: aec15c5c3163210488e1ec0591dfffc3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1188736003}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &728977219
 GameObject:
   m_ObjectHideFlags: 0
@@ -13043,6 +13049,11 @@ PrefabInstance:
       propertyPath: VFX_spearCatch2
       value: 
       objectReference: {fileID: 1596076761}
+    - target: {fileID: 7679503908780900668, guid: aec15c5c3163210488e1ec0591dfffc3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8045839014961115483, guid: aec15c5c3163210488e1ec0591dfffc3,
         type: 3}
       propertyPath: m_IsActive
@@ -31500,6 +31511,11 @@ PrefabInstance:
       objectReference: {fileID: 1329450020}
     - target: {fileID: 2169044377857516534, guid: b254029f1aaef9943ad0271662538b62,
         type: 3}
+      propertyPath: spearModel
+      value: 
+      objectReference: {fileID: 726762543}
+    - target: {fileID: 2169044377857516534, guid: b254029f1aaef9943ad0271662538b62,
+        type: 3}
       propertyPath: firstRecall
       value: 
       objectReference: {fileID: 11400000, guid: d607353bc22c0b04d8d18668352b04de,
@@ -31545,6 +31561,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 39ce01103ed75dd4ba453b7d99bc76a0,
         type: 2}
+    - target: {fileID: 2169044377857516534, guid: b254029f1aaef9943ad0271662538b62,
+        type: 3}
+      propertyPath: heldSpearModel
+      value: 
+      objectReference: {fileID: 1535900523}
     - target: {fileID: 2169044377857516534, guid: b254029f1aaef9943ad0271662538b62,
         type: 3}
       propertyPath: staffProjectile
@@ -32197,7 +32218,7 @@ PrefabInstance:
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
       propertyPath: progress
-      value: 0.99997133
+      value: 0.99999887
       objectReference: {fileID: 0}
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}
@@ -32248,6 +32269,11 @@ PrefabInstance:
         type: 3}
       propertyPath: nightColor.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
+        type: 3}
+      propertyPath: darkerExposure
+      value: -8.5
       objectReference: {fileID: 0}
     - target: {fileID: 4880273609277471328, guid: 4e19d265d67051c45821082b3370c7a9,
         type: 3}

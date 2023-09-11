@@ -41,6 +41,11 @@ public class Armadillo : BaseEnemy
     [SerializeField] Animator anim;
     [SerializeField] string rollAnim, swipeAnim, digAnim;
 
+    [Header("Sounds")]
+    [SerializeField] Sound rollSound;
+    [SerializeField] Sound summonSound, burrowSound, emergeSound, swipeSound;
+    bool playedEmergeSound;
+
     protected override void Die()
     {
         base.Die();
@@ -68,7 +73,8 @@ public class Armadillo : BaseEnemy
         //print("end roll");
         rollHB.EndChecking();
         busy = true;
-        
+
+        rollSound.Stop();
         rolling = false;
         anim.SetBool(rollAnim, false);
         timeRolling = 0;
@@ -87,7 +93,6 @@ public class Armadillo : BaseEnemy
 
     public void FinishUnroll()
     {
-        //print("done unrolling!");
         move.EnableRotation();
         move.target = target.position;
         move.gotoTarget = true;
@@ -97,7 +102,6 @@ public class Armadillo : BaseEnemy
 
     public void StartDigCountdown()
     {
-        //print("starting countdown");
         digging = true;
         digTimeLeft = Random.Range(digTimeRange.x, digTimeRange.y);
     }
@@ -108,6 +112,12 @@ public class Armadillo : BaseEnemy
         rollCooldown = rollResetTime;
         digCooldown = digResetTime;
         erruptionVFX.GetComponent<VisualEffect>().Stop();
+
+        rollSound = Instantiate(rollSound);
+        summonSound = Instantiate(summonSound);
+        burrowSound = Instantiate(burrowSound);
+        emergeSound = Instantiate(emergeSound);
+        swipeSound = Instantiate(swipeSound);
     }
 
     protected override void Update()
@@ -141,8 +151,10 @@ public class Armadillo : BaseEnemy
                 transform.position = surfaceDecal.transform.position;
                 PutOnGround();
                 anim.SetBool(digAnim, false);
-
-
+                if (!playedEmergeSound) {
+                    emergeSound.Play();
+                    playedEmergeSound = true;
+                }
                 return;
             }
             surfaceDecal.transform.position = target.transform.position + Vector3.up;
@@ -150,6 +162,7 @@ public class Armadillo : BaseEnemy
             digHB.StartChecking(transform, digDamage, digKB);
             digTimeLeft = 1;
         }
+        else playedEmergeSound = false;
 
         //handle erruption vfx
         if (erruptionCooldown <= 0 && errupting){
@@ -169,7 +182,6 @@ public class Armadillo : BaseEnemy
 
     void StartDig()
     {
-        //print("start dig!");
         if (enemyPrefab) {
             for (int i = 0; i < numEnemiesToSpawn; i++) {
                 if (minions.Count > 2) break;
@@ -177,7 +189,9 @@ public class Armadillo : BaseEnemy
                 var newMinion = Instantiate(enemyPrefab, transform.position + offset, Quaternion.identity);
                 newMinion.GetComponent<EnemyStats>().inGroup = false;
                 minions.Add(newMinion);
+                
             }
+            summonSound.Play();
         }
         LookAtTarget(1);
         move.gotoTarget = false;
@@ -186,6 +200,8 @@ public class Armadillo : BaseEnemy
         anim.SetBool(digAnim, true);
         stats.SetInvincible();
         GoopManager.i.SpawnGoop(transform.position, 1, goopLifeTime);
+
+        burrowSound.Play();
     }
 
     void StartRoll()
@@ -203,6 +219,7 @@ public class Armadillo : BaseEnemy
 
     public void RollMove()
     {
+        rollSound.Play();
         move.ChangeSpeed(rollSpeed);
         rollHB.StartChecking(transform, rollDamage, rollKB);
         move.gotoTarget = true;
@@ -229,6 +246,7 @@ public class Armadillo : BaseEnemy
         Stop();
         StopAllCoroutines();
         LookAtTarget(0.75f);
+        swipeSound.Play();
 
         currentAttack = new AttackDetails(swipeHB, swipeAnim, swipeDmg, swipeResetTime, swipeKB, gameObject);
         swipeCooldown = swipeResetTime;

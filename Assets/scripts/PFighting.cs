@@ -33,9 +33,9 @@ public class PFighting : HitReciever {
     [SerializeField] Fact anyThrow;
     [SerializeField] Fact recall, fullThrow, criticalThrow, stabbedOnce, shockWave, throwWeak, recallstarted, recallThrown, firstRecall, tutorialDone;
 
-    [Header("powerBall")]
+    [Header("finalFight")]
     [SerializeField] GameObject spearTipBall;
-    [SerializeField] GameObject thrownSpearBall;
+    [SerializeField] GameObject thrownSpearBall, spearModel, heldSpearModel;
 
     public bool RecallReady;
 
@@ -46,7 +46,8 @@ public class PFighting : HitReciever {
 
     public void SetSpearLayer(int layer)
     {
-        staffProjectile.gameObject.layer = layer;
+        spearModel.layer = layer;
+        heldSpearModel.layer = layer;
     }
 
     public void SetSpearDmg(int dmg)

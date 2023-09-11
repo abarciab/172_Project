@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.Properties;
 using UnityEditor.Rendering;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class Snake : BaseEnemy
@@ -43,7 +44,7 @@ public class Snake : BaseEnemy
 
     [Header("Anims")]
     [SerializeField] Animator anim;
-    [SerializeField] string sprayAnim, spitAnim, tailWhipAnim, slitherAnim, coiledAnim = "coiled", pillarHitAnim = "pillarHit", spikeHitAnim = "spikeHit";
+    [SerializeField] string sprayAnim, spitAnim, tailWhipAnim, slitherAnim, coiledAnim = "coiled", pillarHitAnim = "pillarHit", spikeHitAnim = "spikeHit", p3AdvanceAnim = "phase3Advance";
 
     [Header("phases")]
     [SerializeField] int Phase = 1;
@@ -66,6 +67,12 @@ public class Snake : BaseEnemy
     [SerializeField] Transform restingPos;
     [SerializeField] Transform leftPos, rightPos;
     [SerializeField] float snakeMoveLeftRightSpeed;
+
+    [Space(3)]
+    [SerializeField] bool p3AdvanceOnPlayer = true;
+    [SerializeField] float p3AdvanceSpeed = 1;
+    [SerializeField] Collider headColldier;
+    [SerializeField] List<Collider> tailColliders = new List<Collider>();
 
     [Header("p3 obstacles")]
     [SerializeField] int obstacleRound = 1;
@@ -179,7 +186,9 @@ public class Snake : BaseEnemy
                 return;
             }
 
-            MoveBackAndForth();
+            if (p3AdvanceOnPlayer) Phase3MoveTowardPlayer();
+            else MoveBackAndForth();
+
             darknessPhaseTimePassed += Time.deltaTime;
             if (darknessPhaseTimePassed > p3strikeBuildUpResetTime && buildingUp) BecomeVulnerable();
             if (darknessPhaseTimePassed > p3strikeBuildUpResetTime + p3VulnerableTime && vulnerable) p3StrikeAttack();
@@ -197,6 +206,19 @@ public class Snake : BaseEnemy
         if (phase3shootCooldown <= 0) {
             p3LaunchProjectile();
             phase3shootCooldown = phase3ShootResetTime;
+        }
+    }
+
+    void Phase3MoveTowardPlayer()
+    {
+        anim.SetBool(p3AdvanceAnim, true);
+        move.target = target.position;
+        move.ChangeSpeed(p3AdvanceSpeed);
+        move.gotoTarget = true;
+
+        if (!headColldier.enabled) {
+            headColldier.enabled = true;
+            foreach (var c in tailColliders) c.enabled = false;
         }
     }
 
@@ -229,6 +251,13 @@ public class Snake : BaseEnemy
 
     void StartPhase3Shooting()
     {
+        if (p3AdvanceOnPlayer) {
+            move.gotoTarget = false;
+            anim.SetBool(p3AdvanceAnim, false);
+            headColldier.enabled = false;
+            foreach (var c in tailColliders) c.enabled = true;
+        }
+
         transform.position = restingPos.position;
         stats.invincible = true;
         p3ShootTimeCooldown = phase3SustainTime + p3TransitionTime;

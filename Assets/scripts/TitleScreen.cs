@@ -14,11 +14,9 @@ public class TitleScreen : MonoBehaviour {
     [SerializeField] GameObject fade, video;
     [SerializeField] float activeA, inactiveA;
     [SerializeField] VideoPlayer videoPlayer;
-    [SerializeField] Sound sunBlastSound;
 
     private void Start()
     {
-        sunBlastSound = Instantiate(sunBlastSound);
         fade.GetComponent<Image>().color = new Color(0, 0, 0, 0);
         fading = false;
         Time.timeScale = 1;
@@ -60,7 +58,6 @@ public class TitleScreen : MonoBehaviour {
 
     public void PlaySunBlastSound()
     {
-        sunBlastSound.Play();
     }
 
     IEnumerator _StartGame(float delay)
