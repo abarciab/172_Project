@@ -59,6 +59,8 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject powerBall;
     [HideInInspector] public bool poweredUp;
 
+    [HideInInspector] public bool canRun, canRoll;
+
     public void PowerUp()
     {
         poweredUp = true;
@@ -107,7 +109,6 @@ public class Player : MonoBehaviour
         fightingEnabled = GetComponent<PFighting>().enabled;
         GetComponent<PMovement>().enabled = false;
         GetComponent<PFighting>().enabled = false;
-        //FindObjectOfType<CameraController>().enabled = false;
     }
 
     public void UnfreezePlayer()
@@ -115,7 +116,6 @@ public class Player : MonoBehaviour
         var fMan = FactManager.i;
         GetComponent<PMovement>().enabled = true;
         GetComponent<PFighting>().enabled = fightingEnabled || fMan.IsPresent(tutorialComplete) || fMan.IsPresent(hasSpear);
-        //FindObjectOfType<CameraController>().enabled = true;
     }
 
     public void RemoveInteractable(Gate interactable)
@@ -290,8 +290,6 @@ public class Player : MonoBehaviour
 
     List<BaseEnemy> SortList(List<BaseEnemy> inputList)
     {
-
-
         var outputList = new List<BaseEnemy>();
 
         int currentPriority = 0;

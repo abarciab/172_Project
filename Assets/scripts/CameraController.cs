@@ -27,6 +27,8 @@ public class CameraController : MonoBehaviour
     CameraState.State currentState = new CameraState.State();
     float _blendSmoothness;
 
+    [HideInInspector] public float lastMouseMoveDist;
+
     private void Start()
     {
         if (!Application.isPlaying) return;
@@ -141,6 +143,8 @@ public class CameraController : MonoBehaviour
         else if (y < 180 && y > s.parentRotLimitsY.y) {
             transform.localEulerAngles = new Vector3(s.parentRotLimitsY.y, transform.localEulerAngles.y, 0);
         }
+
+        lastMouseMoveDist = Mathf.Abs(mouseX) + Mathf.Abs(mouseY);
     }
 
     private void OnDrawGizmos()

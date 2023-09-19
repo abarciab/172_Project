@@ -12,6 +12,8 @@ public class Trackable : MonoBehaviour
 
     private void Update()
     {
+        if (MarkerTracker.i == null) return;
+
         bool present = false;
         foreach (var f in factCondition) if (FactManager.i.IsPresent(f)) present = true;
         if (factCondition.Count > 0) track = present && (unless == null || !FactManager.i.IsPresent(unless));

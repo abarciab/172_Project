@@ -37,13 +37,13 @@ public class PControls : MonoBehaviour
         if (move.posing) return;
 
         if (move.sitting && Input.GetKeyDown(standUpKey)) { move.sitting = false; GlobalUI.i.HidePrompt(); }
-        if (!move.sitting && !fight.stabbing && !fight.chargingSpear() && Input.GetKeyDown(roll)) move.Roll();
+        if (!move.sitting && !fight.stabbing && !fight.chargingSpear() && Input.GetKeyDown(roll) && player.canRoll) move.Roll();
 
         move.goForward = Input.GetKey(forward);
         move.goBack = Input.GetKey(backward);
         move.pressLeft = Input.GetKey(left);
         move.pressRight = Input.GetKey(right);
-        move.running = Input.GetKey(run);
+        move.running = Input.GetKey(run) && player.canRun;
 
         if (Input.GetKeyDown(interactKey)) player.ActivateInteractable();
         if (!Input.GetKey(forward) && !Input.GetKey(left) && !Input.GetKey(right) && !Input.GetKey(backward)) move.running = false;

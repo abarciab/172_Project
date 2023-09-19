@@ -246,7 +246,6 @@ public class Armadillo : BaseEnemy
         Stop();
         StopAllCoroutines();
         LookAtTarget(0.75f);
-        swipeSound.Play();
 
         currentAttack = new AttackDetails(swipeHB, swipeAnim, swipeDmg, swipeResetTime, swipeKB, gameObject);
         swipeCooldown = swipeResetTime;

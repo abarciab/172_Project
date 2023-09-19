@@ -48,6 +48,9 @@ public class SaveManager : MonoBehaviour
         GetComponent<FactManager>().SetFacts(loadedFacts);
         GetComponent<GameManager>().SetCurrentStory(PlayerPrefs.GetString("currentStory"));
         GetComponent<GameManager>().LoadStory(PlayerPrefs.GetInt("story"));
+
+        if (loadedFacts.Count == 0) FindObjectOfType<MovementTutorial>(true).Activate();
+
         //print("Game loaded succsessfully - " + loadedFacts.Count + " facts, story stage: " + GetComponent<GameManager>().GetID());
     }
 

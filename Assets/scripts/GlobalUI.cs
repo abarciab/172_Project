@@ -36,7 +36,7 @@ public class GlobalUI : MonoBehaviour
     [SerializeField] Image dmgIndicator, dmgFlash, goopOverlay;
     public Image fade;
     [SerializeField] Fact tutorialDone;
-    bool hidingBL, hidingCompass, wasFighting;
+    bool hidingBLAnim, hidingCompassAnim, wasFighting;
 
     [Header("boss bar")]
     [SerializeField] GameObject bossBar;
@@ -53,7 +53,7 @@ public class GlobalUI : MonoBehaviour
     [Header("Quest")]
     [SerializeField] TextMeshProUGUI currentQuest;
     [SerializeField] GameObject newQuestFlash;
-    bool hidingQuest;
+    bool hidingQuestAnim;
 
     [Header("Dialogue")]
     [SerializeField] TextMeshProUGUI nameText;
@@ -89,6 +89,12 @@ public class GlobalUI : MonoBehaviour
 
     UISound sound;
     bool loadingSave = false, gameOver;
+
+    bool hidingQuest, hidingCompass, hidingBL;
+
+    public void SetHideHUD(bool state) { hidingBL = state; }
+    public void SetHideCompass(bool state) { hidingCompass = state; }
+    public void SetHideQuest(bool state) { hidingQuest = state; }
 
     public void FadeToCredits(float delay)
     {
@@ -377,25 +383,25 @@ public class GlobalUI : MonoBehaviour
     {
         bool fighting = Player.i.InCombat();
 
-        bool showQuest = !string.IsNullOrEmpty(currentQuest.text) && !talking && !fighting;
+        bool showQuest = !string.IsNullOrEmpty(currentQuest.text) && !talking && !fighting && !hidingQuest;
         if (showQuest && !currentQuest.gameObject.activeInHierarchy) {
             currentQuest.gameObject.SetActive(true);
-            hidingQuest = false;
+            hidingQuestAnim = false;
         }
-        if (!showQuest && currentQuest.gameObject.activeInHierarchy && !hidingQuest) {
+        if (!showQuest && currentQuest.gameObject.activeInHierarchy && !hidingQuestAnim) {
             currentQuest.GetComponent<UIEventCoord>().SetTrigger("Exit");
-            hidingQuest = true;
+            hidingQuestAnim = true;
         }
 
-        bool showCompass = !fighting && !talking;
+        bool showCompass = !fighting && !talking && !hidingCompass;
         if (fighting) wasFighting = true;
-        if (!showCompass && compass.activeInHierarchy && !hidingCompass) {
+        if (!showCompass && compass.activeInHierarchy && !hidingCompassAnim) {
             compass.GetComponent<UIEventCoord>().SetTrigger("Exit");
-            hidingCompass = true;
+            hidingCompassAnim = true;
         }
         if (showCompass && !compass.activeInHierarchy) {
             compass.SetActive(true);
-            hidingCompass = false;
+            hidingCompassAnim = false;
             if (wasFighting) sound.EndCombat();
             wasFighting = false;
         }
@@ -411,16 +417,16 @@ public class GlobalUI : MonoBehaviour
     {
         var fight = Player.i.GetComponent<PFighting>();
         
-        var showBottomLeft = (!title.activeInHierarchy && showHPbar && Player.i.InCombat()) || !Player.i.FullHealth() || fight.GetSWcooldown() > 0 || !FactManager.i.IsPresent(tutorialDone);
-        if (talking) showBottomLeft = false;
+        var showBL = (!title.activeInHierarchy && showHPbar && Player.i.InCombat()) || !Player.i.FullHealth() || fight.GetSWcooldown() > 0 || !FactManager.i.IsPresent(tutorialDone);
+        if (talking || hidingBL) showBL = false;
 
-        if (bottomLeft.activeInHierarchy && !showBottomLeft && !hidingBL) {
+        if (bottomLeft.activeInHierarchy && !showBL && !hidingBLAnim) {
             bottomLeft.GetComponent<UIEventCoord>().SetTrigger("Exit");
-            hidingBL = true;
+            hidingBLAnim = true;
         }
-        if (!bottomLeft.activeInHierarchy && showBottomLeft) {
+        if (!bottomLeft.activeInHierarchy && showBL) {
             bottomLeft.SetActive(true);
-            hidingBL = false;
+            hidingBLAnim = false;
         }
 
        crossHair.SetActive(!talking);
