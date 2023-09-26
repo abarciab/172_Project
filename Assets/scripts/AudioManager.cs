@@ -12,7 +12,7 @@ public class AudioManager : MonoBehaviour {
     public static AudioManager instance;
 
     [SerializeField] GameObject coordinatorPrefab;
-    List<SoundCoordinator> soundCoordinators = new List<SoundCoordinator>();
+    [SerializeField] List<SoundCoordinator> soundCoordinators = new List<SoundCoordinator>();
     [SerializeField] AudioMixerGroup sfxMixerG, musicMixerG;
     [SerializeField] AudioMixer sfxMixer, musicMixer;
     [SerializeField] Vector2 volumeRange = new Vector2(0, 20);
@@ -22,6 +22,24 @@ public class AudioManager : MonoBehaviour {
     [SerializeField] float sfxVolume, musicVolume;
 
     [SerializeField] bool setVolumeToStartVolume;
+
+    public void PauseNonMusic() {
+        foreach (var s in soundCoordinators) {
+            if (s) s.PauseNonMusic();
+        }
+    }
+
+    public void PauseSounds() {
+        foreach (var s in soundCoordinators) {
+            if (s) s.Pause();
+        }
+    }
+
+    public void UnpauseSounds() {
+        foreach (var s in soundCoordinators) {
+            if (s) s.Unpause();
+        }
+    }
 
     private void Update()
     {

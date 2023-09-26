@@ -164,7 +164,7 @@ public class EnemyStats : HitReciever
 
     private void Update()
     {
-        
+        if (Player.i.dead) gameObject.SetActive(false);
 
         stunTimeLeft -= Time.deltaTime;
         foreach (var m in body) m.material = stunTimeLeft > 0 ? stunnedMat : normalMat;

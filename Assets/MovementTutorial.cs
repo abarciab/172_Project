@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -21,6 +20,7 @@ public class MovementTutorial : MonoBehaviour
 
     public void Activate()
     {
+        print("Starting pre tutorial!");
         ui = GlobalUI.i;
         cam = FindObjectOfType<CameraController>(true);
 

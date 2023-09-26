@@ -87,6 +87,10 @@ public class GlobalUI : MonoBehaviour
     [SerializeField] Slider masterSlider;
     [SerializeField] Slider sfxSlider, musicSlider;
 
+    [Header("Game over")]
+    [SerializeField] GameObject gameOverScreen;
+    [SerializeField] float gameOverSoundTime;
+
     UISound sound;
     bool loadingSave = false, gameOver;
 
@@ -95,6 +99,29 @@ public class GlobalUI : MonoBehaviour
     public void SetHideHUD(bool state) { hidingBL = state; }
     public void SetHideCompass(bool state) { hidingCompass = state; }
     public void SetHideQuest(bool state) { hidingQuest = state; }
+
+    public void SetFullscreen() {
+        Screen.fullScreen = true;
+    }
+
+    public void SetWindowed() {
+        Screen.fullScreen = false;
+    }
+
+    public void GameOver() {
+        gameOverScreen.SetActive(true);
+        if (loadingSave) return;
+        loadingSave = true;
+        Time.timeScale = 1;
+        sound.SnakeHiss();
+        StartCoroutine(GameOverTimer());
+    }
+
+    IEnumerator GameOverTimer() {
+        fade.GetComponent<Fade>().Appear();
+        yield return new WaitForSeconds(gameOverSoundTime);
+        GameManager.i.RestartScene();
+    }
 
     public void FadeToCredits(float delay)
     {

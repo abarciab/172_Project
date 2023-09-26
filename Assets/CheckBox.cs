@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class CheckBox : MonoBehaviour
 {
@@ -9,8 +8,12 @@ public class CheckBox : MonoBehaviour
     [SerializeField] Color checkedColor, uncheckedColor, hoverColor;
     bool active;
 
+    [SerializeField] UnityEvent activeEvent, inactiveEvent;
+    [SerializeField] bool startActive;
+
     private void Start()
     {
+        if (startActive) Click();
         img.color = active ? checkedColor : uncheckedColor;
     }
 
@@ -28,5 +31,8 @@ public class CheckBox : MonoBehaviour
     {
         active = !active;
         EndHover();
+
+        if (active && activeEvent != null) activeEvent.Invoke();
+        if (!active && inactiveEvent != null) inactiveEvent.Invoke();
     }
 }

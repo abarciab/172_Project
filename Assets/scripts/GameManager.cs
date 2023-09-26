@@ -120,6 +120,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
         GlobalUI.i.Pause();
         unlockCursor();
+        AudioManager.instance.PauseSounds();
     }
 
     void LockCursor() {
@@ -139,6 +140,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
         if (Application.isPlaying) GlobalUI.i.Resume();
         LockCursor();
+        AudioManager.instance.UnpauseSounds();
     }
 
     public void TogglePause()

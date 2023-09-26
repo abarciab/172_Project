@@ -121,9 +121,10 @@ public class FactManager : MonoBehaviour
     public void LoadSaveState(int stateID)
     {
         var state = GetState(stateID);
-        if (state == null) return;
-
-        print("facts: " + state);
+        if (state == null) {
+            print("tried to load a null state");
+            return;
+        }
 
         SetFacts(state.facts);
         GameManager.i.LoadStory(state.storyID);

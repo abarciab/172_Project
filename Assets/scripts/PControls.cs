@@ -18,6 +18,17 @@ public class PControls : MonoBehaviour
     [SerializeField] Fact throwFact;
     [SerializeField] Fact stabFact, swFact;
 
+    bool toggleRun;
+    bool runMode; 
+
+    public void SetToggleRunOn() {
+        toggleRun = true;
+    }
+
+    public void DisableToggleRun() {
+        toggleRun = false;
+    }
+
     private void Start()
     {
         move = GetComponent<PMovement>();
@@ -27,7 +38,7 @@ public class PControls : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(pauseKey) && !GameManager.i.paused) GameManager.i.TogglePause();
+        if (Input.GetKeyDown(pauseKey) && !GameManager.i.paused && player.canRoll) GameManager.i.TogglePause();
 
         if (GameManager.i.paused || GlobalUI.i.DisplayingImage()) return;
 
@@ -43,7 +54,11 @@ public class PControls : MonoBehaviour
         move.goBack = Input.GetKey(backward);
         move.pressLeft = Input.GetKey(left);
         move.pressRight = Input.GetKey(right);
-        move.running = Input.GetKey(run) && player.canRun;
+        if (!toggleRun) move.running = Input.GetKey(run) && player.canRun;
+        else {
+            move.running = runMode && player.canRun;
+            if (Input.GetKeyDown(run)) runMode = !runMode;
+        }
 
         if (Input.GetKeyDown(interactKey)) player.ActivateInteractable();
         if (!Input.GetKey(forward) && !Input.GetKey(left) && !Input.GetKey(right) && !Input.GetKey(backward)) move.running = false;
