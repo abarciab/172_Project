@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PSound : MonoBehaviour
 {
-    [SerializeField] Sound footstep, footstepHard, footstepGoop, stabSwish, drawSpear, startConvo;
+    [SerializeField] Sound footstep, footstepHard, footstepGoop, stabSwish, drawSpear, startConvo, runningStep;
     private bool isDirtSurface = true;
 
     private void Start()
@@ -15,6 +15,7 @@ public class PSound : MonoBehaviour
         drawSpear = Instantiate(drawSpear);
         startConvo = Instantiate(startConvo);
         footstepGoop = Instantiate(footstepGoop);
+        runningStep = Instantiate(runningStep);
 
     }
 
@@ -24,6 +25,11 @@ public class PSound : MonoBehaviour
     public void SetSoftSurface(bool isSoft)
     {
         isDirtSurface = isSoft;
+    }
+
+    public void PlayFootStepRun()
+    {
+        runningStep.Play(transform);
     }
 
     public void PlayFootStep()

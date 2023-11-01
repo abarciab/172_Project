@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -12,12 +11,23 @@ public class MovementTutorial : MonoBehaviour
     [SerializeField] float mouseMoveThreshold = 10, runTimeThreshold, wasdDirectionTime = 0.5f, numRolls = 4;
     [SerializeField] Slider progressSlider;
 
+    [Header("Sounds")]
+    [SerializeField] Sound advanceSound;
+    [SerializeField] Sound completeSound;
+
     GlobalUI ui;
     CameraController cam;
 
     float mouseMoveTime, wTime, aTime, sTime, dTime, runTime;
 
     int currentStage;
+    float progressTarget;
+
+    private void Start()
+    {
+        advanceSound = Instantiate(advanceSound);
+        completeSound = Instantiate(completeSound);
+    }
 
     public void Activate()
     {
@@ -27,8 +37,16 @@ public class MovementTutorial : MonoBehaviour
         Player.i.FreezePlayer();
         HideAllUI();
 
-        progressSlider.gameObject.SetActive(true);
         currentStage = 0;
+
+        var toShow = new List<GameObject> { progressSlider.gameObject, mouseParent };
+        StartCoroutine(WaitThenShowAndAdvance(toShow, 1.8f));   
+    }
+
+    IEnumerator WaitThenShowAndAdvance(List<GameObject> toShow, float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        foreach (var o in toShow) o.SetActive(true);
         AdvanceToNextStage();
     }
 
@@ -41,6 +59,8 @@ public class MovementTutorial : MonoBehaviour
 
     private void Update()
     {
+        
+
         if (1 - progressSlider.value < 0.001f) AdvanceToNextStage();
 
         if (currentStage == 1) CheckForMouseMove();
@@ -69,13 +89,16 @@ public class MovementTutorial : MonoBehaviour
 
     void CheckForRoll()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) progressSlider.value += 1 / numRolls;
+        if (Input.GetKeyDown(KeyCode.Space)) progressTarget += 1 / numRolls;
+        progressSlider.value = Mathf.Lerp(progressSlider.value, progressTarget, 0.05f);
     }
 
     public void AdvanceToNextStage()
     {
         DisableAll();
         progressSlider.value = 0;
+
+        if (currentStage < 6) advanceSound.Play();
 
         switch (currentStage) {
             case 0: StartMouseStage();
@@ -104,6 +127,7 @@ public class MovementTutorial : MonoBehaviour
         ui.SetHideHUD(false);
 
         gameObject.SetActive(false);
+        completeSound.Play();
     }
 
     void DisableAll()

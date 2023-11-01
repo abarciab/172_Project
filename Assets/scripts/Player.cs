@@ -42,6 +42,7 @@ public class Player : MonoBehaviour
     [SerializeField] float goopTick;
     float goopTickCooldown;
     [HideInInspector] public float goopTime;
+    [SerializeField] float goopYLevel;
 
     [SerializeField] List<BaseEnemy> enemies = new List<BaseEnemy>();
     [SerializeField] List<BaseEnemy> currentMeleeEnemies = new List<BaseEnemy>();
@@ -59,7 +60,7 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject powerBall;
     [HideInInspector] public bool poweredUp;
 
-    [HideInInspector] public bool canRun, canRoll;
+    [HideInInspector] public bool canRun = true, canRoll = true;
 
     public void PowerUp()
     {
@@ -244,11 +245,14 @@ public class Player : MonoBehaviour
             GlobalUI.i.HidePrompt();
         }
 
+        bool underwater = transform.position.y <= goopYLevel;
+
+        if (underwater) goopTime = 1;
         if (goopTime > 0) {
             goopTime -= Time.deltaTime;
             goopTickCooldown -= Time.deltaTime;
             if (goopTickCooldown <= 0) {
-                ChangeHealth(-goopDmg);
+                ChangeHealth(underwater ? -goopDmg * 5 : -goopDmg);
                 goopTickCooldown = goopTick;
             }
         }

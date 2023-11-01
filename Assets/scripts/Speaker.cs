@@ -31,7 +31,6 @@ public class Speaker : MonoBehaviour
     float callCooldown;
     Sound convoSound;
 
-
     private void Start()
     {
         foreach (var c in conversations) c.convo.Init(transform.GetChild(0), SourceLocalPosition);

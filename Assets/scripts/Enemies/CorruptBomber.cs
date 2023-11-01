@@ -17,6 +17,8 @@ public class CorruptBomber : BaseEnemy
     [SerializeField] GameObject explodeObj;
     [SerializeField] Vector3 explodeOffset = new Vector3(0, 1, 0);
     [SerializeField] int explodeDamage;
+    [SerializeField] float explodeDelay = 1f;
+    bool startingExplode;
 
     [Header("Sounds")]
     [SerializeField] Sound explodeSound;
@@ -36,9 +38,16 @@ public class CorruptBomber : BaseEnemy
 
         if (!inAgroRange || busy || stunned) return;
 
+        if (startingExplode) {
+            explodeDelay -= Time.deltaTime;
+            if (explodeDelay <= 0) startExplode();
+            return;
+        }
         if (dist > explodeRange.y) MoveTowardTarget();
         else if (dist < explodeRange.x) Backup();
-        else startExplode();
+        else {
+            startingExplode = true;
+        }
     }
 
     protected override void Die()

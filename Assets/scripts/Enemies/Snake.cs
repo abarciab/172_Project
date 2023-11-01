@@ -2,13 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Properties;
-using UnityEditor.Rendering;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class Snake : BaseEnemy
 {
-
 
     [Header("Spit")]
     [SerializeField] GameObject projectilePrefab;

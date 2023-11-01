@@ -110,8 +110,6 @@ public class AudioManager : MonoBehaviour {
         musicMixer.SetFloat("volume", _musicVol);
     }
 
-    
-
     private void Awake()
     {
         instance = this;

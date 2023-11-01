@@ -392,6 +392,7 @@ public class GlobalUI : MonoBehaviour
             currentQuest.GetComponent<UIEventCoord>().SetTrigger("Exit");
             hidingQuestAnim = true;
         }
+        if (chargeParent.activeInHierarchy) currentQuest.gameObject.SetActive(false);
 
         bool showCompass = !fighting && !talking && !hidingCompass;
         if (fighting) wasFighting = true;
