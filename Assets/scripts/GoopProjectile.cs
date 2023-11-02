@@ -8,14 +8,21 @@ public class GoopProjectile : MonoBehaviour
     [SerializeField] bool destroyedBySpear = true;
     Vector3 velocity;
     [SerializeField] Collider actualCollider;
+    [SerializeField] SphereCollider triggerCollider;
     bool bounced;
     [SerializeField] HitReciever.HitData bouncedHit;
 
     [SerializeField] List<Renderer> meshes = new List<Renderer>();
     [SerializeField] Material glowingMat, normalMat;
 
+    [Space(5)]
+    [SerializeField] bool switchLayers;
+    [SerializeField] float switchTime = 1;
+    [SerializeField] int newLayer; 
+
     [Space()]
     [SerializeField] Sound flySound;
+
 
     private void Start()
     {
@@ -25,8 +32,13 @@ public class GoopProjectile : MonoBehaviour
         }
     }
 
-        private void Update()
+    private void Update()
     {
+        if (switchLayers && switchTime > 0) {
+            switchTime -= Time.deltaTime;
+            if (switchTime <= 0) gameObject.layer = newLayer;
+        }
+
         var dir = transform.position - Player.i.transform.position;
         GetComponent<Rigidbody>().velocity += dir * Time.deltaTime * homingAmount;
 
@@ -35,8 +47,8 @@ public class GoopProjectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<EnemyStats>() && bounced) {
-            other.GetComponent<EnemyStats>().Hit(bouncedHit, true);
+        if (other.GetComponentInParent<EnemyStats>() && bounced) {
+            other.GetComponentInParent<EnemyStats>().Hit(bouncedHit, true);
             Destroy(gameObject);
             return;
         }
@@ -50,7 +62,7 @@ public class GoopProjectile : MonoBehaviour
                 Player.i.poweredUp = false;
                 actualCollider.enabled = false;
                 bounced = true;
-                //StartCoroutine(ReEnableCollider());
+                triggerCollider.radius *= 2;
             }
             else {
                 actualCollider.enabled = false;
@@ -67,6 +79,7 @@ public class GoopProjectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        print("landed: " + collision.gameObject.name);
         var spear = collision.gameObject.GetComponent<ThrownStaff>();
         if (!spear) spear = collision.gameObject.GetComponentInParent<ThrownStaff>();
         if (!spear) {

@@ -70,7 +70,6 @@ public class Snake : BaseEnemy
     [SerializeField] List<Collider> tailColliders = new List<Collider>();
 
     [Header("p3 obstacles")]
-    [SerializeField] int obstacleRound = 1;
     [SerializeField] int obstacleCount;
     [SerializeField] float obstacleRevealTime = 1, obstacleHiddenYPos = -10f, obstacleRevealedYPos = 7.5f;
     [SerializeField] Transform p3ObstacleParent;
@@ -192,10 +191,7 @@ public class Snake : BaseEnemy
             return;
         }
 
-        if (p3ShootTimeCooldown <= p3TransitionTime) {
-            print("In transition!");
-            return;
-        }
+        if (p3ShootTimeCooldown <= p3TransitionTime) return;
 
         phase3shootCooldown -= Time.deltaTime;
         if (phase3shootCooldown <= 0) {

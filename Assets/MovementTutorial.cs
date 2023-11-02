@@ -60,7 +60,7 @@ public class MovementTutorial : MonoBehaviour
 
     private void Update()
     {
-        
+        if (Application.isEditor && Input.GetKeyDown(KeyCode.N)) EndTutorial(); 
 
         if (1 - progressSlider.value < 0.001f) AdvanceToNextStage();
 
@@ -129,6 +129,9 @@ public class MovementTutorial : MonoBehaviour
 
         gameObject.SetActive(false);
         completeSound.Play();
+
+        Player.i.UnfreezePlayer();
+        Player.i.canRoll = Player.i.canRun = true;
     }
 
     void DisableAll()

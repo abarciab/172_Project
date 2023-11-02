@@ -36,6 +36,9 @@ public class EnemyStats : HitReciever
     [SerializeField] List<SkinnedMeshRenderer> body = new List<SkinnedMeshRenderer>();
     public Material normalMat, hitMat, critMat, stunnedMat;
 
+    [Header("Debug")]
+    [SerializeField] bool printHits;
+
     Coroutine currentBleed;
 
     [Space()]
@@ -104,6 +107,8 @@ public class EnemyStats : HitReciever
 
     public override void Hit(HitData hit, bool willHit = false)
     {
+        if (printHits) print("hit: " + hit.damage + ", willHit: " + willHit);
+
         if (invincible && !willHit) return;
         bool newlyStunned = stunTimeLeft <= 0 && hit.stun;
         base.Hit(hit);
