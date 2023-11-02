@@ -60,7 +60,7 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject powerBall;
     [HideInInspector] public bool poweredUp;
 
-    [HideInInspector] public bool canRun = true, canRoll = true;
+    [HideInInspector] public bool canRun, canRoll, dead;
 
     public void PowerUp()
     {
@@ -351,14 +351,19 @@ public class Player : MonoBehaviour
         healCooldown = healWaitTime;
         StopAllCoroutines();
 
-        hurtSound.Play();
+        if (health > 0)hurtSound.Play();
         CameraShake.i.Shake();
     }
 
     void Die() {
+        if (dead) return;
+
+        AudioManager.instance.PauseNonMusic();
         CameraState.i.GetComponent<MusicPlayer>().FadeOut();
         deathSound.Play();
-        GlobalUI.i.RestartScene();
+        GlobalUI.i.GameOver();
+        dead = true;
+        
     }
 
     private void Awake()

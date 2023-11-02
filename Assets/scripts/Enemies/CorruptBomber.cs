@@ -38,14 +38,16 @@ public class CorruptBomber : BaseEnemy
 
         if (!inAgroRange || busy || stunned) return;
 
-        if (startingExplode) {
+        if (startingExplode)
+        {
             explodeDelay -= Time.deltaTime;
             if (explodeDelay <= 0) startExplode();
             return;
         }
         if (dist > explodeRange.y) MoveTowardTarget();
         else if (dist < explodeRange.x) Backup();
-        else {
+        else
+        {
             startingExplode = true;
         }
     }
@@ -77,13 +79,14 @@ public class CorruptBomber : BaseEnemy
             anim.SetTrigger(explodeFailedTrigger);
             return;
         }*/
-        
 
-        for (int i = 0; i < numGlobs; i++) {
+
+        for (int i = 0; i < numGlobs; i++)
+        {
             GoopManager.i.SpawnGoop(transform.position, globAmount);
             enabled = false;
             Destroy(gameObject, 1f);
-            
+
             explodeSound.Play(transform);
         }
     }

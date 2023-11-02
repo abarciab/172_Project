@@ -31,6 +31,7 @@ public class MovementTutorial : MonoBehaviour
 
     public void Activate()
     {
+        print("Starting pre tutorial!");
         ui = GlobalUI.i;
         cam = FindObjectOfType<CameraController>(true);
 

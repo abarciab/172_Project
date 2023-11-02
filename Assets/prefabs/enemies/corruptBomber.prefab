@@ -5049,7 +5049,7 @@ Transform:
   - {fileID: 2288693492077242487}
   - {fileID: 872610922743165141}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &8959324631095615391
 NavMeshAgent:
@@ -10011,13 +10011,14 @@ MonoBehaviour:
   explodeFailedTrigger: explodeFail
   walkThreshold: 0.01
   explodeRange: {x: 0.93, y: 1.8}
-  numGlobs: 4
-  globAmount: 0.855
+  numGlobs: 3
+  globAmount: 0.718
   explodeSpeed: 0
-  explodeObj: {fileID: 8124543167177156648, guid: aa512fad73606c14e832cf71245e3153,
+  explodeObj: {fileID: 5925975979107122954, guid: fa643e383222128489c2c7e80350818c,
     type: 3}
   explodeOffset: {x: 0, y: 1, z: 0}
   explodeDamage: 15
+  explodeDelay: 0.9
   explodeSound: {fileID: 11400000, guid: bfe53bf3b82a92e46b6ec18066d9fb8b, type: 2}
   buildUpSound: {fileID: 11400000, guid: f95be422a4a61c740bf66a9e89e187de, type: 2}
 --- !u!1 &7084225015433004556

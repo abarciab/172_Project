@@ -17,7 +17,6 @@ public class SaveManager : MonoBehaviour
         for (int i = 0; i < facts.Count; i++) {
             if (facts[i].doNotSave) continue;
             if (facts[i].addWhenSaving != null) {
-                print("saving exrta fact: " + facts[i].addWhenSaving.name);
                 PlayerPrefs.SetString("fact" + (i + 1), facts[i].addWhenSaving.name);
             }
             PlayerPrefs.SetString("fact" + i, facts[i].name);
@@ -50,6 +49,10 @@ public class SaveManager : MonoBehaviour
         GetComponent<GameManager>().LoadStory(PlayerPrefs.GetInt("story"));
 
         if (loadedFacts.Count == 0) FindObjectOfType<MovementTutorial>(true).Activate();
+        else {
+            Player.i.canRoll = true;
+            Player.i.canRun = true;
+        }
 
         //print("Game loaded succsessfully - " + loadedFacts.Count + " facts, story stage: " + GetComponent<GameManager>().GetID());
     }

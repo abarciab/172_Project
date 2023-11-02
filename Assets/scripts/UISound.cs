@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UISound : MonoBehaviour
 {
-    [SerializeField] Sound getItem, turnPage, newQuest, fullChargeSound, newQuestLong, heartBeat, endConvo, endConvo2, endCombat;
+    [SerializeField] Sound getItem, turnPage, newQuest, fullChargeSound, newQuestLong, heartBeat, endConvo, endConvo2, endCombat, snakeHiss;
     [SerializeField] AnimationCurve heartbeatCurve;
 
     [Header("Buttons")]
@@ -24,6 +24,7 @@ public class UISound : MonoBehaviour
         endConvo = Instantiate(endConvo);
         endConvo2 = Instantiate(endConvo2);
         endCombat = Instantiate(endCombat);
+        snakeHiss = Instantiate(snakeHiss);
 
         heartBeat.PlaySilent();
     }
@@ -36,6 +37,10 @@ public class UISound : MonoBehaviour
     public void Heartbeat(float healthPercent)
     {
         heartBeat.PercentVolume(heartbeatCurve.Evaluate(healthPercent));
+    }
+
+    public void SnakeHiss() {
+        snakeHiss.Play();
     }
 
     public void ClickButton()

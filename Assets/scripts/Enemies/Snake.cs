@@ -1,12 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.Properties;
 using UnityEngine;
 
 public class Snake : BaseEnemy
 {
-
     [Header("Spit")]
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] Vector2 RangedRange;

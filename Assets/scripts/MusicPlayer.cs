@@ -41,7 +41,10 @@ public class MusicPlayer : MonoBehaviour
             return;
         }
 
-        if (fadingOut) return;
+        if (fadingOut) {
+            FadeOut();
+            return;
+        }
 
         if (Player.i.InCombat()) {
             Player.i.EnterCombat();
