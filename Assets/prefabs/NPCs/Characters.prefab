@@ -468,6 +468,7 @@ MonoBehaviour:
   cameraOffset: {x: 0, y: 1.25, z: 0}
   speakerDistance: {x: 1, y: -0.3}
   SourceLocalPosition: {x: 0, y: 0, z: -1.3}
+  callRange: {x: 2, y: 5}
 --- !u!114 &7700924224945027149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -593,6 +594,7 @@ MonoBehaviour:
   cameraOffset: {x: 0, y: 0.66, z: 0}
   speakerDistance: {x: 1, y: -0.5}
   SourceLocalPosition: {x: 0, y: 0, z: 0}
+  callRange: {x: 4, y: 8}
 --- !u!114 &8297307207466647525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -811,6 +813,7 @@ MonoBehaviour:
   cameraOffset: {x: 0, y: 1.3, z: 0}
   speakerDistance: {x: 1.05, y: -0.43}
   SourceLocalPosition: {x: 0, y: 0, z: 0}
+  callRange: {x: 4, y: 8}
 --- !u!114 &2440791175737971791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -956,6 +959,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: gran
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663128797434766542, guid: 7c48be7f603bcdb4d904ea99c5abe193,
+        type: 3}
+      propertyPath: callRange.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663128797434766542, guid: 7c48be7f603bcdb4d904ea99c5abe193,
+        type: 3}
+      propertyPath: callRange.y
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4663128797434766542, guid: 7c48be7f603bcdb4d904ea99c5abe193,
         type: 3}
