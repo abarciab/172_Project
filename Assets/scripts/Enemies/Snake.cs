@@ -5,11 +5,14 @@ using UnityEngine;
 
 public class Snake : BaseEnemy
 {
+    [Header("Projectile")]
+    [SerializeField] Vector3 projectileStartOffset, projectileSize;
+    [SerializeField] float projectileAngle = 45, shortDist;
+
     [Header("Spit")]
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] Vector2 RangedRange;
-    [SerializeField] Vector3 projectileStartOffset, projectileSize;
-    [SerializeField] float spitResetTime, projectileAngle = 45, shortDist;
+    [SerializeField] float spitResetTime;
     [SerializeField] int rangedDmg;
     [SerializeField, Range(0, 1)] float goopAmount;
     float spitCooldown;
@@ -22,22 +25,16 @@ public class Snake : BaseEnemy
 
     [Header("Goop Orb")]
     [SerializeField] GameObject orbPrefab;
-    [SerializeField] float orbResetTime, orbSpeed, orbScale, orbTargetOffset;
+    [SerializeField] float orbResetTime, orbSpeed, orbScale, orbTargetYOffset;
     [SerializeField] int orbDamage;
     float orbCooldown;
-
-    [Header("tail whip")]
-    [SerializeField] Vector2 tailWhipRange;
-    [SerializeField] float tailWhipResetTime;
-    [SerializeField] int tailWhipDamage;
-    [SerializeField] HitBox tailWhipHB;
-    float tailWhipCooldown;
 
     [Header("Sounds")]
     [SerializeField] Sound goopThrowSound;
     [SerializeField] Sound transitionSound, slitherSound, battleStartSound, hissSound, buildUp, strike;
 
     [Header("Anims")]
+    [SerializeField] float introWaitTime = 5;
     [SerializeField] Animator anim;
     [SerializeField] string sprayAnim, spitAnim, tailWhipAnim, slitherAnim, coiledAnim = "coiled", pillarHitAnim = "pillarHit", spikeHitAnim = "spikeHit", p3AdvanceAnim = "phase3Advance";
 
@@ -119,7 +116,6 @@ public class Snake : BaseEnemy
     public override void EndAttack()
     {
         base.EndAttack();
-        tailWhipHB.Refresh();
         currentAttack = null;
     }
 
@@ -338,7 +334,7 @@ public class Snake : BaseEnemy
         orb.GetComponent<HitBox>().StartChecking(transform, orbDamage);
 
         Vector3 targetPos = target.position + Player.i.speed3D;
-        var dir =  (targetPos + Vector3.down * orbTargetOffset) - (transform.position + projectileStartOffset*2);
+        var dir =  (targetPos + Vector3.up * orbTargetYOffset) - (transform.position + projectileStartOffset*2);
         orb.GetComponent<Rigidbody>().AddForce(orbSpeed * dir.normalized);
 
         goopThrowSound.Play();
@@ -350,16 +346,7 @@ public class Snake : BaseEnemy
         float dt = Time.deltaTime;
         spitCooldown -= dt;
         sprayCooldown -= dt;
-        tailWhipCooldown -= dt;
         orbCooldown -= dt;
-    }
-
-    void TailWhip()
-    {
-        busy = true;
-        tailWhipCooldown = tailWhipResetTime;
-        currentAttack = new AttackDetails(tailWhipHB, tailWhipAnim, tailWhipDamage, 0, 50, gameObject);
-        anim.SetTrigger(tailWhipAnim);
     }
 
     void RangedAttack()
@@ -383,7 +370,6 @@ public class Snake : BaseEnemy
         spitCooldown = spitResetTime;
         anim.SetBool(spitAnim, true);
     }
-
 
     public void LaunchProjectile(float predictMultiplier = 1)
     {
@@ -423,8 +409,5 @@ public class Snake : BaseEnemy
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, RangedRange.x);
         Gizmos.DrawWireSphere(transform.position, RangedRange.y);
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, tailWhipRange.x);
-        Gizmos.DrawWireSphere(transform.position, tailWhipRange.y);
     }
 }

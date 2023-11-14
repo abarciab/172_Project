@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 3810867379375475800}
   - component: {fileID: 147003176640279059}
   - component: {fileID: 386997023096378504}
+  - component: {fileID: 410813884090075331}
   - component: {fileID: 3925142823399293205}
   - component: {fileID: 5652803430239516570}
-  - component: {fileID: 410813884090075331}
   m_Layer: 8
   m_Name: snake
   m_TagString: Enemy
@@ -41,7 +41,7 @@ Transform:
   - {fileID: 1345226986109738206}
   - {fileID: 29055093971101382}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 156.34, z: 0}
 --- !u!195 &2211974521691028086
 NavMeshAgent:
@@ -96,31 +96,34 @@ MonoBehaviour:
   OnHit:
     m_PersistentCalls:
       m_Calls: []
+  invincible: 0
   health: 2000
   maxHealth: 2000
+  healSpeed: 30
   hpBar: {fileID: 0}
-  destroy: 0
-  KBresist: 0
+  HPBarDisplayRange: 30
+  stunTimeLeft: 0
+  stunTime: 0
   blood: {fileID: 276517901316141166}
   bloodTime: 1
-  healSpeed: 30
-  stunTime: 0
-  stunTimeLeft: 0
-  boss: 1
-  invincible: 0
-  bossName: the beast
+  inGroup: 0
+  groupID: 0
+  destroy: 0
+  dropWhenDie: {fileID: 0}
   removeFactOnDeath: []
   addFactOnDeath:
   - {fileID: 11400000, guid: 99a1ac19ef5dbb2428e5fec98e50846f, type: 2}
-  inGroup: 0
-  groupID: 0
-  HPBarDisplayRange: 30
+  boss: 1
+  bossName: the beast
+  camShakeOnHurt: 0
+  camShakeParams: {x: 0, y: 0}
   deathSound: {fileID: 11400000, guid: 4ca3a8a2f73cc274cbe6d3833793339b, type: 2}
   spawnSound: {fileID: 0}
   hurtSound: {fileID: 0}
   stunnedHurtSound: {fileID: 0}
   getStunnedSound: {fileID: 0}
   playDeathGlobal: 0
+  playHurtGlobal: 0
   hitMatTime: 0.1
   body:
   - {fileID: 8827844535414026505}
@@ -128,7 +131,8 @@ MonoBehaviour:
   hitMat: {fileID: 2100000, guid: 018437717a7bb1b48b7421ae7987224a, type: 2}
   critMat: {fileID: 2100000, guid: 60fc2459480549b4e8f804e469d6d332, type: 2}
   stunnedMat: {fileID: 2100000, guid: 3bc9034cb1cba2a439bb71c1ca73caeb, type: 2}
-  dropWhenDie: {fileID: 0}
+  KBresist: 0
+  printHits: 0
 --- !u!199 &386997023096378504
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -201,6 +205,132 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &410813884090075331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43378320019879016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b55faed60229143b07a155f1530c31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agroRange: Infinity
+  debug: 0
+  meleePriority: 0
+  jumpDist: 0.2
+  jumpheight: 0.2
+  jumpTime: 0.2
+  orbitSpeed: 0
+  orbitSwitchMod: 0
+  projectileStartOffset: {x: 0, y: 2, z: 0}
+  projectileSize: {x: 0, y: 1, z: 1}
+  projectileAngle: 45
+  shortDist: 2500
+  projectilePrefab: {fileID: 8124543167177156648, guid: f1e9b153d47510d45bcf29c19258a932,
+    type: 3}
+  RangedRange: {x: 15.2, y: 62}
+  spitResetTime: 1
+  rangedDmg: 35
+  goopAmount: 1
+  sprayResetTime: 3
+  sprayDelay: 0.2
+  orbPrefab: {fileID: 0}
+  orbResetTime: 0
+  orbSpeed: 0
+  orbScale: 0
+  orbTargetYOffset: 0
+  orbDamage: 0
+  goopThrowSound: {fileID: 11400000, guid: 8614ff1858aca484eb6204bf7e80fa78, type: 2}
+  transitionSound: {fileID: 11400000, guid: 1aad6c31e8e30b045833c90c7eac90b3, type: 2}
+  slitherSound: {fileID: 11400000, guid: bdccf7a94152f3045aeb63b0306afac0, type: 2}
+  battleStartSound: {fileID: 11400000, guid: 76525f2b73d0aaf4fafad15466418f24, type: 2}
+  hissSound: {fileID: 11400000, guid: e58ca59779988164e80e7981a1913fe5, type: 2}
+  buildUp: {fileID: 0}
+  strike: {fileID: 0}
+  anim: {fileID: 2272639541864170218}
+  sprayAnim: spray
+  spitAnim: spit
+  tailWhipAnim: tailWhip
+  slitherAnim: slither
+  coiledAnim: coiled
+  pillarHitAnim: pillarHit
+  spikeHitAnim: spikeHit
+  p3AdvanceAnim: phase3Advance
+  Phase: 1
+  phase1Pickups: {fileID: 0}
+  phase2Spawners: {fileID: 0}
+  phase3ShootResetTime: 0
+  phase3SustainTime: 0
+  p3ShootSpeed: 0
+  p3ProjectileMass: 0
+  p3TargetOffset: 0
+  p3ShootPredictMult: 2
+  p3ShootAngle: 30
+  p3ShortDist: 0
+  p3RandomizeRadius: 0
+  p3ShootDamage: 15
+  playerTPtarget: {fileID: 0}
+  p3strikeBuildUpResetTime: 7
+  p3VulnerableTime: 2
+  p3StrikeTime: 5
+  p3TransitionTime: 0
+  p3Strike:
+    damage: 0
+    source: {fileID: 0}
+    KB: 0
+    offset: {x: 0, y: 0, z: 0}
+    stunTime: 0
+    crit: 0
+    stun: 0
+  snakeEyesMat: {fileID: 0}
+  pickupMat: {fileID: 0}
+  restingPos: {fileID: 0}
+  leftPos: {fileID: 0}
+  rightPos: {fileID: 0}
+  snakeMoveLeftRightSpeed: 0
+  p3AdvanceOnPlayer: 1
+  p3AdvanceSpeed: 1
+  headColldier: {fileID: 1480630259144828674}
+  tailColliders:
+  - {fileID: 7486117393891253445}
+  - {fileID: 1715574174063759502}
+  - {fileID: 4180420350285241617}
+  - {fileID: 1083883810728894005}
+  - {fileID: 5370273708169968225}
+  - {fileID: 5686929718982887514}
+  - {fileID: 7795275810529413347}
+  - {fileID: 7923569671551123753}
+  - {fileID: 2943555922977270659}
+  - {fileID: 4247119312763047619}
+  - {fileID: 8624563190860189699}
+  - {fileID: 3842109863045242494}
+  - {fileID: 7738592731333871363}
+  - {fileID: 6198535189621693422}
+  - {fileID: 4923232581822257646}
+  - {fileID: 2561184856539526854}
+  - {fileID: 1474333895290901474}
+  - {fileID: 2420728594342620685}
+  - {fileID: 6210440787725467788}
+  - {fileID: 8353906144613535233}
+  - {fileID: 2293297025662238783}
+  - {fileID: 2169464855274187719}
+  obstacleCount: 0
+  obstacleRevealTime: 1
+  obstacleHiddenYPos: -10
+  obstacleRevealedYPos: 7.5
+  p3ObstacleParent: {fileID: 0}
+  obstacleRevealCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  snakeEyes: {fileID: 0}
+  snakeEyesLayer: 0
+  defaultLayer: 0
 --- !u!136 &3925142823399293205
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4983,137 +5113,6 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!114 &410813884090075331
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 43378320019879016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0b55faed60229143b07a155f1530c31, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agroRange: Infinity
-  debug: 0
-  meleePriority: 0
-  jumpDist: 0.2
-  jumpheight: 0.2
-  jumpTime: 0.2
-  orbitSpeed: 0
-  orbitSwitchMod: 0
-  projectilePrefab: {fileID: 8124543167177156648, guid: f1e9b153d47510d45bcf29c19258a932,
-    type: 3}
-  RangedRange: {x: 15.2, y: 62}
-  projectileStartOffset: {x: 0, y: 2, z: 0}
-  projectileSize: {x: 0, y: 1, z: 1}
-  spitResetTime: 1
-  projectileAngle: 45
-  shortDist: 2500
-  rangedDmg: 35
-  goopAmount: 1
-  sprayResetTime: 3
-  sprayDelay: 0.2
-  orbPrefab: {fileID: 0}
-  orbResetTime: 0
-  orbSpeed: 0
-  orbScale: 0
-  orbTargetOffset: 0
-  orbDamage: 0
-  tailWhipRange: {x: 0, y: 27.8}
-  tailWhipResetTime: 5
-  tailWhipDamage: 50
-  tailWhipHB: {fileID: 8361076466891776419}
-  goopThrowSound: {fileID: 11400000, guid: 279eed7a547c9174f9ce7c5fc4e7216b, type: 2}
-  transitionSound: {fileID: 11400000, guid: 1aad6c31e8e30b045833c90c7eac90b3, type: 2}
-  slitherSound: {fileID: 11400000, guid: bdccf7a94152f3045aeb63b0306afac0, type: 2}
-  battleStartSound: {fileID: 11400000, guid: 76525f2b73d0aaf4fafad15466418f24, type: 2}
-  hissSound: {fileID: 11400000, guid: e58ca59779988164e80e7981a1913fe5, type: 2}
-  buildUp: {fileID: 0}
-  strike: {fileID: 0}
-  anim: {fileID: 2272639541864170218}
-  sprayAnim: spray
-  spitAnim: spit
-  tailWhipAnim: tailWhip
-  slitherAnim: slither
-  coiledAnim: coiled
-  pillarHitAnim: pillarHit
-  spikeHitAnim: spikeHit
-  p3AdvanceAnim: phase3Advance
-  Phase: 1
-  phase1Pickups: {fileID: 0}
-  phase2Spawners: {fileID: 0}
-  phase3ShootResetTime: 0
-  phase3SustainTime: 0
-  p3ShootSpeed: 0
-  p3ProjectileMass: 0
-  p3TargetOffset: 0
-  p3ShootPredictMult: 2
-  p3ShootAngle: 30
-  p3ShortDist: 0
-  p3RandomizeRadius: 0
-  p3ShootDamage: 15
-  playerTPtarget: {fileID: 0}
-  p3strikeBuildUpResetTime: 7
-  p3VulnerableTime: 2
-  p3StrikeTime: 5
-  p3TransitionTime: 0
-  p3Strike:
-    damage: 0
-    source: {fileID: 0}
-    KB: 0
-    offset: {x: 0, y: 0, z: 0}
-    stunTime: 0
-    crit: 0
-    stun: 0
-  snakeEyesMat: {fileID: 0}
-  pickupMat: {fileID: 0}
-  restingPos: {fileID: 0}
-  leftPos: {fileID: 0}
-  rightPos: {fileID: 0}
-  snakeMoveLeftRightSpeed: 0
-  p3AdvanceOnPlayer: 1
-  p3AdvanceSpeed: 1
-  headColldier: {fileID: 1480630259144828674}
-  tailColliders:
-  - {fileID: 7486117393891253445}
-  - {fileID: 1715574174063759502}
-  - {fileID: 4180420350285241617}
-  - {fileID: 1083883810728894005}
-  - {fileID: 5370273708169968225}
-  - {fileID: 5686929718982887514}
-  - {fileID: 7795275810529413347}
-  - {fileID: 7923569671551123753}
-  - {fileID: 2943555922977270659}
-  - {fileID: 4247119312763047619}
-  - {fileID: 8624563190860189699}
-  - {fileID: 3842109863045242494}
-  - {fileID: 7738592731333871363}
-  - {fileID: 6198535189621693422}
-  - {fileID: 4923232581822257646}
-  - {fileID: 2561184856539526854}
-  - {fileID: 1474333895290901474}
-  - {fileID: 2420728594342620685}
-  - {fileID: 6210440787725467788}
-  - {fileID: 8353906144613535233}
-  - {fileID: 2293297025662238783}
-  - {fileID: 2169464855274187719}
-  obstacleRound: 1
-  obstacleCount: 0
-  obstacleRevealTime: 1
-  obstacleHiddenYPos: -10
-  obstacleRevealedYPos: 7.5
-  p3ObstacleParent: {fileID: 0}
-  obstacleRevealCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  snakeEyes: {fileID: 0}
-  snakeEyesLayer: 0
-  defaultLayer: 0
 --- !u!1 &49619333576104098
 GameObject:
   m_ObjectHideFlags: 0

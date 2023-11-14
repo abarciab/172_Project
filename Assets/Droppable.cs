@@ -15,6 +15,7 @@ public class Droppable : HitReciever
     [SerializeField] HitData hitData;
     [SerializeField] Material glowingMat, normalMat;
     [SerializeField] List<Renderer> meshes = new List<Renderer>();
+    bool _hitSnake;
 
     private void Start()
     {
@@ -53,7 +54,7 @@ public class Droppable : HitReciever
         }
     }
 
-        void Drop()
+    void Drop()
     {
         GetComponent<Collider>().isTrigger = true;
         StartCoroutine(AnimateDrop());
@@ -77,9 +78,10 @@ public class Droppable : HitReciever
 
     private void OnTriggerStay(Collider other)
     {
+        if (_hitSnake) return;
         if (other.GetComponent<EnemyStats>()) {
             other.GetComponent<EnemyStats>().Hit(hitData, true);
-            GetComponent<Collider>().enabled = false;
+            _hitSnake = true;
         }
     }
 }

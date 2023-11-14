@@ -28,9 +28,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8720987699195342619}
   - {fileID: 6442031102873074603}
   - {fileID: 2593894838034767942}
-  - {fileID: 8720987699195342619}
   m_Father: {fileID: 4258767810184036673}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 3497137185851864430}
   - component: {fileID: 2153082717579237581}
   m_Layer: 0
-  m_Name: Base.002 (1)
+  m_Name: baseLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -301,10 +301,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2935288435665049021}
-  - {fileID: 7098308797996062947}
   - {fileID: 2121933586117520991}
+  - {fileID: 7098308797996062947}
   - {fileID: 2952123222398839575}
+  - {fileID: 2935288435665049021}
   - {fileID: 5529815034725049867}
   m_Father: {fileID: 2668226756063479240}
   m_RootOrder: -1
@@ -322,7 +322,7 @@ GameObject:
   - component: {fileID: 1928583992618211188}
   - component: {fileID: 2744557518470566855}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: baseRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -565,8 +565,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.428455, y: 2.4115684, z: 3.1497498}
-  m_Center: {x: -1.0607704, y: 0.6000172, z: 0.54578537}
+  m_Size: {x: 3.4930701, y: 2.4115684, z: 3.2221186}
+  m_Center: {x: -1.0607703, y: 0.6000172, z: 0.5819681}
 --- !u!54 &8877463774253964439
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -714,8 +714,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.0130534, y: 3.9207387, z: 2.6961827}
-  m_Center: {x: -0.9776956, y: 1.4603693, z: -0.028461447}
+  m_Size: {x: 4.3823156, y: 12.293926, z: 2.6961827}
+  m_Center: {x: -0.29306453, y: 5.6469636, z: -0.02846143}
 --- !u!54 &6196200183088781732
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -999,8 +999,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.0130534, y: 4.091397, z: 2.6961827}
-  m_Center: {x: -0.9776956, y: 1.5456983, z: -0.028461447}
+  m_Size: {x: 3.1712737, y: 10.424629, z: 2.6961827}
+  m_Center: {x: -0.2841281, y: 4.712315, z: -0.028461432}
 --- !u!54 &7803427655404044715
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1559,6 +1559,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RuinsStatue_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 3544541331817042242, guid: 94737a259acd9c84d859bebef12166d3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2429,6 +2434,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5256096171705153511, guid: 754d072d1ae3cae42bfdc4a8518798fa,
         type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5256096171705153511, guid: 754d072d1ae3cae42bfdc4a8518798fa,
+        type: 3}
       propertyPath: m_Center.x
       value: 1.0133224
       objectReference: {fileID: 0}
@@ -2442,7 +2452,8 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: -0.008544372
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5256096171705153511, guid: 754d072d1ae3cae42bfdc4a8518798fa, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

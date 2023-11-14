@@ -15,7 +15,7 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 1
-  m_FogColor: {r: 0.754717, g: 0.5602529, b: 0.40939838, a: 1}
+  m_FogColor: {r: 0.40690637, g: 0.60607964, b: 0.6792453, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.01
   m_LinearFogStart: 0
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 1.5433913, g: 0.74593616, b: 1.5418073, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1247,7 +1247,6 @@ MonoBehaviour:
   musicMixerG: {fileID: 24300002, guid: 6f2050bf307348f4e99a4ae8be5d9cc6, type: 2}
   sfxMixer: {fileID: 24100000, guid: 1c4fc48d421abf04b9894f8f0363e46b, type: 2}
   musicMixer: {fileID: 24100000, guid: 6f2050bf307348f4e99a4ae8be5d9cc6, type: 2}
-  volumeRange: {x: -60, y: 20}
   masterStartVol: 1
   sfxStartVol: 0.75
   musicStartVol: 0.75
@@ -2346,7 +2345,7 @@ MonoBehaviour:
     focusIndex: 0
     mouseXSens: 1
     mouseYSens: 1
-    parentRotLimitsY: {x: -35, y: 30}
+    parentRotLimitsY: {x: -50, y: 30}
     transitionSmoothness: 0.5
   - name: 'state 2 - dialogue: '
     displayName: 8
@@ -7392,7 +7391,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &659454849
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7414,7 +7413,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -442.3}
+  m_AnchoredPosition: {x: 85, y: -442.3}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &659454850
@@ -18833,9 +18832,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   test: 0
-  testIntensity: 0.02
-  testTime: 0.2
-  testMod: 0
+  testIntensity: 0.1
+  testTime: 0.5
+  testMod: 1
   shakeCurveX:
     serializedVersion: 2
     m_Curve:
@@ -28065,7 +28064,7 @@ GameObject:
   - component: {fileID: 2035462438}
   - component: {fileID: 2035462437}
   m_Layer: 5
-  m_Name: boss
+  m_Name: label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28088,8 +28087,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -635.7, y: 392.4}
-  m_SizeDelta: {x: 239.2003, y: 50}
+  m_AnchoredPosition: {x: -807.3656, y: 391.46027}
+  m_SizeDelta: {x: 1141.042, y: 92.79}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2035462437
 MonoBehaviour:
@@ -34290,8 +34289,8 @@ RectTransform:
   m_Father: {fileID: 8051461787523974649}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.453, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -34470,7 +34469,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.547
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -34490,7 +34489,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

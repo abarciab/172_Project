@@ -7,7 +7,7 @@ public class AudioManager : MonoBehaviour {
     // users assign sound clips, set the volume and pitch for each clip (optional)
     // users can assign multiple audio files for the same call, each with different volume and pitch (or syncronize them)
     // users can play sounds by calling 'play' on a PlayableSound scriptable object.
-    //     settings for that sound can be found on that scriptable object
+    // settings for that sound can be found on that scriptable object
 
     public static AudioManager instance;
 
@@ -15,7 +15,6 @@ public class AudioManager : MonoBehaviour {
     [SerializeField] List<SoundCoordinator> soundCoordinators = new List<SoundCoordinator>();
     [SerializeField] AudioMixerGroup sfxMixerG, musicMixerG;
     [SerializeField] AudioMixer sfxMixer, musicMixer;
-    [SerializeField] Vector2 volumeRange = new Vector2(0, 20);
     [SerializeField] float masterStartVol, sfxStartVol, musicStartVol;
     [Space()]
     [SerializeField] float masterVolume;
@@ -114,9 +113,7 @@ public class AudioManager : MonoBehaviour {
 
     float MapToVolumeRange(float input)
     {
-        input *= volumeRange.y - volumeRange.x;
-        input += volumeRange.x;
-        return Mathf.Clamp(input, volumeRange.x, volumeRange.y);
+        return Mathf.Log10(input) * 20;
     }
 
     void UpdateActualVolume()
@@ -126,6 +123,8 @@ public class AudioManager : MonoBehaviour {
 
         var _musicVol = MapToVolumeRange(musicVolume * masterVolume);
         musicMixer.SetFloat("volume", _musicVol);
+
+        SaveVolume();
     }
 
     private void Awake()

@@ -6,43 +6,54 @@ using UnityEngine.UI;
 
 public class EnemyStats : HitReciever
 {
+    [Header("Health")]
+    public bool invincible;
     public int health;
     public int maxHealth;
+    [SerializeField] int healSpeed;
     [SerializeField] Slider hpBar;
-    public bool destroy;
-    [SerializeField] float KBresist;
+    [SerializeField] float HPBarDisplayRange = 30;
+
+    [Header("Stun")]
+    [HideInInspector] public float stunTimeLeft;
+    [SerializeField] float stunTime;
+
+    [Header("Blood Effect")]
     [SerializeField] GameObject blood;
     [SerializeField] float bloodTime = 1;
-    [SerializeField] int healSpeed;
-    [SerializeField] float stunTime;
-    [HideInInspector] public float stunTimeLeft;
-    public bool boss;
-    public bool invincible;
-    [SerializeField] string bossName;
 
-    [SerializeField] List<Fact> removeFactOnDeath = new List<Fact>(), addFactOnDeath = new List<Fact>();
-
+    [Header("Group")]
     public bool inGroup;
     [SerializeField] int groupID;
-    [SerializeField] float HPBarDisplayRange = 30;
+
+    [Header("On Death")]
+    public bool destroy;
+    [SerializeField] GameObject dropWhenDie;
+    [SerializeField] List<Fact> removeFactOnDeath = new List<Fact>(), addFactOnDeath = new List<Fact>();
+
+    [Header("Boss")]
+    public bool boss;
+    [SerializeField] string bossName;
+    [SerializeField] bool camShakeOnHurt;
+    [SerializeField] Vector2 camShakeParams;
 
     [Header("Sounds")]
     [SerializeField] Sound deathSound;
     [SerializeField] Sound spawnSound, hurtSound, stunnedHurtSound, getStunnedSound;
-    [SerializeField] bool playDeathGlobal;
+    [SerializeField] bool playDeathGlobal, playHurtGlobal;
 
     [Header("Materials")]
     [SerializeField] float hitMatTime = 0.1f;
     [SerializeField] List<SkinnedMeshRenderer> body = new List<SkinnedMeshRenderer>();
     public Material normalMat, hitMat, critMat, stunnedMat;
 
+    [Header("Misc")]
+    [SerializeField] float KBresist;
+
     [Header("Debug")]
     [SerializeField] bool printHits;
 
     Coroutine currentBleed;
-
-    [Space()]
-    [SerializeField] GameObject dropWhenDie;
 
     public void HideBody()
     {
@@ -114,7 +125,10 @@ public class EnemyStats : HitReciever
         base.Hit(hit);
 
         if (newlyStunned && getStunnedSound) getStunnedSound.Play(transform);
-        if (hurtSound && (!stunnedHurtSound || stunTimeLeft <= 0 || newlyStunned)) hurtSound.Play(transform);
+        if (hurtSound && (!stunnedHurtSound || stunTimeLeft <= 0 || newlyStunned)) {
+            if (playHurtGlobal) hurtSound.Play();
+            else hurtSound.Play();
+        }
         if (stunTimeLeft > 0) {
             hit.damage *= 2;
             if (stunnedHurtSound && !newlyStunned) stunnedHurtSound.Play(transform);
@@ -124,6 +138,7 @@ public class EnemyStats : HitReciever
         health -= hit.damage;
         health = Mathf.Clamp(health, 0, maxHealth);
         if (health <= 0) Die();
+        if (camShakeOnHurt) FindObjectOfType<CameraShake>().Shake(camShakeParams.x, camShakeParams.y);
 
         GetComponent<EnemyMovement>()?.KnockBack(hit.source, hit.KB * KBresist);
 

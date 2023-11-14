@@ -79,7 +79,6 @@ public class GoopProjectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        print("landed: " + collision.gameObject.name);
         var spear = collision.gameObject.GetComponent<ThrownStaff>();
         if (!spear) spear = collision.gameObject.GetComponentInParent<ThrownStaff>();
         if (!spear) {
