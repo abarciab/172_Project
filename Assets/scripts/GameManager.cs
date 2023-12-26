@@ -63,6 +63,26 @@ public class GameManager : MonoBehaviour
     [SerializeField] Fact granEnd;
     [SerializeField] Fact engineerEnd, leaderEnd;
 
+    [Header("Goats")]
+    [SerializeField] private int totalNumGoats;
+    [SerializeField] private int numGoatsFound;
+
+    public void ToggleFullscreen(bool state)
+    {
+        Screen.fullScreen = state;
+    }
+
+    public void ResetGoatData()
+    {
+        numGoatsFound = 0;
+    }
+
+    public void FoundGoat(bool showNotification = true)
+    {
+        numGoatsFound += 1;
+        if (showNotification) GlobalUI.i.ShowNewGoat(numGoatsFound, totalNumGoats);
+    }
+
     private void OnValidate()
     {
         int offset = 0;

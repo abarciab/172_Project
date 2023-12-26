@@ -91,6 +91,10 @@ public class GlobalUI : MonoBehaviour
     [SerializeField] GameObject gameOverScreen;
     [SerializeField] float gameOverSoundTime;
 
+    [Header("goat dropdown")]
+    [SerializeField] private GameObject goatNotificationParent;
+    [SerializeField] private TextMeshProUGUI goatNotificationText;
+
     UISound sound;
     bool loadingSave = false, gameOver;
 
@@ -99,6 +103,12 @@ public class GlobalUI : MonoBehaviour
     public void SetHideHUD(bool state) { hidingBL = state; }
     public void SetHideCompass(bool state) { hidingCompass = state; }
     public void SetHideQuest(bool state) { hidingQuest = state; }
+
+    public void ShowNewGoat(int numGoatsFound, int numTotalGoats)
+    {
+        goatNotificationParent.SetActive(true);
+        goatNotificationText.text = numGoatsFound + "/" + numTotalGoats;
+    }
 
     public void SetFullscreen() {
         Screen.fullScreen = true;
