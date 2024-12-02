@@ -11,6 +11,7 @@ public class PMovement : MonoBehaviour
     [SerializeField] float stoppingFriction = 0.025f;
     [SerializeField] float rotationSpeed = 0.5f;
     [SerializeField] float cameraAlignSmoothness = 0.2f;
+    [SerializeField] float _moveDirAlignSmoothness = 5;
     [SerializeField] float stepSpeed;
     [SerializeField] float stepTime;
     [SerializeField] float strafeSpeed = 4;
@@ -114,7 +115,7 @@ public class PMovement : MonoBehaviour
     void AlignToCamera() {
         var camForward = CameraState.i.transform.forward;
         camForward.y = 0;
-        transform.forward = Vector3.Lerp(transform.forward, camForward, cameraAlignSmoothness);
+        transform.forward = Vector3.Lerp(transform.forward, camForward, cameraAlignSmoothness * Time.deltaTime);
 
         turnLeft = turnRight = false;
         if (transform.eulerAngles.y - rotation > 0.01f) turnLeft = true;
@@ -146,30 +147,30 @@ public class PMovement : MonoBehaviour
         else if (goBack) rb.velocity = (transform.forward * -1 + horizontalDir).normalized * speed + verticalVel;
         else rb.velocity = Vector3.Lerp(rb.velocity, horizontalDir * speed + verticalVel, stoppingFriction);
 
-        if (!attacking) AlignModel();
-        else {
+        if (attacking) {
             Transform model = transform.GetChild(0);
-            model.transform.localRotation = Quaternion.Lerp(model.localRotation, Quaternion.Euler(Vector3.zero), 0.2f);
+            model.transform.localRotation = Quaternion.Lerp(model.localRotation, Quaternion.Euler(Vector3.zero), 0.2f); //TEMP
         }
+        else AlignModel();
     }
 
     void AlignModel()
     {
         Transform model = transform.GetChild(0);
 
-        if (p.InCombat || GetComponent<PFighting>().chargingSpear()) { model.transform.localEulerAngles = Vector3.zero;  return; }
-
-        if (rb.velocity.magnitude <= 0.01f) {
-            model.transform.localRotation = Quaternion.Lerp(model.transform.localRotation, Quaternion.identity, 0.2f);
-            return;
+        if (p.InCombat || GetComponent<PFighting>().chargingSpear()) { 
+            model.transform.localEulerAngles = Vector3.zero;  
+            return; 
         }
+
+        if (rb.velocity.magnitude <= 0.01f) return;
         
         var originalRot = model.transform.localEulerAngles;
         model.LookAt(transform.position + rb.velocity.normalized);
         var targetRot = model.transform.localEulerAngles;
         targetRot.x = originalRot.x;
         targetRot.z = originalRot.z;
-        model.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(originalRot), Quaternion.Euler(targetRot), 0.2f);
+        model.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(originalRot), Quaternion.Euler(targetRot), _moveDirAlignSmoothness * Time.deltaTime);
 
     }
 
