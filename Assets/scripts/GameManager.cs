@@ -26,25 +26,27 @@ public class GameManager : MonoBehaviour
     [Header("Enemy groups")]
     [SerializeField] List<EnemyGroupData> groups = new List<EnemyGroupData>();
 
-    [Header("Ending")]
-    [SerializeField] Fact granEnd;
-    [SerializeField] Fact engineerEnd;
-    [SerializeField] Fact leaderEnd;
-
     [Header("Goats")]
     public int NumTotalGoats = 11;
     [SerializeField] private int numGoatsFound;
 
     [Header("References")]
-    public Transform Player;
-    [SerializeField] private MovementTutorial _firstTutorial;
-    [SerializeField] private List<Transform> _playerTpPoints;
+    [SerializeField] private Transform _player;
+    //[SerializeField] private MovementTutorial _firstTutorial;
+    //[SerializeField] private List<Transform> _playerTpPoints;
     [SerializeField] private CameraController _cam;
  
     [SerializeField, ReadOnly] public float GameProgress;
 
+    void Awake()
+    {
+        i = this;
+        if (!PlayerPrefs.HasKey("checkpoint")) PlayerPrefs.SetInt("checkpoint", -1);
+    }
+
     private void Start()
     {
+        _player = Player.i.transform; 
         SaveManager.i.OnLoad.AddListener(SetGameStateFromSaveData);
 
         runtimeStory = new List<StoryProgressionData>(story);
@@ -55,11 +57,6 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        var f = FactManager.i;
-        if (f && f.IsPresent(granEnd) && f.IsPresent(engineerEnd) && f.IsPresent(leaderEnd)) {
-            GlobalUI.i.FadeToCredits(3);
-        }
-
         if (setStarting) {
             PlayerPrefs.SetInt("checkpoint", startingCheckPoint);
             setStarting = false;
@@ -72,13 +69,13 @@ public class GameManager : MonoBehaviour
         UpdateEnemyGroups();
 
         if (!started) RestartFromCheckPoint();
-        CheckStory();
+        //CheckStory();
     }
 
     private void SetGameStateFromSaveData(SaveData current)
     {
-        Player.transform.position = current.PlayerPosition;
-        Player.rotation = current.PlayerRotation;
+        _player.transform.position = current.PlayerPosition;
+        _player.rotation = current.PlayerRotation;
         GameProgress = current.GameProgress;
         PropogateGameProgressChange();
     }
@@ -90,9 +87,9 @@ public class GameManager : MonoBehaviour
 
     private void StartGame()
     {
-        _firstTutorial.Activate();
-        Player.SetPositionAndRotation(_playerTpPoints[0].position, _playerTpPoints[0].rotation);
-        _cam.SnapToState();
+        //_firstTutorial.Activate();
+        //_player.SetPositionAndRotation(_playerTpPoints[0].position, _playerTpPoints[0].rotation);
+        if (_cam) _cam.SnapToState();
     }
 
     public void AddNewSpeaker(string name)
@@ -177,7 +174,7 @@ public class GameManager : MonoBehaviour
     {
         paused = true;
         Time.timeScale = 0;
-        GlobalUI.i.Pause();
+        GlobalUI.i.Do(UIAction.PAUSE);
         unlockCursor();
         AudioManager.i.Pause();
     }
@@ -190,14 +187,14 @@ public class GameManager : MonoBehaviour
     void unlockCursor() {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-       
+
     }
 
     public void Unpause()
     {
         paused = false;
         Time.timeScale = 1;
-        if (Application.isPlaying) GlobalUI.i.Resume();
+        if (Application.isPlaying) GlobalUI.i.Do(UIAction.RESUME);
         LockCursor();
         AudioManager.i.Resume();
     }
@@ -213,7 +210,7 @@ public class GameManager : MonoBehaviour
         started = true;
         int checkPoint = PlayerPrefs.GetInt("checkpoint");
         if (GetCheckPoint(checkPoint) == Vector3.zero) return;
-        Player.position = GetCheckPoint(checkPoint);
+        _player.position = GetCheckPoint(checkPoint);
     }
 
     public void RestartScene()
@@ -253,17 +250,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-    void CheckStory()
-    {
-        if (runtimeStory.Count == 0 || !Application.isPlaying) return;
-        var next = runtimeStory[0];
-        if (FactManager.i.IsPresent(next.fact) != next.state) return;
-
-        UpdateStoryDisplay();
-        runtimeStory.RemoveAt(0);
-    }
-
     void UpdateStoryDisplay()
     {
         var text = runtimeStory[0].nextQuest;
@@ -271,9 +257,4 @@ public class GameManager : MonoBehaviour
         else GlobalUI.i.Do(UIAction.DISPLAY_QUEST_TEXT_LONG, text);
     }
 
-    void Awake() 
-    { 
-        i = this;
-        if (!PlayerPrefs.HasKey("checkpoint")) PlayerPrefs.SetInt("checkpoint", -1);
-    }
 }

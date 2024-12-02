@@ -10,7 +10,6 @@ public class Player : MonoBehaviour
     [HideInInspector] public PAnimator animator;
     [HideInInspector] public Vector3 speed3D;
     [HideInInspector] public float forwardSpeed;
-    [SerializeField] Fact tutorialComplete, hasSpear;
     [SerializeField] float dialogueDisplaySpeed;
    
     EnemyStats closestEnemy;
@@ -26,6 +25,10 @@ public class Player : MonoBehaviour
     [SerializeField] Sound hurtSound;
     [SerializeField] Sound deathSound;
     [SerializeField] Sound healthRegenSound;
+    [SerializeField] Sound _endCombatSound;
+    [SerializeField] private Sound _heartBeatSound;
+    [SerializeField] AnimationCurve _heartbeatCurve;
+
     private PSound pSound;
 
     Speaker interestedSpeaker;
@@ -39,9 +42,8 @@ public class Player : MonoBehaviour
     [Header("Goop")]
     [SerializeField] int goopDmg = 1;
     [SerializeField] float goopTick;
-    float goopTickCooldown;
     [HideInInspector] public float GoopTime { get; private set; }
-    [SerializeField] float goopYLevel;
+    float goopTickCooldown;
 
     [SerializeField] List<BaseEnemy> enemies = new List<BaseEnemy>();
     [SerializeField] List<BaseEnemy> currentMeleeEnemies = new List<BaseEnemy>();
@@ -53,11 +55,15 @@ public class Player : MonoBehaviour
     [Header("PowerUp")]
     [SerializeField] GameObject powerBall;
 
-    [HideInInspector] public bool poweredUp;
-    [HideInInspector] public bool canRun, canRoll, dead;
+    public bool poweredUp;
+    public bool canRun;
+    public bool canRoll;
+    public bool dead;
+
     [HideInInspector] public UnityEvent<float> OnHealthChange;
     [HideInInspector] public UnityEvent OnStartCombat;
     [HideInInspector] public UnityEvent OnEndCombat;
+    [HideInInspector] public UnityEvent OnDie;
 
     private float _healthPercent => (float)maxHealth / health;
     private string currentLine;
@@ -68,9 +74,14 @@ public class Player : MonoBehaviour
     private void Start()
     {
         health = maxHealth;
+
         hurtSound = Instantiate(hurtSound);
         deathSound = Instantiate(deathSound);
+        _endCombatSound = Instantiate(_endCombatSound);
         healthRegenSound = Instantiate(healthRegenSound);
+        _heartBeatSound = Instantiate(_heartBeatSound);
+        _heartBeatSound.PlaySilent();
+
         pSound = GameObject.FindGameObjectWithTag("Bonnie").GetComponent<PSound>();
         powerBall.SetActive(false);
     }
@@ -78,7 +89,6 @@ public class Player : MonoBehaviour
     public void SetGoopTime(float time)
     {
         GoopTime = Mathf.Max(GoopTime, time);
-
     }
 
     public void PowerUp()
@@ -106,7 +116,10 @@ public class Player : MonoBehaviour
         else {
             currentMeleeEnemies.Remove(enemy);
             enemies.Remove(enemy);
-            if (!InCombat) OnEndCombat.Invoke();
+            if (!InCombat) {
+                OnEndCombat.Invoke();
+                _endCombatSound.Play();
+            }
         }
     }
 
@@ -132,14 +145,14 @@ public class Player : MonoBehaviour
     public void UnfreezePlayer()
     {
 
-        var fMan = FactManager.i;
+        //var fMan = FactManager.i;
 
         int deaths = PlayerPrefs.GetInt("deaths", 0);
         PlayerPrefs.SetInt("deaths", deaths + 1);
 
-        if (fMan.IsPresent(tutorialComplete)) AchievementController.i.Unlock("TUTORIAL_COMPLETE");
+        //if (fMan.IsPresent(tutorialComplete)) AchievementController.i.Unlock("TUTORIAL_COMPLETE");
         GetComponent<PMovement>().enabled = true;
-        GetComponent<PFighting>().enabled = fightingEnabled || fMan.IsPresent(tutorialComplete) || fMan.IsPresent(hasSpear);
+        GetComponent<PFighting>().enabled = fightingEnabled;
     }
 
     public void RemoveInteractable(Gate interactable)
@@ -179,7 +192,7 @@ public class Player : MonoBehaviour
     {
         if (interestedSpeaker == null) return;
 
-        if (!GlobalUI.i.Talking) pSound.StartConversation();
+        pSound.StartConversation();
 
         GetComponent<PMovement>().StopMovement();
 
@@ -271,19 +284,17 @@ public class Player : MonoBehaviour
             GlobalUI.i.Do(UIAction.HIDE_PROMPT);
         }
 
-        bool underwater = transform.position.y <= goopYLevel;
 
-        if (underwater) GoopTime = 1;
         if (GoopTime > 0) {
             GoopTime -= Time.deltaTime;
             goopTickCooldown -= Time.deltaTime;
             if (goopTickCooldown <= 0) {
-                ChangeHealth(underwater ? -goopDmg * 5 : -goopDmg);
+                ChangeHealth(-goopDmg);
                 goopTickCooldown = goopTick;
             }
         }
 
-        if (FactManager.i.IsPresent(tutorialComplete)) GetComponent<PFighting>().enabled = true;
+        //if (FactManager.i.IsPresent(tutorialComplete)) GetComponent<PFighting>().enabled = true;
 
         for (int i = 0; i < enemies.Count; i++) {
             if (enemies[i] == null) enemies.RemoveAt(i);
@@ -364,6 +375,7 @@ public class Player : MonoBehaviour
 
         OnHealthChange.Invoke(_healthPercent);
         if (delta < 0) DoDamageEffects();
+        _heartBeatSound.SetPercentVolume(_heartbeatCurve.Evaluate(_healthPercent));
     }
 
     private void DoDamageEffects()
@@ -382,8 +394,8 @@ public class Player : MonoBehaviour
         AudioManager.i.PauseNonMusic();
         CameraState.i.GetComponent<MusicPlayer>().FadeOutCurrent(0.5f);
         deathSound.Play();
-        GlobalUI.i.GameOver();
         dead = true;
+        OnDie.Invoke();
         
     }
 

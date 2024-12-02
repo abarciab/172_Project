@@ -39,8 +39,6 @@ public class MovementTutorial : MonoBehaviour
 
     public async void Activate()
     {
-        GlobalUI.i.Busy = true;
-
         gameObject.SetActive(true);
 
         _ui = GlobalUI.i;
@@ -61,7 +59,7 @@ public class MovementTutorial : MonoBehaviour
     {
         //_ui.SetHideCompass(true);
         //_ui.SetHideQuest(true);
-        _ui.SetHideHUD(true);
+        //_ui.SetHideHUD(true);
     }
 
     private void Update()
@@ -131,7 +129,7 @@ public class MovementTutorial : MonoBehaviour
     {
         //_ui.SetHideCompass(false);
         //_ui.SetHideQuest(false);
-        _ui.SetHideHUD(false);
+        //_ui.SetHideHUD(false);
 
         gameObject.SetActive(false);
         completeSound.Play();
@@ -140,7 +138,6 @@ public class MovementTutorial : MonoBehaviour
         Player.i.canRoll = Player.i.canRun = true;
 
         await Task.Yield();
-        GlobalUI.i.Busy = false;
     }
 
     void DisableAll()

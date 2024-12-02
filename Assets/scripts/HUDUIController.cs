@@ -18,6 +18,7 @@ public class HUDUIController : MonoBehaviour
     [SerializeField] private MarkerTracker _compass;
 
     [Header("misc")]
+    [SerializeField] private GameObject _bottomLeft;
     [SerializeField] private GameObject _crossHair;
 
     private void Start()
@@ -55,23 +56,11 @@ public class HUDUIController : MonoBehaviour
             if (type == UIAction.START_CONVERSATION) _crossHair.SetActive(true);
             if (type == UIAction.END_CONVERSATION) _crossHair.SetActive(false);
         }
+        if (_bottomLeft) {
+            bool showBL = type == UIAction.START_COMBAT || type == UIAction.DISPLAY_PLAYER_HP || type == UIAction.DISPLAY_SUNBLAST_COOLDOWN;
+            if (showBL) _bottomLeft.SetActive(true);
+            else if (type == UIAction.END_COMBAT) _bottomLeft.SetActive(false);
+        }
+
     }
-
-    [Space(20)]
-
-
-    [Header("Game over")]
-    [SerializeField] private GameObject _gameOverScreen;
-    [SerializeField] private float _gameOverSoundTime;
-
-
-    [Header("Misc")]
-    public GameObject TutorialSkip;
-
-
-    [SerializeField] private GameObject _title;
-
-    [SerializeField] private GameObject _bottomLeft;
-
-    [SerializeField] private Fade _fade;
 }

@@ -24,7 +24,6 @@ public class CameraZone : MonoBehaviour {
         if (other.GetComponent<Player>() != null) {
             if (enterState != CameraState.StateName.None) CameraState.i.SwitchToState(enterState);
             foreach (var obj in enableOnEnter) if (obj != null && !obj.activeInHierarchy) obj.SetActive(true);
-            if (stopAndPose) Player.i.GetComponent<PMovement>().SlowDownAndPose(poseTarget);
         }
     }
 

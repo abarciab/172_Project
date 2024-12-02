@@ -1,3 +1,4 @@
+using MyBox;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,10 +7,11 @@ public class PFighting : HitReciever {
 
     [SerializeField] Rigidbody staffProjectile;
     [SerializeField] float throwForce, maxAimTime, critWindow, minAimTime;
-    public int throwDmg, critDmg;
+    public int throwDmg { get; private set; }
+    public int critDmg { get; private set; }
     [SerializeField] Vector3 offset, aimOffset;
 
-    bool hasSpear, aimed, recalling, charging, spearDrawn;
+    [SerializeField, ReadOnly] bool hasSpear, aimed, recalling, charging, spearDrawn;
     public bool stabbing;
     [HideInInspector] public float chargeTime;
     [SerializeField] GameObject spearObj;
@@ -28,10 +30,6 @@ public class PFighting : HitReciever {
     [Header("Sounds")]
     [SerializeField] Sound throwSpearSound;
     [SerializeField] Sound shockwaveSound, shockwaveReadySound, recallWoosh, spearCatch, critSucsess, recallError, spearBuildUp, sunBlastError;
-
-    [Header("Tutorial")]
-    [SerializeField] Fact anyThrow;
-    [SerializeField] Fact recall, fullThrow, criticalThrow, stabbedOnce, shockWave, throwWeak, recallstarted, recallThrown, firstRecall, tutorialDone;
 
     [Header("finalFight")]
     [SerializeField] GameObject spearTipBall;
@@ -110,11 +108,6 @@ public class PFighting : HitReciever {
     {
         RecallReady = true;
         GlobalUI.i.Do(UIAction.RECALL_READY);
-
-        var fMan = FactManager.i;
-        if (fMan.IsPresent(tutorialDone)) return;
-        if (fMan.IsPresent(anyThrow)) fMan.AddFact(firstRecall);
-        if (fMan.IsPresent(recallstarted)) fMan.AddFact(recallThrown);
     }
 
     public void ReturnSpear()
@@ -125,10 +118,7 @@ public class PFighting : HitReciever {
         spearCatch.Play();
     }
 
-    public int CritDmg()
-    {
-        return FactManager.i.IsPresent(throwWeak) ? 0 : critDmg;
-    }
+    public int CritDmg => critDmg;
 
     public void ThrowSpear()
     {
@@ -168,12 +158,7 @@ public class PFighting : HitReciever {
         staffProjectile.gameObject.SetActive(true);
         staffProjectile.AddForce(dir * (throwForce * power));
 
-        staffProjectile.GetComponentInChildren<HitBox>().StartChecking(transform, FactManager.i.IsPresent(throwWeak) ? 0 : damage, _crit: perfectThrow);
-
-        var fMan = FactManager.i;
-        if (!fMan.IsPresent(anyThrow)) fMan.AddFact(anyThrow);
-        else if (!fMan.IsPresent(fullThrow) && power == 1) fMan.AddFact(fullThrow);
-        else if (!fMan.IsPresent(criticalThrow) && perfectThrow) fMan.AddFact(criticalThrow);
+        staffProjectile.GetComponentInChildren<HitBox>().StartChecking(transform, damage, _crit: perfectThrow);
 
         GlobalUI.i.Do(UIAction.THROW_SPEAR);
     }
@@ -185,7 +170,6 @@ public class PFighting : HitReciever {
         if (!hasSpear) {RetrieveSpear(); return; }
         if (charging || stabbing) return;
         stabbing = true;
-        FactManager.i.AddFact(stabbedOnce);
     }
 
     public void StartChecking()
@@ -213,7 +197,7 @@ public class PFighting : HitReciever {
 
     public void StartAimingSpear()
     {
-        if (!enabled || charging || GlobalUI.i.Talking) return;
+        if (!enabled || charging) return;
         if (!spearDrawn) { DrawSpear(); return; }
         if (!hasSpear) { RetrieveSpear(); return; }
         aimed = charging = true;
@@ -246,10 +230,9 @@ public class PFighting : HitReciever {
             return;
         }
 
-        if (!enabled || GlobalUI.i.Talking) return;
+        if (!enabled) return;
         shockwaveSound.Play(transform);
         sunblastCooldown = shockwaveResetTime;
-        if (!FactManager.i.IsPresent(tutorialDone)) FactManager.i.AddFact(shockWave);
 
         if (hasSpear) shockwave.transform.position = transform.position;
         else shockwave.transform.position = staffProjectile.transform.position;
@@ -265,7 +248,6 @@ public class PFighting : HitReciever {
         recalling = staffProjectile.GetComponent<ThrownStaff>().Recall();
         if (recalling) {
             recallWoosh.Play(transform);
-            FactManager.i.AddFact(recall);
         }
     }
 

@@ -42,7 +42,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 243183716836786047}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -3282112465140020554, guid: bc51c938ad92ffa4895fd54d7182a2ed, type: 3}
 --- !u!23 &8812430536830275183
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -373,9 +373,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2784563777906131161}
-  - component: {fileID: 7744009899923336844}
   - component: {fileID: 941652327916763561}
   - component: {fileID: 8800406439853991187}
+  - component: {fileID: 7744009899923336844}
   - component: {fileID: 2195632380883558681}
   m_Layer: 8
   m_Name: shockwave
@@ -400,8 +400,58 @@ Transform:
   - {fileID: 2891177220236228048}
   - {fileID: 496778085134420712}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &941652327916763561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5722463811611699907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c5d6c6223e3560489b6221904dcde1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explodeTime: 1
+  explodeSpeed: 12
+  spinSpeed: 5
+  SunblastVFX: {fileID: 297735667953231406}
+  startScale: {x: 2, y: 2, z: 2}
+  heldScale: {x: 3.5, y: 3.5, z: 3.5}
+--- !u!114 &8800406439853991187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5722463811611699907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa196e82b7c44084cbde7cbeee54d9a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checking: 0
+  targets: []
+  linkedBoxes: []
+  ignoreTag: Player
+  printHits: 0
+  playSoundOnHit: 1
+  hitSound: {fileID: 11400000, guid: 3225fc9be196a134e8bffaabb057753c, type: 2}
+  altSound: {fileID: 0}
+  SpawnOnHit: {fileID: 0}
+  blockable: 0
+  blockTag: 
+  blockedSound: {fileID: 0}
+  OnHit:
+    m_PersistentCalls:
+      m_Calls: []
+  onTrigger:
+    m_PersistentCalls:
+      m_Calls: []
+  triggeredBy: {fileID: 0}
+  checkParent: 1
 --- !u!135 &7744009899923336844
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -423,54 +473,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1.0807924
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &941652327916763561
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5722463811611699907}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c5d6c6223e3560489b6221904dcde1c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explodeTime: 1
-  explodeSpeed: 12
-  spinSpeed: 5
-  SunblastVFX: {fileID: 297735667953231406}
-  startScale: {x: 2, y: 2, z: 2}
---- !u!114 &8800406439853991187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5722463811611699907}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa196e82b7c44084cbde7cbeee54d9a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  checking: 0
-  targets: []
-  linkedBoxes: []
-  ignoreTag: Player
-  printHits: 0
-  playSoundOnHit: 1
-  hitSound: {fileID: 11400000, guid: 3225fc9be196a134e8bffaabb057753c, type: 2}
-  SpawnOnHit: {fileID: 0}
-  blockable: 0
-  blockTag: 
-  blockedSound: {fileID: 0}
-  OnHit:
-    m_PersistentCalls:
-      m_Calls: []
-  onTrigger:
-    m_PersistentCalls:
-      m_Calls: []
-  triggeredBy: {fileID: 0}
-  checkParent: 1
 --- !u!54 &2195632380883558681
 Rigidbody:
   m_ObjectHideFlags: 0

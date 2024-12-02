@@ -16,7 +16,7 @@ public class TriggerPrompt : MonoBehaviour
         if (!player) return;
 
         Player.i.FreezePlayer();
-        GlobalUI.i.tutorialSkip.SetActive(true);
+        //GlobalUI.i.tutorialSkip.SetActive(true);
         promptUp = true;
     }
 
@@ -25,14 +25,14 @@ public class TriggerPrompt : MonoBehaviour
         if (promptUp) {
             if (Input.GetKeyDown(KeyCode.F)) {
                 Player.i.UnfreezePlayer();
-                GlobalUI.i.tutorialSkip.SetActive(false);
+                //GlobalUI.i.tutorialSkip.SetActive(false);
                 FactManager.i.AddFact(tutorialComplete);
                 Destroy(gameObject);
                 promptUp = false;
             }
             if (Input.GetKeyDown(KeyCode.R)) {
                 Player.i.UnfreezePlayer();
-                GlobalUI.i.tutorialSkip.SetActive(false);
+                //GlobalUI.i.tutorialSkip.SetActive(false);
                 StartCoroutine(Resume(3));
             }
         }

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class PauseMenuController : MonoBehaviour
 {
+    [SerializeField] private GameObject _menuParent;
     [SerializeField] private GameObject _settingsSection;
     [SerializeField] private GameObject _savesSection;
     [SerializeField] private GameObject _controlsSection;
@@ -27,6 +28,29 @@ public class PauseMenuController : MonoBehaviour
     {
         _openMenuSound.Play();
         SetSliderPositions(AudioManager.i.Volumes);
+        GlobalUI.i.OnUpdateUI.AddListener(OnUpdateUI);
+    }
+
+    private void OnUpdateUI(UIAction type, object parameter)
+    {
+        if (type == UIAction.PAUSE) Pause();
+        else if (type == UIAction.RESUME) Resume();
+    }
+
+    public void SetPaused(bool paused)
+    {
+        if (paused) Pause();
+        else Resume();
+    }
+
+    public void Resume()
+    {
+        _menuParent.SetActive(false);
+    }
+
+    public void Pause()
+    {
+        _menuParent.SetActive(true);
     }
 
     private void UpdateVolumeValues(float value)

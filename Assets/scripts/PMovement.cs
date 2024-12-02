@@ -1,3 +1,4 @@
+using MyBox;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,17 +6,39 @@ using UnityEngine;
 [RequireComponent(typeof(Player))]
 public class PMovement : MonoBehaviour
 {
-    [SerializeField] float forwardSpeed, runSpeed, stoppingFriction = 0.025f, rotationSpeed = 0.5f, cameraAlignSmoothness = 0.2f, stepSpeed, stepTime, strafeSpeed = 4, dashSpeed, dashTime, KBsmoothness = 0.5f, goopMult = 0.5f;
-    [HideInInspector] public bool goForward, turnLeft, turnRight, goBack, running, alignToCamera, stepping, rolling, strafe, attacking, pressLeft, pressRight, knockedBack, posing;
-    public bool sitting;
+    [SerializeField] float forwardSpeed;
+    [SerializeField] float runSpeed;
+    [SerializeField] float stoppingFriction = 0.025f;
+    [SerializeField] float rotationSpeed = 0.5f;
+    [SerializeField] float cameraAlignSmoothness = 0.2f;
+    [SerializeField] float stepSpeed;
+    [SerializeField] float stepTime;
+    [SerializeField] float strafeSpeed = 4;
+    [SerializeField] float dashSpeed;
+    [SerializeField] float dashTime;
+    [SerializeField] float KBSmoothness = 0.5f;
+    [SerializeField] float goopMult = 0.5f;
+
+    [HideInInspector] public bool goForward;
+    [HideInInspector] public bool turnLeft;
+    [HideInInspector] public bool turnRight;
+    [HideInInspector] public bool goBack;
+    [HideInInspector] public bool running;
+    [SerializeField, ReadOnly] public bool rolling;
+    [HideInInspector] public bool strafe;
+    [HideInInspector] public bool attacking;
+    [HideInInspector] public bool pressLeft;
+    [HideInInspector] public bool pressRight;
+    [HideInInspector] public bool knockedBack;
 
     [Header("TEST")]
-    bool alignToEnemy, stopped;
-    public float rotation, stunned, KB;
+    bool stopped;
+    public float rotation;
+    public float stunned;
+    public float KB;
     Rigidbody rb;
     Player p;
     Vector3 rollDir;
-    Transform poseLookTarget;
 
     [Header("Sounds")]
     [SerializeField] Sound rollSound;
@@ -33,29 +56,20 @@ public class PMovement : MonoBehaviour
         knockedBack = true;
     }
 
-    public void StepForward()
-    {
-        return;
-
-        stepping = true;
-        StartCoroutine(StopStep());
-    }
-
     public void Roll() {
         if (rolling) return;
-        //if (GetComponent<PFighting>().basicAttacking || GetComponent<PFighting>().hvyAttacking) return;
-
-        if (!rolling) rollSound.Play();
-        rollDir = GetDashDir();
         rolling = true;
-        StartCoroutine(StopDash());
+
+        rollSound.Play();
+        rollDir = GetRollDir();
+        StartCoroutine(StopRoll());
     }
 
     public void StopMovement()
     {
         stopped = true;
         rb.velocity = Vector3.zero;
-        rolling = stepping = false;
+        rolling = false;
     }
 
     public void ResumeMovement()
@@ -63,21 +77,9 @@ public class PMovement : MonoBehaviour
         stopped = false;
     }
 
-    public void SlowDownAndPose(Transform lookTarget = null) {
-        posing = true;
-        if (lookTarget) poseLookTarget = lookTarget;
-    }
-
-    IEnumerator StopDash() {
+    IEnumerator StopRoll() {
         yield return new WaitForSeconds(dashTime);
-        if (alignToEnemy) AlignToEnemy(1);
         rolling = false;
-    }
-
-    IEnumerator StopStep()
-    {
-        yield return new WaitForSeconds(stepTime);
-        stepping = false;
     }
 
     private void Start()
@@ -92,64 +94,21 @@ public class PMovement : MonoBehaviour
     {
         goopTime -= Time.deltaTime;
 
-        //attacking = GetComponent<PFighting>().basicAttacking || GetComponent<PFighting>().hvyAttacking;
-        alignToEnemy = CameraState.i.GetLockedEnemy() != null;
-        alignToCamera = CameraState.i.mouseControl;
         SetPlayerStats();
-        if (running) stepping = false;
 
-        if (sitting || stopped) return;
+        if (stopped) return;
         Turn();
         Move();
 
-        if (KB > 0.01f) KB = Mathf.Lerp(KB, 0, KBsmoothness);
+        if (KB > 0.01f) KB = Mathf.Lerp(KB, 0, KBSmoothness);
         else knockedBack = false;
     }
 
     void Turn()
     {
-        if (stepping || rolling || attacking) return;
+        if (rolling || attacking) return;
 
-        if (posing) {
-            if (poseLookTarget == null) return;
-
-            transform.LookAt(poseLookTarget);
-            var orig = transform.localEulerAngles;
-            var rot_ = transform.localEulerAngles;
-            rot_.x = rot_.z = 0;
-            transform.localRotation = Quaternion.Lerp(Quaternion.Euler(orig), Quaternion.Euler(rot_), 0.025f);
-            return;
-        }
-
-        if (alignToCamera) {
-            AlignToCamera();
-            return;
-        }
-
-        if (alignToEnemy) {
-            AlignToEnemy();
-            return;
-        }
-
-        if (turnLeft) rotation -= rotationSpeed;
-        if (turnRight) rotation += rotationSpeed;
-
-        var rot = transform.localEulerAngles;
-        rot.y = rotation;
-        transform.localEulerAngles = rot;
-    }
-
-    void AlignToEnemy(float smoothnessOverride = -1) {
-
-        if (smoothnessOverride == -1) smoothnessOverride = cameraAlignSmoothness;
-        var enemy = CameraState.i.GetLockedEnemy();
-        
-        var _rot = transform.localEulerAngles;
-        var originalRot = _rot;
-        transform.LookAt(enemy.transform);
-        var lookAtRot = transform.localEulerAngles;
-        _rot.y = lookAtRot.y;
-        transform.localEulerAngles = Vector3.Lerp(originalRot, _rot, smoothnessOverride);
+        AlignToCamera();
     }
 
     void AlignToCamera() {
@@ -180,16 +139,14 @@ public class PMovement : MonoBehaviour
         }
 
         if (stopped) rb.velocity = Vector3.zero;
-        else if (posing) rb.velocity = Vector3.Lerp(rb.velocity, Vector3.zero, 0.025f);
         else if (knockedBack) rb.velocity = KBdir * KB + verticalVel;
         else if (rolling) rb.velocity = (rollDir * dashSpeed) + verticalVel;
-        else if (stepping) rb.velocity = (transform.forward * stepSpeed) + verticalVel;
 
         else if (goForward) rb.velocity = (transform.forward + horizontalDir).normalized * speed + verticalVel;
         else if (goBack) rb.velocity = (transform.forward * -1 + horizontalDir).normalized * speed + verticalVel;
         else rb.velocity = Vector3.Lerp(rb.velocity, horizontalDir * speed + verticalVel, stoppingFriction);
 
-        if (!alignToEnemy && !attacking) AlignModel();
+        if (!attacking) AlignModel();
         else {
             Transform model = transform.GetChild(0);
             model.transform.localRotation = Quaternion.Lerp(model.localRotation, Quaternion.Euler(Vector3.zero), 0.2f);
@@ -216,7 +173,7 @@ public class PMovement : MonoBehaviour
 
     }
 
-    Vector3 GetDashDir() {
+    Vector3 GetRollDir() {
         Vector3 dir = Vector3.zero;
         if (pressRight) dir += transform.right;
         if (pressLeft) dir += transform.right * -1;
@@ -229,8 +186,7 @@ public class PMovement : MonoBehaviour
     Vector3 GetStrafeDir() {
         var strafeDir = Vector3.zero;
         strafe = false;
-        if (!alignToCamera && !alignToEnemy) return strafeDir;
-        strafe = alignToEnemy && !attacking;
+        strafe = !attacking;
 
         if (pressLeft) strafeDir = transform.right * -1;
         else if (pressRight) strafeDir = transform.right;

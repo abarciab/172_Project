@@ -81,7 +81,6 @@ public class HitEventCoord : MonoBehaviour
         corrupt.EndScream();
     }
 
-
     public void StartPlayerCheck()
     {
         var player = GetComponentInParent<PFighting>();

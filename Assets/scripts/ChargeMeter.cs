@@ -6,7 +6,7 @@ using UnityEngine;
 public class ChargeMeter : MonoBehaviour
 {
     [Header("spear charge")]
-    public Slider ThrowCharge;
+    [SerializeField] private Slider _throwCharge;
     [SerializeField] private GameObject _centralMarkerShine;
     [SerializeField] private Image _centralMarker;
     [SerializeField] Color _centralMarkerDefaultColor;
@@ -20,6 +20,7 @@ public class ChargeMeter : MonoBehaviour
 
     public void DisplaySpearCharge(float charge)
     {
+        _throwCharge.value = charge;
         gameObject.SetActive(Player.i.GetComponent<PFighting>().chargingSpear());
         //swCountdown.transform.parent.gameObject.SetActive(Player.i.GetComponent<PFighting>().enabled);
 

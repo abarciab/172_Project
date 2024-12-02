@@ -41,19 +41,19 @@ public class Speaker : MonoBehaviour
     private void Update()
     {
         callCooldown -= Time.deltaTime;
-        if (!GlobalUI.i.Talking && callCooldown <= 0) {
+        if (callCooldown <= 0) {
             callCooldown = Random.Range(callRange.x, callRange.y);
             //print("Activating");
             if (convoSound) convoSound.Play(transform);
         }
-        if (GlobalUI.i.Talking) convoSound.Stop();
+        //if (GlobalUI.i.Talking) convoSound.Stop();
 
         for (int i = 0; i < conversations.Count; i++) {
             CheckStatus(conversations[i]);
         }
 
         speechBubble.SetActive(false);
-        if (!GlobalUI.i.Talking) foreach (var c in conversations) if (c.enabled) speechBubble.SetActive(true);
+        //if (!GlobalUI.i.Talking) foreach (var c in conversations) if (c.enabled) speechBubble.SetActive(true);
     }
 
     void CheckStatus(ConversationData c)

@@ -1,3 +1,4 @@
+using MyBox;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,11 +6,17 @@ using UnityEngine;
 [RequireComponent(typeof(PMovement))]
 public class PControls : MonoBehaviour
 {
-    [SerializeField] KeyCode forward = KeyCode.W, left = KeyCode.A, backward = KeyCode.S, right = KeyCode.D, run = KeyCode.LeftShift,
-        standUpKey = KeyCode.Space, roll = KeyCode.LeftControl, interactKey = KeyCode.E, abilityKey = KeyCode.E, pauseKey = KeyCode.Escape;
+    [SerializeField, SearchableEnum] KeyCode _forward = KeyCode.W;
+    [SerializeField, SearchableEnum] KeyCode _left = KeyCode.A;
+    [SerializeField, SearchableEnum] KeyCode _backward = KeyCode.S;
+    [SerializeField, SearchableEnum] KeyCode _right = KeyCode.D;
+    [SerializeField, SearchableEnum] KeyCode _run = KeyCode.LeftShift;
+    [SerializeField, SearchableEnum] KeyCode _roll = KeyCode.Space;
+    [SerializeField, SearchableEnum] KeyCode _interactKey = KeyCode.E;
+    [SerializeField, SearchableEnum] KeyCode _abilityKey = KeyCode.E;
+    [SerializeField, SearchableEnum] KeyCode _pauseKey = KeyCode.Escape;
+    
     [SerializeField] bool mouseMove;
-    [SerializeField] float sitControlTime = 1f;
-    float timeSitting;
     PMovement move;
     PFighting fight;
     Player player;
@@ -38,40 +45,28 @@ public class PControls : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(pauseKey) && player.canRoll && !GlobalUI.i.Busy) GameManager.i.TogglePause();
-
+        if (Input.GetKeyDown(_pauseKey) && player.canRoll) GameManager.i.TogglePause();
         if (GameManager.i.paused) return;
 
-        if (move.sitting) timeSitting += Time.deltaTime;
+        
+        if (!fight.stabbing && !fight.chargingSpear() && Input.GetKeyDown(_roll) && player.canRoll) move.Roll();
 
-        if (move.posing) return;
-
-        if (move.sitting && Input.GetKeyDown(standUpKey)) { 
-            move.sitting = false;
-            GlobalUI.i.Do(UIAction.HIDE_PROMPT); 
-        }
-        if (!move.sitting && !fight.stabbing && !fight.chargingSpear() && Input.GetKeyDown(roll) && player.canRoll) move.Roll();
-
-        move.goForward = Input.GetKey(forward);
-        move.goBack = Input.GetKey(backward);
-        move.pressLeft = Input.GetKey(left);
-        move.pressRight = Input.GetKey(right);
-        if (!toggleRun) move.running = Input.GetKey(run) && player.canRun;
+        move.goForward = Input.GetKey(_forward);
+        move.goBack = Input.GetKey(_backward);
+        move.pressLeft = Input.GetKey(_left);
+        move.pressRight = Input.GetKey(_right);
+        if (!toggleRun) move.running = Input.GetKey(_run) && player.canRun;
         else {
             move.running = runMode && player.canRun;
-            if (Input.GetKeyDown(run)) runMode = !runMode;
+            if (Input.GetKeyDown(_run)) runMode = !runMode;
         }
 
-        if (Input.GetKeyDown(interactKey)) player.ActivateInteractable();
-        if (!Input.GetKey(forward) && !Input.GetKey(left) && !Input.GetKey(right) && !Input.GetKey(backward)) move.running = false;
+        if (Input.GetKeyDown(_interactKey)) player.ActivateInteractable();
+        if (!Input.GetKey(_forward) && !Input.GetKey(_left) && !Input.GetKey(_right) && !Input.GetKey(_backward)) move.running = false;
 
-        if (Input.GetMouseButtonDown(0) && FactManager.i.IsPresent(throwFact)) fight.StartAimingSpear();
-        if (Input.GetMouseButtonUp(0) && FactManager.i.IsPresent(throwFact)) fight.ThrowSpear();
-        if (Input.GetMouseButtonDown(1) && FactManager.i.IsPresent(stabFact)) fight.Stab();
-        if (Input.GetKeyDown(abilityKey) && FactManager.i.IsPresent(swFact)) fight.ActivateShockwave();
-
-        if (move.alignToCamera) return;
-        move.turnRight = Input.GetKey(right);
-        move.turnLeft = Input.GetKey(left);
+        if (Input.GetMouseButtonDown(0)) fight.StartAimingSpear();
+        if (Input.GetMouseButtonUp(0)) fight.ThrowSpear();
+        if (Input.GetMouseButtonDown(1)) fight.Stab();
+        if (Input.GetKeyDown(_abilityKey)) fight.ActivateShockwave();
     }
 }

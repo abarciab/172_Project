@@ -32,28 +32,23 @@ public class PAnimator : MonoBehaviour
 
     private void Update()
     {
-        //bool frozen = GlobalUI.i.DisplayingImage();
         bool frozen = false; //TEMP
         bool moving = Mathf.Abs(p.forwardSpeed) > minWalkSpeed && !frozen;
 
-        if (move.posing) anim.SetBool("HandsOnHips", move.posing);
-
         anim.SetBool("Hurt", move.knockedBack);
-        anim.SetBool("Sitting", move.sitting);
         anim.SetBool("Moving", moving);
         anim.SetBool("Backwards", moving && p.forwardSpeed <= -0.1f);
-        anim.SetBool("Running", move.running && !move.posing && !move.rolling);
+        anim.SetBool("Running", move.running && !move.rolling);
         anim.SetBool("TurningLeft", move.turnLeft && !moving);
         anim.SetBool("TurningRight", move.turnRight && !moving);
         anim.SetBool("StaffDrawn", fight.SpearOut());
         anim.SetBool("chargingThrow", fight.chargingSpear() && fight.chargeTime > minChargeTime);
         anim.SetBool("hasSpear", fight.HasSpear());
 
-        anim.SetBool("Talking", GlobalUI.i.Talking);
+        //anim.SetBool("Talking", GlobalUI.i.Talking);
         
         anim.SetBool("Strafe", !frozen && move.strafe && Mathf.Abs(GetComponent<Rigidbody>().velocity.x + GetComponent<Rigidbody>().velocity.z) > 0.01f);
 
-        
 
         if (!attacking && fight.Stabbing()) {
             attacking = true;
