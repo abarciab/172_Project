@@ -63,6 +63,6 @@ public class GoopManager : MonoBehaviour
             mainGlob = newGlob;
             if (time != -1) newGlob.GetComponent<Goop>().lifeTime = time;
         }
-        if (goopSound.instantialized) goopSound.Play(mainGlob.transform);
+        if (goopSound.Instantialized) goopSound.Play(mainGlob.transform);
     }
 }

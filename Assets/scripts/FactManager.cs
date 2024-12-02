@@ -102,10 +102,12 @@ public class FactManager : MonoBehaviour
 
         facts.Add(fact);
         if (fact.skipToStory > 0 && fact.skipToStory > GameManager.i.GetID()) GameManager.i.LoadStory(fact.skipToStory);
-        if (respectAutoSave && autoSave && autosaveTriggers.Contains(fact)) GetComponent<SaveManager>().SaveGame();
+        //if (respectAutoSave && autoSave && autosaveTriggers.Contains(fact)) GetComponent<SaveManager>().SaveGame();
 
         CheckShaders(!fromRule);
-        if (!fromRule) GlobalUI.i.Inform(fact);
+        //if (!fromRule) GlobalUI.i.Inform(fact);
+
+        if (fact.Achievement) AchievementController.i.Unlock(fact.AchivementName);
     }
 
     public void RemoveFact(Fact fact)
@@ -131,7 +133,7 @@ public class FactManager : MonoBehaviour
         PlayerPrefs.SetInt("checkpoint", state.checkPoint);
         PlayerPrefs.SetInt("autoCheckpoint", state.checkPoint);
         while (true) if (!CheckRules()) break;
-        GetComponent<SaveManager>().SaveGame();
+        //GetComponent<SaveManager>().SaveGame();
         GameManager.i.RestartScene();
     }
 

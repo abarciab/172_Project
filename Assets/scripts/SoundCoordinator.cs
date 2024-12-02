@@ -4,42 +4,48 @@ using UnityEngine;
 
 public class SoundCoordinator : MonoBehaviour
 {
-    List<AudioSource> sources = new List<AudioSource>();
+    List<KeyValuePair<Sound, AudioSource>> sources = new List<KeyValuePair<Sound, AudioSource>>();
     List<AudioSource> pausedSources = new List<AudioSource>();
 
     public void AddNewSound(Sound sound, bool restart, bool _3D = true)
     {
-        var source = gameObject.AddComponent<AudioSource>();
-        sources.Add(source);
-        source.outputAudioMixerGroup = AudioManager.instance.GetMixer(sound.type);
-        source.playOnAwake = false;
-        if (_3D) source.spatialBlend = 1;
-        sound.audioSource = source;
+        var newSource = gameObject.AddComponent<AudioSource>();
+        newSource.outputAudioMixerGroup = AudioManager.i.GetMixer(sound.Type);
+        newSource.playOnAwake = false;
+        if (_3D) newSource.spatialBlend = 1;
+        sound.AudioSource = newSource;
         sound.Play(transform.parent, restart);
+
+        var newPair = new KeyValuePair<Sound, AudioSource>(sound, newSource);
+        sources.Add(newPair);
     }
 
-    public void PauseNonMusic() {
-        pausedSources.Clear();
+    public void Pause()
+    {
         foreach (var s in sources) {
-            if (s && s.isPlaying && s.outputAudioMixerGroup != AudioManager.instance.GetMixer(SoundType.music)) {
-                s.Pause();
-                pausedSources.Add(s);
+            if (!s.Key.Unpauseable && s.Value.isPlaying) {
+                s.Value.Pause();
+                pausedSources.Add(s.Value);
             }
         }
     }
 
-    public void Pause() {
-        pausedSources.Clear();
+
+    public void PauseNonMusic()
+    {
         foreach (var s in sources) {
-            if (s && s.isPlaying) {
-                s.Pause();
-                pausedSources.Add(s);
+            if (!s.Key.Unpauseable && s.Value.isPlaying && s.Key.Type != SoundType.music) {
+                s.Value.Pause();
+                pausedSources.Add(s.Value);
             }
         }
     }
 
-    public void Unpause() {
+
+    public void Resume()
+    {
         foreach (var s in pausedSources) s.Play();
+        pausedSources.Clear();
     }
 
 }

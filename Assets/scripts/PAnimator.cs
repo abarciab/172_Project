@@ -32,7 +32,8 @@ public class PAnimator : MonoBehaviour
 
     private void Update()
     {
-        bool frozen = GlobalUI.i.DisplayingImage();
+        //bool frozen = GlobalUI.i.DisplayingImage();
+        bool frozen = false; //TEMP
         bool moving = Mathf.Abs(p.forwardSpeed) > minWalkSpeed && !frozen;
 
         if (move.posing) anim.SetBool("HandsOnHips", move.posing);
@@ -48,7 +49,7 @@ public class PAnimator : MonoBehaviour
         anim.SetBool("chargingThrow", fight.chargingSpear() && fight.chargeTime > minChargeTime);
         anim.SetBool("hasSpear", fight.HasSpear());
 
-        anim.SetBool("Talking", GlobalUI.i.talking);
+        anim.SetBool("Talking", GlobalUI.i.Talking);
         
         anim.SetBool("Strafe", !frozen && move.strafe && Mathf.Abs(GetComponent<Rigidbody>().velocity.x + GetComponent<Rigidbody>().velocity.z) > 0.01f);
 

@@ -34,7 +34,7 @@ public class PSound : MonoBehaviour
 
     public void PlayFootStep()
     {
-        if (Player.i.goopTime > 0) footstepGoop.Play(transform);
+        if (Player.i.GoopTime > 0) footstepGoop.Play(transform);
         else if (isDirtSurface) footstep.Play(transform);
         else footstepHard.Play(transform);
     }

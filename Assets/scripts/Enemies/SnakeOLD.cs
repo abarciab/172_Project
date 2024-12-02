@@ -126,7 +126,8 @@ public class SnakeOLD : BaseEnemy
 
         postProcessing.SetActive(true);
         ShaderTransitionController.i.PausePP();
-        GlobalUI.i.BlackOut(0.5f);
+        print("black out!");
+        //GlobalUI.i.Do(UIAction.BLACK_OUT, 0.5f);
 
         anim.SetBool(coiledAnim, true);
         

@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b54c4e062583404688e9450addf1871, type: 3}
+  m_Name: footstepRun
+  m_EditorClassIdentifier: 
+  Type: 0
+  Unpauseable: 0
+  _clips:
+  - Name: footsteps_Dirt1
+    Clip: {fileID: 8300000, guid: ab10a1c3bf524aa4a98b4b0eeab04080, type: 3}
+    Looping: 0
+  - Name: footsteps_Dirt2
+    Clip: {fileID: 8300000, guid: e99df7610f682df409bd389a859a4261, type: 3}
+    Looping: 0
+  - Name: footsteps_Dirt3
+    Clip: {fileID: 8300000, guid: 5b39744dd3ee7a4458e6b477f3174ff8, type: 3}
+    Looping: 0
+  _volume: 1
+  _pitch: 1
+  _randomizePitch: 0
+  _pitchRandomizeAmount: 0
+  AudioSource: {fileID: 0}
+  Instantialized: 0

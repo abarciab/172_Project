@@ -200,7 +200,7 @@ public class PMovement : MonoBehaviour
     {
         Transform model = transform.GetChild(0);
 
-        if (p.InCombat() || GetComponent<PFighting>().chargingSpear()) { model.transform.localEulerAngles = Vector3.zero;  return; }
+        if (p.InCombat || GetComponent<PFighting>().chargingSpear()) { model.transform.localEulerAngles = Vector3.zero;  return; }
 
         if (rb.velocity.magnitude <= 0.01f) {
             model.transform.localRotation = Quaternion.Lerp(model.transform.localRotation, Quaternion.identity, 0.2f);

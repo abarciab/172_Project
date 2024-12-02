@@ -20,7 +20,7 @@ public class SpearVFXCoordinator : MonoBehaviour
 
     private void Update()
     {
-        if (!fight.enabled || fight.GetSWcooldown() > 0) {
+        if (!fight.enabled || fight.GetSunblastCooldown() > 0) {
             ps_sunblast.SetActive(false);
             if (spear) spear.material = dullMat;
             if (spearMesh) spearMesh.material = dullMat;

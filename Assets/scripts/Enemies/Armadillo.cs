@@ -51,6 +51,7 @@ public class Armadillo : BaseEnemy
         base.Die();
         foreach (var m in minions) Destroy(m);
         Destroy(gameObject);
+        AchievementController.i.Unlock("ARMADILLO_KILLED");
     }
 
     public override void EndAttack()

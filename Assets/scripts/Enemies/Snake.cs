@@ -123,6 +123,8 @@ public class Snake : BaseEnemy
     {
         base.Die();
         Destroy(gameObject);
+        AchievementController.i.Unlock("SNAKE_KILLED");
+        if (PlayerPrefs.GetInt("deaths", 0) == 0) AchievementController.i.Unlock("SUN_WARRIOR");
     }
 
     protected override void Update()

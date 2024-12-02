@@ -36,7 +36,7 @@ public class UISound : MonoBehaviour
 
     public void Heartbeat(float healthPercent)
     {
-        heartBeat.PercentVolume(heartbeatCurve.Evaluate(healthPercent));
+        heartBeat.SetPercentVolume(heartbeatCurve.Evaluate(healthPercent));
     }
 
     public void SnakeHiss() {

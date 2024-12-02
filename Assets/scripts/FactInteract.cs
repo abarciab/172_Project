@@ -24,7 +24,7 @@ public class FactInteract : MonoBehaviour
         if (promptUp && Input.GetKeyDown(interactKey)) {
             foreach (var f in addWhenInteract) FactManager.i.AddFact(f);
             foreach (var f in removeWhenInteract) FactManager.i.RemoveFact(f);
-            GlobalUI.i.HidePrompt(prompt);
+            GlobalUI.i.Do(UIAction.HIDE_PROMPT, prompt);
             if (PlayWhenInteract) PlayWhenInteract.Play();
             Destroy(this);
         }
@@ -38,7 +38,7 @@ public class FactInteract : MonoBehaviour
         if (!player) player = other.GetComponentInParent<Player>();
 
         if (player != null) {
-            GlobalUI.i.DisplayPrompt(prompt);
+            GlobalUI.i.Do(UIAction.DISPLAY_PROMPT, prompt);
             promptUp = true;
         }
     }
@@ -51,7 +51,7 @@ public class FactInteract : MonoBehaviour
         if (!player) player = other.GetComponentInParent<Player>();
 
         if (player != null) {
-            GlobalUI.i.HidePrompt(prompt);
+            GlobalUI.i.Do(UIAction.HIDE_PROMPT, prompt);
             promptUp = false;
         }
     }

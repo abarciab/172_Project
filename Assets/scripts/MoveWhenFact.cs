@@ -34,8 +34,6 @@ public class MoveWhenFact : MonoBehaviour
     }
 
     private void Update() {
-        OnValidate();
-        
 
         if (!Application.isPlaying) return;
 

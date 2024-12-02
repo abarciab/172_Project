@@ -38,16 +38,18 @@ public class PControls : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(pauseKey) && !GameManager.i.paused && player.canRoll) GameManager.i.TogglePause();
+        if (Input.GetKeyDown(pauseKey) && player.canRoll && !GlobalUI.i.Busy) GameManager.i.TogglePause();
 
-        if (GameManager.i.paused || GlobalUI.i.DisplayingImage()) return;
+        if (GameManager.i.paused) return;
 
         if (move.sitting) timeSitting += Time.deltaTime;
-        if (move.sitting && timeSitting >= sitControlTime) GlobalUI.i.DisplayPrompt("press alt to stand up");
 
         if (move.posing) return;
 
-        if (move.sitting && Input.GetKeyDown(standUpKey)) { move.sitting = false; GlobalUI.i.HidePrompt(); }
+        if (move.sitting && Input.GetKeyDown(standUpKey)) { 
+            move.sitting = false;
+            GlobalUI.i.Do(UIAction.HIDE_PROMPT); 
+        }
         if (!move.sitting && !fight.stabbing && !fight.chargingSpear() && Input.GetKeyDown(roll) && player.canRoll) move.Roll();
 
         move.goForward = Input.GetKey(forward);
@@ -64,7 +66,7 @@ public class PControls : MonoBehaviour
         if (!Input.GetKey(forward) && !Input.GetKey(left) && !Input.GetKey(right) && !Input.GetKey(backward)) move.running = false;
 
         if (Input.GetMouseButtonDown(0) && FactManager.i.IsPresent(throwFact)) fight.StartAimingSpear();
-        if (Input.GetMouseButtonUp(0) && FactManager.i.IsPresent(throwFact)) fight.ThrowStaff();
+        if (Input.GetMouseButtonUp(0) && FactManager.i.IsPresent(throwFact)) fight.ThrowSpear();
         if (Input.GetMouseButtonDown(1) && FactManager.i.IsPresent(stabFact)) fight.Stab();
         if (Input.GetKeyDown(abilityKey) && FactManager.i.IsPresent(swFact)) fight.ActivateShockwave();
 

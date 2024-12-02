@@ -1,94 +1,90 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Properties;
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class AudioManager : MonoBehaviour {
-    // users assign sound clips, set the volume and pitch for each clip (optional)
-    // users can assign multiple audio files for the same call, each with different volume and pitch (or syncronize them)
-    // users can play sounds by calling 'play' on a PlayableSound scriptable object.
-    // settings for that sound can be found on that scriptable object
-
-    public static AudioManager instance;
+public class AudioManager : MonoBehaviour
+{
+    public static AudioManager i;
+    private void Awake() { i = this; }
 
     [SerializeField] GameObject coordinatorPrefab;
-    [SerializeField] List<SoundCoordinator> soundCoordinators = new List<SoundCoordinator>();
-    [SerializeField] AudioMixerGroup sfxMixerG, musicMixerG;
-    [SerializeField] AudioMixer sfxMixer, musicMixer;
-    [SerializeField] float masterStartVol, sfxStartVol, musicStartVol;
-    [Space()]
-    [SerializeField] float masterVolume;
-    [SerializeField] float sfxVolume, musicVolume;
+    List<SoundCoordinator> soundCoordinators = new List<SoundCoordinator>();
 
-    [SerializeField] bool setVolumeToStartVolume;
+    [Header("Mixers & Volume")]
+    [SerializeField] AudioMixer mixer;
+    [SerializeField] float masterVolume, musicVolume, ambientVolume, sfxVolume;
 
-    public void PauseNonMusic() {
-        foreach (var s in soundCoordinators) {
-            if (s) s.PauseNonMusic();
-        }
-    }
+    public Vector4 Volumes { get { return new Vector4(masterVolume, musicVolume, ambientVolume, sfxVolume); } }
 
-    public void PauseSounds() {
-        foreach (var s in soundCoordinators) {
-            if (s) s.Pause();
-        }
-    }
-
-    public void UnpauseSounds() {
-        foreach (var s in soundCoordinators) {
-            if (s) s.Unpause();
-        }
-    }
-
-    private void Update()
+    public void FadeOutMaster(float time)
     {
-        if (setVolumeToStartVolume) {
-            setVolumeToStartVolume = false;
-            SetMasterVolume(masterStartVol);
-            SetMusicVolume(musicStartVol);
-            SetSfxVolume(sfxStartVol);
+        StartCoroutine(AnimateMasterFade(time));
+    }
+
+    IEnumerator AnimateMasterFade(float time)
+    {
+        float original = masterVolume;
+        float timePassed = 0;
+        while (timePassed < time) {
+            timePassed += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+            SetMasterVolume(Mathf.Lerp(original, 0, timePassed / time));
         }
     }
 
     private void Start()
     {
         LoadVolumeValuesFromSaveData();
-
-        SetMasterVolume(masterStartVol);
-        SetMusicVolume(musicStartVol);
-        SetSfxVolume(sfxStartVol);
-
-        if (GlobalUI.i != null) GlobalUI.i.SetSliderPositions(masterVolume, sfxVolume, musicVolume);
+        SetMixerVolumes();
     }
 
     public void SaveVolume()
     {
         PlayerPrefs.SetFloat("masterVolume", masterVolume);
-        PlayerPrefs.SetFloat("sfxVolume", sfxVolume);
         PlayerPrefs.SetFloat("musicVolume", musicVolume);
+        PlayerPrefs.SetFloat("ambientVolume", ambientVolume);
+        PlayerPrefs.SetFloat("sfxVolume", sfxVolume);
+    }
+
+    public void PauseNonMusic()
+    {
+        foreach (var s in soundCoordinators) s.PauseNonMusic();
+    }
+
+    public void Pause()
+    {
+        foreach (var s in soundCoordinators) s.Pause();
+    }
+
+    public void Resume()
+    {
+        foreach (var s in soundCoordinators) s.Resume();
     }
 
     public void ResetVolumeSaveData()
     {
+
     }
 
     void LoadVolumeValuesFromSaveData()
     {
-        var master = PlayerPrefs.GetFloat("masterVolume", -100);
-        if (master > 0) masterStartVol = master;
-        var sfx = PlayerPrefs.GetFloat("sfxVolume", -100);
-        if (sfx > 0) sfxStartVol = sfx;
-        var music = PlayerPrefs.GetFloat("musicVolume", -100);
-        if (music > 0) musicStartVol = music;
+        masterVolume = PlayerPrefs.GetFloat("masterVolume", masterVolume);
+        musicVolume = PlayerPrefs.GetFloat("musicVolume", musicVolume);
+        ambientVolume = PlayerPrefs.GetFloat("ambientVolume", ambientVolume);
+        sfxVolume = PlayerPrefs.GetFloat("sfxVolume", sfxVolume);
     }
 
     public AudioMixerGroup GetMixer(SoundType type)
     {
         switch (type) {
             case SoundType.sfx:
-                return sfxMixerG;
+                return mixer.FindMatchingGroups("Sfx")[0];
             case SoundType.music:
-                return musicMixerG;
+                return mixer.FindMatchingGroups("Music")[0];
+            case SoundType.ambient:
+                return mixer.FindMatchingGroups("Ambient")[0];
         }
         return null;
     }
@@ -96,40 +92,34 @@ public class AudioManager : MonoBehaviour {
     public void SetMasterVolume(float vol)
     {
         masterVolume = vol;
-        UpdateActualVolume();
+        SetMixerVolumes();
     }
 
     public void SetSfxVolume(float vol)
     {
         sfxVolume = vol;
-        UpdateActualVolume();
+        SetMixerVolumes();
     }
 
     public void SetMusicVolume(float vol)
     {
         musicVolume = vol;
-        UpdateActualVolume();
+        SetMixerVolumes();
     }
 
-    float MapToVolumeRange(float input)
+    void SetMixerVolumes()
     {
-        return Mathf.Log10(input) * 20;
-    }
-
-    void UpdateActualVolume()
-    {
-        var _sfxVol = MapToVolumeRange(sfxVolume * masterVolume);
-        sfxMixer.SetFloat("volume", _sfxVol);
-
-        var _musicVol = MapToVolumeRange(musicVolume * masterVolume);
-        musicMixer.SetFloat("volume", _musicVol);
+        mixer.SetFloat("masterVolume", Mathf.Log10(masterVolume) * 20);
+        mixer.SetFloat("sfxVolume", Mathf.Log10(sfxVolume) * 20);
+        mixer.SetFloat("musicVolume", Mathf.Log10(musicVolume) * 20);
 
         SaveVolume();
     }
 
-    private void Awake()
+    public void SetAmbientVolume(float vol)
     {
-        instance = this;
+        ambientVolume = vol;
+        mixer.SetFloat("ambientVolume", Mathf.Log10(ambientVolume) * 20);
     }
 
     public void PlaySound(Sound sound, Transform caller, bool restart = true)
@@ -138,7 +128,7 @@ public class AudioManager : MonoBehaviour {
         var coordinator = GetExistingCoordinator(caller);
         coordinator.AddNewSound(sound, restart, caller != transform);
     }
-    
+
     SoundCoordinator GetExistingCoordinator(Transform caller)
     {
         for (int i = 0; i < soundCoordinators.Count; i++) {
@@ -149,10 +139,10 @@ public class AudioManager : MonoBehaviour {
         foreach (var coord in soundCoordinators) {
             if (coord && coord.transform.parent == caller) return coord;
         }
-        return AddNewCoord(caller);
+        return AddNewCoordinator(caller);
     }
 
-    SoundCoordinator AddNewCoord(Transform caller)
+    SoundCoordinator AddNewCoordinator(Transform caller)
     {
         var coordObj = Instantiate(coordinatorPrefab, caller);
         var coord = coordObj.GetComponent<SoundCoordinator>();
@@ -162,6 +152,6 @@ public class AudioManager : MonoBehaviour {
 
     private void OnDestroy()
     {
-        if (instance == this) instance = null;
+        if (i == this) i = null;
     }
 }

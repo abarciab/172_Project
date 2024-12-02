@@ -62,4 +62,42 @@ public class Clouds : MonoBehaviour
         return pos;
     }
 
+    private void OnDrawGizmosSelected()
+    {
+        DrawBoxOutline(transform.position + Vector3.down * yRange.x, Bounds * 2, yRange.y);
+    }
+
+    private void DrawBoxOutline(Vector3 center, Vector2 size, float height)
+    {
+        // Calculate half extents
+        Vector3 halfExtents = new Vector3(size.x / 2f, height / 2f, size.y / 2f);
+
+        // Calculate box corners
+        Vector3 frontBottomLeft = center + new Vector3(-halfExtents.x, -halfExtents.y, -halfExtents.z);
+        Vector3 frontBottomRight = center + new Vector3(halfExtents.x, -halfExtents.y, -halfExtents.z);
+        Vector3 frontTopLeft = center + new Vector3(-halfExtents.x, halfExtents.y, -halfExtents.z);
+        Vector3 frontTopRight = center + new Vector3(halfExtents.x, halfExtents.y, -halfExtents.z);
+        Vector3 backBottomLeft = center + new Vector3(-halfExtents.x, -halfExtents.y, halfExtents.z);
+        Vector3 backBottomRight = center + new Vector3(halfExtents.x, -halfExtents.y, halfExtents.z);
+        Vector3 backTopLeft = center + new Vector3(-halfExtents.x, halfExtents.y, halfExtents.z);
+        Vector3 backTopRight = center + new Vector3(halfExtents.x, halfExtents.y, halfExtents.z);
+
+        // Draw lines between corners
+        Gizmos.color = Color.green; // Set the color of the lines
+        Gizmos.DrawLine(frontBottomLeft, frontBottomRight);
+        Gizmos.DrawLine(frontBottomRight, frontTopRight);
+        Gizmos.DrawLine(frontTopRight, frontTopLeft);
+        Gizmos.DrawLine(frontTopLeft, frontBottomLeft);
+
+        Gizmos.DrawLine(backBottomLeft, backBottomRight);
+        Gizmos.DrawLine(backBottomRight, backTopRight);
+        Gizmos.DrawLine(backTopRight, backTopLeft);
+        Gizmos.DrawLine(backTopLeft, backBottomLeft);
+
+        Gizmos.DrawLine(frontBottomLeft, backBottomLeft);
+        Gizmos.DrawLine(frontBottomRight, backBottomRight);
+        Gizmos.DrawLine(frontTopLeft, backTopLeft);
+        Gizmos.DrawLine(frontTopRight, backTopRight);
+    }
+
 }

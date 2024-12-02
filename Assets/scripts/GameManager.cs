@@ -1,71 +1,113 @@
+using MyBox;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-[ExecuteAlways]
 public class GameManager : MonoBehaviour
 {
-
-    [System.Serializable]
-    public class EnemyGroup
-    {
-        public Fact fact;
-        public List<GameObject> enemies = new List<GameObject>();
-        public int ID;
-        public bool enabled;
-    }
-
-    [System.Serializable] 
-    public class StoryPorgression
-    {
-        [HideInInspector] public string name;
-        public Fact fact;
-        public bool state;
-        public string nextQuest;
-        public int ID;
-        public bool playLong;
-        public bool customID;
-    }
-
-    [System.Serializable]
-    public class CheckPoint
-    {
-        public Transform point;
-        public int ID;
-
-        public CheckPoint(Transform _point, int _ID)
-        {
-            point = _point;
-            ID = _ID;
-        }
-    }
-
     public static GameManager i;
     
     public bool paused { get; private set; }
 
-    List<CheckPoint> checkPoints = new List<CheckPoint>();
+    List<CheckPointData> checkPoints = new List<CheckPointData>();
     bool started;
 
     [Header("Manual Setup")]
     [SerializeField] int startingCheckPoint;
-    [SerializeField] bool setStarting, resetGame;
+    [SerializeField] bool setStarting;
+    [SerializeField] bool resetGame;
 
     [Header("Quest")]
-    [SerializeField] List<StoryPorgression> story = new List<StoryPorgression>();
-    List<StoryPorgression> runtimeStory = new List<StoryPorgression>();
+    [SerializeField] List<StoryProgressionData> story = new List<StoryProgressionData>();
+    List<StoryProgressionData> runtimeStory = new List<StoryProgressionData>();
 
     [Header("Enemy groups")]
-    [SerializeField] List<EnemyGroup> groups = new List<EnemyGroup>();
+    [SerializeField] List<EnemyGroupData> groups = new List<EnemyGroupData>();
 
     [Header("Ending")]
     [SerializeField] Fact granEnd;
-    [SerializeField] Fact engineerEnd, leaderEnd;
+    [SerializeField] Fact engineerEnd;
+    [SerializeField] Fact leaderEnd;
 
     [Header("Goats")]
-    [SerializeField] private int totalNumGoats;
+    public int NumTotalGoats = 11;
     [SerializeField] private int numGoatsFound;
+
+    [Header("References")]
+    public Transform Player;
+    [SerializeField] private MovementTutorial _firstTutorial;
+    [SerializeField] private List<Transform> _playerTpPoints;
+    [SerializeField] private CameraController _cam;
+ 
+    [SerializeField, ReadOnly] public float GameProgress;
+
+    private void Start()
+    {
+        SaveManager.i.OnLoad.AddListener(SetGameStateFromSaveData);
+
+        runtimeStory = new List<StoryProgressionData>(story);
+        //GetComponent<SaveManager>().LoadGame();
+        Unpause();
+        LockCursor();
+    }
+
+    private void Update()
+    {
+        var f = FactManager.i;
+        if (f && f.IsPresent(granEnd) && f.IsPresent(engineerEnd) && f.IsPresent(leaderEnd)) {
+            GlobalUI.i.FadeToCredits(3);
+        }
+
+        if (setStarting) {
+            PlayerPrefs.SetInt("checkpoint", startingCheckPoint);
+            setStarting = false;
+        }
+        if (resetGame) {
+            resetGame = false;
+            //GetComponent<SaveManager>().ResetGame();
+        }
+
+        UpdateEnemyGroups();
+
+        if (!started) RestartFromCheckPoint();
+        CheckStory();
+    }
+
+    private void SetGameStateFromSaveData(SaveData current)
+    {
+        Player.transform.position = current.PlayerPosition;
+        Player.rotation = current.PlayerRotation;
+        GameProgress = current.GameProgress;
+        PropogateGameProgressChange();
+    }
+
+    private void PropogateGameProgressChange()
+    {
+        if (GameProgress - 0 < 0.001f) StartGame(); 
+    }
+
+    private void StartGame()
+    {
+        _firstTutorial.Activate();
+        Player.SetPositionAndRotation(_playerTpPoints[0].position, _playerTpPoints[0].rotation);
+        _cam.SnapToState();
+    }
+
+    public void AddNewSpeaker(string name)
+    {
+        if (name == "Engineer") PlayerPrefs.SetInt("speaker1", 1);
+        if (name == "Gran") PlayerPrefs.SetInt("speaker2", 1);
+        if (name == "Leader") PlayerPrefs.SetInt("speaker3", 1);
+
+        int totalSpeakers = 0;
+        if (PlayerPrefs.GetInt("speaker1", 0) == 1) totalSpeakers += 1;
+        if (PlayerPrefs.GetInt("speaker2", 0) == 1) totalSpeakers += 1;
+        if (PlayerPrefs.GetInt("speaker3", 0) == 1) totalSpeakers += 1;
+
+        if (totalSpeakers >= 3) AchievementController.i.Unlock("CHATTERBOX");
+    }
 
     public void ToggleFullscreen(bool state)
     {
@@ -80,7 +122,9 @@ public class GameManager : MonoBehaviour
     public void FoundGoat(bool showNotification = true)
     {
         numGoatsFound += 1;
-        if (showNotification) GlobalUI.i.ShowNewGoat(numGoatsFound, totalNumGoats);
+        if (showNotification) GlobalUI.i.Do(UIAction.DISPLAY_GOATS, numGoatsFound);
+        if (numGoatsFound == 1) AchievementController.i.Unlock("FIRST_GOAT");
+        if (numGoatsFound == NumTotalGoats) AchievementController.i.Unlock("ALL_GOATS");
     }
 
     private void OnValidate()
@@ -109,20 +153,15 @@ public class GameManager : MonoBehaviour
         return runtimeStory[0].ID;
     }
 
-    public string getCurrentStory()
-    {
-        return GlobalUI.i.GetCurrentText();
-    }
-
     public void SetCurrentStory(string text)
     {
-        if (GlobalUI.i) GlobalUI.i.UpdateQuestText(text, false);
+        if (GlobalUI.i) GlobalUI.i.Do(UIAction.DISPLAY_QUEST_TEXT, text);
     }
 
     public void LoadStory(int ID)
     {
         if (ID == -1) { runtimeStory.Clear(); return; }
-        runtimeStory = new List<StoryPorgression>(story);
+        runtimeStory = new List<StoryProgressionData>(story);
         while (runtimeStory.Count > 0 && runtimeStory[0].ID != ID) {
             runtimeStory.RemoveAt(0);
         }
@@ -131,7 +170,7 @@ public class GameManager : MonoBehaviour
 
     public void AddCheckPoint(Transform point, int ID)
     {
-        checkPoints.Add(new CheckPoint(point, ID));
+        checkPoints.Add(new CheckPointData(point, ID));
     }
 
     public void Pause()
@@ -140,7 +179,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
         GlobalUI.i.Pause();
         unlockCursor();
-        AudioManager.instance.PauseSounds();
+        AudioManager.i.Pause();
     }
 
     void LockCursor() {
@@ -160,7 +199,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
         if (Application.isPlaying) GlobalUI.i.Resume();
         LockCursor();
-        AudioManager.instance.UnpauseSounds();
+        AudioManager.i.Resume();
     }
 
     public void TogglePause()
@@ -174,7 +213,7 @@ public class GameManager : MonoBehaviour
         started = true;
         int checkPoint = PlayerPrefs.GetInt("checkpoint");
         if (GetCheckPoint(checkPoint) == Vector3.zero) return;
-        Player.i.transform.position = GetCheckPoint(checkPoint);
+        Player.position = GetCheckPoint(checkPoint);
     }
 
     public void RestartScene()
@@ -192,28 +231,6 @@ public class GameManager : MonoBehaviour
     {
         foreach (var c in checkPoints) if (c.ID == ID) return c.point.position;
         return Vector3.zero;
-    }
-
-    private void Update()
-    {
-        var f = FactManager.i;
-        if (f && f.IsPresent(granEnd) && f.IsPresent(engineerEnd) && f.IsPresent(leaderEnd)) {
-            GlobalUI.i.FadeToCredits(3);
-        }
-
-        if (setStarting) {
-            PlayerPrefs.SetInt("checkpoint", startingCheckPoint);
-            setStarting = false;
-        }
-        if (resetGame) {
-            resetGame = false;
-            GetComponent<SaveManager>().ResetGame();
-        }
-
-        UpdateEnemyGroups();
-
-        if (!started) RestartFromCheckPoint();
-        CheckStory();
     }
 
     void UpdateEnemyGroups()
@@ -236,15 +253,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        if (!Application.isPlaying) return;
-
-        runtimeStory = new List<StoryPorgression>(story);
-        GetComponent<SaveManager>().LoadGame();
-        Unpause();
-        LockCursor();
-    }
 
     void CheckStory()
     {
@@ -258,7 +266,9 @@ public class GameManager : MonoBehaviour
 
     void UpdateStoryDisplay()
     {
-        GlobalUI.i.UpdateQuestText(runtimeStory[0].nextQuest, runtimeStory[0].playLong);
+        var text = runtimeStory[0].nextQuest;
+        if (runtimeStory[0].playLong) GlobalUI.i.Do(UIAction.DISPLAY_QUEST_TEXT, text);
+        else GlobalUI.i.Do(UIAction.DISPLAY_QUEST_TEXT_LONG, text);
     }
 
     void Awake() 

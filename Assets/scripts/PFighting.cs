@@ -23,7 +23,7 @@ public class PFighting : HitReciever {
     [SerializeField] Shockwave shockwave;
     [SerializeField] float shockwaveResetTime, shockwaveKB;
     [SerializeField] int shockwaveDmg;
-    float swCooldown;
+    float sunblastCooldown;
 
     [Header("Sounds")]
     [SerializeField] Sound throwSpearSound;
@@ -39,9 +39,59 @@ public class PFighting : HitReciever {
 
     public bool RecallReady;
 
-    public bool Recalling()
+    public bool chargingSpear() => charging;
+    public bool Stabbing() => stabbing;
+    public bool SpearOut() => spearDrawn;
+    public bool Recalling() => recalling;
+    public void DrawSpear() => spearDrawn = true;
+    public bool HasSpear() => hasSpear;
+    public void PutAwaySpear() { }
+    public float GetSunblastCooldown() => sunblastCooldown;
+
+    private void Start()
     {
-        return recalling;
+        hasSpear = true;
+        aimed = false;
+
+        throwSpearSound = Instantiate(throwSpearSound);
+        shockwaveSound = Instantiate(shockwaveSound);
+        shockwaveReadySound = Instantiate(shockwaveReadySound);
+        recallWoosh = Instantiate(recallWoosh);
+        recallError = Instantiate(recallError);
+        spearCatch = Instantiate(spearCatch);
+        critSucsess = Instantiate(critSucsess);
+        spearBuildUp = Instantiate(spearBuildUp);
+        sunBlastError = Instantiate(sunBlastError);
+    }
+
+    private void Update()
+    {
+        spearObj.SetActive(hasSpear && (!spearDrawn || (!staffProjectile.gameObject.activeInHierarchy || !charging)));
+
+        spearTipBall.SetActive(hasSpear && Player.i.poweredUp);
+
+        thrownSpearBall.SetActive(!hasSpear && Player.i.poweredUp);
+
+        if (sunblastCooldown > 0) DecrementSunblastCooldown();
+
+
+        if (charging) chargeTime += Time.deltaTime;
+
+        float chargePercent = Mathf.Min(chargeTime, maxAimTime) / maxAimTime;
+        GlobalUI.i.Do(UIAction.UPDATE_CHARGE, chargePercent);
+    }
+
+    private void DecrementSunblastCooldown()
+    {
+        sunblastCooldown -= Time.deltaTime;
+        GlobalUI.i.Do(UIAction.DISPLAY_SUNBLAST_COOLDOWN, sunblastCooldown);
+        if (sunblastCooldown <= 0) OnSunblastReady();
+    }
+
+    private void OnSunblastReady()
+    {
+        shockwaveReadySound.Play(transform);
+        GlobalUI.i.Do(UIAction.SUNBLAST_READY);
     }
 
     public void SetSpearLayer(int layer)
@@ -59,6 +109,7 @@ public class PFighting : HitReciever {
     public void RecallReadyNotice()
     {
         RecallReady = true;
+        GlobalUI.i.Do(UIAction.RECALL_READY);
 
         var fMan = FactManager.i;
         if (fMan.IsPresent(tutorialDone)) return;
@@ -66,27 +117,11 @@ public class PFighting : HitReciever {
         if (fMan.IsPresent(recallstarted)) fMan.AddFact(recallThrown);
     }
 
-    public void DrawSpear()
-    {
-        spearDrawn = true;
-    }
-
-    public bool HasSpear()
-    {
-        return hasSpear;
-    }
-
-    public void PutAwaySpear() {}
-
-    public float GetSWcooldown()
-    {
-        return swCooldown;
-    }
-
     public void ReturnSpear()
     {
         hasSpear = true;
         recalling = charging = false;
+        GlobalUI.i.Do(UIAction.CATCH_SPEAR);
         spearCatch.Play();
     }
 
@@ -95,11 +130,12 @@ public class PFighting : HitReciever {
         return FactManager.i.IsPresent(throwWeak) ? 0 : critDmg;
     }
 
-    public void ThrowStaff()
+    public void ThrowSpear()
     {
         spearBuildUp.Stop();
         charging = false;
         if (!hasSpear || !aimed) return;
+
         aimed = false;
         CameraState.i.SwitchToState(CameraState.StateName.MouseFollow);
 
@@ -122,7 +158,7 @@ public class PFighting : HitReciever {
 
         chargeTime = 0;
         throwSpearSound.Play(transform);
-        staffProjectile.GetComponent<ThrownStaff>().OnThrow();
+        staffProjectile.GetComponent<ThrownStaff>().Throw();
         
         staffProjectile.gameObject.SetActive(false);
         var dir = GetAimDir();
@@ -139,7 +175,7 @@ public class PFighting : HitReciever {
         else if (!fMan.IsPresent(fullThrow) && power == 1) fMan.AddFact(fullThrow);
         else if (!fMan.IsPresent(criticalThrow) && perfectThrow) fMan.AddFact(criticalThrow);
 
-        
+        GlobalUI.i.Do(UIAction.THROW_SPEAR);
     }
 
     public void Stab()
@@ -163,20 +199,6 @@ public class PFighting : HitReciever {
         stabbing = false;
     }
 
-    public bool chargingSpear()
-    {
-        return charging;
-    }
-
-    public bool Stabbing()
-    {
-        return stabbing;
-    }
-
-    public bool SpearOut()
-    {
-        return spearDrawn;
-    }
 
     public override void Hit(HitData hit)
     {
@@ -188,25 +210,10 @@ public class PFighting : HitReciever {
         GetComponent<PMovement>().KnockBack(hit.source, hit.KB, hit.offset);
     }
 
-    private void Start()
-    {
-        hasSpear = true;
-        aimed = false;
-
-        throwSpearSound = Instantiate(throwSpearSound);
-        shockwaveSound = Instantiate(shockwaveSound);
-        shockwaveReadySound = Instantiate(shockwaveReadySound);
-        recallWoosh = Instantiate(recallWoosh);
-        recallError = Instantiate(recallError);
-        spearCatch = Instantiate(spearCatch);
-        critSucsess = Instantiate(critSucsess);
-        spearBuildUp = Instantiate(spearBuildUp);
-        sunBlastError = Instantiate(sunBlastError);
-    }
 
     public void StartAimingSpear()
     {
-        if (!enabled || charging || GlobalUI.i.talking) return;
+        if (!enabled || charging || GlobalUI.i.Talking) return;
         if (!spearDrawn) { DrawSpear(); return; }
         if (!hasSpear) { RetrieveSpear(); return; }
         aimed = charging = true;
@@ -234,34 +241,20 @@ public class PFighting : HitReciever {
 
     public void ActivateShockwave()
     {
-        if (swCooldown > 0) {
+        if (sunblastCooldown > 0) {
             sunBlastError.Play();
             return;
         }
 
-        if (!enabled || GlobalUI.i.talking) return;
+        if (!enabled || GlobalUI.i.Talking) return;
         shockwaveSound.Play(transform);
-        swCooldown = shockwaveResetTime;
+        sunblastCooldown = shockwaveResetTime;
         if (!FactManager.i.IsPresent(tutorialDone)) FactManager.i.AddFact(shockWave);
 
         if (hasSpear) shockwave.transform.position = transform.position;
         else shockwave.transform.position = staffProjectile.transform.position;
 
         shockwave.Explode(shockwaveDmg, shockwaveKB);
-    }
-
-    private void Update()
-    {
-        spearObj.SetActive(hasSpear && (!spearDrawn || (!staffProjectile.gameObject.activeInHierarchy || !charging)));
-        spearTipBall.SetActive(hasSpear && Player.i.poweredUp);
-        thrownSpearBall.SetActive(!hasSpear && Player.i.poweredUp);
-
-        var playSound = false;
-        if (swCooldown > 0) playSound = true;
-        swCooldown -= Time.deltaTime;
-        if (swCooldown <= 0 && playSound) shockwaveReadySound.Play(transform);
-        if (charging) chargeTime += Time.deltaTime;
-        GlobalUI.i.throwCharge.value = Mathf.Min(chargeTime, maxAimTime) / maxAimTime;
     }
 
     void RetrieveSpear()

@@ -177,7 +177,7 @@ public class EnemyStats : HitReciever
 
         if (deathSound) if (playDeathGlobal) deathSound.Play(transform); else deathSound.Play();
 
-        if (boss) GlobalUI.i.EndBossFight();
+        if (boss) GlobalUI.i.Do(UIAction.END_BOSS_FIGHT);
 
         if (dropWhenDie != null) Instantiate(dropWhenDie, transform.position, Quaternion.identity);
     }
@@ -190,8 +190,8 @@ public class EnemyStats : HitReciever
         foreach (var m in body) m.material = stunTimeLeft > 0 ? stunnedMat : normalMat;
 
         if (boss) {
-            GlobalUI.i.StartBossFight(bossName, gameObject);
-            GlobalUI.i.bossSlider.value = (float) health / maxHealth;
+            GlobalUI.i.Do(UIAction.START_BOSS_FIGHT, gameObject);
+            GlobalUI.i.Do(UIAction.SET_BOSS_HEALTH, (float) health / maxHealth);
             return;
         }
 

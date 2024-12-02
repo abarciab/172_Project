@@ -51,7 +51,7 @@ public class ThrownStaff : MonoBehaviour
         
     }
 
-    public void OnThrow()
+    public void Throw()
     {
         VFXCoordinator.EnableTrailVFX(); //activate trail PS object
     }
@@ -79,7 +79,7 @@ public class ThrownStaff : MonoBehaviour
             ping.Play();
             fight.RecallReadyNotice();
         }
-        windSound.PercentVolume(rb.velocity.magnitude / maxSpeed, 0.025f);
+        windSound.SetPercentVolume(rb.velocity.magnitude / maxSpeed, 0.025f);
         if (!rb.isKinematic && !recalling) transform.LookAt(transform.position + rb.velocity.normalized);
         if (!recalling) return;
 
@@ -98,7 +98,7 @@ public class ThrownStaff : MonoBehaviour
         gameObject.SetActive(false);
         Player.i.GetComponent<PFighting>().ReturnSpear();
 
-        VFXCoordinator.DisableTrailVFX(); //deactivate trail PS object
+        VFXCoordinator.DisableTrailVFX();
         VFXCoordinator.DisableHSImpact();
         VFXCoordinator.PlaySpearCatch();
 

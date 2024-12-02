@@ -48,9 +48,11 @@ public class CameraController : MonoBehaviour
         _blendSmoothness = Application.isPlaying ? currentState.transitionSmoothness : 1;
 
         if (!Application.isPlaying || !GameManager.i.paused) return;
+    }
 
-        //if (Input.GetKeyDown(KeyCode.Escape)) UnlockMouse();
-        //if (Input.GetMouseButtonDown(0)) LockMouse();
+    public void SnapToState()
+    {
+        transform.forward = player.transform.forward;
     }
 
     private void LateUpdate()

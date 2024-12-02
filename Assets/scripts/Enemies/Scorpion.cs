@@ -90,12 +90,13 @@ public class Scorpion : BaseEnemy
     {
         base.Die();
         Destroy(gameObject, 1);
+        AchievementController.i.Unlock("SCORPION_KILLED");
     }
 
     protected override void Update()
     {
-        if (move.gotoTarget) WalkLoop.PercentVolume(1, 0.05f);
-        else WalkLoop.PercentVolume(0, 0.05f);
+        if (move.gotoTarget) WalkLoop.SetPercentVolume(1, 0.05f);
+        else WalkLoop.SetPercentVolume(0, 0.05f);
 
 
         base.Update();

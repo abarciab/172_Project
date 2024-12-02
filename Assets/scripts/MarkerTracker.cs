@@ -3,24 +3,42 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+[System.Serializable]
+public class Marker
+{
+    public RectTransform UImarker;
+    public Transform trackedObj;
+}
+
 public class MarkerTracker : MonoBehaviour
 {
     public static MarkerTracker i;
     void Awake() { i = this; }
 
-    [System.Serializable]
-    public class Marker
-    {
-        public RectTransform UImarker;
-        public Transform trackedObj;
-    }
-
     public List<Marker> activeMarkers = new List<Marker>();
 
-    [SerializeField] RectTransform markerParent;
-    [SerializeField] GameObject markerPrefab, leftMarker, rightMarker;
-    [SerializeField] Sprite defaultMarker;
-    [SerializeField] bool onlyDefault;
+    [SerializeField] private RectTransform markerParent;
+    [SerializeField] private GameObject markerPrefab;
+    [SerializeField] private GameObject leftMarker;
+    [SerializeField] private GameObject rightMarker;
+    [SerializeField] private Sprite defaultMarker;
+    [SerializeField] private bool onlyDefault;
+
+    public void Show() => gameObject.SetActive(true);
+    public void Hide() => gameObject.SetActive(false);
+
+    private void Update()
+    {
+        for (int i = 0; i < activeMarkers.Count; i++) {
+            if (activeMarkers[i].trackedObj == null || !activeMarkers[i].trackedObj.gameObject.activeInHierarchy) {
+                Destroy(activeMarkers[i].UImarker.gameObject);
+                activeMarkers.RemoveAt(i);
+            }
+        }
+        foreach (var m in activeMarkers) UpdateMarker(m);
+    }
+
 
     public bool AlreadyTracking(Transform obj)
     {
@@ -53,16 +71,6 @@ public class MarkerTracker : MonoBehaviour
         activeMarkers.Add(newMarker);
     }
 
-    private void Update()
-    {
-        for (int i = 0; i < activeMarkers.Count; i++) {
-            if (activeMarkers[i].trackedObj == null || !activeMarkers[i].trackedObj.gameObject.activeInHierarchy) {
-                Destroy(activeMarkers[i].UImarker.gameObject);
-                activeMarkers.RemoveAt(i);
-            }
-        }
-        foreach (var m in activeMarkers) UpdateMarker(m);
-    }
 
     void UpdateMarker(Marker m)
     {

@@ -29,7 +29,7 @@ public class Goop : MonoBehaviour
         var player = other.GetComponent<PMovement>();
         if (player) {
             player.goopTime = .25f;
-            player.GetComponent<Player>().goopTime = 0.15f;
+            Player.i.SetGoopTime(0.15f);
         }
 
         var shockwave = other.GetComponent<Shockwave>();

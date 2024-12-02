@@ -31,6 +31,7 @@ public class EnableWhenFact : MonoBehaviour
             }
         }
         for (int i = 0; i < items.Count; i++) {
+            if (items[i].obj == null) print("Null on " + i + " from " + gameObject.name);
             if ( items[i].obj.activeInHierarchy != items[i].invert) items.RemoveAt(i);
         }
     }

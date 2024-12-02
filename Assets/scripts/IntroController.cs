@@ -24,7 +24,7 @@ public class IntroController : MonoBehaviour
     private void Update()
     {
         if (!started) {
-            GlobalUI.i.DisplayLine("", "I should probably go speak with gran...");
+            GlobalUI.i.Do(UIAction.DISPLAY_LINE, "I should probably go speak with gran...");
             started = true;
         }
 
@@ -32,7 +32,7 @@ public class IntroController : MonoBehaviour
             fade.enabled = true;
             Player.i.GetComponent<PControls>().enabled = true;
             enabled = false;
-            GlobalUI.i.EndConversation();
+            GlobalUI.i.Do(UIAction.END_CONVERSATION);
         }
     }
 }

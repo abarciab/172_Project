@@ -8,4 +8,6 @@ public class Fact : ScriptableObject
     public int skipToStory;
     public bool doNotSave;
     public Fact addWhenSaving;
+    public bool Achievement;
+    public string AchivementName;
 }

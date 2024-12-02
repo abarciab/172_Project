@@ -41,19 +41,19 @@ public class Speaker : MonoBehaviour
     private void Update()
     {
         callCooldown -= Time.deltaTime;
-        if (!GlobalUI.i.talking && callCooldown <= 0) {
+        if (!GlobalUI.i.Talking && callCooldown <= 0) {
             callCooldown = Random.Range(callRange.x, callRange.y);
             //print("Activating");
             if (convoSound) convoSound.Play(transform);
         }
-        if (GlobalUI.i.talking) convoSound.Stop();
+        if (GlobalUI.i.Talking) convoSound.Stop();
 
         for (int i = 0; i < conversations.Count; i++) {
             CheckStatus(conversations[i]);
         }
 
         speechBubble.SetActive(false);
-        if (!GlobalUI.i.talking) foreach (var c in conversations) if (c.enabled) speechBubble.SetActive(true);
+        if (!GlobalUI.i.Talking) foreach (var c in conversations) if (c.enabled) speechBubble.SetActive(true);
     }
 
     void CheckStatus(ConversationData c)
@@ -70,6 +70,7 @@ public class Speaker : MonoBehaviour
 
     public string GetNextLine(bool reset = false)
     {
+        GameManager.i.AddNewSpeaker(characterName);
         var convoData = GetCurrentConvo();
         if (convoData == null) {
             StartCoroutine(WaitThenShowInterest());

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,92 +10,63 @@ using UnityEngine.Video;
 
 public class TitleScreen : MonoBehaviour {
 
-    public Image continueButton;
-    public bool fading;
-    [SerializeField] GameObject fade, video;
-    [SerializeField] float activeA, inactiveA;
-    [SerializeField] VideoPlayer videoPlayer;
+    [SerializeField] private Fade _fade;
+    [SerializeField] private GameObject _video;
+    [SerializeField] private VideoPlayer _videoPlayer;
+    [SerializeField] private Sound _click;
+    [SerializeField] private float _startDelayTime = 0.5f;
+
+    private bool _started;
 
     private void Start()
     {
-        fade.GetComponent<Image>().color = new Color(0, 0, 0, 0);
-        fading = false;
+        _click = Instantiate(_click);
         Time.timeScale = 1;
     }
 
-    private void Update()
-    {
-        bool continueEnabled = PlayerPrefs.GetInt("savedFacts", 0) > 0;
-        continueButton.GetComponent<Button>().enabled = continueEnabled;
-        continueButton.GetComponent<EventTrigger>().enabled = continueEnabled;
-
-        var continueText = continueButton.GetComponentInChildren<TextMeshProUGUI>();
-        var continueColor = continueText.color;
-        continueColor.a = continueEnabled ? activeA : inactiveA;
-        continueText.color = continueColor;
-
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-
-        if (!fading) return;
-
-        fade.SetActive(true);
-        fade.GetComponent<Image>().color = Color.Lerp(fade.GetComponent<Image>().color, Color.black, 0.2f);
-    }
+    public void Click() => _click.Play();
 
     public void Quit()
     {
         Application.Quit();
     }
 
-    public void StartGame()
+    public void StartNewGame()
     {
-        if (fading) return;
-        fading = true;
-        
+        if (_started) return;
+        _started = true;
+
+        Click();
         StopAllCoroutines();
-        StartCoroutine(_StartGame(2.5f));
+        _StartGame(_startDelayTime);
     }
 
-    public void PlaySunBlastSound()
+    private async void _StartGame(float delay)
     {
-    }
+        FindObjectOfType<MusicPlayer>().FadeOutCurrent(delay);
+        await Task.Delay((int) (delay * 1000));
 
-    IEnumerator _StartGame(float delay)
-    {
-        var source = GetComponent<AudioSource>();
+        _video.SetActive(true);
 
-        while (delay > 0) {
-            yield return new WaitForEndOfFrame();
-            delay -= Time.deltaTime;
-            source.volume = Mathf.Lerp(source.volume, 0, 0.05f);
+        float timePassed = -0.1f;
+        while (!Input.GetKeyDown(KeyCode.Escape) && timePassed < _videoPlayer.length) {
+            timePassed += Time.deltaTime;
+            await Task.Yield();
         }
 
-        video.SetActive(true);
-
-        while (!videoPlayer.isPlaying) yield return null;
-        while (videoPlayer.isPlaying && !Input.GetKeyDown(KeyCode.Escape)) yield return null;
-
-        PlayerPrefs.SetInt("checkpoint", 0);
-        PlayerPrefs.SetInt("savedFacts", 0);
-        PlayerPrefs.SetInt("story", 0);
-        LoadGame(0);
+        LoadGame();
     }
 
-    public void LoadGame(float delay = 1.5f)
-    {
-        if (fading && delay > 0) return;
-        fading = true;
+    public async void LoadGame()
+    {        
+        _fade.Appear();
+        await Task.Delay(Mathf.RoundToInt(_fade.FadeTime * 1000));
 
-        StartCoroutine(_LoadGame(delay));   
-    }
+        Destroy(AudioManager.i.gameObject);
+        AudioManager.i = null;
 
-    IEnumerator _LoadGame(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-
-        SceneManager.LoadScene(2);
-        SceneManager.LoadScene(1, LoadSceneMode.Additive);
+        PlayerPrefs.SetInt("NEXTSCENE", 2);
+        SceneManager.LoadScene(4);
     }
 
     public void Credits()

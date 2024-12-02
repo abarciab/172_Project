@@ -19,6 +19,7 @@ public class CreditsScreen : MonoBehaviour
 
     public void Quit()
     {
+        AchievementController.i.Unlock("CREDITS");
         SceneManager.LoadScene(0);
     }
 
