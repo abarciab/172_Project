@@ -6,11 +6,14 @@ using UnityEngine;
 [ExecuteAlways]
 public class CameraState : MonoBehaviour
 {
-    public enum StateName {None, Follow, Sceneic, Castle, MouseFollow, Grave, LockOn, MouseOverShoulder, dialogue};
+    public enum StateName {None, Follow, Sceneic, MouseFollow, MouseOverShoulder, dialogue};
     public enum ParentLookTarget { None, PlayerForward, Obj, Mouse};
 
     public static CameraState i;
     void Awake() { i = this; }
+
+
+    private void OnValidate() => FindSelectedState();
 
     [System.Serializable]
     public class State
@@ -159,32 +162,6 @@ public class CameraState : MonoBehaviour
         FindSelectedState();
     }
 
-    public void LockOnEnemy(GameObject target, Vector3 objOffset) {
-
-        foreach (var s in states) {
-            if (s.displayName == StateName.LockOn) {
-                s.parentLookOffset = objOffset;
-                s.objFocus = target;
-            }
-        }
-
-        SwitchToState(StateName.LockOn);
-    }
-
-    public GameObject GetLockedEnemy() {
-        if (current.displayName != StateName.LockOn) return null;
-        return current.objFocus;
-    }
-
-    public void StopLockOn() {
-        if (current.displayName != StateName.LockOn) return;
-        SwitchToState(StateName.MouseFollow);
-    }
-
-    private void OnValidate()
-    {
-        FindSelectedState();
-    }
 
     private void Update()
     {

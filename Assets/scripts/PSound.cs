@@ -1,52 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+
+public enum PSoundKey { FOOTSTEP, FOOTSTEP_HARD, FOOTSTEP_GOOP, FOOTSTEP_RUN, STAB_SWISH, DRAW_SPEAR, START_CONVO, HURT, DEATH, HEALTH_REGEN, END_COMBAT, HEARTBEAT, ROLL}
+
+[System.Serializable]
+public class PSoundData
+{
+    [HideInInspector] public string Name;
+    public PSoundKey Key;
+    public Sound Sound;
+}
 
 public class PSound : MonoBehaviour
 {
-    [SerializeField] Sound footstep, footstepHard, footstepGoop, stabSwish, drawSpear, startConvo, runningStep;
-    private bool isDirtSurface = true;
+    [SerializeField] private List<PSoundData> data = new List<PSoundData>();
+    public Sound Get(PSoundKey key) => data.Where(x => x.Key == key).First().Sound;
+
+    private void OnValidate()
+    {
+        foreach (var d in data) d.Name = d.Key + " " + (d.Sound == null ? "(missing)" : "");
+    }
 
     private void Start()
     {
-        footstep = Instantiate(footstep);
-        footstepHard = Instantiate(footstepHard);
-        stabSwish = Instantiate(stabSwish);
-        drawSpear = Instantiate(drawSpear);
-        startConvo = Instantiate(startConvo);
-        footstepGoop = Instantiate(footstepGoop);
-        runningStep = Instantiate(runningStep);
-
+        foreach (var d in data) d.Sound = Instantiate(d.Sound);
     }
 
-    public void PlaySwoosh() {
-        stabSwish.Play(transform);
-    }
-    public void SetSoftSurface(bool isSoft)
-    {
-        isDirtSurface = isSoft;
-    }
-
-    public void PlayFootStepRun()
-    {
-        runningStep.Play(transform);
-    }
-
-    public void PlayFootStep()
-    {
-        if (Player.i.GoopTime > 0) footstepGoop.Play(transform);
-        else if (isDirtSurface) footstep.Play(transform);
-        else footstepHard.Play(transform);
-    }
-
-    public void DrawSpear()
-    {
-        drawSpear.Play(transform);
-    }
-
-    public void StartConversation()
-    {
-        startConvo.Play();
-    }
-
+    public void PlayFootStep() { }
+    public void PlayFootStepRun() { }
 }

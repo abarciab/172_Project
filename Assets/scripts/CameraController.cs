@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteAlways]
 public class CameraController : MonoBehaviour
 {
     [SerializeField] CameraState.State manualState;
@@ -20,19 +19,18 @@ public class CameraController : MonoBehaviour
 
     [Header("Dependencies")]
     [SerializeField] Player player;
-    [SerializeField] GameObject cam,camTarget;
+    [SerializeField] GameObject cam;
+    [SerializeField] GameObject camTarget;
     [SerializeField] CameraState camState;
     [SerializeField] CameraFocusManager focusMan;
 
-    CameraState.State currentState = new CameraState.State();
-    float _blendSmoothness;
+    private CameraState.State currentState = new CameraState.State();
+    private float _blendSmoothness;
 
     [HideInInspector] public float lastMouseMoveDist;
 
     private void Start()
     {
-        if (!Application.isPlaying) return;
-        
         currentState = new CameraState.State(camState.current);
     }
 
@@ -45,14 +43,9 @@ public class CameraController : MonoBehaviour
             addManualState = false;
             manualStateNum = -1;
         }
-        _blendSmoothness = Application.isPlaying ? currentState.transitionSmoothness : 1;
+        _blendSmoothness = currentState.transitionSmoothness;
 
-        if (!Application.isPlaying || !GameManager.i.paused) return;
-    }
-
-    public void SnapToState()
-    {
-        transform.forward = player.transform.forward;
+        if (!GameManager.i.paused) return;
     }
 
     private void LateUpdate()
@@ -62,12 +55,11 @@ public class CameraController : MonoBehaviour
         if (!player) player = FindObjectOfType<Player>();
         if (!player || !cam || !camState) return;
 
-        if (Application.isPlaying) mouseTransitionTimeLeft -= Time.deltaTime;
-        else mouseTransitionTimeLeft = -1;
+        mouseTransitionTimeLeft -= Time.deltaTime;
 
         var state = camState.current;
         if (useManaual) state = manualState;
-        if (!currentState.equals(state))LerpToState(state);
+        if (!currentState.equals(state)) LerpToState(state);
         if (currentState == null) return;
 
         SetCamPosition(currentState);
@@ -76,15 +68,9 @@ public class CameraController : MonoBehaviour
         SetParentLookDir(currentState);
     }
 
-    void LerpToState(CameraState.State o)
-    {
-        if (!Application.isPlaying) {
-            currentState = o;
-            return;
-        }
+    public void SnapToState() => transform.forward = player.transform.forward;
 
-        currentState.Lerp(o);
-    }
+    void LerpToState(CameraState.State o) => currentState.Lerp(o);
 
     void SetCamPosition(CameraState.State s)
     {
@@ -122,17 +108,6 @@ public class CameraController : MonoBehaviour
             transform.forward = Vector3.Lerp(transform.forward, targetForward, s.parentRotSmoothness);
             return;
         }
-
-        if (!Application.isPlaying) {
-
-            float _x = 360 * inputX;
-            float _y = Mathf.Abs(s.parentRotLimitsY.x - s.parentRotLimitsY.y) * inputY;
-
-            transform.localEulerAngles = new Vector3(_y, _x, 0);
-            return;
-        }
-
-        //if (s.parentLookTarget != CameraState.ParentLookTarget.Mouse) return;
 
         float mouseX = Input.GetAxis("Mouse X") * s.mouseXSens;
         float mouseY = Input.GetAxis("Mouse Y") * s.mouseYSens * -1;

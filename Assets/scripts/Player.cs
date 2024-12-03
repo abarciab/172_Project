@@ -7,98 +7,120 @@ using UnityEngine.Events;
 public class Player : MonoBehaviour
 {
     public static Player i;
-    [HideInInspector] public PAnimator animator;
-    [HideInInspector] public Vector3 speed3D;
-    [HideInInspector] public float forwardSpeed;
-    [SerializeField] float dialogueDisplaySpeed;
-   
-    EnemyStats closestEnemy;
-    [SerializeField] float lockOnDist = 15, speakerEndDist;
 
-    [SerializeField] private int maxHealth;
-    private int health;
+    [HideInInspector] public PSound Sounds;
+    [SerializeField] private AnimationCurve _heartbeatCurve;
+
+    //
+    //
+    //
+
 
     [Header("Prompts")]
     [SerializeField] string startTalkingPrompt = "Press E to talk";
 
-    [Header("sounds")]
-    [SerializeField] Sound hurtSound;
-    [SerializeField] Sound deathSound;
-    [SerializeField] Sound healthRegenSound;
-    [SerializeField] Sound _endCombatSound;
-    [SerializeField] private Sound _heartBeatSound;
-    [SerializeField] AnimationCurve _heartbeatCurve;
-
-    private PSound pSound;
-
-    Speaker interestedSpeaker;
-    Gate interestedInteractable;
-
     [Header("Healing")]
     [SerializeField] float healWaitTime;
     [SerializeField] int healRate;
-    float healCooldown;
+    private float healCooldown;
 
     [Header("Goop")]
     [SerializeField] int goopDmg = 1;
     [SerializeField] float goopTick;
-    [HideInInspector] public float GoopTime { get; private set; }
-    float goopTickCooldown;
+    private float goopTickCooldown;
 
-    [SerializeField] List<BaseEnemy> enemies = new List<BaseEnemy>();
-    [SerializeField] List<BaseEnemy> currentMeleeEnemies = new List<BaseEnemy>();
-    [SerializeField] float meleeRatio = 0.5f, tokenCheckTime = 5;
-    float meleeCheckCooldown;
-
-    private bool fightingEnabled;
-
-    [Header("PowerUp")]
-    [SerializeField] GameObject powerBall;
-
+    [Header("Misc")]
     public bool poweredUp;
     public bool canRun;
     public bool canRoll;
     public bool dead;
 
+    [SerializeField] float dialogueDisplaySpeed;
+    [SerializeField] float lockOnDist = 15;
+    [SerializeField] float speakerEndDist;
+    [SerializeField] private int maxHealth;
+    [SerializeField] GameObject powerBall;
+    [SerializeField] List<BaseEnemy> enemies = new List<BaseEnemy>();
+    [SerializeField] List<BaseEnemy> currentMeleeEnemies = new List<BaseEnemy>();
+    [SerializeField] float meleeRatio = 0.5f, tokenCheckTime = 5;
+
+    [HideInInspector] public float GoopTime { get; private set; }
     [HideInInspector] public UnityEvent<float> OnHealthChange;
     [HideInInspector] public UnityEvent OnStartCombat;
     [HideInInspector] public UnityEvent OnEndCombat;
     [HideInInspector] public UnityEvent OnDie;
+    [HideInInspector] public PAnimator animator;
+    [HideInInspector] public Vector3 speed3D;
+    [HideInInspector] public float forwardSpeed;
 
-    private float _healthPercent => (float)maxHealth / health;
+    private int health;
+    private float meleeCheckCooldown;
+    private bool fightingEnabled;
     private string currentLine;
     private string partialLine;
     private int partialLineIndex;
     private Coroutine displayCurrentLine;
+    private Speaker interestedSpeaker;
+    private Gate interestedInteractable;
+
+    public bool InCombat => enemies.Count > 0;
+    private float _healthPercent => (float)maxHealth / health;
+    public void SetGoopTime(float time) => GoopTime = Mathf.Max(GoopTime, time);
+    public bool FullHealth() => health == maxHealth;
+
+    private void Awake()
+    {
+        i = this;
+        animator = GetComponent<PAnimator>();
+    }
 
     private void Start()
     {
+        Sounds = GetComponentInChildren<PSound>();
         health = maxHealth;
-
-        hurtSound = Instantiate(hurtSound);
-        deathSound = Instantiate(deathSound);
-        _endCombatSound = Instantiate(_endCombatSound);
-        healthRegenSound = Instantiate(healthRegenSound);
-        _heartBeatSound = Instantiate(_heartBeatSound);
-        _heartBeatSound.PlaySilent();
-
-        pSound = GameObject.FindGameObjectWithTag("Bonnie").GetComponent<PSound>();
         powerBall.SetActive(false);
+        Sounds.Get(PSoundKey.HEARTBEAT).PlaySilent();
     }
 
-    public void SetGoopTime(float time)
+    private void Update()
     {
-        GoopTime = Mathf.Max(GoopTime, time);
+        UpdateMeleeEnemies();
+
+        if (Input.GetKeyDown(KeyCode.K)) GameManager.i.RestartScene();
+
+        if (healCooldown <= 0 && health < maxHealth) {
+            StartCoroutine(Heal());
+            Sounds.Get(PSoundKey.HEALTH_REGEN).Play();
+        }
+        healCooldown -= Time.deltaTime;
+
+        if (interestedSpeaker == null) GlobalUI.i.Do(UIAction.HIDE_PROMPT, startTalkingPrompt);
+        if (interestedSpeaker != null && Vector3.Distance(transform.position, interestedSpeaker.transform.position) > speakerEndDist) {
+            interestedSpeaker = null;
+            GlobalUI.i.Do(UIAction.HIDE_PROMPT);
+        }
+
+        if (GoopTime > 0) {
+            GoopTime -= Time.deltaTime;
+            goopTickCooldown -= Time.deltaTime;
+            if (goopTickCooldown <= 0) {
+                ChangeHealth(-goopDmg);
+                goopTickCooldown = goopTick;
+            }
+        }
+
+        for (int i = 0; i < enemies.Count; i++) {
+            if (enemies[i] == null) enemies.RemoveAt(i);
+        }
+        if (enemies.Count == 0) {
+            if (GetComponent<PMovement>().running) GetComponent<PFighting>().PutAwaySpear();
+        }
     }
 
     public void PowerUp()
     {
         poweredUp = true;
         powerBall.SetActive(true);
-    }
-    public bool FullHealth()
-    {
-        return health == maxHealth;
     }
 
     public bool CheckMelee(BaseEnemy enemy, int priority)
@@ -118,12 +140,10 @@ public class Player : MonoBehaviour
             enemies.Remove(enemy);
             if (!InCombat) {
                 OnEndCombat.Invoke();
-                _endCombatSound.Play();
+                Sounds.Get(PSoundKey.END_COMBAT).Play();
             }
         }
     }
-
-    public bool InCombat => enemies.Count > 0;
 
     public void SetSpearDamage(int damage)
     {
@@ -144,13 +164,9 @@ public class Player : MonoBehaviour
 
     public void UnfreezePlayer()
     {
-
-        //var fMan = FactManager.i;
-
         int deaths = PlayerPrefs.GetInt("deaths", 0);
         PlayerPrefs.SetInt("deaths", deaths + 1);
 
-        //if (fMan.IsPresent(tutorialComplete)) AchievementController.i.Unlock("TUTORIAL_COMPLETE");
         GetComponent<PMovement>().enabled = true;
         GetComponent<PFighting>().enabled = fightingEnabled;
     }
@@ -192,8 +208,6 @@ public class Player : MonoBehaviour
     {
         if (interestedSpeaker == null) return;
 
-        pSound.StartConversation();
-
         GetComponent<PMovement>().StopMovement();
 
         if (string.IsNullOrEmpty(currentLine)) currentLine = interestedSpeaker.GetNextLine();
@@ -219,7 +233,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    IEnumerator _DisplayCurrentLine()
+    private IEnumerator _DisplayCurrentLine()
     {
         partialLine = "";
         partialLineIndex = 0;
@@ -233,7 +247,6 @@ public class Player : MonoBehaviour
         }
         displayCurrentLine = null;
     }
-
 
     void SwitchToDialogueCam()
     {
@@ -265,46 +278,6 @@ public class Player : MonoBehaviour
         GetComponent<PFighting>().DrawSpear();
     }
 
-    private void Update() {
-        UpdateMeleeEnemies();
-
-        if (Input.GetKeyDown(KeyCode.K)) GameManager.i.RestartScene();
-        //if (Input.GetKeyDown(KeyCode.L)) GameManager.i.GetComponent<SaveManager>().SaveGame();
-        //if (Input.GetKeyDown(KeyCode.O)) GameManager.i.GetComponent<SaveManager>().ResetGame();
-
-        if (healCooldown <= 0 && health < maxHealth){
-            StartCoroutine(Heal());
-            healthRegenSound.Play();
-        }
-        healCooldown -= Time.deltaTime;
-
-        if (interestedSpeaker == null) GlobalUI.i.Do(UIAction.HIDE_PROMPT, startTalkingPrompt);
-        if (interestedSpeaker != null && Vector3.Distance(transform.position, interestedSpeaker.transform.position) > speakerEndDist) {
-            interestedSpeaker = null;
-            GlobalUI.i.Do(UIAction.HIDE_PROMPT);
-        }
-
-
-        if (GoopTime > 0) {
-            GoopTime -= Time.deltaTime;
-            goopTickCooldown -= Time.deltaTime;
-            if (goopTickCooldown <= 0) {
-                ChangeHealth(-goopDmg);
-                goopTickCooldown = goopTick;
-            }
-        }
-
-        //if (FactManager.i.IsPresent(tutorialComplete)) GetComponent<PFighting>().enabled = true;
-
-        for (int i = 0; i < enemies.Count; i++) {
-            if (enemies[i] == null) enemies.RemoveAt(i);
-        }
-        if (enemies.Count == 0) {
-            CameraState.i.StopLockOn();
-            if (GetComponent<PMovement>().running) GetComponent<PFighting>().PutAwaySpear();
-            return;
-        }
-    }
 
     void UpdateMeleeEnemies()
     {
@@ -332,6 +305,7 @@ public class Player : MonoBehaviour
     List<BaseEnemy> SortList(List<BaseEnemy> inputList)
     {
         var outputList = new List<BaseEnemy>();
+        //return inputList.OrderBy(x => x.)
 
         int currentPriority = 0;
         while (outputList.Count < inputList.Count) {
@@ -375,7 +349,8 @@ public class Player : MonoBehaviour
 
         OnHealthChange.Invoke(_healthPercent);
         if (delta < 0) DoDamageEffects();
-        _heartBeatSound.SetPercentVolume(_heartbeatCurve.Evaluate(_healthPercent));
+
+        Sounds.Get(PSoundKey.HEARTBEAT).SetPercentVolume(_heartbeatCurve.Evaluate(_healthPercent));
     }
 
     private void DoDamageEffects()
@@ -383,34 +358,29 @@ public class Player : MonoBehaviour
         healCooldown = healWaitTime;
         StopAllCoroutines();
 
-        if (health > 0) hurtSound.Play();
+        if (health > 0) Sounds.Get(PSoundKey.HURT).Play();
         CameraShake.i.Shake();
     }
 
     void Die() {
         if (dead) return;
+        dead = true;
 
         AchievementController.i.Unlock("FIRST_DEATH");
         AudioManager.i.PauseNonMusic();
         CameraState.i.GetComponent<MusicPlayer>().FadeOutCurrent(0.5f);
-        deathSound.Play();
-        dead = true;
+        Sounds.Get(PSoundKey.DEATH).Play();
         OnDie.Invoke();
         
     }
 
-    private void Awake()
-    {
-        i = this;
-        animator = GetComponent<PAnimator>();
-    }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "StoneSurface")
+        /*if (collision.gameObject.tag == "StoneSurface")
             pSound.SetSoftSurface(false);
         else
-            pSound.SetSoftSurface(true);
+            pSound.SetSoftSurface(true);*/
     }
 
 }

@@ -21,10 +21,6 @@ public class PControls : MonoBehaviour
     PFighting fight;
     Player player;
 
-    [Header("Facts")]
-    [SerializeField] Fact throwFact;
-    [SerializeField] Fact stabFact, swFact;
-
     bool toggleRun;
     bool runMode; 
 

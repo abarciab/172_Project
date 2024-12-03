@@ -1,11 +1,17 @@
 using MyBox;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 [RequireComponent(typeof(Player))]
 public class PMovement : MonoBehaviour
 {
+    private Player _p;
+
+    //
+    //
+    //
     [SerializeField] float forwardSpeed;
     [SerializeField] float runSpeed;
     [SerializeField] float stoppingFriction = 0.025f;
@@ -20,75 +26,37 @@ public class PMovement : MonoBehaviour
     [SerializeField] float KBSmoothness = 0.5f;
     [SerializeField] float goopMult = 0.5f;
 
+    [SerializeField, ReadOnly] public bool rolling;
     [HideInInspector] public bool goForward;
     [HideInInspector] public bool turnLeft;
     [HideInInspector] public bool turnRight;
     [HideInInspector] public bool goBack;
     [HideInInspector] public bool running;
-    [SerializeField, ReadOnly] public bool rolling;
     [HideInInspector] public bool strafe;
     [HideInInspector] public bool attacking;
     [HideInInspector] public bool pressLeft;
     [HideInInspector] public bool pressRight;
     [HideInInspector] public bool knockedBack;
+    [HideInInspector] public float goopTime;
+    [HideInInspector] public float rotation;
+    [HideInInspector] public float stunned;
+    [HideInInspector] public float KB;
 
-    [Header("TEST")]
-    bool stopped;
-    public float rotation;
-    public float stunned;
-    public float KB;
-    Rigidbody rb;
-    Player p;
-    Vector3 rollDir;
+    private bool stopped;
+    private Rigidbody rb;
+    private Player p;
+    private Vector3 rollDir;
+    private Vector3 source;
 
-    [Header("Sounds")]
-    [SerializeField] Sound rollSound;
-
-    [HideInInspector] public float goopTime; 
-
-    Vector3 source;
-
-    public void KnockBack(GameObject _source, float _KB, Vector3 offset)
-    {
-        if (_source == null || _KB <= 0) return;
-
-        source = _source.transform.position + offset;
-        KB = _KB;
-        knockedBack = true;
-    }
-
-    public void Roll() {
-        if (rolling) return;
-        rolling = true;
-
-        rollSound.Play();
-        rollDir = GetRollDir();
-        StartCoroutine(StopRoll());
-    }
-
-    public void StopMovement()
-    {
-        stopped = true;
-        rb.velocity = Vector3.zero;
-        rolling = false;
-    }
-
-    public void ResumeMovement()
-    {
-        stopped = false;
-    }
-
-    IEnumerator StopRoll() {
-        yield return new WaitForSeconds(dashTime);
-        rolling = false;
-    }
+    public void ResumeMovement() => stopped = false;
 
     private void Start()
     {
         rotation = transform.localEulerAngles.y;
         p = GetComponent<Player>();
         rb = GetComponent<Rigidbody>();
-        rollSound = Instantiate(rollSound);
+
+        _p = GetComponent<Player>();   
     }
 
     private void Update()
@@ -105,10 +73,36 @@ public class PMovement : MonoBehaviour
         else knockedBack = false;
     }
 
+    public void KnockBack(GameObject _source, float _KB, Vector3 offset)
+    {
+        if (_source == null || _KB <= 0) return;
+
+        source = _source.transform.position + offset;
+        KB = _KB;
+        knockedBack = true;
+    }
+
+    public async void Roll() {
+        if (rolling) return;
+        rolling = true;
+
+        _p.Sounds.Get(PSoundKey.ROLL).Play();
+        rollDir = GetRollDir();
+
+        await Task.Delay(Mathf.RoundToInt(dashTime * 1000));
+        rolling = false;
+    }
+
+    public void StopMovement()
+    {
+        stopped = true;
+        rb.velocity = Vector3.zero;
+        rolling = false;
+    }
+
     void Turn()
     {
         if (rolling || attacking) return;
-
         AlignToCamera();
     }
 
@@ -171,10 +165,9 @@ public class PMovement : MonoBehaviour
         targetRot.x = originalRot.x;
         targetRot.z = originalRot.z;
         model.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(originalRot), Quaternion.Euler(targetRot), _moveDirAlignSmoothness * Time.deltaTime);
-
     }
 
-    Vector3 GetRollDir() {
+    private Vector3 GetRollDir() {
         Vector3 dir = Vector3.zero;
         if (pressRight) dir += transform.right;
         if (pressLeft) dir += transform.right * -1;
@@ -184,9 +177,8 @@ public class PMovement : MonoBehaviour
         return dir.normalized;
     }
 
-    Vector3 GetStrafeDir() {
+    private Vector3 GetStrafeDir() {
         var strafeDir = Vector3.zero;
-        strafe = false;
         strafe = !attacking;
 
         if (pressLeft) strafeDir = transform.right * -1;
