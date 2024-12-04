@@ -127,7 +127,6 @@ public class PFighting : HitReciever {
         if (!hasSpear || !aimed) return;
 
         aimed = false;
-        CameraState.i.SwitchToState(CameraState.StateName.MouseFollow);
 
         if (chargeTime <= minAimTime) {
             chargeTime = 0;
@@ -204,7 +203,7 @@ public class PFighting : HitReciever {
         stabbing = false;
         spearBuildUp.Play();
 
-        CameraState.i.SwitchToState(CameraState.StateName.MouseOverShoulder);
+        //CameraState.i.SwitchToState(CameraState.StateName.MouseOverShoulder);
 
         staffProjectile.gameObject.SetActive(false);
 

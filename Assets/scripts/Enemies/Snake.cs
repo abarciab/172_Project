@@ -232,7 +232,9 @@ public class Snake : BaseEnemy
         projectile.GetComponent<GoopProjectile>().goopAmount = goopAmount;
         projectile.GetComponent<HitBox>().StartChecking(transform, p3ShootDamage);
         var variation = Random.insideUnitSphere * p3RandomizeRadius;
-        Vector3 targetPos = target.position + Player.i.speed3D * p3ShootPredictMult + variation;    
+
+        var targetPos = target.position;
+        //Vector3 targetPos = target.position + Player.i.speed3D * p3ShootPredictMult + variation;    
 
         AimAndFire(projectile, p3ShootAngle, targetPos, projectileStartOffset.y, shortDist:0, source: projectileSource);
         goopThrowSound.Play();
@@ -335,7 +337,8 @@ public class Snake : BaseEnemy
         orb.GetComponent<GoopProjectile>().goopAmount = goopAmount;
         orb.GetComponent<HitBox>().StartChecking(transform, orbDamage);
 
-        Vector3 targetPos = target.position + Player.i.speed3D;
+        //Vector3 targetPos = target.position + Player.i.speed3D;
+        var targetPos = target.position;
         var dir =  (targetPos + Vector3.up * orbTargetYOffset) - (transform.position + projectileStartOffset*2);
         orb.GetComponent<Rigidbody>().AddForce(orbSpeed * dir.normalized);
 
@@ -385,7 +388,8 @@ public class Snake : BaseEnemy
         var projectile = InstantiateProjectile(projectilePrefab, projectileStartOffset, projectileSize);
         projectile.GetComponent<GoopProjectile>().goopAmount = goopAmount;
         projectile.GetComponent<HitBox>().StartChecking(transform, rangedDmg);
-        Vector3 targetPos = target.position + Player.i.speed3D * predictMultiplier;
+        //Vector3 targetPos = target.position + Player.i.speed3D * predictMultiplier;
+        var targetPos = target.position;
         
         AimAndFire(projectile, projectileAngle, targetPos, projectileStartOffset.y, shortDist, source: projectileSource);
         goopThrowSound.Play();

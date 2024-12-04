@@ -20,7 +20,7 @@ public class MovementTutorial : MonoBehaviour
     [SerializeField] private float _displayTime = 1.8f;
 
     private GlobalUI _ui;
-    private CameraController _cam;
+    private GameObject _cam;
     private float _mouseMoveTime;
     private float _wTime;
     private float _aTime;
@@ -42,7 +42,6 @@ public class MovementTutorial : MonoBehaviour
         gameObject.SetActive(true);
 
         _ui = GlobalUI.i;
-        _cam = FindObjectOfType<CameraController>(true);
 
         Player.i.FreezePlayer();
         HideAllUI();
@@ -199,7 +198,7 @@ public class MovementTutorial : MonoBehaviour
 
     void CheckForMouseMove()
     {
-        _mouseMoveTime += _cam.lastMouseMoveDist;
+        //_mouseMoveTime += _cam.lastMouseMoveDist; //TEMP
         progressSlider.value = _mouseMoveTime / mouseMoveThreshold;
     }
 }

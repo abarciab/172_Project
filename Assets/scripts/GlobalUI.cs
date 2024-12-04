@@ -2,8 +2,10 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public enum UIAction { START_BOSS_FIGHT, END_BOSS_FIGHT, SET_BOSS_HEALTH, DISPLAY_QUEST_TEXT, DISPLAY_QUEST_TEXT_LONG, END_QUEST, DISPLAY_GOATS, DISPLAY_PLAYER_HP, UPDATE_HP_OVERLAY, UPDATE_GOOP_OVERLAY,
-    DISPLAY_IMAGE, UPDATE_CHARGE, BLACK_OUT, START_CONVERSATION, DISPLAY_LINE, END_CONVERSATION, HIDE_PROMPT, DISPLAY_PROMPT, SUNBLAST_READY, DISPLAY_SUNBLAST_COOLDOWN, CATCH_SPEAR, THROW_SPEAR, RECALL_READY, 
+    DISPLAY_IMAGE, UPDATE_CHARGE, BLACK_OUT, START_CONVERSATION, ANIMATE_LINE, FINISH_LINE_ANIMATION, END_CONVERSATION, HIDE_PROMPT, DISPLAY_PROMPT, SUNBLAST_READY, DISPLAY_SUNBLAST_COOLDOWN, CATCH_SPEAR, THROW_SPEAR, RECALL_READY, 
     START_COMBAT, END_COMBAT, LOSE_GAME, GO_TO_CREDITS, RESET_GAME, PAUSE, RESUME}
+
+public enum UIResult { COMPLETE_LINE_ANIMATE}
 
 public class GlobalUI : MonoBehaviour
 {
@@ -11,6 +13,7 @@ public class GlobalUI : MonoBehaviour
     private void Awake() { i = this; }
 
     [HideInInspector] public UnityEvent<UIAction, object> OnUpdateUI;
+    [HideInInspector] public UnityEvent<UIResult> OnResult;
 
     private void Start()
     {
@@ -18,6 +21,11 @@ public class GlobalUI : MonoBehaviour
         Player.i.OnStartCombat.AddListener(() => Do(UIAction.START_COMBAT));
         Player.i.OnEndCombat.AddListener(() => Do(UIAction.END_COMBAT));
         Player.i.OnDie.AddListener(() => Do(UIAction.LOSE_GAME));
+    }
+
+    public void TriggerOnResult(UIResult parameter)
+    {
+        OnResult?.Invoke(parameter);
     }
 
     public void Do(UIAction type)

@@ -5550,6 +5550,7 @@ GameObject:
   - component: {fileID: 1102902526040257228}
   - component: {fileID: 964083654665622310}
   - component: {fileID: 2169044377857516534}
+  - component: {fileID: 7051459509963037629}
   - component: {fileID: 1800732338891651329}
   - component: {fileID: 7864350523726699956}
   m_Layer: 6
@@ -5591,21 +5592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd2fa3aa1d458684ab487e15cc20a132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 964083654665622310}
-  speed3D: {x: 0, y: 0, z: 0}
-  forwardSpeed: 0
-  tutorialComplete: {fileID: 11400000, guid: d9860b0abf3606e4ba65fcd4d12ad6e9, type: 2}
-  hasSpear: {fileID: 11400000, guid: 51fee63c6e41c204a9377c814ab47668, type: 2}
-  dialogueDisplaySpeed: 0
-  lockOnDist: 15
-  speakerEndDist: 2
-  maxHealth: 180
-  startTalkingPrompt: Press F to talk
-  hurtSound: {fileID: 11400000, guid: 9e9607a9670eae74db862bcf9188834a, type: 2}
-  deathSound: {fileID: 11400000, guid: d3e3ccf7df06dbf4cbb6b5707a7191bc, type: 2}
-  healthRegenSound: {fileID: 11400000, guid: 0ea6f8eb2f26ac34b8447b8cad4ad669, type: 2}
-  _endCombatSound: {fileID: 11400000, guid: eeea8334be49b84428a888195a79bde9, type: 2}
-  _heartBeatSound: {fileID: 11400000, guid: cb951dfceecfac642beec4cbfa347e5e, type: 2}
+  Sounds: {fileID: 0}
   _heartbeatCurve:
     serializedVersion: 2
     m_Curve:
@@ -5630,20 +5617,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  healWaitTime: 15
-  healRate: 1
-  goopDmg: 5
-  goopTick: 0.5
-  goopYLevel: 75.6
-  enemies: []
-  currentMeleeEnemies: []
-  meleeRatio: 0.5
-  tokenCheckTime: 5
-  powerBall: {fileID: 8733213954435719596}
-  poweredUp: 0
-  canRun: 0
-  canRoll: 0
-  dead: 0
   OnHealthChange:
     m_PersistentCalls:
       m_Calls: []
@@ -5656,6 +5629,23 @@ MonoBehaviour:
   OnDie:
     m_PersistentCalls:
       m_Calls: []
+  healWaitTime: 15
+  healRate: 1
+  goopDmg: 5
+  goopTick: 0.5
+  poweredUp: 0
+  canRun: 0
+  canRoll: 0
+  dead: 0
+  maxHealth: 180
+  powerBall: {fileID: 8733213954435719596}
+  enemies: []
+  currentMeleeEnemies: []
+  meleeRatio: 0.5
+  tokenCheckTime: 5
+  animator: {fileID: 964083654665622310}
+  speed3D: {x: 0, y: 0, z: 0}
+  forwardSpeed: 0
 --- !u!114 &3539150935043894316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5668,38 +5658,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af23ff9578188d24799545f19051ba23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsRunning: 0
   forwardSpeed: 2.5
   runSpeed: 6
   stoppingFriction: 0.25
   rotationSpeed: 2
   cameraAlignSmoothness: 1
+  _moveDirAlignSmoothness: 5
   stepSpeed: 2
   stepTime: 0.05
   strafeSpeed: 3
   dashSpeed: 8
   dashTime: 0.6
-  KBsmoothness: 0.5
+  KBSmoothness: 0.5
   goopMult: 0.3
+  rolling: 0
   goForward: 0
   turnLeft: 0
   turnRight: 0
   goBack: 0
-  running: 0
-  alignToCamera: 0
-  stepping: 0
-  rolling: 0
   strafe: 0
   attacking: 0
   pressLeft: 0
   pressRight: 0
   knockedBack: 0
-  posing: 0
-  sitting: 0
+  goopTime: 0
   rotation: 0
   stunned: 0
   KB: 0
-  rollSound: {fileID: 11400000, guid: 1bb6c951bbd13394daa45a3dca4df825, type: 2}
-  goopTime: 0
 --- !u!114 &1102902526040257228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5712,21 +5698,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ead7ab543d858d409896760c0665bf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forward: 119
-  left: 97
-  backward: 115
-  right: 100
-  run: 304
-  standUpKey: 308
-  roll: 32
-  interactKey: 102
-  abilityKey: 101
-  pauseKey: 27
+  _forward: 119
+  _left: 97
+  _backward: 115
+  _right: 100
+  _run: 304
+  _roll: 32
+  _interactKey: 101
+  _abilityKey: 101
+  _pauseKey: 27
   mouseMove: 0
-  sitControlTime: 1
-  throwFact: {fileID: 11400000, guid: 6a6ee2881cfaeb044bad376f977827b1, type: 2}
-  stabFact: {fileID: 11400000, guid: 693987e3b05429f47baac509930c46a8, type: 2}
-  swFact: {fileID: 11400000, guid: 9bd917b47c91b0546b9fc9063b75300d, type: 2}
 --- !u!114 &964083654665622310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5762,10 +5743,13 @@ MonoBehaviour:
   maxAimTime: 0.7
   critWindow: 0
   minAimTime: 0.2
-  throwDmg: 35
-  critDmg: 80
   offset: {x: -0.4, y: 1, z: 0.5}
   aimOffset: {x: 0, y: 0.07, z: 0}
+  hasSpear: 0
+  aimed: 0
+  recalling: 0
+  charging: 0
+  spearDrawn: 0
   stabbing: 0
   chargeTime: 0
   spearObj: {fileID: 1694966950256762379}
@@ -5786,22 +5770,26 @@ MonoBehaviour:
   recallError: {fileID: 11400000, guid: 435471cbcb4b4ce4d829c96880db4c25, type: 2}
   spearBuildUp: {fileID: 11400000, guid: eefeb46203ae55147bd377478075dbc8, type: 2}
   sunBlastError: {fileID: 11400000, guid: 39ce01103ed75dd4ba453b7d99bc76a0, type: 2}
-  anyThrow: {fileID: 11400000, guid: c891c6c2eaa1ab94f892d4f9b302e11d, type: 2}
-  recall: {fileID: 11400000, guid: e43dd86f8fa85dc48ba49841edd4821d, type: 2}
-  fullThrow: {fileID: 11400000, guid: 11df60ec2b4bf054687f195753ad5e18, type: 2}
-  criticalThrow: {fileID: 11400000, guid: adbaf4a6fc836a34c9a007872c8ed031, type: 2}
-  stabbedOnce: {fileID: 11400000, guid: fc4988d58af734a479c7a0e9cd2678eb, type: 2}
-  shockWave: {fileID: 11400000, guid: b2ae771ca064de54aa11686566b9ce67, type: 2}
-  throwWeak: {fileID: 11400000, guid: bb694a4af1a305a4d84b4d6d8b0b4896, type: 2}
-  recallstarted: {fileID: 11400000, guid: 08944f24f29109a47a252ae23de34774, type: 2}
-  recallThrown: {fileID: 11400000, guid: 1583c58397ff9d5448b1efd00659a618, type: 2}
-  firstRecall: {fileID: 11400000, guid: d607353bc22c0b04d8d18668352b04de, type: 2}
-  tutorialDone: {fileID: 11400000, guid: d9860b0abf3606e4ba65fcd4d12ad6e9, type: 2}
   spearTipBall: {fileID: 8733213954435719596}
   thrownSpearBall: {fileID: 0}
   spearModel: {fileID: 0}
   heldSpearModel: {fileID: 1694966950256762379}
   RecallReady: 0
+--- !u!114 &7051459509963037629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8498954834271688486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b59fcbcd0fce7bb4ca7bc102a5aaf466, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _startTalkingPrompt: Press E to talk
+  _speakerEndDist: 0
+  _dialogueDisplaySpeed: 0.1
 --- !u!54 &1800732338891651329
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8594,13 +8582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac192df5bc63a5e4c923039723c6a7e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  footstep: {fileID: 11400000, guid: b5d22326f0e16f645b6cbce2fd1ba659, type: 2}
-  footstepHard: {fileID: 11400000, guid: 9e3f179ef8501484d82e9e162223ef48, type: 2}
-  footstepGoop: {fileID: 11400000, guid: dc73c089cdf080c498c4025f7d28d18b, type: 2}
-  stabSwish: {fileID: 11400000, guid: de9dc550c4ac53949867dd023abd6d24, type: 2}
-  drawSpear: {fileID: 11400000, guid: cc203c5c84851714aba53bd3c192b3fe, type: 2}
-  startConvo: {fileID: 11400000, guid: e18956bf3a910db4f9ef59e3c27307fc, type: 2}
-  runningStep: {fileID: 11400000, guid: dddd7c11077b38e48a5bf442a6f06506, type: 2}
+  data: []
 --- !u!4 &5666328555735627448 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7e5397dfc7036764384342c17248d7f7,
@@ -9453,13 +9435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac192df5bc63a5e4c923039723c6a7e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  footstep: {fileID: 0}
-  footstepHard: {fileID: 0}
-  footstepGoop: {fileID: 0}
-  stabSwish: {fileID: 0}
-  drawSpear: {fileID: 0}
-  startConvo: {fileID: 0}
-  runningStep: {fileID: 0}
+  data: []
 --- !u!114 &4161794609844753844
 MonoBehaviour:
   m_ObjectHideFlags: 0

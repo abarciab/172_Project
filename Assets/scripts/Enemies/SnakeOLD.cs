@@ -305,7 +305,9 @@ public class SnakeOLD : BaseEnemy
         var projectile = InstantiateProjectile(projectilePrefab, projectileStartOffset, projectileSize);
         projectile.GetComponent<GoopProjectile>().goopAmount = goopAmount;
         projectile.GetComponent<HitBox>().StartChecking(transform, rangedDmg);
-        Vector3 targetPos = target.position + Player.i.speed3D;
+        //Vector3 targetPos = target.position + Player.i.speed3D;
+        var targetPos = target.position;
+
         if (finalPhase) targetPos += new Vector3(Random.Range(-projectileSpread, projectileSpread), 0, Random.Range(-projectileSpread, projectileSpread));
         
         if (finalPhase) projectile.transform.position = projectileSource.transform.position;

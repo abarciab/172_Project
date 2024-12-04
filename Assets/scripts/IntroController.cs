@@ -24,7 +24,7 @@ public class IntroController : MonoBehaviour
     private void Update()
     {
         if (!started) {
-            GlobalUI.i.Do(UIAction.DISPLAY_LINE, "I should probably go speak with gran...");
+            GlobalUI.i.Do(UIAction.ANIMATE_LINE, "I should probably go speak with gran...");
             started = true;
         }
 

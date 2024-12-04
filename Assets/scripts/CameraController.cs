@@ -1,136 +1,93 @@
+using MyBox;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] CameraState.State manualState;
-    [Space(18)]
-    [SerializeField] bool useManaual;
-    [SerializeField] bool addManualState;
-    [SerializeField] int manualStateNum;
+    [SerializeField] private Vector2 _fovRanges;
+    [SerializeField] private float _fovSnappiness = 5;
 
-    [Header("Transition parameters")]
-    [SerializeField] float blendSmoothness;
-    [SerializeField] float fixedToMouseTransitionTime = 1, parentMoveSmoothness = 0.5f;
-    [HideInInspector] public float mouseTransitionTimeLeft;
-    [SerializeField, Range(0,1 )] float inputX, inputY;
-    [SerializeField] bool debug;
+    [SerializeField] private float _posSnapiness;
+    [SerializeField] private float _rotSnapiness;
 
-    [Header("Dependencies")]
-    [SerializeField] Player player;
-    [SerializeField] GameObject cam;
-    [SerializeField] GameObject camTarget;
-    [SerializeField] CameraState camState;
-    [SerializeField] CameraFocusManager focusMan;
+    [SerializeField] private Camera _camera;
+    [SerializeField] private Vector3 _offset;
+    [SerializeField] private Vector3 _targetOffset;
+    [SerializeField] private float _rotSpeed;
+    [SerializeField] private float _aimSnapiness = 10;
 
-    private CameraState.State currentState = new CameraState.State();
-    private float _blendSmoothness;
+    private Transform _player;
+    private Vector3 _targetPosition;
+    private Vector3 _aimTarget;
+    [SerializeField, ReadOnly] private bool _hasAimTarget;
 
-    [HideInInspector] public float lastMouseMoveDist;
+    public void ClearTarget() => _hasAimTarget = false;
 
     private void Start()
     {
-        currentState = new CameraState.State(camState.current);
+        _player = Player.i.transform;
     }
 
     private void Update()
     {
-        if (GameManager.i && GameManager.i.paused) return;
+        SetPos();
+        Rotate();
+        AimCamera();
+        SetFOV();
+    }
 
-        if (addManualState) {
-            camState.AddState(manualState, manualStateNum);
-            addManualState = false;
-            manualStateNum = -1;
+    public void SetTarget(Vector3 targetPoint)
+    {
+        print("set target");
+        _hasAimTarget = true;
+        _aimTarget = targetPoint;
+    }
+
+    private void SetFOV()
+    {
+        float targetFOV = Player.i.IsRunning ? _fovRanges.y : _fovRanges.x;
+        _camera.fieldOfView = Mathf.Lerp(_camera.fieldOfView, targetFOV, _fovSnappiness * Time.deltaTime);
+    }
+
+    private void Rotate()
+    {
+        if (_hasAimTarget) {
+            var current = transform.rotation;
+            transform.LookAt(_aimTarget);
+            var euler = transform.localEulerAngles;
+            euler.x = euler.z = 0;
+            transform.localEulerAngles = euler;
+            transform.rotation = Quaternion.Lerp(current, transform.rotation, _aimSnapiness * Time.deltaTime);  
         }
-        _blendSmoothness = currentState.transitionSmoothness;
-
-        if (!GameManager.i.paused) return;
-    }
-
-    private void LateUpdate()
-    {
-        if (GameManager.i && GameManager.i.paused) return;
-
-        if (!player) player = FindObjectOfType<Player>();
-        if (!player || !cam || !camState) return;
-
-        mouseTransitionTimeLeft -= Time.deltaTime;
-
-        var state = camState.current;
-        if (useManaual) state = manualState;
-        if (!currentState.equals(state)) LerpToState(state);
-        if (currentState == null) return;
-
-        SetCamPosition(currentState);
-        SetCamLookDir(currentState);
-        SetFollow(currentState);
-        SetParentLookDir(currentState);
-    }
-
-    public void SnapToState() => transform.forward = player.transform.forward;
-
-    void LerpToState(CameraState.State o) => currentState.Lerp(o);
-
-    void SetCamPosition(CameraState.State s)
-    {
-        var pos = cam.transform.localPosition;
-        pos.x = s.camX;
-        pos.y = s.camY;
-        pos.z = s.camZ;
-
-        cam.transform.localPosition = Vector3.Lerp(cam.transform.localPosition, pos, _blendSmoothness);
-        camTarget.transform.localPosition = Vector3.Lerp(camTarget.transform.localPosition, pos + s.camTargetOffset, _blendSmoothness);
-    }
-    void SetCamLookDir(CameraState.State s)
-    {
-        var targetRot = cam.transform.localEulerAngles;
-        var original = targetRot;
-        cam.transform.LookAt(camTarget.transform);
-        targetRot.y = cam.transform.localEulerAngles.y;
-        cam.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(original), Quaternion.Euler(targetRot), _blendSmoothness);
-    }
-
-    void SetFollow(CameraState.State s)
-    {
-        if (s.followPlayer) transform.position = Vector3.Lerp(transform.position, player.transform.position + s.parentPosOffset, parentMoveSmoothness);
-    }
-
-    void SetParentLookDir(CameraState.State s)
-    {
-        Vector3 targetForward = transform.position;
-        if (s.parentLookTarget == CameraState.ParentLookTarget.Obj && s.objFocus == null) s.objFocus = focusMan.GetFocus(s.focusIndex);
-
-        if (s.parentLookTarget == CameraState.ParentLookTarget.PlayerForward || mouseTransitionTimeLeft > 0) targetForward = player.transform.forward;
-        if (s.parentLookTarget == CameraState.ParentLookTarget.Obj && s.objFocus != null) targetForward = (s.objFocus.transform.position + s.parentLookOffset - transform.position).normalized; 
-
-        if ((s.parentLookTarget != CameraState.ParentLookTarget.None && s.parentLookTarget != CameraState.ParentLookTarget.Mouse) || mouseTransitionTimeLeft > 0) {
-            transform.forward = Vector3.Lerp(transform.forward, targetForward, s.parentRotSmoothness);
-            return;
+        else {
+            var inputDelta = Input.GetAxis("Mouse X");
+            inputDelta = Mathf.Clamp(inputDelta, -7, 7);
+            transform.Rotate(0, inputDelta * _rotSpeed * Time.deltaTime * 100, 0);
         }
 
-        float mouseX = Input.GetAxis("Mouse X") * s.mouseXSens;
-        float mouseY = Input.GetAxis("Mouse Y") * s.mouseYSens * -1;
-
-        transform.localEulerAngles += new Vector3(mouseY, mouseX, 0);
-        float y = transform.localEulerAngles.x;
-        if (y > 180 && y < 360 + s.parentRotLimitsY.x) {
-            transform.localEulerAngles = new Vector3(360 + s.parentRotLimitsY.x, transform.localEulerAngles.y, 0);
-        }
-        else if (y < 180 && y > s.parentRotLimitsY.y) {
-            transform.localEulerAngles = new Vector3(s.parentRotLimitsY.y, transform.localEulerAngles.y, 0);
-        }
-
-        lastMouseMoveDist = Mathf.Abs(mouseX) + Mathf.Abs(mouseY);
     }
 
-    private void OnDrawGizmos()
+    private void AimCamera()
     {
-        if (!debug) return;
+        Vector3 aimPos;
+        if (_hasAimTarget) aimPos = _aimTarget; 
+        else aimPos = transform.TransformPoint(_targetOffset);
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(camTarget.transform.position, 0.1f);
-        Gizmos.color = Color.white;
-        Gizmos.DrawSphere(cam.transform.position, 0.1f);
+        Debug.DrawLine(_camera.transform.position, aimPos, Color.red);
+        var current = _camera.transform.rotation;
+        _camera.transform.LookAt(aimPos);
+        _camera.transform.rotation = Quaternion.Lerp(current, _camera.transform.rotation, _aimSnapiness * Time.deltaTime);
+    }
+
+    private void SetPos()
+    {
+        _targetPosition = _player.TransformPoint(_offset);
+    }
+
+    private void FixedUpdate()
+    {
+        transform.position = Vector3.Lerp(transform.position, _targetPosition, _posSnapiness * Time.fixedDeltaTime);
     }
 }

@@ -33,12 +33,12 @@ public class PAnimator : MonoBehaviour
     private void Update()
     {
         bool frozen = false; //TEMP
-        bool moving = Mathf.Abs(p.forwardSpeed) > minWalkSpeed && !frozen;
+        bool moving = Mathf.Abs(p.ForwardSpeed) > minWalkSpeed && !frozen;
 
         anim.SetBool("Hurt", move.knockedBack);
         anim.SetBool("Moving", moving);
-        anim.SetBool("Backwards", moving && p.forwardSpeed <= -0.1f);
-        anim.SetBool("Running", move.running && !move.rolling);
+        anim.SetBool("Backwards", moving && p.ForwardSpeed <= -0.1f);
+        anim.SetBool("Running", move.IsRunning && !move.rolling);
         anim.SetBool("TurningLeft", move.turnLeft && !moving);
         anim.SetBool("TurningRight", move.turnRight && !moving);
         anim.SetBool("StaffDrawn", fight.SpearOut());
@@ -61,7 +61,7 @@ public class PAnimator : MonoBehaviour
 
         anim.SetBool("Attacking", attacking);
 
-        if ((move.running || move.rolling || move.knockedBack) && attacking) {
+        if ((move.IsRunning || move.rolling || move.knockedBack) && attacking) {
             fight.EndAttack();
         }
 

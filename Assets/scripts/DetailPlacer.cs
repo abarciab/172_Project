@@ -21,7 +21,11 @@ public class DetailPlacer : MonoBehaviour
         Scatter();
     }
 
-    [ButtonMethod]
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P)) Scatter();
+    }
+
     private void Scatter()
     {
         if (_prefabs.Count == 0) return;

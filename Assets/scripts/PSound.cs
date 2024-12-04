@@ -26,6 +26,8 @@ public class PSound : MonoBehaviour
     private void Start()
     {
         foreach (var d in data) d.Sound = Instantiate(d.Sound);
+
+        Get(PSoundKey.HEARTBEAT).PlaySilent();
     }
 
     public void PlayFootStep() { }

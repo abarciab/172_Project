@@ -8,7 +8,9 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager i;
-    
+
+    public CameraController Camera;
+
     public bool paused { get; private set; }
 
     List<CheckPointData> checkPoints = new List<CheckPointData>();
@@ -34,7 +36,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform _player;
     //[SerializeField] private MovementTutorial _firstTutorial;
     //[SerializeField] private List<Transform> _playerTpPoints;
-    [SerializeField] private CameraController _cam;
+    [SerializeField] private GameObject _cam;
  
     [SerializeField, ReadOnly] public float GameProgress;
 
@@ -89,7 +91,7 @@ public class GameManager : MonoBehaviour
     {
         //_firstTutorial.Activate();
         //_player.SetPositionAndRotation(_playerTpPoints[0].position, _playerTpPoints[0].rotation);
-        if (_cam) _cam.SnapToState();
+        //if (_cam) _cam.SnapToState();
     }
 
     public void AddNewSpeaker(string name)

@@ -8,65 +8,83 @@ using UnityEngine;
 public class PMovement : MonoBehaviour
 {
     private Player _p;
+    
+    [HideInInspector] public bool IsRunning;
+
+    [Header("Controls")]
+    [SerializeField, SearchableEnum] KeyCode _forward = KeyCode.W;
+    [SerializeField, SearchableEnum] KeyCode _left = KeyCode.A;
+    [SerializeField, SearchableEnum] KeyCode _backward = KeyCode.S;
+    [SerializeField, SearchableEnum] KeyCode _right = KeyCode.D;
+    [SerializeField, SearchableEnum] KeyCode _run = KeyCode.LeftShift;
+    [SerializeField, SearchableEnum] KeyCode _roll = KeyCode.Space;
 
     //
     //
     //
+
+    [Header("movement")]
     [SerializeField] float forwardSpeed;
     [SerializeField] float runSpeed;
+    [SerializeField] float goopMult = 0.5f;
     [SerializeField] float stoppingFriction = 0.025f;
+
+    [Header("Rotation")]
     [SerializeField] float rotationSpeed = 0.5f;
     [SerializeField] float cameraAlignSmoothness = 0.2f;
     [SerializeField] float _moveDirAlignSmoothness = 5;
-    [SerializeField] float stepSpeed;
-    [SerializeField] float stepTime;
-    [SerializeField] float strafeSpeed = 4;
+
+    [Header("Rolling")]
     [SerializeField] float dashSpeed;
     [SerializeField] float dashTime;
-    [SerializeField] float KBSmoothness = 0.5f;
-    [SerializeField] float goopMult = 0.5f;
 
-    [SerializeField, ReadOnly] public bool rolling;
-    [HideInInspector] public bool goForward;
+    //
+    //
+    //
+
+
+    [SerializeField] float KBSmoothness = 0.5f;
+
+    [HideInInspector] public bool rolling;
+
     [HideInInspector] public bool turnLeft;
     [HideInInspector] public bool turnRight;
-    [HideInInspector] public bool goBack;
-    [HideInInspector] public bool running;
     [HideInInspector] public bool strafe;
     [HideInInspector] public bool attacking;
-    [HideInInspector] public bool pressLeft;
-    [HideInInspector] public bool pressRight;
     [HideInInspector] public bool knockedBack;
     [HideInInspector] public float goopTime;
     [HideInInspector] public float rotation;
     [HideInInspector] public float stunned;
     [HideInInspector] public float KB;
 
-    private bool stopped;
-    private Rigidbody rb;
-    private Player p;
-    private Vector3 rollDir;
-    private Vector3 source;
+    private bool _stopped;
+    private Vector3 _rollDir;
+    private Vector3 _source;
 
-    public void ResumeMovement() => stopped = false;
+    public float ForwardSpeed => Vector3.Dot(_p.RB.velocity, transform.GetChild(0).forward);
+    public void ResumeMovement() => _stopped = false;
 
     private void Start()
     {
         rotation = transform.localEulerAngles.y;
-        p = GetComponent<Player>();
-        rb = GetComponent<Rigidbody>();
-
         _p = GetComponent<Player>();   
     }
 
     private void Update()
     {
+        if (_stopped) return;
+
+        //if (!fight.stabbing && !fight.chargingSpear() && Input.GetKeyDown(_roll) && player.canRoll) move.Roll();
+        if (Input.GetKeyDown(_roll)) Roll();
+
+        IsRunning = Input.GetKey(_run);
+
+        //if (!Input.GetKey(_forward) && !Input.GetKey(_left) && !Input.GetKey(_right) && !Input.GetKey(_backward)) move.IsRunning = false;
+
         goopTime -= Time.deltaTime;
 
-        SetPlayerStats();
+        if (!rolling || !attacking) AlignToCamera();
 
-        if (stopped) return;
-        Turn();
         Move();
 
         if (KB > 0.01f) KB = Mathf.Lerp(KB, 0, KBSmoothness);
@@ -77,7 +95,7 @@ public class PMovement : MonoBehaviour
     {
         if (_source == null || _KB <= 0) return;
 
-        source = _source.transform.position + offset;
+        this._source = _source.transform.position + offset;
         KB = _KB;
         knockedBack = true;
     }
@@ -87,7 +105,7 @@ public class PMovement : MonoBehaviour
         rolling = true;
 
         _p.Sounds.Get(PSoundKey.ROLL).Play();
-        rollDir = GetRollDir();
+        _rollDir = GetRollDir();
 
         await Task.Delay(Mathf.RoundToInt(dashTime * 1000));
         rolling = false;
@@ -95,19 +113,13 @@ public class PMovement : MonoBehaviour
 
     public void StopMovement()
     {
-        stopped = true;
-        rb.velocity = Vector3.zero;
+        _stopped = true;
+        _p.RB.velocity = Vector3.zero;
         rolling = false;
     }
 
-    void Turn()
-    {
-        if (rolling || attacking) return;
-        AlignToCamera();
-    }
-
     void AlignToCamera() {
-        var camForward = CameraState.i.transform.forward;
+        var camForward = GameManager.i.Camera.transform.forward;
         camForward.y = 0;
         transform.forward = Vector3.Lerp(transform.forward, camForward, cameraAlignSmoothness * Time.deltaTime);
 
@@ -119,27 +131,27 @@ public class PMovement : MonoBehaviour
 
     void Move()
     {
-        float speed = running ? runSpeed : forwardSpeed;
+        float speed = IsRunning ? runSpeed : forwardSpeed;
         speed = goopTime > 0 ? speed * goopMult : speed;
         if (attacking) speed = 0;
 
-        var verticalVel = rb.velocity;
+        var verticalVel = _p.RB.velocity;
         verticalVel.x = verticalVel.z = 0;
 
         Vector3 horizontalDir = !attacking ? GetStrafeDir() : Vector3.zero;
         var KBdir = Vector3.zero;
         if (knockedBack) {
-            KBdir = (transform.position - source).normalized;
+            KBdir = (transform.position - _source).normalized;
             KBdir.y = 0;
         }
 
-        if (stopped) rb.velocity = Vector3.zero;
-        else if (knockedBack) rb.velocity = KBdir * KB + verticalVel;
-        else if (rolling) rb.velocity = (rollDir * dashSpeed) + verticalVel;
+        if (_stopped) _p.RB.velocity = Vector3.zero;
+        else if (knockedBack) _p.RB.velocity = KBdir * KB + verticalVel;
+        else if (rolling) _p.RB.velocity = (_rollDir * dashSpeed) + verticalVel;
 
-        else if (goForward) rb.velocity = (transform.forward + horizontalDir).normalized * speed + verticalVel;
-        else if (goBack) rb.velocity = (transform.forward * -1 + horizontalDir).normalized * speed + verticalVel;
-        else rb.velocity = Vector3.Lerp(rb.velocity, horizontalDir * speed + verticalVel, stoppingFriction);
+        else if (Input.GetKey(_forward)) _p.RB.velocity = (transform.forward + horizontalDir).normalized * speed + verticalVel;
+        else if (Input.GetKey(_backward)) _p.RB.velocity = (transform.forward * -1 + horizontalDir).normalized * speed + verticalVel;
+        else _p.RB.velocity = Vector3.Lerp(_p.RB.velocity, horizontalDir * speed + verticalVel, stoppingFriction);
 
         if (attacking) {
             Transform model = transform.GetChild(0);
@@ -152,15 +164,15 @@ public class PMovement : MonoBehaviour
     {
         Transform model = transform.GetChild(0);
 
-        if (p.InCombat || GetComponent<PFighting>().chargingSpear()) { 
+        if (_p.InCombat || GetComponent<PFighting>().chargingSpear()) { 
             model.transform.localEulerAngles = Vector3.zero;  
             return; 
         }
 
-        if (rb.velocity.magnitude <= 0.01f) return;
+        if (_p.RB.velocity.magnitude <= 0.01f) return;
         
         var originalRot = model.transform.localEulerAngles;
-        model.LookAt(transform.position + rb.velocity.normalized);
+        model.LookAt(transform.position + _p.RB.velocity.normalized);
         var targetRot = model.transform.localEulerAngles;
         targetRot.x = originalRot.x;
         targetRot.z = originalRot.z;
@@ -169,10 +181,10 @@ public class PMovement : MonoBehaviour
 
     private Vector3 GetRollDir() {
         Vector3 dir = Vector3.zero;
-        if (pressRight) dir += transform.right;
-        if (pressLeft) dir += transform.right * -1;
-        if (goForward) dir += transform.forward;
-        if (goBack) dir += transform.forward * -1;
+        if (Input.GetKey(_right)) dir += transform.right;
+        if (Input.GetKey(_left)) dir += transform.right * -1;
+        if (Input.GetKey(_forward)) dir += transform.forward;
+        if (Input.GetKey(_backward)) dir += transform.forward * -1;
 
         return dir.normalized;
     }
@@ -181,16 +193,10 @@ public class PMovement : MonoBehaviour
         var strafeDir = Vector3.zero;
         strafe = !attacking;
 
-        if (pressLeft) strafeDir = transform.right * -1;
-        else if (pressRight) strafeDir = transform.right;
+        if (Input.GetKey(_right)) strafeDir = transform.right;
+        if (Input.GetKey(_left)) strafeDir = transform.right * -1;
         else strafe = false;
 
         return strafeDir;
-    }
-
-    void SetPlayerStats()
-    {
-        p.speed3D = rb.velocity;
-        p.forwardSpeed = Vector3.Dot(rb.velocity, transform.GetChild(0).forward);
     }
 }

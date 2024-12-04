@@ -1,132 +1,135 @@
+using MyBox;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class ConversationData
+{
+    [HideInInspector] public string Name;
+    [DisplayInspector] public Conversation Convo;
+    public bool Enabled;
+}
+
 public class Speaker : MonoBehaviour
 {
-    [System.Serializable]
-    public class ConversationData
-    {
-        [HideInInspector] public string name;
-        public Conversation convo;
-        public bool enabled;
-        public int priority;
-        public Fact deleteWhenTrue;
-        public Fact EnableWhenTrue;
-    }
+    public string Name;
+    [SerializeField] private List<ConversationData> _conversations = new List<ConversationData>();
+    [SerializeField] private Sound _bark;
+    [SerializeField] Vector2 _barkCooldownRange = new Vector2(2, 5);
+    [SerializeField] private Collider _trigger;
+    [SerializeField] private float _rotateSnappiness = 10;
+
+    [Header("Offsets")]
+    [SerializeField] private Vector3 _cameraAimOffset;
+
+    private float _barkCooldown;
+    private bool _talking;
+    private bool _hasConversation;
+    private bool _interested;
+
+    private List<string> _currentLines = new List<string>();
+    private int _currentIndex;
+    private Transform _player;
+
+    public string CurrentLine => _currentLines[_currentIndex];
+    private Vector3 _camAimPoint => transform.TransformPoint(_cameraAimOffset);
 
     private void OnValidate()
     {
-        foreach (var c in conversations) if (c.convo) c.name = c.convo.name;
+        foreach (var c in _conversations) if (c.Convo) c.Name = c.Convo.name;
     }
-
-    [SerializeField] List<ConversationData> conversations = new List<ConversationData>();
-    public string characterName;
-    [SerializeField] GameObject speechBubble;
-    public bool talking;
-    public Vector3 cameraOffset;
-    public Vector2 speakerDistance;
-    [SerializeField] Vector3 SourceLocalPosition;
-    [SerializeField] Vector2 callRange = new Vector2(2, 5);
-    float callCooldown;
-    Sound convoSound;
 
     private void Start()
     {
-        foreach (var c in conversations) c.convo.Init(transform.GetChild(0), SourceLocalPosition);
-        callCooldown = Random.Range(callRange.x, callRange.y);
-        if (conversations.Count > 0 && conversations[0].convo.voiceLines != null) convoSound = Instantiate(conversations[0].convo.voiceLines);
+        _bark = Instantiate(_bark);
+
+        _hasConversation = GetCurrentConversation() != null;
+        _trigger.enabled = _hasConversation;
+        _player = Player.i.transform;
     }
 
     private void Update()
     {
-        callCooldown -= Time.deltaTime;
-        if (callCooldown <= 0) {
-            callCooldown = Random.Range(callRange.x, callRange.y);
-            //print("Activating");
-            if (convoSound) convoSound.Play(transform);
-        }
-        //if (GlobalUI.i.Talking) convoSound.Stop();
+        if (!_hasConversation) return;
 
-        for (int i = 0; i < conversations.Count; i++) {
-            CheckStatus(conversations[i]);
-        }
-
-        speechBubble.SetActive(false);
-        //if (!GlobalUI.i.Talking) foreach (var c in conversations) if (c.enabled) speechBubble.SetActive(true);
+        if (_interested) FacePlayer();
+        Bark();
     }
 
-    void CheckStatus(ConversationData c)
+    private void FacePlayer()
     {
-        if (c.EnableWhenTrue != null && FactManager.i.IsPresent(c.EnableWhenTrue)) c.enabled = true;
-        if (c.deleteWhenTrue != null && FactManager.i.IsPresent(c.deleteWhenTrue)) c.enabled = false;
+        var current = transform.rotation;
+        transform.LookAt(_player.position);
+        var euler = transform.localEulerAngles;
+        euler.x = euler.z = 0;
+        transform.localEulerAngles = euler;
+        transform.rotation = Quaternion.Lerp(current, transform.rotation, _rotateSnappiness * Time.deltaTime);
+    }
+
+    private void Bark()
+    { 
+        _barkCooldown -= Time.deltaTime;
+        if (_barkCooldown > 0) return;
+
+        _barkCooldown = Random.Range(_barkCooldownRange.x, _barkCooldownRange.y);
+        _bark.Play(restart: false);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Player>();
-        if (player && !string.Equals(GetNextLine(true), "END")) player.SpeakerShowInterest(this);
-    }
-
-    public string GetNextLine(bool reset = false)
-    {
-        GameManager.i.AddNewSpeaker(characterName);
-        var convoData = GetCurrentConvo();
-        if (convoData == null) {
-            StartCoroutine(WaitThenShowInterest());
-            return "END";
+        if (player) {
+            player.ShowInterest(this);
+            _interested = true; 
         }
-
-        if (reset) convoData.convo.DontPlay(1);
-        string nextLine = convoData.convo.nextLine;
-        if (reset) convoData.convo.StepBack();
-        return nextLine;
     }
 
-    IEnumerator WaitThenShowInterest()
+    private void OnTriggerExit(Collider other)
     {
-        bool valid = false;
-        foreach (var c in conversations) if (c.enabled) valid = true;
-        if (!valid) yield break;
+        if (_talking) return;
 
-        yield return new WaitForSeconds(0.6f);
-        Player.i.SpeakerShowInterest(this);
+        var player = other.GetComponent<Player>();
+        if (player) {
+            player.StopInterest(this);
+            _interested = false;
+        }
     }
 
-    ConversationData GetCurrentConvo()
+    public void StartConversation()
     {
-        var valid = new List<ConversationData>();
-        foreach (var c in conversations) if (c.enabled) valid.Add(c);
+        GameManager.i.AddNewSpeaker(Name); //for an achievemnet, refactor later
+        GameManager.i.Camera.SetTarget(_camAimPoint);
 
-        if (valid.Count == 0) return null;
+        var convoData = GetCurrentConversation();
+        _currentIndex = -1;
+        _currentLines = convoData.Convo.Lines;
+        _talking = true;
+    }
 
-        var highestPriority = valid[0];
-        foreach (var c in valid) if (c.priority > highestPriority.priority) highestPriority = c;
+    public string GetNextLine()
+    {
+        _currentIndex += 1;
 
-        return highestPriority;
+        if (_currentIndex >= _currentLines.Count) return null;
+        else return _currentLines[_currentIndex];
+    }
+
+    ConversationData GetCurrentConversation()
+    {
+        foreach (var c in _conversations) if (c.Enabled) return c;
+        return null;
     }
 
     public void EndConversation()
     {
-        talking = false;
-        var convoData = GetCurrentConvo();
-        if (convoData == null) return;
-
-        if (convoData.convo.endConvoFact.Count > 0) foreach (var f in convoData.convo.endConvoFact) FactManager.i.AddFact(f);
-        if (convoData.convo.endConvoRemoveFact != null) FactManager.i.RemoveFact(convoData.convo.endConvoRemoveFact);
-    }
-
-    public Vector3 GetStandPosition()
-    {
-        Transform model = transform.GetChild(0);
-        return transform.position + (model.forward * speakerDistance.x) + (model.right * speakerDistance.y);
+        _talking = false;
+        _interested = false;
     }
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position + cameraOffset, 0.05f);
-        Gizmos.DrawWireSphere(GetStandPosition(), 0.05f);
-        Gizmos.DrawWireSphere(transform.position + (transform.forward * SourceLocalPosition.z), 0.05f);
+        Gizmos.DrawWireSphere(_camAimPoint, 0.05f);
     }
 }

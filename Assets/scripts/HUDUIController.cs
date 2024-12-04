@@ -58,9 +58,18 @@ public class HUDUIController : MonoBehaviour
         }
         if (_bottomLeft) {
             bool showBL = type == UIAction.START_COMBAT || type == UIAction.DISPLAY_PLAYER_HP || type == UIAction.DISPLAY_SUNBLAST_COOLDOWN;
+            bool hideBL = type == UIAction.END_COMBAT;
+            
             if (showBL) _bottomLeft.SetActive(true);
-            else if (type == UIAction.END_COMBAT) _bottomLeft.SetActive(false);
+            else if (hideBL) _bottomLeft.SetActive(false);
         }
+        if (type == UIAction.START_CONVERSATION) ChangeConversationState(true);
+        if (type == UIAction.END_CONVERSATION) ChangeConversationState(false);
+    }
 
+    private void ChangeConversationState(bool startingConvo)
+    {
+        if (_bottomLeft) _bottomLeft.SetActive(!startingConvo);
+        if (_crossHair) _crossHair.SetActive(!startingConvo);
     }
 }

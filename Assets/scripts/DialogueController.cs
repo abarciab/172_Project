@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
-#nullable enable
 public class DialogueController : MonoBehaviour
 {
     [Header("textBoxes")]
@@ -14,14 +14,19 @@ public class DialogueController : MonoBehaviour
     [Header("Sounds")]
     [SerializeField] private Sound _turnPageSound;
     [SerializeField] private Sound _endConvoSound;
-    public bool Talking { get; private set; }
 
+    [Header("Misc")]
+    [SerializeField] private GameObject _textBoxParent;
+    [SerializeField] private float _letterDisplayTime = 0.05f;
+
+    private bool _talking;
     private string _currentSpeaker;
+    private string _currentLine;
+    private bool _animating;
 
     private void Start()
     {
-        _mainText.gameObject.SetActive(false);
-        _nameText.gameObject.SetActive(false);
+        _textBoxParent.SetActive(false);
 
         _turnPageSound = Instantiate(_turnPageSound);
         _endConvoSound = Instantiate(_endConvoSound);
@@ -34,7 +39,8 @@ public class DialogueController : MonoBehaviour
     private void OnUpdateUI(UIAction type, object parameter)
     {
         if (type == UIAction.START_CONVERSATION && parameter is string speakerName) StartConversation(speakerName);
-        else if (type == UIAction.DISPLAY_LINE && parameter is string line) DisplayLine(line);
+        else if (type == UIAction.ANIMATE_LINE && parameter is string line) AnimateLine(line);
+        else if (type == UIAction.FINISH_LINE_ANIMATION) FinishAnimation();
         else if (type == UIAction.END_CONVERSATION) EndConversation();
         else if (type == UIAction.DISPLAY_PROMPT && parameter is string displayPrompt) DisplayPrompt(displayPrompt);
 
@@ -61,22 +67,37 @@ public class DialogueController : MonoBehaviour
     private void StartConversation(string speakerName)
     {
         _currentSpeaker = speakerName;
-        _nameText.gameObject.SetActive(true);
+        _textBoxParent.SetActive(true);
         _nameText.text = _currentSpeaker;
+        _mainText.text = "";
     }
 
-    private void DisplayLine(string line)
+    private async void AnimateLine(string line)
     {
-        _mainText.gameObject.SetActive(true);
-        _mainText.text = line;
         _turnPageSound.Play();
+        _mainText.text = "";
+        _currentLine = line;
+
+        _animating = true;
+        foreach (var letter in line) {
+            if (!_animating) return;
+            _mainText.text += letter;
+            await Task.Delay(Mathf.RoundToInt(_letterDisplayTime * 1000));
+        }
+        GlobalUI.i.TriggerOnResult(UIResult.COMPLETE_LINE_ANIMATE);
+        _animating = false;
+    } 
+
+    private void FinishAnimation()
+    {
+        _animating = false;
+        _mainText.text = _currentLine;
     }
 
     private void EndConversation()
     {
-        _nameText.gameObject.SetActive(false);
-        _mainText.gameObject.SetActive(false);
-        Talking = false;
+        _textBoxParent.SetActive(false);
+        _talking = false;
         _endConvoSound.Play();
     }
 }
