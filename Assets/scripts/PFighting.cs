@@ -3,7 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Player))]
 public class PFighting : HitReciever {
+
+    private Player _p;
+
+    //
+    //
+    //
 
     [SerializeField] Rigidbody staffProjectile;
     [SerializeField] float throwForce, maxAimTime, critWindow, minAimTime;
@@ -43,7 +50,6 @@ public class PFighting : HitReciever {
     public bool Recalling() => recalling;
     public void DrawSpear() => spearDrawn = true;
     public bool HasSpear() => hasSpear;
-    public void PutAwaySpear() { }
     public float GetSunblastCooldown() => sunblastCooldown;
 
     private void Start()
@@ -60,6 +66,8 @@ public class PFighting : HitReciever {
         critSucsess = Instantiate(critSucsess);
         spearBuildUp = Instantiate(spearBuildUp);
         sunBlastError = Instantiate(sunBlastError);
+
+        _p = GetComponent<Player>();
     }
 
     private void Update()
@@ -71,12 +79,15 @@ public class PFighting : HitReciever {
         thrownSpearBall.SetActive(!hasSpear && Player.i.poweredUp);
 
         if (sunblastCooldown > 0) DecrementSunblastCooldown();
-
-
         if (charging) chargeTime += Time.deltaTime;
 
         float chargePercent = Mathf.Min(chargeTime, maxAimTime) / maxAimTime;
         GlobalUI.i.Do(UIAction.UPDATE_CHARGE, chargePercent);
+    }
+
+    public void PutAwaySpear()
+    {
+        spearDrawn = false;
     }
 
     private void DecrementSunblastCooldown()

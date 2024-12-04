@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro.EditorUtilities;
 using UnityEngine;
 
 public class CorruptExplorer : BaseEnemy
@@ -34,23 +35,12 @@ public class CorruptExplorer : BaseEnemy
     [Header("Sounds")]
     [SerializeField] Sound launchSound;
 
-    public void LaunchProjectile()
+    protected override void Start()
     {
-        busy = false;
-        var projectile = InstantiateProjectile(projectilePrefab, projectileStartOffset, projectileSize);
-        projectile.GetComponent<GoopProjectile>().goopAmount = goopAmount;
-        projectile.GetComponent<HitBox>().StartChecking(transform, rangedDmg);
-        AimAndFire(projectile, projectileAngle);
-        anim.SetBool(rangedAnim, false);
-        launchSound.Play(transform);
+        base.Start();
+        launchSound = Instantiate(launchSound);
     }
 
-    protected override void Die()
-    {
-        base.Die();
-        anim.SetBool("dead", true);
-        Destroy(gameObject, 2.5f);
-    }
     protected override void Update()
     {
         base.Update();
@@ -70,6 +60,30 @@ public class CorruptExplorer : BaseEnemy
         }
 
         DoAnims();
+    }
+
+    public void LaunchProjectile()
+    {
+        busy = false;
+        var projectile = InstantiateProjectile(projectilePrefab, projectileStartOffset, projectileSize);
+        projectile.GetComponent<GoopProjectile>().goopAmount = goopAmount;
+        projectile.GetComponent<HitBox>().StartChecking(transform, rangedDmg);
+        AimAndFire(projectile, projectileAngle);
+        anim.SetBool(rangedAnim, false);
+        launchSound.Play(transform);
+    }
+
+    private void OnDestroy()
+    {
+        print(gameObject.name + " was destroyed");
+    }
+
+    protected override void Die()
+    {
+        base.Die();
+        anim.SetBool("dead", true);
+        print(gameObject.name + " died");
+        Destroy(gameObject, 2.5f);
     }
 
     void DoAnims()
@@ -116,19 +130,6 @@ public class CorruptExplorer : BaseEnemy
     {
         hitCooldown -= Time.deltaTime;
         rangedCooldown -= Time.deltaTime;
-    }
-
-    protected override void Awake()
-    {
-        base.Awake();
-    }
-
-    protected override void Start()
-    {
-        base.Start();
-
-        launchSound = Instantiate(launchSound);
-
     }
     protected override void OnDrawGizmosSelected()
     {

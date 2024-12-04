@@ -25,9 +25,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] List<StoryProgressionData> story = new List<StoryProgressionData>();
     List<StoryProgressionData> runtimeStory = new List<StoryProgressionData>();
 
-    [Header("Enemy groups")]
-    [SerializeField] List<EnemyGroupData> groups = new List<EnemyGroupData>();
-
     [Header("Goats")]
     public int NumTotalGoats = 11;
     [SerializeField] private int numGoatsFound;
@@ -67,8 +64,6 @@ public class GameManager : MonoBehaviour
             resetGame = false;
             //GetComponent<SaveManager>().ResetGame();
         }
-
-        UpdateEnemyGroups();
 
         if (!started) RestartFromCheckPoint();
         //CheckStory();
@@ -134,16 +129,6 @@ public class GameManager : MonoBehaviour
             if (story[i].customID) offset += 1;
             else story[i].ID = i-offset;
         }
-    }
-
-    public void removeFromGroup(GameObject enemy, int groupID)
-    {
-        foreach (var g in groups) if (g.ID == groupID) g.enemies.Remove(enemy); 
-    }
-
-    public void AddToGroup(GameObject enemy, int groupID)
-    {
-        foreach (var g in groups) if (g.ID == groupID) { g.enemies.Add(enemy); g.enabled = true; }
     }
 
     public int GetID()
@@ -230,26 +215,6 @@ public class GameManager : MonoBehaviour
     {
         foreach (var c in checkPoints) if (c.ID == ID) return c.point.position;
         return Vector3.zero;
-    }
-
-    void UpdateEnemyGroups()
-    {
-        if (!Application.isPlaying) return;
-        foreach (var g in groups) {
-
-            if (g.enabled && FactManager.i.IsPresent(g.fact)) {
-                for (int i = 0; i < g.enemies.Count; i++) {
-                    Destroy(g.enemies[i]);
-                }
-                g.enabled = false;
-                return;
-            }
-
-            for (int i = 0; i < g.enemies.Count; i++) {
-                if (g.enemies[i] == null) g.enemies.RemoveAt(i);
-            }
-            if (g.enabled && g.enemies.Count == 0) FactManager.i.AddFact(g.fact);
-        }
     }
 
     void UpdateStoryDisplay()

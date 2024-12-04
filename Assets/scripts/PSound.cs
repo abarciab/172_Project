@@ -30,6 +30,9 @@ public class PSound : MonoBehaviour
         Get(PSoundKey.HEARTBEAT).PlaySilent();
     }
 
-    public void PlayFootStep() { }
-    public void PlayFootStepRun() { }
+
+    public void DrawSpear() => Get(PSoundKey.DRAW_SPEAR).Play();
+    public void PlaySwoosh() => Get(PSoundKey.STAB_SWISH).Play();
+    public void PlayFootStep() => Get(PSoundKey.FOOTSTEP).Play();
+    public void PlayFootStepRun() => PlayFootStep();
 }

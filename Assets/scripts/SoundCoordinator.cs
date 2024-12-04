@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SoundCoordinator : MonoBehaviour
@@ -22,6 +23,7 @@ public class SoundCoordinator : MonoBehaviour
 
     public void Pause()
     {
+        sources = sources.Where(x => x.Value != null && x.Key != null).ToList();
         foreach (var s in sources) {
             if (!s.Key.Unpauseable && s.Value.isPlaying) {
                 s.Value.Pause();

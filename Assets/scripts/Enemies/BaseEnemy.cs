@@ -57,7 +57,20 @@ public class BaseEnemy : MonoBehaviour
     float orbitOffset;
     protected AttackDetails currentAttack;
 
-    
+    virtual protected void Awake()
+    {
+        move = GetComponent<EnemyMovement>();
+        stats = GetComponent<EnemyStats>();
+    }
+
+    virtual protected void Start()
+    {
+        target = Player.i.gameObject.transform;
+        orbitOffset = Random.Range(0, 1000);
+        oldPos = new Vector2(transform.position.x, transform.position.z);
+
+        stats.OnHit.AddListener(JumpBack);
+    }
 
     public float Dist()
     {
@@ -140,21 +153,6 @@ public class BaseEnemy : MonoBehaviour
     virtual public void EndAttack()
     {
         busy = false;
-    }
-
-    virtual protected void Awake()
-    {
-        move = GetComponent<EnemyMovement>();
-        stats = GetComponent<EnemyStats>();
-    }
-
-    virtual protected void Start()
-    {
-        target = Player.i.gameObject.transform;
-        orbitOffset = Random.Range(0, 1000);
-        oldPos = new Vector2(transform.position.x, transform.position.z);
-
-        stats.OnHit.AddListener(JumpBack);
     }
     
     virtual protected void Update()

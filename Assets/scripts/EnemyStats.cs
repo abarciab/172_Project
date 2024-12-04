@@ -90,7 +90,6 @@ public class EnemyStats : HitReciever
 
     private void Start()
     {
-        if (inGroup) GameManager.i.AddToGroup(gameObject, groupID);
         health = maxHealth;
         if (blood != null) blood.SetActive(false);
 
@@ -165,7 +164,6 @@ public class EnemyStats : HitReciever
     {
         if (hpBar) hpBar.gameObject.SetActive(false);
         HPBarDisplayRange = 0;
-        if (inGroup) GameManager.i.removeFromGroup(gameObject, groupID);
 
         if (removeFactOnDeath.Count > 0) foreach (var f in removeFactOnDeath) FactManager.i.RemoveFact(f);
         if (addFactOnDeath.Count > 0) foreach (var f in addFactOnDeath) FactManager.i.AddFact(f);
