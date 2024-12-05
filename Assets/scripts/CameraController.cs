@@ -63,8 +63,9 @@ public class CameraController : MonoBehaviour
         }
         else {
             var inputDelta = Input.GetAxis("Mouse X");
-            inputDelta = Mathf.Clamp(inputDelta, -7, 7);
-            transform.Rotate(0, inputDelta * _rotSpeed * Time.deltaTime * 100, 0);
+            var delta = inputDelta * _rotSpeed * Time.deltaTime * 100;
+            delta = Mathf.Clamp(delta, -10, 10);
+            transform.Rotate(0, delta, 0);
         }
 
     }

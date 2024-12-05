@@ -1,73 +1,45 @@
+using MyBox;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+
+public enum PAnimSpeeds {STILL, WALKING, RUNNING}
 
 public class PAnimator : MonoBehaviour
 {
-    [Header("parameters")]
-    [SerializeField] float minWalkSpeed = 0.1f, minChargeTime = 0.06f;
+    [SerializeField] private Animator _animator;
+    [SerializeField] private string _rollTrigger = "Roll";
+    [SerializeField] private string _drawStaffTrigger = "DrawStaff";
+    [SerializeField] private string _walkBool = "Walk";
+    [SerializeField] private string _runBool = "Run";
+    [SerializeField] private string _leftBool = "TurningLeft";
+    [SerializeField] private string _rightBool = "TurningRight";
 
-    [Header("Dependencies")]
-    [SerializeField] Animator anim;
-    Player p;
-    PMovement move;
-    PFighting fight;
-    bool triggeredDash;
+    [SerializeField, ReadOnly] private PAnimSpeeds _currentSpeed;
 
-    bool attacking;
+    public void DrawStaff() => _animator.SetTrigger(_drawStaffTrigger);
 
-    private void Start()
+    public void Roll()
     {
-        p = Player.i;
-        move = GetComponent<PMovement>();
-        fight = GetComponent<PFighting>();
-        fight.OnHit.AddListener(GetHurt);
+        if (_currentSpeed == PAnimSpeeds.STILL) return;
+        _animator.SetTrigger(_rollTrigger);
     }
 
-    void GetHurt()
+    public void SetSpeed(PAnimSpeeds speed)
     {
-        anim.SetTrigger("hurt");
+        _currentSpeed = speed;
+
+        _animator.SetBool(_walkBool, speed == PAnimSpeeds.WALKING);
+        _animator.SetBool(_runBool, speed == PAnimSpeeds.RUNNING);
+
+        if (speed != PAnimSpeeds.STILL) SetTurning(false, false);
     }
 
-    private void Update()
+    public void SetTurning(bool left, bool right)
     {
-        bool frozen = false; //TEMP
-        bool moving = Mathf.Abs(p.ForwardSpeed) > minWalkSpeed && !frozen;
-
-        anim.SetBool("Hurt", move.knockedBack);
-        anim.SetBool("Moving", moving);
-        anim.SetBool("Backwards", moving && p.ForwardSpeed <= -0.1f);
-        anim.SetBool("Running", move.IsRunning && !move.rolling);
-        anim.SetBool("TurningLeft", move.turnLeft && !moving);
-        anim.SetBool("TurningRight", move.turnRight && !moving);
-        anim.SetBool("StaffDrawn", fight.SpearOut());
-        anim.SetBool("chargingThrow", fight.chargingSpear() && fight.chargeTime > minChargeTime);
-        anim.SetBool("hasSpear", fight.HasSpear());
-
-        //anim.SetBool("Talking", GlobalUI.i.Talking);
-        
-        anim.SetBool("Strafe", !frozen && move.strafe && Mathf.Abs(GetComponent<Rigidbody>().velocity.x + GetComponent<Rigidbody>().velocity.z) > 0.01f);
-
-
-        if (!attacking && fight.Stabbing()) {
-            attacking = true;
-            anim.SetTrigger("BasicAttack");
-        }
-
-        if (!fight.Stabbing() || frozen) {
-            attacking = false;
-        }
-
-        anim.SetBool("Attacking", attacking);
-
-        if ((move.IsRunning || move.rolling || move.knockedBack) && attacking) {
-            fight.EndAttack();
-        }
-
-        if (triggeredDash && !move.rolling) triggeredDash = false;
-        if (move.rolling && !triggeredDash && !attacking) {
-            triggeredDash = true;
-            anim.SetTrigger("Roll");
-        }
+        _animator.SetBool(_leftBool, left);
+        _animator.SetBool(_rightBool, right);
     }
+
 }
