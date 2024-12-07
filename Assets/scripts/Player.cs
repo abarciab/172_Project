@@ -69,7 +69,6 @@ public class Player : MonoBehaviour
     public bool FullHealth() => health == maxHealth;
     public bool IsRunning => _move.IsRunning;
     public void SetSpearDamage(int damage) => GetComponent<PFighting>().SetSpearDmg(damage);
-    public void SetSpearLayer(int layer) => GetComponent<PFighting>().SetSpearLayer(layer);
     public void ShowInterest(Speaker speaker) => _dialogue.ShowInterest(speaker);
     public void StopInterest(Speaker speaker) => _dialogue.StopInterest(speaker);
     public float ForwardSpeed => _move.ForwardSpeed;

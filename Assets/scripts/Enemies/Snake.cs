@@ -259,7 +259,6 @@ public class Snake : BaseEnemy
         snakeEyes.layer = defaultLayer;
         StartCoroutine(SummonObstacles());
         Player.i.UnfreezePlayer();
-        Player.i.SetSpearLayer(default);
     }
 
     void StartPhase3Darkness()
@@ -274,7 +273,6 @@ public class Snake : BaseEnemy
         snakeEyes.layer = snakeEyesLayer;
         ShaderTransitionController.i.DarkenNight();
         TPandLockPlayer();
-        Player.i.SetSpearLayer(snakeEyesLayer);
     }
 
     void p3StrikeAttack()
