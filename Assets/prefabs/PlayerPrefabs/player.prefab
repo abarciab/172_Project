@@ -118,6 +118,50 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!1 &3313363126831536899
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8648612026174630446}
+  - component: {fileID: 3617303456582502610}
+  m_Layer: 6
+  m_Name: AbilityController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8648612026174630446
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3313363126831536899}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1131929939906990091}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3617303456582502610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3313363126831536899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b91ce1c5a048de344a3c3fb229333caf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4080490367962299111
 GameObject:
   m_ObjectHideFlags: 0
@@ -5572,6 +5616,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8648612026174630446}
   - {fileID: 5666328555735627448}
   - {fileID: 6126988757045702848}
   - {fileID: 7320456896884759677}
@@ -5592,7 +5637,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd2fa3aa1d458684ab487e15cc20a132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Sounds: {fileID: 0}
   _heartbeatCurve:
     serializedVersion: 2
     m_Curve:
@@ -5629,6 +5673,7 @@ MonoBehaviour:
   OnDie:
     m_PersistentCalls:
       m_Calls: []
+  Sounds: {fileID: 0}
   healWaitTime: 15
   healRate: 1
   goopDmg: 5
@@ -5643,9 +5688,6 @@ MonoBehaviour:
   currentMeleeEnemies: []
   meleeRatio: 0.5
   tokenCheckTime: 5
-  animator: {fileID: 964083654665622310}
-  speed3D: {x: 0, y: 0, z: 0}
-  forwardSpeed: 0
 --- !u!114 &3539150935043894316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5658,34 +5700,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af23ff9578188d24799545f19051ba23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsRunning: 0
-  forwardSpeed: 2.5
-  runSpeed: 6
+  _forward: 119
+  _left: 97
+  _backward: 115
+  _right: 100
+  _run: 304
+  _roll: 32
+  _walkSpeed: 0
+  _runSpeed: 0
+  _accelerationSnapiness: 5
+  goopMult: 0.3
   stoppingFriction: 0.25
   rotationSpeed: 2
   cameraAlignSmoothness: 1
   _moveDirAlignSmoothness: 5
-  stepSpeed: 2
-  stepTime: 0.05
-  strafeSpeed: 3
+  _rollWaitTime: 0.1
   dashSpeed: 8
   dashTime: 0.6
   KBSmoothness: 0.5
-  goopMult: 0.3
   rolling: 0
-  goForward: 0
-  turnLeft: 0
-  turnRight: 0
-  goBack: 0
   strafe: 0
   attacking: 0
-  pressLeft: 0
-  pressRight: 0
   knockedBack: 0
   goopTime: 0
   rotation: 0
   stunned: 0
   KB: 0
+  _oldSpeed: 0
 --- !u!114 &1102902526040257228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5698,12 +5739,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ead7ab543d858d409896760c0665bf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _forward: 119
-  _left: 97
-  _backward: 115
-  _right: 100
-  _run: 304
-  _roll: 32
   _interactKey: 101
   _abilityKey: 101
   _pauseKey: 27
@@ -5720,9 +5755,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e57d5cd19c650b74faa555bc348840ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minWalkSpeed: 0.2
-  minChargeTime: 0.13
-  anim: {fileID: 1748235687149956290}
+  _animator: {fileID: 0}
+  _rollTrigger: Roll
+  _drawStaffTrigger: DrawStaff
+  _walkBool: Walk
+  _runBool: Run
+  _leftBool: TurningLeft
+  _rightBool: TurningRight
+  _currentSpeed: 0
 --- !u!114 &2169044377857516534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5738,43 +5778,32 @@ MonoBehaviour:
   OnHit:
     m_PersistentCalls:
       m_Calls: []
-  staffProjectile: {fileID: 0}
+  _leftClickAbility: {fileID: 0}
+  _rightClickAbility: {fileID: 0}
+  _SpecialAbility: {fileID: 0}
   throwForce: 500
   maxAimTime: 0.7
   critWindow: 0
   minAimTime: 0.2
-  offset: {x: -0.4, y: 1, z: 0.5}
-  aimOffset: {x: 0, y: 0.07, z: 0}
-  hasSpear: 0
+  chargeTime: 0
   aimed: 0
   recalling: 0
   charging: 0
   spearDrawn: 0
-  stabbing: 0
-  chargeTime: 0
+  RecallReady: 0
+  staffProjectile: {fileID: 0}
+  offset: {x: -0.4, y: 1, z: 0.5}
+  aimOffset: {x: 0, y: 0.07, z: 0}
   spearObj: {fileID: 1694966950256762379}
-  stabHB: {fileID: 333220101860648675}
-  stabDmg: 35
   stabKB: 15
-  shockwave: {fileID: 0}
+  stabDmg: 35
+  stabbing: 0
+  stabHB: {fileID: 333220101860648675}
   shockwaveResetTime: 4
   shockwaveKB: 40
   shockwaveDmg: 10
-  throwSpearSound: {fileID: 11400000, guid: 3fff5c26ddbf2f547af3cf706eb1b0bf, type: 2}
-  shockwaveSound: {fileID: 11400000, guid: c0e869764d90e4549a93c17d93640f9e, type: 2}
-  shockwaveReadySound: {fileID: 11400000, guid: 198acce3c3c9f544ba5df945c604597f,
-    type: 2}
-  recallWoosh: {fileID: 11400000, guid: 1aad6c31e8e30b045833c90c7eac90b3, type: 2}
-  spearCatch: {fileID: 11400000, guid: 10c4f6c1fe9c4644f99fbb5c5977cfd7, type: 2}
-  critSucsess: {fileID: 11400000, guid: 6cdfb3d9ad940f34897bb6feacb06605, type: 2}
-  recallError: {fileID: 11400000, guid: 435471cbcb4b4ce4d829c96880db4c25, type: 2}
-  spearBuildUp: {fileID: 11400000, guid: eefeb46203ae55147bd377478075dbc8, type: 2}
-  sunBlastError: {fileID: 11400000, guid: 39ce01103ed75dd4ba453b7d99bc76a0, type: 2}
-  spearTipBall: {fileID: 8733213954435719596}
-  thrownSpearBall: {fileID: 0}
-  spearModel: {fileID: 0}
-  heldSpearModel: {fileID: 1694966950256762379}
-  RecallReady: 0
+  shockwave: {fileID: 0}
+  _hasSpear: 0
 --- !u!114 &7051459509963037629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8534,12 +8563,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24544c9a75b43574a81646ea8072b9ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!95 &1748235687149956290 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 7e5397dfc7036764384342c17248d7f7,
-    type: 3}
-  m_PrefabInstance: {fileID: 5271585073412133203}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1990402477420114484 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -3263075426010553497, guid: 7e5397dfc7036764384342c17248d7f7,

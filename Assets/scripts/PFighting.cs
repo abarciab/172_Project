@@ -7,13 +7,10 @@ using UnityEngine;
 public class PFighting : HitReciever
 {
 
+    [Header("Misc")]
+    [SerializeField] private PlayerAbilityController _abilityController;
+
     private Player _p;
-
-    [SerializeField] private PlayerAbilityData _leftClickAbility;
-    [SerializeField] private PlayerAbilityData _rightClickAbility;
-    [SerializeField] private PlayerAbilityData _SpecialAbility;
-
-    private PlayerAbilityController _abilityController = new PlayerAbilityController();
 
     //
     //
@@ -39,14 +36,14 @@ public class PFighting : HitReciever
     [SerializeField] Vector3 aimOffset;
     [SerializeField] GameObject spearObj;
 
-    //stab:
+    [Header("Stab")]
     [SerializeField] float stabKB;
     [SerializeField] int stabDmg;
     public bool stabbing;
     public bool Stabbing() => stabbing;
     [SerializeField] HitBox stabHB;
 
-    //sunblast:
+    [Header("Sunblast")]
     [SerializeField] float shockwaveResetTime;
     [SerializeField] float shockwaveKB;
     float sunblastCooldown;
@@ -54,11 +51,11 @@ public class PFighting : HitReciever
     [SerializeField] Shockwave shockwave;
     public float GetSunblastCooldown() => sunblastCooldown;
 
-    //misc 
-    public int CritDmg => critDmg;
+    [Header("Misc")]
     [SerializeField, ReadOnly] private bool _hasSpear;
     public int throwDmg { get; private set; }
     public int critDmg { get; private set; }
+    public int CritDmg => critDmg;
     public bool SpearOut() => spearDrawn;
     public void DrawSpear() => spearDrawn = true;
     public bool HasSpear() => _hasSpear;
