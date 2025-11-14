@@ -13,6 +13,9 @@ public class PFighting : HitReciever
     [SerializeField] private PlayerAbilityController _abilityController;
     [SerializeField, SearchableEnum] private KeyCode _specialKey = KeyCode.E;
 
+    [Header("Misc")]
+    [SerializeField] private PlayerAbilityController _abilityController;
+
     private Player _p;
 
     //
