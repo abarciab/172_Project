@@ -6,59 +6,42 @@ using UnityEngine;
 [RequireComponent(typeof(Player))]
 public class PFighting : HitReciever
 {
+    [Header("Testing")]
+    [SerializeField] private PlayerAbilityData _sunblast;
+
+    [Header("Misc")]
+    [SerializeField] private PlayerAbilityController _abilityController;
+    [SerializeField, SearchableEnum] private KeyCode _specialKey = KeyCode.E;
 
     private Player _p;
 
-    [SerializeField] private PlayerAbilityData _leftClickAbility;
-    [SerializeField] private PlayerAbilityData _rightClickAbility;
-    [SerializeField] private PlayerAbilityData _SpecialAbility;
-
-    private PlayerAbilityController _abilityController = new PlayerAbilityController();
-
     //
     //
     //
-
-    //throw:
-    [SerializeField] float throwForce;
-    [SerializeField] float maxAimTime;
-    [SerializeField] float critWindow;
-    [SerializeField] float minAimTime;
-    [HideInInspector] public float chargeTime;
-
-    [SerializeField, ReadOnly] bool aimed;
-    [SerializeField, ReadOnly] bool recalling;
-    [SerializeField, ReadOnly] bool charging;
-    [SerializeField, ReadOnly] bool spearDrawn;
-    public bool RecallReady;
-    public bool chargingSpear() => charging;
-    public bool Recalling() => recalling;
 
     [SerializeField] Rigidbody staffProjectile;
     [SerializeField] Vector3 offset;
     [SerializeField] Vector3 aimOffset;
     [SerializeField] GameObject spearObj;
 
-    //stab:
+    [Header("Stab")]
     [SerializeField] float stabKB;
     [SerializeField] int stabDmg;
     public bool stabbing;
     public bool Stabbing() => stabbing;
     [SerializeField] HitBox stabHB;
 
-    //sunblast:
-    [SerializeField] float shockwaveResetTime;
-    [SerializeField] float shockwaveKB;
-    float sunblastCooldown;
-    [SerializeField] int shockwaveDmg;
-    [SerializeField] Shockwave shockwave;
-    public float GetSunblastCooldown() => sunblastCooldown;
-
-    //misc 
-    public int CritDmg => critDmg;
+    [Header("Misc")]
     [SerializeField, ReadOnly] private bool _hasSpear;
+    [SerializeField, ReadOnly] bool recalling;
+    [SerializeField, ReadOnly] bool charging;
+    [SerializeField, ReadOnly] bool spearDrawn;
+    public bool RecallReady;
+    public bool chargingSpear() => charging;
+    public bool Recalling() => recalling;
     public int throwDmg { get; private set; }
     public int critDmg { get; private set; }
+    public int CritDmg => critDmg;
     public bool SpearOut() => spearDrawn;
     public void DrawSpear() => spearDrawn = true;
     public bool HasSpear() => _hasSpear;
@@ -66,31 +49,39 @@ public class PFighting : HitReciever
     public void StartChecking() => stabHB.StartChecking(true, stabDmg, stabKB, stabHB.gameObject);
     Vector3 GetAimDir() => (Camera.main.transform.forward + aimOffset).normalized;
 
+    private bool _initialized;
+
+    private void OnEnable() {
+        if (!_p) _p = GetComponent<Player>();
+        if (_initialized) _p.Anim.DrawSpear();
+    }
+
     private void Start()
     {
         _hasSpear = true;
-        aimed = false;
-
-        _p = GetComponent<Player>();
+        _p.Anim.DrawSpear();
+        _initialized = true;
+        spearObj.SetActive(true);
     }
 
-    private void Update()
-    {
-        spearObj.SetActive(_hasSpear && (!spearDrawn || (!staffProjectile.gameObject.activeInHierarchy || !charging)));
+    private void Update() {
 
-        if (sunblastCooldown > 0) DecrementSunblastCooldown();
-        if (charging) chargeTime += Time.deltaTime;
+        SendInputsToAbilityController();
 
-        float chargePercent = Mathf.Min(chargeTime, maxAimTime) / maxAimTime;
-        GlobalUI.i.Do(UIAction.UPDATE_CHARGE, chargePercent);
+
+        //
+        //
+
+        //spearObj.SetActive(_hasSpear && (!spearDrawn || (!staffProjectile.gameObject.activeInHierarchy || !charging)));
     }
 
-
-    private void DecrementSunblastCooldown()
-    {
-        sunblastCooldown -= Time.deltaTime;
-        GlobalUI.i.Do(UIAction.DISPLAY_SUNBLAST_COOLDOWN, sunblastCooldown);
-        if (sunblastCooldown <= 0) OnSunblastReady();
+    private void SendInputsToAbilityController() {
+        var leftClick = Input.GetMouseButtonDown(0) ? InputType.DOWN : (Input.GetMouseButton(0) ? InputType.STAY : (Input.GetMouseButtonUp(0) ? InputType.UP : InputType.NONE));
+        if (leftClick != InputType.NONE) _abilityController.OnLeftClick(leftClick);
+        var rightClick = Input.GetMouseButtonDown(1) ? InputType.DOWN : (Input.GetMouseButton(1) ? InputType.STAY : (Input.GetMouseButtonUp(1) ? InputType.UP : InputType.NONE));
+        if (rightClick != InputType.NONE) _abilityController.OnRightClick(rightClick);
+        var special = Input.GetKeyDown(_specialKey) ? InputType.DOWN : (Input.GetKey(_specialKey) ? InputType.STAY : (Input.GetKeyUp(_specialKey) ? InputType.UP : InputType.NONE));
+        if (special != InputType.NONE) _abilityController.OnSpecial(special);
     }
 
     private void OnSunblastReady()
@@ -121,31 +112,10 @@ public class PFighting : HitReciever
 
     public void ThrowSpear()
     {
-        _p.Sounds.Get(PSoundKey.THROW_CHARGE).Stop();
         charging = false;
-        if (!_hasSpear || !aimed) return;
-
-        aimed = false;
-
-        if (chargeTime <= minAimTime) {
-            chargeTime = 0;
-            staffProjectile.gameObject.SetActive(false);
-            return;
-        }
-
         _hasSpear = false;
-        bool perfectThrow = chargeTime > (0.85 * maxAimTime) && chargeTime < (maxAimTime + 0.2f);
-        float power = Mathf.Clamp01(chargeTime / maxAimTime);
-        int damage = Mathf.RoundToInt(throwDmg * power);
 
-        if (perfectThrow) {
-            _p.Sounds.Get(PSoundKey.CRIT_HIT).Play();
-            power = 1;
-            damage = critDmg;
-        }
-
-        chargeTime = 0;
-        _p.Sounds.Get(PSoundKey.THROW_SPEAR).Play(transform);
+        /*
         staffProjectile.GetComponent<ThrownStaff>().Throw();
         
         staffProjectile.gameObject.SetActive(false);
@@ -157,8 +127,7 @@ public class PFighting : HitReciever
         staffProjectile.AddForce(dir * (throwForce * power));
 
         staffProjectile.GetComponentInChildren<HitBox>().StartChecking(transform, damage, _crit: perfectThrow);
-
-        GlobalUI.i.Do(UIAction.THROW_SPEAR);
+        */
     }
 
     public void Stab()
@@ -191,7 +160,7 @@ public class PFighting : HitReciever
         if (!enabled || charging) return;
         if (!spearDrawn) { DrawSpear(); return; }
         if (!_hasSpear) { RetrieveSpear(); return; }
-        aimed = charging = true;
+        charging = true;
         stabbing = false;
         _p.Sounds.Get(PSoundKey.THROW_CHARGE).Play();
 
@@ -212,23 +181,6 @@ public class PFighting : HitReciever
     {
         var dir = GetAimDir();
         staffProjectile.transform.LookAt(staffProjectile.transform.position + dir * 10);
-    }
-
-    public void ActivateShockwave()
-    {
-        if (sunblastCooldown > 0) {
-            _p.Sounds.Get(PSoundKey.SUNBLAST_ERROR).Play();
-            return;
-        }
-
-        if (!enabled) return;
-        _p.Sounds.Get(PSoundKey.SUNBLAST).Play();
-        sunblastCooldown = shockwaveResetTime;
-
-        if (_hasSpear) shockwave.transform.position = transform.position;
-        else shockwave.transform.position = staffProjectile.transform.position;
-
-        shockwave.Explode(shockwaveDmg, shockwaveKB);
     }
 
     void RetrieveSpear()

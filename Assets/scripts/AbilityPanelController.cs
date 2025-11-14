@@ -8,9 +8,9 @@ using UnityEngine.UI;
 public class AbilityPanelController : MonoBehaviour
 {
     [Header("Abilities")]
-    [SerializeField] private AbilityDisplay _throwAbility;
-    [SerializeField] private AbilityDisplay _stabAbility;
-    [SerializeField] private AbilityDisplay _sunblastAbility;
+    [SerializeField] private AbilityDisplay _leftClickAbility;
+    [SerializeField] private AbilityDisplay _rightClickAbility;
+    [SerializeField] private AbilityDisplay _specialAbility;
     [SerializeField] private float _abilityFlashTime = 0.1f;
 
     [Header("sprites")]
@@ -24,6 +24,13 @@ public class AbilityPanelController : MonoBehaviour
     private void Start()
     {
         GlobalUI.i.OnUpdateUI.AddListener(OnUpdateUI);
+        ClearAbilityDisplays();
+    }
+
+    private void ClearAbilityDisplays() {
+        /*_leftClickAbility.Clear();
+        _rightClickAbility.Clear();
+        _specialAbility.Clear();*/
     }
 
     private void OnUpdateUI(UIAction type, object parameter)
@@ -37,35 +44,35 @@ public class AbilityPanelController : MonoBehaviour
 
     private void OnRecallReady()
     {
-        _throwAbility.FlashAndEnable();
-        _stabAbility.FlashAndEnable();
+        _leftClickAbility.FlashAndEnable();
+        _rightClickAbility.FlashAndEnable();
     }
 
     private void OnThrowSpear()
     {
-        _throwAbility.SetImage(_recallSprite);
-        _throwAbility.SetEnabled(false);
+        _leftClickAbility.SetImage(_recallSprite);
+        _leftClickAbility.SetEnabled(false);
 
-        _stabAbility.SetImage(_recallSprite);
-        _stabAbility.SetEnabled(false);
+        _rightClickAbility.SetImage(_recallSprite);
+        _rightClickAbility.SetEnabled(false);
     }
 
     private void OnCatchSpear()
     {
-        _throwAbility.SetImage(_throwSprite);
-        _stabAbility.SetImage(_stabSprite);
+        _leftClickAbility.SetImage(_throwSprite);
+        _rightClickAbility.SetImage(_stabSprite);
     }
 
     private void DisplaySunblastCooldown(float cooldown)
     {
         int num = Mathf.CeilToInt(cooldown);
-        _sunblastAbility.UpdateText(num > 0 ? num.ToString() : "");
+        _specialAbility.UpdateText(num > 0 ? num.ToString() : "");
     }
 
     private void OnSunblastReady()
     {
-        _sunblastAbility.Flash();
-        _sunblastAbility.UpdateText("");
+        _specialAbility.Flash();
+        _specialAbility.UpdateText("");
     }
 
     public void DisplayPlayerHP (float hpPercent)

@@ -20,7 +20,7 @@ public class SpearVFXCoordinator : MonoBehaviour
 
     private void Update()
     {
-        if (!fight.enabled || fight.GetSunblastCooldown() > 0) {
+        if (!fight.enabled) {
             ps_sunblast.SetActive(false);
             if (spear) spear.material = dullMat;
             if (spearMesh) spearMesh.material = dullMat;
@@ -30,7 +30,6 @@ public class SpearVFXCoordinator : MonoBehaviour
             if (spear) spear.material = shinyMat;
             if (spearMesh) spearMesh.material = shinyMat;
         }
-
     }
 
     //Handle throw trail vfx

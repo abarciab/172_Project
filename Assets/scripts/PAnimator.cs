@@ -10,15 +10,22 @@ public class PAnimator : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
     [SerializeField] private string _rollTrigger = "Roll";
-    [SerializeField] private string _drawStaffTrigger = "DrawStaff";
+    [SerializeField] private string _drawSpearTrigger = "DrawSpear";
+    [SerializeField] private string _putAwaySpearTrigger = "PutAwaySpear";
+    [SerializeField] private string _spearOutBool = "SpearOut";
     [SerializeField] private string _walkBool = "Walk";
     [SerializeField] private string _runBool = "Run";
     [SerializeField] private string _leftBool = "TurningLeft";
     [SerializeField] private string _rightBool = "TurningRight";
 
-    [SerializeField, ReadOnly] private PAnimSpeeds _currentSpeed;
+    private PAnimSpeeds _currentSpeed;
+    private bool _spearOut;
 
-    public void DrawStaff() => _animator.SetTrigger(_drawStaffTrigger);
+    public void DrawSpear() {
+        if (_spearOut) return;
+        _animator.SetTrigger(_drawSpearTrigger);
+        SetSpearOut(true);
+    }
 
     public void Roll()
     {
@@ -42,4 +49,8 @@ public class PAnimator : MonoBehaviour
         _animator.SetBool(_rightBool, right);
     }
 
+    private void SetSpearOut(bool spearOut) {
+        _spearOut = spearOut;
+        _animator.SetBool(_spearOutBool, spearOut);
+    }
 }

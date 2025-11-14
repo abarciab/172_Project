@@ -59,7 +59,7 @@ public class PMovement : MonoBehaviour
     [SerializeField, ReadOnly] private float _oldSpeed;
 
     public bool IsRunning => Input.GetKey(_run);
-    public float ForwardSpeed => Vector3.Dot(_p.RB.velocity, transform.GetChild(0).forward);
+    public float ForwardSpeed => Vector3.Dot(_p.RB.linearVelocity, transform.GetChild(0).forward);
     public void ResumeMovement() => _stopped = false;
     private float _targetSpeed => Input.GetKey(_run) ? _runSpeed : _walkSpeed;
 
@@ -107,7 +107,7 @@ public class PMovement : MonoBehaviour
     public void StopMovement()
     {
         _stopped = true;
-        _p.RB.velocity = Vector3.zero;
+        _p.RB.linearVelocity = Vector3.zero;
         rolling = false;
     }
 
@@ -129,7 +129,7 @@ public class PMovement : MonoBehaviour
     private void Move()
     {
         if (_stopped) {
-            _p.RB.velocity = Vector3.zero;
+            _p.RB.linearVelocity = Vector3.zero;
             return;
         }
 
@@ -146,9 +146,9 @@ public class PMovement : MonoBehaviour
 
         _p.Anim.SetSpeed(speed > 0.01f ? (speed > _walkSpeed + 0.01f ? PAnimSpeeds.RUNNING : PAnimSpeeds.WALKING) : PAnimSpeeds.STILL);
 
-        var vert = _p.RB.velocity.y;
+        var vert = _p.RB.linearVelocity.y;
 
-        _p.RB.velocity = (moveDir * speed) + (Vector3.up * vert);
+        _p.RB.linearVelocity = (moveDir * speed) + (Vector3.up * vert);
 
         AlignModelWithMoveDir();
 
@@ -188,10 +188,10 @@ public class PMovement : MonoBehaviour
             return; 
         }
 
-        if (_p.RB.velocity.magnitude <= 0.01f) return;
+        if (_p.RB.linearVelocity.magnitude <= 0.01f) return;
         
         var originalRot = model.transform.localEulerAngles;
-        model.LookAt(transform.position + _p.RB.velocity.normalized);
+        model.LookAt(transform.position + _p.RB.linearVelocity.normalized);
         var targetRot = model.transform.localEulerAngles;
         targetRot.x = originalRot.x;
         targetRot.z = originalRot.z;

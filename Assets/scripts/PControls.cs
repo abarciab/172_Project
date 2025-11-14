@@ -8,7 +8,6 @@ public class PControls : MonoBehaviour
 {
 
     [SerializeField, SearchableEnum] KeyCode _interactKey = KeyCode.E;
-    [SerializeField, SearchableEnum] KeyCode _abilityKey = KeyCode.E;
     [SerializeField, SearchableEnum] KeyCode _pauseKey = KeyCode.Escape;
     
     [SerializeField] bool mouseMove;
@@ -45,6 +44,5 @@ public class PControls : MonoBehaviour
         if (Input.GetMouseButtonDown(0)) fight.StartAimingSpear();
         if (Input.GetMouseButtonUp(0)) fight.ThrowSpear();
         if (Input.GetMouseButtonDown(1)) fight.Stab();
-        if (Input.GetKeyDown(_abilityKey)) fight.ActivateShockwave();
     }
 }

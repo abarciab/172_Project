@@ -40,7 +40,7 @@ public class GoopProjectile : MonoBehaviour
         }
 
         var dir = transform.position - Player.i.transform.position;
-        GetComponent<Rigidbody>().velocity += dir * Time.deltaTime * homingAmount;
+        GetComponent<Rigidbody>().linearVelocity += dir * Time.deltaTime * homingAmount;
 
         if (!destroyedBySpear) foreach (var r in meshes) r.material = Player.i.poweredUp ? glowingMat : normalMat;
     }
@@ -58,7 +58,7 @@ public class GoopProjectile : MonoBehaviour
         if (spear) {
             if (destroyedBySpear) Destroy(gameObject);
             else if (Player.i.poweredUp) {
-                GetComponent<Rigidbody>().velocity *= -2;
+                GetComponent<Rigidbody>().linearVelocity *= -2;
                 Player.i.poweredUp = false;
                 actualCollider.enabled = false;
                 bounced = true;

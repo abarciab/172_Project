@@ -122,7 +122,7 @@ public class BaseEnemy : MonoBehaviour
             print("is NaN!");
             return;
         }
-        rb.velocity = finalVelocity;
+        rb.linearVelocity = finalVelocity;
     }
 
     protected GameObject InstantiateProjectile(GameObject prefab, Vector3 offset, Vector3 scale)

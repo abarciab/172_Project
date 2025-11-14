@@ -118,6 +118,52 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!1 &3313363126831536899
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8648612026174630446}
+  - component: {fileID: 3617303456582502610}
+  m_Layer: 6
+  m_Name: AbilityController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8648612026174630446
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3313363126831536899}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1131929939906990091}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3617303456582502610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3313363126831536899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b91ce1c5a048de344a3c3fb229333caf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _perfectThrowThreshold: 0.1
+  _critDmgMod: 2
 --- !u!1 &4080490367962299111
 GameObject:
   m_ObjectHideFlags: 0
@@ -5548,9 +5594,9 @@ GameObject:
   - component: {fileID: 8143559751821159365}
   - component: {fileID: 3539150935043894316}
   - component: {fileID: 1102902526040257228}
-  - component: {fileID: 964083654665622310}
   - component: {fileID: 2169044377857516534}
   - component: {fileID: 7051459509963037629}
+  - component: {fileID: 964083654665622310}
   - component: {fileID: 1800732338891651329}
   - component: {fileID: 7864350523726699956}
   m_Layer: 6
@@ -5572,6 +5618,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8648612026174630446}
   - {fileID: 5666328555735627448}
   - {fileID: 6126988757045702848}
   - {fileID: 7320456896884759677}
@@ -5592,7 +5639,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd2fa3aa1d458684ab487e15cc20a132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Sounds: {fileID: 0}
   _heartbeatCurve:
     serializedVersion: 2
     m_Curve:
@@ -5629,13 +5675,14 @@ MonoBehaviour:
   OnDie:
     m_PersistentCalls:
       m_Calls: []
+  Sounds: {fileID: 0}
   healWaitTime: 15
   healRate: 1
   goopDmg: 5
   goopTick: 0.5
   poweredUp: 0
-  canRun: 0
-  canRoll: 0
+  canRun: 1
+  canRoll: 1
   dead: 0
   maxHealth: 180
   powerBall: {fileID: 8733213954435719596}
@@ -5643,9 +5690,6 @@ MonoBehaviour:
   currentMeleeEnemies: []
   meleeRatio: 0.5
   tokenCheckTime: 5
-  animator: {fileID: 964083654665622310}
-  speed3D: {x: 0, y: 0, z: 0}
-  forwardSpeed: 0
 --- !u!114 &3539150935043894316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5658,34 +5702,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af23ff9578188d24799545f19051ba23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsRunning: 0
-  forwardSpeed: 2.5
-  runSpeed: 6
+  _forward: 119
+  _left: 97
+  _backward: 115
+  _right: 100
+  _run: 304
+  _roll: 32
+  _walkSpeed: 2.5
+  _runSpeed: 6
+  _accelerationSnapiness: 10
+  goopMult: 0.3
   stoppingFriction: 0.25
-  rotationSpeed: 2
-  cameraAlignSmoothness: 1
-  _moveDirAlignSmoothness: 5
-  stepSpeed: 2
-  stepTime: 0.05
-  strafeSpeed: 3
+  rotationSpeed: 1
+  cameraAlignSmoothness: 10
+  _moveDirAlignSmoothness: 8
+  _rollWaitTime: 0.1
   dashSpeed: 8
   dashTime: 0.6
   KBSmoothness: 0.5
-  goopMult: 0.3
   rolling: 0
-  goForward: 0
-  turnLeft: 0
-  turnRight: 0
-  goBack: 0
   strafe: 0
   attacking: 0
-  pressLeft: 0
-  pressRight: 0
   knockedBack: 0
   goopTime: 0
   rotation: 0
   stunned: 0
   KB: 0
+  _oldSpeed: 0
 --- !u!114 &1102902526040257228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5698,31 +5741,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ead7ab543d858d409896760c0665bf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _forward: 119
-  _left: 97
-  _backward: 115
-  _right: 100
-  _run: 304
-  _roll: 32
   _interactKey: 101
-  _abilityKey: 101
   _pauseKey: 27
   mouseMove: 0
---- !u!114 &964083654665622310
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8498954834271688486}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e57d5cd19c650b74faa555bc348840ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minWalkSpeed: 0.2
-  minChargeTime: 0.13
-  anim: {fileID: 1748235687149956290}
 --- !u!114 &2169044377857516534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5738,42 +5759,21 @@ MonoBehaviour:
   OnHit:
     m_PersistentCalls:
       m_Calls: []
+  _sunblast: {fileID: 0}
+  _abilityController: {fileID: 3617303456582502610}
+  _specialKey: 101
   staffProjectile: {fileID: 0}
-  throwForce: 500
-  maxAimTime: 0.7
-  critWindow: 0
-  minAimTime: 0.2
   offset: {x: -0.4, y: 1, z: 0.5}
   aimOffset: {x: 0, y: 0.07, z: 0}
-  hasSpear: 0
-  aimed: 0
+  spearObj: {fileID: 1694966950256762379}
+  stabKB: 15
+  stabDmg: 35
+  stabbing: 0
+  stabHB: {fileID: 333220101860648675}
+  _hasSpear: 0
   recalling: 0
   charging: 0
   spearDrawn: 0
-  stabbing: 0
-  chargeTime: 0
-  spearObj: {fileID: 1694966950256762379}
-  stabHB: {fileID: 333220101860648675}
-  stabDmg: 35
-  stabKB: 15
-  shockwave: {fileID: 0}
-  shockwaveResetTime: 4
-  shockwaveKB: 40
-  shockwaveDmg: 10
-  throwSpearSound: {fileID: 11400000, guid: 3fff5c26ddbf2f547af3cf706eb1b0bf, type: 2}
-  shockwaveSound: {fileID: 11400000, guid: c0e869764d90e4549a93c17d93640f9e, type: 2}
-  shockwaveReadySound: {fileID: 11400000, guid: 198acce3c3c9f544ba5df945c604597f,
-    type: 2}
-  recallWoosh: {fileID: 11400000, guid: 1aad6c31e8e30b045833c90c7eac90b3, type: 2}
-  spearCatch: {fileID: 11400000, guid: 10c4f6c1fe9c4644f99fbb5c5977cfd7, type: 2}
-  critSucsess: {fileID: 11400000, guid: 6cdfb3d9ad940f34897bb6feacb06605, type: 2}
-  recallError: {fileID: 11400000, guid: 435471cbcb4b4ce4d829c96880db4c25, type: 2}
-  spearBuildUp: {fileID: 11400000, guid: eefeb46203ae55147bd377478075dbc8, type: 2}
-  sunBlastError: {fileID: 11400000, guid: 39ce01103ed75dd4ba453b7d99bc76a0, type: 2}
-  spearTipBall: {fileID: 8733213954435719596}
-  thrownSpearBall: {fileID: 0}
-  spearModel: {fileID: 0}
-  heldSpearModel: {fileID: 1694966950256762379}
   RecallReady: 0
 --- !u!114 &7051459509963037629
 MonoBehaviour:
@@ -5790,6 +5790,27 @@ MonoBehaviour:
   _startTalkingPrompt: Press E to talk
   _speakerEndDist: 0
   _dialogueDisplaySpeed: 0.1
+--- !u!114 &964083654665622310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8498954834271688486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e57d5cd19c650b74faa555bc348840ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 1748235687149956290}
+  _rollTrigger: Roll
+  _drawSpearTrigger: DrawSpear
+  _putAwaySpearTrigger: PutAwaySpear
+  _walkBool: Walk
+  _runBool: Run
+  _leftBool: TurningLeft
+  _rightBool: TurningRight
+  _currentSpeed: 0
 --- !u!54 &1800732338891651329
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8582,7 +8603,73 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac192df5bc63a5e4c923039723c6a7e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: []
+  data:
+  - Name: 'FOOTSTEP '
+    Key: 0
+    Sound: {fileID: 11400000, guid: b5d22326f0e16f645b6cbce2fd1ba659, type: 2}
+  - Name: 'FOOTSTEP_HARD '
+    Key: 1
+    Sound: {fileID: 11400000, guid: b5d22326f0e16f645b6cbce2fd1ba659, type: 2}
+  - Name: 'FOOTSTEP_GOOP '
+    Key: 2
+    Sound: {fileID: 11400000, guid: dc73c089cdf080c498c4025f7d28d18b, type: 2}
+  - Name: 'FOOTSTEP_RUN '
+    Key: 3
+    Sound: {fileID: 11400000, guid: dddd7c11077b38e48a5bf442a6f06506, type: 2}
+  - Name: 'STAB_SWISH '
+    Key: 4
+    Sound: {fileID: 11400000, guid: de9dc550c4ac53949867dd023abd6d24, type: 2}
+  - Name: 'DRAW_SPEAR '
+    Key: 5
+    Sound: {fileID: 11400000, guid: cc203c5c84851714aba53bd3c192b3fe, type: 2}
+  - Name: 'START_CONVO '
+    Key: 6
+    Sound: {fileID: 11400000, guid: e18956bf3a910db4f9ef59e3c27307fc, type: 2}
+  - Name: 'HURT '
+    Key: 7
+    Sound: {fileID: 11400000, guid: 9e9607a9670eae74db862bcf9188834a, type: 2}
+  - Name: 'DEATH '
+    Key: 8
+    Sound: {fileID: 11400000, guid: d3e3ccf7df06dbf4cbb6b5707a7191bc, type: 2}
+  - Name: 'HEALTH_REGEN '
+    Key: 9
+    Sound: {fileID: 11400000, guid: 0ea6f8eb2f26ac34b8447b8cad4ad669, type: 2}
+  - Name: 'END_COMBAT '
+    Key: 10
+    Sound: {fileID: 11400000, guid: eeea8334be49b84428a888195a79bde9, type: 2}
+  - Name: 'HEARTBEAT '
+    Key: 11
+    Sound: {fileID: 11400000, guid: cb951dfceecfac642beec4cbfa347e5e, type: 2}
+  - Name: 'ROLL '
+    Key: 12
+    Sound: {fileID: 11400000, guid: 1bb6c951bbd13394daa45a3dca4df825, type: 2}
+  - Name: 'THROW_SPEAR '
+    Key: 13
+    Sound: {fileID: 11400000, guid: 3fff5c26ddbf2f547af3cf706eb1b0bf, type: 2}
+  - Name: 'SPEAR_CATCH '
+    Key: 14
+    Sound: {fileID: 11400000, guid: 10c4f6c1fe9c4644f99fbb5c5977cfd7, type: 2}
+  - Name: 'SUNBLAST '
+    Key: 15
+    Sound: {fileID: 11400000, guid: c0e869764d90e4549a93c17d93640f9e, type: 2}
+  - Name: 'SUNBLASTREADY '
+    Key: 16
+    Sound: {fileID: 11400000, guid: 198acce3c3c9f544ba5df945c604597f, type: 2}
+  - Name: 'SUNBLAST_ERROR '
+    Key: 17
+    Sound: {fileID: 11400000, guid: 39ce01103ed75dd4ba453b7d99bc76a0, type: 2}
+  - Name: 'RECALL '
+    Key: 18
+    Sound: {fileID: 11400000, guid: 1aad6c31e8e30b045833c90c7eac90b3, type: 2}
+  - Name: 'CRIT_HIT '
+    Key: 19
+    Sound: {fileID: 11400000, guid: 6cdfb3d9ad940f34897bb6feacb06605, type: 2}
+  - Name: 'RECALL_ERROR '
+    Key: 20
+    Sound: {fileID: 11400000, guid: 435471cbcb4b4ce4d829c96880db4c25, type: 2}
+  - Name: 'THROW_CHARGE '
+    Key: 21
+    Sound: {fileID: 11400000, guid: eefeb46203ae55147bd377478075dbc8, type: 2}
 --- !u!4 &5666328555735627448 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7e5397dfc7036764384342c17248d7f7,

@@ -11,7 +11,6 @@ public enum PlayerState { MOVING, SPEAKING}
 public class Player : MonoBehaviour
 {
     public static Player i;
-    private void Awake() { i = this; }
 
     [SerializeField] private AnimationCurve _heartbeatCurve;
 
@@ -73,11 +72,15 @@ public class Player : MonoBehaviour
     public void StopInterest(Speaker speaker) => _dialogue.StopInterest(speaker);
     public float ForwardSpeed => _move.ForwardSpeed;
 
+    private void Awake() {
+        i = this;
+        Anim = GetComponent<PAnimator>();
+    }
+
     private void Start()
     {
         _move = GetComponent<PMovement>();
         _dialogue = GetComponent<PDialogue>();
-        Anim = GetComponent<PAnimator>();
         Sounds = GetComponentInChildren<PSound>();
 
         RB = GetComponent<Rigidbody>();

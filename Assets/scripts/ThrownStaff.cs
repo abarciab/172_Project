@@ -38,7 +38,7 @@ public class ThrownStaff : MonoBehaviour
         if (!hb.triggeredBy.CompareTag("BlockSpear")) return;
 
         hb.EndChecking();
-        rb.velocity *= -0.5f;
+        rb.linearVelocity *= -0.5f;
         blocked.Play();
     }
 
@@ -65,7 +65,7 @@ public class ThrownStaff : MonoBehaviour
         rb.isKinematic = false;
         rb.useGravity = false;
         GetComponent<CapsuleCollider>().isTrigger = true;
-        rb.velocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
         recalling = true;
         GetComponentInChildren<HitBox>().StartChecking(true, Player.i.GetComponent<PFighting>().CritDmg, _crit:true);
 
@@ -79,8 +79,8 @@ public class ThrownStaff : MonoBehaviour
             ping.Play();
             fight.RecallReadyNotice();
         }
-        windSound.SetPercentVolume(rb.velocity.magnitude / maxSpeed, 0.025f);
-        if (!rb.isKinematic && !recalling) transform.LookAt(transform.position + rb.velocity.normalized);
+        windSound.SetPercentVolume(rb.linearVelocity.magnitude / maxSpeed, 0.025f);
+        if (!rb.isKinematic && !recalling) transform.LookAt(transform.position + rb.linearVelocity.normalized);
         if (!recalling) return;
 
         transform.position = Vector3.Lerp(transform.position, Player.i.transform.position, 0.1f);
@@ -124,7 +124,7 @@ public class ThrownStaff : MonoBehaviour
         windSound.Stop();
 
         GetComponentInChildren<HitBox>().EndChecking();
-        rb.velocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
         rb.isKinematic = true;
 
     }
